@@ -1,2 +1,14 @@
 @import "tailwindcss";
 @source "../views";
+
+@layer{
+    :root {
+        --color-black: #000;
+        --color-mediumWhite: #FAF9EE;
+        --color-primary: #799EFF;
+        --color-lightGold: #FEFFC4;
+        --color-darkGold: #FFBC4C;
+        --color-mediumYellow: #FFDE63;
+        --color-white: #FFFFFF;
+    }
+}
