@@ -8,5 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-
+    optimizeDeps: {
+        include: ['resources/css/app.css'], // Tambahkan ini
+    }
 });

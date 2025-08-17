@@ -1,14 +1,49 @@
 @import "tailwindcss";
 @source "../views";
 
-@layer{
-    :root {
-        --color-black: #000;
-        --color-mediumWhite: #FAF9EE;
-        --color-primary: #799EFF;
-        --color-lightGold: #FEFFC4;
-        --color-darkGold: #FFBC4C;
-        --color-mediumYellow: #FFDE63;
-        --color-white: #FFFFFF;
-    }
+@layer {
+  :root {
+    /* Color Palette */
+    --color-primary: #799EFF;
+    --color-primary-hover: #6a8de8;
+    --color-dark: #1E293B;
+    --color-light: #F8FAFC;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+    
+    /* Additional Colors */
+    --color-mediumWhite: #FAF9EE;
+    --color-lightGold: #FEFFC4;
+    --color-darkGold: #FFBC4C;
+    --color-mediumYellow: #FFDE63;
+  }
+}
+
+@layer utilities {
+  /* Text Colors */
+  .text-primary { color: var(--color-primary); }
+  .text-dark { color: var(--color-dark); }
+  .text-light { color: var(--color-light); }
+  .text-success { color: var(--color-success); }
+  .text-warning { color: var(--color-warning); }
+  .text-danger { color: var(--color-danger); }
+
+  /* Background Colors */
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-dark { background-color: var(--color-dark); }
+  .bg-light { background-color: var(--color-light); }
+  .bg-success { background-color: var(--color-success); }
+  .bg-warning { background-color: var(--color-warning); }
+  .bg-danger { background-color: var(--color-danger); }
+
+  /* Hover States */
+  .hover\:bg-primary:hover { background-color: var(--color-primary-hover); }
+  .hover\:text-primary:hover { color: var(--color-primary-hover); }
+
+  /* Special Colors */
+  .bg-mediumWhite { background-color: var(--color-mediumWhite); }
+  .text-lightGold { color: var(--color-lightGold); }
+  .bg-darkGold { background-color: var(--color-darkGold); }
+  .text-mediumYellow { color: var(--color-mediumYellow); }
 }
