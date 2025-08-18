@@ -7,11 +7,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index()
     {
+        $currentUsers = Auth::user();
+        if (!$currentUsers) {
+            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+        }
+
         $users = User::all(); // Assuming you have a User model to fetch users
 
         return view('admin.manageUser', compact('users'));
@@ -19,6 +27,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $currentUsers = Auth::user();
+        if (!$currentUsers) {
+            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+        }
+
         $validated = $request->validate([
             'username' => 'required|string|max:255',
             'password' => 'required|min:8|confirmed',
@@ -38,45 +51,75 @@ class UserController extends Controller
         return redirect()->route('manage-user.index')->with('success', 'User created successfully.');
     }
 
-    // public function update($user_id)
-    // {
-    //     // Dapatkan user yang sedang login
-    //     $currentUser = auth()->user();
+    public function update(Request $request, $user_id)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login.showLoginForm')
+                ->withErrors(['error' => 'You do not have permission to view this page.']);
+        }
 
-    //     // Dapatkan user yang ingin diupdate
-    //     $userToUpdate = User::findOrFail($user_id);
+        try {
+            // Validate input
+            $validated = $request->validate([
+                'username' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('users')->ignore($user_id, 'user_id')
+                ],
+            ]);
 
-    //     // Periksa apakah user yang login sama dengan user yang ingin diupdate
-    //     if ($currentUser->id != $userToUpdate->id) {
-    //         return back()->withErrors(['error' => 'You can only update your own profile.']);
-    //     }
+            $userToUpdate = User::findOrFail($user_id);
 
-    //     $userToUpdate->username = request('username');
-    //     $userToUpdate->save();
+            // Check if current user can update this profile
+            if ($currentUser->user_id != $userToUpdate->user_id) {
+                return back()
+                    ->withErrors(['error' => 'You can only update your own profile.'])
+                    ->withInput();
+            } else {
 
-    //     return back()->with('success', 'Profile updated successfully.');
-    // }
+                $userToUpdate->update([
+                    'username' => $validated['username']
+                ]);
 
-    // public function destroy($user_id)
-    // {
-    //     // Dapatkan user yang sedang login
-    //     $currentUser = auth()->user();
+                return back()
+                    ->with('success', 'Profile updated successfully.');
+            }
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors(['error' => 'Failed to update profile. Please try again.'])
+                ->withInput();
+        }
+    }
 
-    //     // Dapatkan user yang ingin dihapus
-    //     $userToDelete = User::findOrFail($user_id);
+    public function destroy($user_id)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login.showLoginForm')
+                ->withErrors(['error' => 'You do not have permission to view this page.']);
+        }
 
-    //     // Periksa apakah user yang login sama dengan user yang ingin dihapus
-    //     if ($currentUser->id != $userToDelete->id) {
-    //         return redirect()->route('manage-user.index')
-    //             ->withErrors(['error' => 'You can only delete your own account.']);
-    //     }
+        try {
+            // Dapatkan user yang ingin dihapus
+            $userToDelete = User::findOrFail($user_id);
 
-    //     $userToDelete->delete();
+            // Periksa apakah user mencoba menghapus dirinya sendiri
+            if ($currentUser->user_id == $userToDelete->user_id) {
+                return redirect()->route('manage-user.index')
+                    ->withErrors(['error' => 'You cannot delete your own account.']);
+            }
 
-    //     // Logout user setelah menghapus akun
-    //     auth()->logout();
-
-    //     return redirect()->route('login')
-    //         ->with('success', 'Your account has been deleted successfully.');
-    // }
+            // Hanya admin yang bisa menghapus user lain
+            if ($currentUser->user_id != $userToDelete->user_id) {
+                $userToDelete->delete();
+                return redirect()->route('manage-user.index')
+                    ->with('success', 'User has been deleted successfully.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('manage-user.index')
+                ->withErrors(['error' => 'Failed to delete user.']);
+        }
+    }
 }
