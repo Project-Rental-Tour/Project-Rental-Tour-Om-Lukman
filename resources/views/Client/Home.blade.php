@@ -28,7 +28,7 @@
         <div class="flex flex-col lg:flex-row gap-12 items-center">
             <!-- Text Content -->
             <div class="lg:w-1/2">
-                <span class="text-[#799EFF] text-sm font-semibold tracking-wider uppercase">
+                <span class="text-primary text-sm font-semibold tracking-wider uppercase">
                     ABOUT ME
                 </span>
                 <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-6">
@@ -40,7 +40,7 @@
                     malesuada gravida. Mauris volutpat enim quis pulv gont congue. Suspendisse ullamcorper, enim vitae
                     tristique blandit, eratot augue torel tempo libero, non porta lectus tortor et elit.
                 </p>
-                <button class="bg-[#799EFF] text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
+                <button class="bg-primary text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
                     More About
                 </button>
             </div>
@@ -65,10 +65,10 @@
     <!-- Top Destination Section -->
     <section class="max-w-7xl mx-auto px-6 py-24 bg-gray-50"> <!-- Increased py from 16 to 24 -->
         <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
-            <span class="text-[#799EFF] text-sm font-semibold tracking-wider uppercase">
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase">
                 TOP SELLING
             </span>
-            <h2 class="text-3xl font-bold text-gray-900 mt-2">
+            <h2 class="text-3xl font-bold text-gray-900 mb-10">
                 Top Destination
             </h2>
         </div>
@@ -93,7 +93,7 @@
                         <span>Bromo Midnight</span>
                     </div>
                     <button
-                        class="w-full bg-[#799EFF] text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
+                        class="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
                         <span class="text-sm font-medium">BOOK NOW</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -122,7 +122,7 @@
                         <span>Bromo, Tumpak Sewu</span>
                     </div>
                     <button
-                        class="w-full bg-[#799EFF] text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
+                        class="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
                         <span class="text-sm font-medium">BOOK NOW</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -150,7 +150,7 @@
                         <span>Bromo, Tumpak Sewu, Kawah Ijen</span>
                     </div>
                     <button
-                        class="w-full bg-[#799EFF] text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
+                        class="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
                         <span class="text-sm font-medium">BOOK NOW</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -178,7 +178,7 @@
                         <span>You can request for your trip</span>
                     </div>
                     <button
-                        class="w-full bg-[#799EFF] text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
+                        class="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-between items-center px-4">
                         <span class="text-sm font-medium">BOOK NOW</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -192,10 +192,10 @@
     <!-- Exploration Section -->
     <section class="max-w-7xl mx-auto px-6 py-24"> <!-- Increased py from 16 to 24 -->
         <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
-            <span class="text-[#799EFF] text-sm font-semibold tracking-wider uppercase">
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase">
                 EXPLORASI BROMO MIDNIGHT & KAWAH IJEN
             </span>
-            <h3 class="text-xl font-semibold text-gray-900 mt-2">
+            <h3 class="text-xl font-semibold text-gray-900 mb-10">
                 2 Hari 1 Malam - Wisata Alam Tropis & Petualangan Ringan
             </h3>
         </div>
@@ -204,7 +204,7 @@
             <!-- Buttons -->
             <div class="lg:w-1/4 space-y-6"> <!-- Increased space-y from 4 to 6 -->
                 <button
-                    class="w-full bg-[#799EFF] text-white py-3 rounded-md flex items-center justify-center gap-2 hover:bg-blue-700 transition">
+                    class="w-full bg-primary text-white py-3 rounded-md flex items-center justify-center gap-2 hover:bg-blue-700 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
@@ -287,10 +287,10 @@
     <!-- Why Choose Us Section -->
     <section class="max-w-7xl mx-auto px-6 py-24 bg-gray-50"> <!-- Increased py from 16 to 24 -->
         <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
-            <span class="text-[#799EFF] text-sm font-semibold tracking-wider uppercase">
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase">
                 OUR SUCCESS
             </span>
-            <h3 class="text-2xl font-bold text-gray-900 mt-2">
+            <h3 class="text-2xl font-bold text-gray-900 mb-10">
                 Why Choose Ann Trans
             </h3>
         </div>
@@ -300,7 +300,7 @@
             <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200"> <!-- Increased p from 6 to 8 -->
                 <div class="flex items-start">
                     <div class="bg-blue-100 p-3 rounded-full mr-4">
-                        <svg class="w-6 h-6 text-[#799EFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                             </path>
@@ -411,10 +411,83 @@
         </div>
     </section>
 
+    {{-- Galery Section --}}
+    <section class="max-w-7xl mx-auto px-6 py-24 bg-gray-50"> <!-- Increased py from 16 to 24 -->
+        <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase">
+                OUR SUCCESS
+            </span>
+            <h3 class="text-2xl font-bold text-gray-900 mb-10">
+                Why Choose Ann Trans
+            </h3>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+            <!-- image - start -->
+            <a href="#" class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+                <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
+                    loading="lazy" alt="Photo by Minh Pham"
+                    class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+                <div
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                </div>
+
+                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">VR</span>
+            </a>
+            <!-- image - end -->
+
+            <!-- image - start -->
+            <a href="#"
+                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+                <img src="https://images.unsplash.com/photo-1542759564-7ccbb6ac450a?auto=format&q=75&fit=crop&w=1000"
+                    loading="lazy" alt="Photo by Magicle"
+                    class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+                <div
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                </div>
+
+                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Tech</span>
+            </a>
+            <!-- image - end -->
+
+            <!-- image - start -->
+            <a href="#"
+                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+                <img src="https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?auto=format&q=75&fit=crop&w=1000"
+                    loading="lazy" alt="Photo by Martin Sanchez"
+                    class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+                <div
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                </div>
+
+                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Dev</span>
+            </a>
+            <!-- image - end -->
+
+            <!-- image - start -->
+            <a href="#" class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&q=75&fit=crop&w=600"
+                    loading="lazy" alt="Photo by Lorenzo Herrera"
+                    class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+                <div
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                </div>
+
+                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Retro</span>
+            </a>
+            <!-- image - end -->
+        </div>
+    </section>
+
+
     <!-- Testimonials Section -->
     <section class="max-w-7xl mx-auto px-6 py-24"> <!-- Increased py from 16 to 24 -->
         <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
-            <span class="text-[#799EFF] text-sm font-semibold tracking-wider uppercase">
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase">
                 TESTIMONIALS
             </span>
             <h3 class="text-3xl font-bold text-gray-900 mt-2">
@@ -423,7 +496,7 @@
         </div>
 
         <div class="bg-white p-10 rounded-lg shadow-md max-w-2xl mx-auto relative"> <!-- Increased p from 8 to 10 -->
-            <div class="absolute top-0 left-0 -mt-4 -ml-4 bg-[#799EFF] text-white p-2 rounded-full">
+            <div class="absolute top-0 left-0 -mt-4 -ml-4 bg-primary text-white p-2 rounded-full">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">

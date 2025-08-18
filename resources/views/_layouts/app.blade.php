@@ -8,8 +8,6 @@
     <title>@yield('title', 'WK')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css' rel='stylesheet' />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @yield('head')
     @stack('styles')
 </head>
