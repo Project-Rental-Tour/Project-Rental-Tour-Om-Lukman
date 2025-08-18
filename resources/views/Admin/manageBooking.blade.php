@@ -14,25 +14,6 @@
                     <h1 class="text-2xl font-semibold text-gray-800">Manage Booking</h1>
                     <p class="text-sm text-gray-500 mt-1">Manage data Karyawan dan Informasi Karyawan</p>
                 </div>
-
-                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-
-                    <!-- Action Buttons -->
-                    <div class="flex gap-2">
-                        <!-- Deleted Selected Button -->
-
-
-
-                        <button data-modal-target="add-modal" data-modal-toggle="add-modal"
-                            class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none flex items-center">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                            Tambah Karyawan
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
