@@ -15,7 +15,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')
+            return redirect()->route('login.showLoginForm')
                 ->withErrors(['error' => 'You need to login first']);
         }
 
@@ -27,7 +27,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')
+            return redirect()->route('login.showLoginForm')
                 ->withErrors(['error' => 'Unauthorized access']);
         }
 
@@ -56,7 +56,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')
+            return redirect()->route('login.showLoginForm')
                 ->withErrors(['error' => 'Unauthorized access']);
         }
 
@@ -91,7 +91,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')
+            return redirect()->route('login.showLoginForm')
                 ->withErrors(['error' => 'Unauthorized access']);
         }
 
