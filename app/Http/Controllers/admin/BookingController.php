@@ -15,7 +15,7 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
@@ -27,7 +27,7 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 

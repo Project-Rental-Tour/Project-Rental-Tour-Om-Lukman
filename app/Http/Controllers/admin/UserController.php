@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $currentUsers = Auth::user();
         if (!$currentUsers) {
-            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
         $users = User::all(); // Assuming you have a User model to fetch users
@@ -30,7 +30,7 @@ class UserController extends Controller
     {
         $currentUsers = Auth::user();
         if (!$currentUsers) {
-            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
         $validated = $request->validate([
@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
@@ -98,7 +98,7 @@ class UserController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
