@@ -14,7 +14,7 @@ class Destination extends Model
         'name_package',
         'place',
         'price',
-        'image_destination',
+        'destination_photo',
     ];
 
     public $timestamps = true;
