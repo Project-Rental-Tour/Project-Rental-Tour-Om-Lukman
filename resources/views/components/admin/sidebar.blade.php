@@ -30,7 +30,7 @@
     <div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto">
         <nav class="flex-1 space-y-1">
             {{-- Dashboard --}}
-            <a href="#"
+            <a href="{{ route('dashboard.index')}}"
                 class="flex items-center px-3 py-2 text-sm font-medium text-white rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-200"
                 aria-current="page">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -43,7 +43,7 @@
             </a>
 
             {{-- User Management --}}
-            <a href="#"
+            <a href="{{ route('manage-user.index') }}"
                 class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 group">
                 <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
             </a>
 
             {{-- Booking Management --}}
-            <a href="#"
+            <a href="{{ route('manage-booking.index')}}"
                 class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 group">
                 <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +105,7 @@
             </a>
 
             {{-- Gallery Management --}}
-            <a href="#"
+            <a href="{{ route('manage-gallery.index') }}"
                 class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 group">
                 <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
