@@ -6,6 +6,7 @@ use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\GalleriesController;
+use App\Http\Controllers\admin\DestinationController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,10 @@ Route::resource('/manage-booking', BookingController::class);
 // Manage Gallery
 Route::resource('/manage-gallery', GalleriesController::class);
 Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
-// Manage Testimony
+// Manage Testimoni
 // Manage Blog
 //Manage Destination
+Route::resource('/manage-destination', DestinationController::class);
+Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');
+
 // Manage Tours
