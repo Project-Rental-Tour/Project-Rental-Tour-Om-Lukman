@@ -15,6 +15,7 @@ class BlogPost extends Model
         'slug',
         'content',
         'featured_image',
+        'author',
     ];
 
     public $timestamps = true;
