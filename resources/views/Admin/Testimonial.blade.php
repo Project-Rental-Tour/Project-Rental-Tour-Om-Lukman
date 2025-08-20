@@ -11,8 +11,27 @@
         <div class="px-4 md:px-6 py-4 md:py-6 bg-white shadow-sm">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-2xl font-semibold text-gray-800">Manage Booking</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800">Manage Karyawan</h1>
                     <p class="text-sm text-gray-500 mt-1">Manage data Karyawan dan Informasi Karyawan</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-2">
+                        <!-- Deleted Selected Button -->
+
+
+
+                        <button data-modal-target="add-modal" data-modal-toggle="add-modal"
+                            class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Tambah Karyawan
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,46 +88,32 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                First Name
+                                Username
                             </th>
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Last Name
+                                Passwrod
                             </th>
 
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Email
-                            </th>
-
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Country
-                            </th>
-
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Message
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Action
+                                Actions
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <!-- Employee Row 1 -->
-                        @foreach ($bookings as $booking)
+                        @foreach ($users as $user)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" name="selected_users[]" value="{{ $booking->booking_id }}"
+                                    <input type="checkbox" name="selected_users[]" value="{{ $user->user_id }}"
                                         class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $booking->username }}</div>
+                                    <div class="text-sm text-center text-gray-900">{{ $user->username }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">********</div>
@@ -124,13 +129,26 @@
                                             class="absolute right-0 mt-0 w-36 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden transform translate-y-1">
                                             <ul class="py-2">
                                                 <li>
-                                                    <a data-modal-target="view-modal-{{ $booking->booking_id }}"
-                                                        data-modal-toggle="view-modal-{{ $booking->booking_id }}"
+                                                    <a data-modal-target="view-modal-{{ $user->user_id }}"
+                                                        data-modal-toggle="view-modal-{{ $user->user_id }}"
                                                         class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                                                         <i class="fa-solid fa-eye mr-2 text-blue-500"></i> View
                                                     </a>
                                                 </li>
-
+                                                <li>
+                                                    <a data-modal-target="edit-modal-{{ $user->user_id }}"
+                                                        data-modal-toggle="edit-modal-{{ $user->user_id }}"
+                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                        <i class="fa-solid fa-pen-to-square mr-2 text-yellow-500"></i> Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-modal-target="delete-modal-{{ $user->user_id }}"
+                                                        data-modal-toggle="delete-modal-{{ $user->user_id }}"
+                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                        <i class="fa-solid fa-trash mr-2 text-red-500"></i> Delete
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -208,13 +226,6 @@
     </div>
 
 
-    {{-- View Modal --}}
-    @foreach ($bookings as $booking)
-        <div id="view-modal-{{ $booking->booking_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-user.view-user', ['user' => $booking])
-        </div>
-    @endforeach
 @endsection
 
 @push('scripts')
