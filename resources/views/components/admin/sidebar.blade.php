@@ -93,7 +93,7 @@
             </a>
 
             {{-- Blog Management --}}
-            <a href="#"
+            <a href="{{ route('manage-blog.index')}}"
                 class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 group">
                 <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
