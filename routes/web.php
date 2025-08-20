@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\TestimoniController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\auth\AuthController;
@@ -31,6 +32,7 @@ Route::resource('/manage-booking', BookingController::class);
 Route::resource('/manage-gallery', GalleriesController::class);
 Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
 // Manage Testimoni
+Route::resource('/testimoni', TestimoniController::class);
 // Manage Blog
 //Manage Destination
 Route::resource('/manage-destination', DestinationController::class);

@@ -262,5 +262,5 @@
     <script src="{{ asset('assets/js/bulkAction.js') }}"></script>
     <script src="{{ asset('assets/js/dropdownTable.js') }}"></script>
     <script src="{{ asset('assets/js/replaceImage.js') }}"></script>
-    <script src="{{ asset('assets/js/salaryCurrency.js') }}"></script>
+
 @endpush
