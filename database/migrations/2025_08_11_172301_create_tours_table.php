@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image_section')->nullable();
             $table->text('title')->nullable();
             $table->text('description')->nullable();
+            $table->string('type');
             $table->string('tag')->unique();
             $table->timestamps();
         });

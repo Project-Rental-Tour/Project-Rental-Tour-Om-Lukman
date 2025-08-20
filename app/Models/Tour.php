@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPSTORM_META\type;
+
 class Tour extends Model
 {
     protected $table = 'tours';
@@ -15,6 +17,7 @@ class Tour extends Model
         'image_section',
         'title',
         'description',
+        'type',
         'tag',
     ];
 
