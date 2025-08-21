@@ -13,12 +13,10 @@ class Tour extends Model
     protected $primaryKey = 'tour_id';
 
     protected $fillable = [
-        'name_section',
-        'image_section',
         'title',
         'description',
         'type',
-        'tag',
+        'facility'
     ];
 
     public $timestamps = true;
