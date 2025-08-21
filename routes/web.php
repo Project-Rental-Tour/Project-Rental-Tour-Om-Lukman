@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\TestimoniController;
+use App\Http\Controllers\admin\TourController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\auth\AuthController;
@@ -40,5 +41,6 @@ Route::delete('/manage-blog/bulk-destroy', [BlogController::class, 'bulkDestroy'
 //Manage Destination
 Route::resource('/manage-destination', DestinationController::class);
 Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');
-
 // Manage Tours
+Route::resource('/manage-tour', TourController::class);
+Route::delete('/manage-tour/bulk-destroy', [TourController::class, 'bulkDestroy'])->name('manage-tour.bulk-destroy');
