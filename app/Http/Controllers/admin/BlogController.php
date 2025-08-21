@@ -14,7 +14,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogPosts = BlogPost::orderBy('created_at')->get();
+        $blogPosts = BlogPost::all();
         return view('admin.manageBlog', compact('blogPosts'));
     }
 
@@ -85,11 +85,11 @@ class BlogController extends Controller
                 if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                     Storage::disk('public')->delete($blogPost->featured_image);
                 }
-                $imagePath = $request->file('featured_image')->store('blog-images', 'public'); // PERBAIKI PATH
+                $imagePath = $request->file('featured_image')->store('blog-images', 'public');
                 $blogPost->featured_image = $imagePath;
             }
 
-            // Update data - author tidak diupdate, tetap dari pembuat asli
+            // Update data
             $blogPost->title = $validatedData['title'];
             $blogPost->content = $validatedData['content'];
 
@@ -97,7 +97,7 @@ class BlogController extends Controller
             if ($blogPost->isDirty('title')) {
                 $slug = Str::slug($validatedData['title']);
 
-                // Cek slug unik (kecuali untuk post ini)
+                // Cek slug unik
                 $originalSlug = $slug;
                 $counter = 1;
                 while (BlogPost::where('slug', $slug)
@@ -113,6 +113,7 @@ class BlogController extends Controller
 
             $blogPost->save();
 
+            // PERBAIKAN DI SINI: Redirect ke index, bukan show
             return redirect()->route('manage-blog.index')
                 ->with('success', 'Blog post berhasil diperbarui');
         } catch (\Exception $e) {
@@ -121,7 +122,7 @@ class BlogController extends Controller
         }
     }
 
-    public function delete($blog_post_id)
+    public function destroy($blog_post_id)
     {
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
