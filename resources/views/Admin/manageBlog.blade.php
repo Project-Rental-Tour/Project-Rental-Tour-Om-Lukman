@@ -12,7 +12,7 @@
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                     <h1 class="text-2xl font-semibold text-gray-800">Manage Blog</h1>
-                    <p class="text-sm text-gray-500 mt-1">Manage data Karyawan dan Informasi Karyawan</p>
+                    <p class="text-sm text-gray-500 mt-1">Manage data Blog dan Informasi Blog</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
@@ -24,7 +24,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            Tambah Karyawan
+                            Tambah Blog
                         </button>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                     <h1 class="text-2xl font-semibold text-gray-800">Manage Destination</h1>
-                    <p class="text-sm text-gray-500 mt-1">Manage data Karyawan dan Informasi Karyawan</p>
+                    <p class="text-sm text-gray-500 mt-1">Manage data Destination dan Informasi Destination</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">

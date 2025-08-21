@@ -11,8 +11,8 @@
         <div class="px-4 md:px-6 py-4 md:py-6 bg-white shadow-sm">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-2xl font-semibold text-gray-800">Manage Karyawan</h1>
-                    <p class="text-sm text-gray-500 mt-1">Manage data Karyawan dan Informasi Karyawan</p>
+                    <h1 class="text-2xl font-semibold text-gray-800">Manage User</h1>
+                    <p class="text-sm text-gray-500 mt-1">Manage data User dan Informasi User</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
