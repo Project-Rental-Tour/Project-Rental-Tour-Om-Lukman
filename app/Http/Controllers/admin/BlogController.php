@@ -30,7 +30,7 @@ class BlogController extends Controller
         try {
             // Upload gambar
             if ($request->hasFile('featured_image')) {
-                $imagePath = $request->file('featured_image')->store('blog-images', 'public');
+                $imagePath = $request->file('featured_image')->store('blogs', 'public');
             } else {
                 return back()->withInput()->with('error', 'Featured image is required');
             }
@@ -85,7 +85,7 @@ class BlogController extends Controller
                 if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                     Storage::disk('public')->delete($blogPost->featured_image);
                 }
-                $imagePath = $request->file('featured_image')->store('blog-images', 'public');
+                $imagePath = $request->file('featured_image')->store('blogs', 'public');
                 $blogPost->featured_image = $imagePath;
             }
 
