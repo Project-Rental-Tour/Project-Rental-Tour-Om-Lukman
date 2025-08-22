@@ -19,7 +19,7 @@ class DestinationController extends Controller
                 ->withErrors(['error' => 'You need to login first']);
         }
 
-        $destinations = Destination::latest()->get();
+        $destinations = Destination::paginate(25);
         return view('admin.manageDestination', compact('destinations'));
     }
 

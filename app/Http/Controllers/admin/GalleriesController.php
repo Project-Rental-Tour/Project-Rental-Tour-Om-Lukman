@@ -19,7 +19,7 @@ class GalleriesController extends Controller
                 ->withErrors(['error' => 'You need to login first']);
         }
 
-        $galleries = Gallery::latest()->get();
+        $galleries = Gallery::paginate(25);
         return view('admin.manageGallery', compact('galleries'));
     }
 

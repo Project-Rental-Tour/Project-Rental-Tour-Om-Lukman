@@ -12,7 +12,7 @@ class TestimoniController extends Controller
     public function index()
     {
         $currentUser = Auth::user();
-        $testimonials = Testimonial::all();
+        $testimonials = Testimonial::paginate(25);
 
         if (!$currentUser) {
             return redirect()->route('login')

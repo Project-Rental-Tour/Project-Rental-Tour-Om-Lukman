@@ -19,7 +19,7 @@ class BookingController extends Controller
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
-        $bookings = Booking::all(); // Assuming you have a Booking model
+        $bookings = Booking::paginate(25);; // Assuming you have a Booking model
         return view('admin.manageBooking', compact('bookings'));
     }
 

@@ -16,22 +16,22 @@ class UserController extends Controller
 {
     public function index()
     {
-        $currentUsers = Auth::user();
-        if (!$currentUsers) {
-            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
-        }
+        // $currentUsers = Auth::user();
+        // if (!$currentUsers) {
+        //     return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+        // }
 
-        $users = User::all(); // Assuming you have a User model to fetch users
+        $users = User::paginate(25); // Assuming you have a User model to fetch users
 
         return view('admin.manageUser', compact('users'));
     }
 
     public function store(Request $request)
     {
-        $currentUsers = Auth::user();
-        if (!$currentUsers) {
-            return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
-        }
+        // $currentUsers = Auth::user();
+        // if (!$currentUsers) {
+        //     return redirect()->route('login.showLoginForm')->withErrors(['error' => 'You do not have permission to view this page.']);
+        // }
 
         $validated = $request->validate([
             'username' => 'required|string|max:255',
