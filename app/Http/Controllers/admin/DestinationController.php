@@ -36,6 +36,8 @@ class DestinationController extends Controller
             'place' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'time' => 'required|string|max:255',
+            'facility' => 'required|string|max:255',
         ]);
 
         try {
@@ -46,6 +48,8 @@ class DestinationController extends Controller
                 'place' => $request->place,
                 'price' => $request->price,
                 'destination_photo' => str_replace('public/', 'storage/', $imagePath),
+                'time' => $request->time,
+                'facility' => $request->facility,
             ]);
 
             return redirect()->route('manage-destination.index')
@@ -64,25 +68,38 @@ class DestinationController extends Controller
                 ->withErrors(['error' => 'Unauthorized access']);
         }
 
+        // Validasi input
         $request->validate([
             'name_package' => 'required|string|max:255',
             'place' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|min:0',
             'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'time' => 'required|string|max:255',
+            'facility' => 'required|string|max:255',
         ]);
 
         try {
             $destination = Destination::findOrFail($destination_id);
+
+            // Format ulang harga (hapus titik dan koma, kemudian konversi ke integer)
+            $price = str_replace(['.', ','], '', $request->price);
+            $price = (int) $price;
+
             $updateData = [
                 'name_package' => $request->name_package,
                 'place' => $request->place,
-                'price' => $request->price,
+                'price' => $price, // Sekarang berupa integer
+                'time' => $request->time,
+                'facility' => $request->facility,
             ];
 
             if ($request->hasFile('destination_photo')) {
                 // Delete old image
                 if ($destination->destination_photo) {
-                    Storage::delete(str_replace('storage/', 'public/', $destination->destination_photo));
+                    $oldImagePath = str_replace('storage/', 'public/', $destination->destination_photo);
+                    if (Storage::exists($oldImagePath)) {
+                        Storage::delete($oldImagePath);
+                    }
                 }
 
                 // Store new image
@@ -95,7 +112,8 @@ class DestinationController extends Controller
             return redirect()->route('manage-destination.index')
                 ->with('success', 'Destination updated successfully');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Update failed: ' . $e->getMessage()]);
+            return back()->withInput()
+                ->withErrors(['error' => 'Update failed: ' . $e->getMessage()]);
         }
     }
 
