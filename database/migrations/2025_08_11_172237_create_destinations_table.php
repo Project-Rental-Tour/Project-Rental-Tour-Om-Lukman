@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('place');
             $table->decimal('price', 10, 2)->default('0.00');
             $table->string('destination_photo')->nullable();
+            $table->string('time');
+            $table->string('facility');
             $table->timestamps();
         });
     }
