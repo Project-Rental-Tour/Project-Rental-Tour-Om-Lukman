@@ -1,49 +1,124 @@
-<footer class="bg-white p-8 rounded-t-xl shadow-lg mt-12">
-    <div class="container mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<footer class="footer text-white p-8 bg-white">
+    <div class="bg-primary rounded-xl">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 items-start">
+                <!-- Column 1: Logo and Description -->
+                <div class="lg:col-span-2 flex flex-col text-left">
+                    <!-- Logo Section -->
+                    <div class="logo-container">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-3 mb-3">
+                            <img src="{{ asset('assets/images/logo/logo-white.png')}}">
+                        </div>
+                        <div class="mb-3">
+                            <h2 class="text-xl font-bold">Syamsul Arifin</h2>
+                            <p class="text-blue-100 text-sm">Web Designer & Developer</p>
+                        </div>
+                    </div>
+                    <p class="text-blue-100 mb-6 leading-relaxed">Hi! I'm Syamsul Arifin and I'm an expert in web design
+                        and
+                        branding. I can help you make your website more attractive and effective for your business
+                        goals.
+                    </p>
 
-            <div class="col-span-1 lg:col-span-1">
-                <h2 class="text-3xl font-bold text-gray-800">TripRex</h2>
-                <p class="text-gray-500 mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="flex space-x-4 mt-4 text-gray-600">
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-instagram"></i></a>
+                    <!-- Social Media -->
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Column 2: Services -->
+                <div class="flex flex-col items-start">
+                    <div class="mb-4">
+                        <span
+                            class="text-sm text-white font-semibold uppercase tracking-wider border-b-2 border-white/30 pb-1">Services</span>
+                    </div>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Web Design</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>UI/UX Design</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Branding</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Development</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Resources -->
+                <div class="flex flex-col items-start">
+                    <div class="mb-4">
+                        <span
+                            class="text-sm text-white font-semibold uppercase tracking-wider border-b-2 border-white/30 pb-1">Resources</span>
+                    </div>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Blog</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Tutorials</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Free Resources</a></li>
+                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Portfolio</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="flex flex-col items-start">
+                    <div class="mb-4">
+                        <span
+                            class="text-sm text-white font-semibold uppercase tracking-wider border-b-2 border-white/30 pb-1">Contact</span>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-white mt-1 mr-3"></i>
+                            <span class="text-blue-100">123 Design Street, Creative City</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone text-white mt-1 mr-3"></i>
+                            <span class="text-blue-100">+1 234 567 890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-white mt-1 mr-3"></i>
+                            <span class="text-blue-100">hello@syamsul.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock text-white mt-1 mr-3"></i>
+                            <span class="text-blue-100">Mon-Fri: 9AM-5PM</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="col-span-1">
-                <h3 class="font-bold text-lg text-gray-800">Product</h3>
-                <ul class="mt-4 space-y-2 text-gray-500">
-                    <li><a href="#" class="hover:text-blue-600">Uve Caser</a></li>
-                    <li><a href="#" class="hover:text-blue-600">Nunstes</a></li>
-                    <li><a href="#" class="hover:text-blue-600">W</a></li>
-                </ul>
-            </div>
+            <!-- Divider -->
+            <div class="divider my-10"></div>
 
-            <div class="col-span-1">
-                <h3 class="font-bold text-lg text-gray-800">Resources</h3>
-                <ul class="mt-4 space-y-2 text-gray-500">
-                    <li><a href="#" class="hover:text-blue-600">About Us</a></li>
-                    <li><a href="#" class="hover:text-blue-600">Contact</a></li>
-                    <li><a href="#" class="hover:text-blue-600">FAQ</a></li>
-                </ul>
-            </div>
-
-            <div class="col-span-1 md:col-span-2 lg:col-span-1">
-                <h3 class="font-bold text-lg text-gray-800">Get In Touch</h3>
-                <p class="text-gray-500 my-4">Don’t miss any updates of our new templates.</p>
-                <div class="flex">
-                    <input type="email" placeholder="Email address"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button
-                        class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 font-semibold">Subscribe</button>
+            <!-- Bottom Footer -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-sm text-blue-100">© 2023 Syamsul Arifin. All rights reserved.</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-blue-100 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-blue-100 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-blue-100 hover:text-white text-sm">Cookie Policy</a>
                 </div>
             </div>
-
-        </div>
-        <div class="border-t border-gray-200 mt-8 pt-6 text-center text-gray-500">
-            <p>&copy; 2025 TripRex. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
