@@ -34,7 +34,7 @@ class DestinationController extends Controller
         $request->validate([
             'name_package' => 'required|string|max:255',
             'place' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'time' => 'required|string|max:255',
             'facility' => 'required|string|max:255',
@@ -43,10 +43,16 @@ class DestinationController extends Controller
         try {
             $imagePath = $request->file('destination_photo')->store('public/destinations');
 
+            // Handle nullable price
+            $price = $request->price;
+            if ($price !== null) {
+                $price = (float) $price;
+            }
+
             Destination::create([
                 'name_package' => $request->name_package,
                 'place' => $request->place,
-                'price' => $request->price,
+                'price' => $price,
                 'destination_photo' => str_replace('public/', 'storage/', $imagePath),
                 'time' => $request->time,
                 'facility' => $request->facility,
@@ -72,7 +78,7 @@ class DestinationController extends Controller
         $request->validate([
             'name_package' => 'required|string|max:255',
             'place' => 'required|string|max:255',
-            'price' => 'required|min:0',
+            'price' => 'nullable|numeric|min:0',
             'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'time' => 'required|string|max:255',
             'facility' => 'required|string|max:255',
@@ -81,14 +87,18 @@ class DestinationController extends Controller
         try {
             $destination = Destination::findOrFail($destination_id);
 
-            // Format ulang harga (hapus titik dan koma, kemudian konversi ke integer)
-            $price = str_replace(['.', ','], '', $request->price);
-            $price = (int) $price;
+            // Handle nullable price
+            $price = $request->price;
+            if ($price !== null) {
+                // Format ulang harga (hapus titik dan koma, kemudian konversi ke float)
+                $price = str_replace(['.', ','], '', $price);
+                $price = (float) $price;
+            }
 
             $updateData = [
                 'name_package' => $request->name_package,
                 'place' => $request->place,
-                'price' => $price, // Sekarang berupa integer
+                'price' => $price, // Bisa berupa float atau null
                 'time' => $request->time,
                 'facility' => $request->facility,
             ];
