@@ -19,7 +19,8 @@
                 <h2 class="text-2xl font-bold mb-2">{{ $destination->name_package }}</h2>
                 <p class="text-blue-100">{{ $destination->place }}</p>
                 <div class="mt-4">
-                    <span class="text-3xl font-bold">Rp. {{ number_format($destination->price, 2) }}</span>
+                    <span class="text-3xl font-bold">Rp.
+                        {{ number_format((float) $destination->price, 0, ',', '.') }}</span>
                     <span class="text-blue-200 ml-2">per person</span>
                 </div>
             </div>
@@ -56,7 +57,41 @@
                             </svg>
                             <h4 class="font-semibold text-gray-800">Package Price</h4>
                         </div>
-                        <p class="text-2xl font-bold text-green-600">Rp. {{ number_format($destination->price, 2) }}</p>
+                        <p class="text-2xl font-bold text-green-600">Rp.
+                            {{ number_format((float) $destination->price, 0, ',', '.') }}
+                        </p>
+                    </div>
+
+                    <!-- Duration/Time Section -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h4 class="font-semibold text-gray-800">Duration</h4>
+                        </div>
+                        <p class="text-gray-600">{{ $destination->time }}</p>
+                    </div>
+
+                    <!-- Facilities Section -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <h4 class="font-semibold text-gray-800">Facilities</h4>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            @foreach(explode(',', $destination->facility) as $facility)
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">
+                                    {{ trim($facility) }}
+                                </span>
+                            @endforeach
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">

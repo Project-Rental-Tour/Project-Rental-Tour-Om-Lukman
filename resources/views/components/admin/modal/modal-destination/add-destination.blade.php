@@ -43,10 +43,33 @@
                         <label for="price" class="block mb-1 text-sm font-medium text-gray-700">
                             Price <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="price" required
+                        <input type="text" id="price"
                             class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Rp 1.000.000" name="price">
                         <p class="mt-1 text-sm text-red-600 hidden" id="price-error"></p>
+                    </div>
+
+                    <div>
+                        <label for="time" class="block mb-1 text-sm font-medium text-gray-700">
+                            Time <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="time" required
+                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="How Long" name="time">
+                        <p class="mt-1 text-sm text-red-600 hidden" id="time-error"></p>
+                    </div>
+
+                    <div>
+                        <label for="facility" class="block mb-1 text-sm font-medium text-gray-700">
+                            Facility <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="facility" required
+                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Facility" name="facility">
+                        <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Gunakan
+                            koma untuk memisahkan fasilitas.
+                        </p>
+                        <p class="mt-1 text-sm text-red-600 hidden" id="facility-error"></p>
                     </div>
 
                     <div>

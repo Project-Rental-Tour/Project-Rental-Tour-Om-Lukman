@@ -105,6 +105,16 @@
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Time
+                            </th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Facility
+                            </th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
                             </th>
                         </tr>
@@ -133,9 +143,24 @@
 
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">Rp.
-                                        {{ number_format($destination->price, 2) }}
+                                        {{ number_format((float) $destination->price, 0, ',', '.') }}
                                     </div>
                                 </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-center text-gray-900">{{ $destination->time }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex flex-wrap gap-1 justify-center">
+                                        @foreach(explode(',', $destination->facility) as $facility)
+                                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 mt-1">
+                                                {{ trim($facility) }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </td>
+
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
                                     <div class="inline-block relative">
