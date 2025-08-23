@@ -26,21 +26,21 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Dashboard
 Route::resource('/dashboard', DashboardController::class);
 // Manage Users
-Route::resource('/manage-user', UserController::class);
 Route::delete('/manage-user/bulk-destroy', [UserController::class, 'bulkDestroy'])->name('manage-user.bulk-destroy');
+Route::resource('/manage-user', UserController::class);
 // Manage Bookings
 Route::resource('/manage-booking', BookingController::class);
 // Manage Gallery
-Route::resource('/manage-gallery', GalleriesController::class);
 Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
+Route::resource('/manage-gallery', GalleriesController::class);
 // Manage Testimoni
 Route::resource('/testimoni', TestimoniController::class);
 // Manage Blog
-Route::resource('/manage-blog', BlogController::class);
 Route::delete('/manage-blog/bulk-destroy', [BlogController::class, 'bulkDestroy'])->name('manage-blog.bulk-destroy');
+Route::resource('/manage-blog', BlogController::class);
 //Manage Destination
-Route::resource('/manage-destination', DestinationController::class);
 Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');
+Route::resource('/manage-destination', DestinationController::class);
 // Manage Tours
-Route::resource('/manage-tour', TourController::class);
 Route::delete('/manage-tour/bulk-destroy', [TourController::class, 'bulkDestroy'])->name('manage-tour.bulk-destroy');
+Route::resource('/manage-tour', TourController::class);

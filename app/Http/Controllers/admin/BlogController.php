@@ -145,36 +145,47 @@ class BlogController extends Controller
 
     public function bulkDestroy(Request $request)
     {
-        $validatedData = $request->validate([
+        // Validate the request
+        $validated = $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'integer|exists:blog_posts,blog_post_id'
+            'ids.*' => 'integer|exists:blog_posts,blog_post_id',
         ]);
 
         try {
-            $deletedCount = 0;
+            // Get all blog posts with the given IDs
+            $posts = BlogPost::whereIn('blog_post_id', $validated['ids'])->get();
 
-            foreach ($validatedData['ids'] as $id) {
-                $blogPost = BlogPost::find($id);
-
-                if ($blogPost) {
-                    if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
-                        Storage::disk('public')->delete($blogPost->featured_image);
-                    }
-
-                    $blogPost->delete();
-                    $deletedCount++;
-                }
+            if ($posts->isEmpty()) {
+                return redirect()->back()
+                    ->with('toast', [
+                        'type' => 'error',
+                        'message' => 'No valid blog posts found to delete.'
+                    ]);
             }
 
-            return response()->json([
-                'success' => true,
-                'toast' => ['type' => 'success', 'message' => $deletedCount . ' blog post(s) deleted successfully']
-            ]);
+            $deletedCount = 0;
+            foreach ($posts as $post) {
+                // Delete the featured image if it exists
+                if ($post->featured_image && Storage::disk('public')->exists($post->featured_image)) {
+                    Storage::disk('public')->delete($post->featured_image);
+                }
+
+                // Delete the post
+                $post->delete();
+                $deletedCount++;
+            }
+
+            return redirect()->route('manage-blog.index')
+                ->with('toast', [
+                    'type' => 'success',
+                    'message' => $deletedCount . ' blog post(s) deleted successfully.'
+                ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Failed to delete blog posts: ' . $e->getMessage()]
-            ], 500);
+            return redirect()->back()
+                ->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Failed to delete blog posts: ' . $e->getMessage()
+                ]);
         }
     }
 }

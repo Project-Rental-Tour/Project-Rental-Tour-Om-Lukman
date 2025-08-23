@@ -1,66 +1,55 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Fungsi untuk menangani bulk actions
-    function handleBulkAction(action) {
-        const selectedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_users[]"]:checked');
+    function handleBulkAction() {
+        const selectedCheckboxes = document.querySelectorAll('.bulk-checkbox:checked');
         const selectedIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
 
         if (selectedIds.length === 0) {
-            alert('Please select at least one item.');
+            showToast('Please select at least one blog post.', 'error');
             return false;
         }
 
         return selectedIds;
     }
 
-    // Bulk Delete
+    // Bulk Delete - Non-AJAX Approach
     const bulkDeleteBtn = document.querySelector('.bulk-delete-btn');
     if (bulkDeleteBtn) {
         bulkDeleteBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const selectedIds = handleBulkAction('delete');
+            const selectedIds = handleBulkAction();
             if (!selectedIds) return;
 
-            if (confirm(`Are you sure you want to delete ${selectedIds.length} selected items?`)) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = bulkDeleteBtn.dataset.route;
+            // Hapus langsung tanpa konfirmasi
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = bulkDeleteBtn.dataset.route;
 
-                const csrfToken = document.createElement('input');
-                csrfToken.type = 'hidden';
-                csrfToken.name = '_token';
-                csrfToken.value = document.querySelector('meta[name="csrf-token"]').content;
-                form.appendChild(csrfToken);
+            // CSRF Token
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = document.querySelector('meta[name="csrf-token"]').content;
+            form.appendChild(csrfToken);
 
-                const methodInput = document.createElement('input');
-                methodInput.type = 'hidden';
-                methodInput.name = '_method';
-                methodInput.value = 'DELETE';
-                form.appendChild(methodInput);
+            // Method override
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'DELETE';
+            form.appendChild(methodInput);
 
-                selectedIds.forEach(id => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'selected_users[]';
-                    input.value = id;
-                    form.appendChild(input);
-                });
+            // Selected IDs
+            selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
 
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    }
-
-    // Bulk Export (contoh action lain)
-    const bulkExportBtn = document.querySelector('.bulk-export-btn');
-    if (bulkExportBtn) {
-        bulkExportBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const selectedIds = handleBulkAction('export');
-            if (!selectedIds) return;
-
-            // Redirect ke route export dengan parameter
-            window.location.href = `${bulkExportBtn.dataset.route}?selected=${selectedIds.join(',')}`;
+            document.body.appendChild(form);
+            form.submit();
         });
     }
 
@@ -68,10 +57,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectAllCheckbox = document.getElementById('select-all');
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function () {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="selected_users[]"]');
+            const checkboxes = document.querySelectorAll('.bulk-checkbox');
             checkboxes.forEach(checkbox => {
                 checkbox.checked = selectAllCheckbox.checked;
             });
         });
     }
+
+    // Update select all checkbox when individual checkboxes change
+    const userCheckboxes = document.querySelectorAll('.bulk-checkbox');
+    userCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const allChecked = document.querySelectorAll('.bulk-checkbox:checked').length === userCheckboxes.length;
+            const someChecked = document.querySelectorAll('.bulk-checkbox:checked').length > 0;
+
+            selectAllCheckbox.checked = allChecked;
+            selectAllCheckbox.indeterminate = someChecked && !allChecked;
+        });
+    });
 });

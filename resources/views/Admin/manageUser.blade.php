@@ -106,7 +106,7 @@
                         @foreach ($users as $user)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" name="selected_users[]" value="{{ $user->user_id }}"
+                                    <input type="checkbox" name="ids[]" value="{{ $user->user_id }}"
                                         class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                                 </td>
 
