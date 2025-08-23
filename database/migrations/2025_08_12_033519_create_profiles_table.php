@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('facebook_link')->nullable();
             $table->string('instagram_link')->nullable();
             $table->string('operating_hours')->nullable();
-            $table->$table->timestamps();
+            $table->timestamps();
         });
     }
 
