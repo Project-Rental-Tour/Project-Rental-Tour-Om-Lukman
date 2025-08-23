@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id('profile_id');
-            $table->string('logo_photo')->nullable();
-            $table->string('name_company')->nullable();
-            $table->string('description')->nullable();
-            $table->timestamps();
+            $table->string('website_name')->nullable();
+            $table->string('website_logo')->nullable(); // simpan path logo
+            $table->string('jumbotron_heading')->nullable();
+            $table->text('jumbotron_subheading')->nullable();
+            $table->string('jumbotron_image')->nullable(); // path gambar jumbotron
+            $table->string('about_heading')->nullable();
+            $table->text('about_description')->nullable();
+            $table->text('address')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->string('operating_hours')->nullable();
+            $table->$table->timestamps();
         });
     }
 
