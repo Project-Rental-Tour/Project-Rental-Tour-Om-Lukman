@@ -61,12 +61,12 @@
 
             <div class="flex justify-end pt-4 space-x-3 border-t border-gray-100 md:col-span-5">
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
                     id="cancel-add">
                     Cancel
                 </button>
                 <button type="submit"
-                    class="flex items-center px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="flex items-center px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 ">
                     <i class="fas fa-plus mr-2"></i>
                     Add Blog Post
                 </button>

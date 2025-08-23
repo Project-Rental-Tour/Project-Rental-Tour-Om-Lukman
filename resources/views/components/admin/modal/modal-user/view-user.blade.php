@@ -40,7 +40,7 @@
             <!-- Modal Footer -->
             <div class="flex justify-end pt-6 mt-6 border-t border-gray-100">
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
                     data-modal-toggle="view-modal-{{ $user->user_id }}">
                     Close
                 </button>

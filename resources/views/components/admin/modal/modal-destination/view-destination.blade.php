@@ -109,12 +109,12 @@
 
             <div class="flex justify-end pt-6 mt-6 border-t border-gray-100 space-x-3">
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
                     data-modal-toggle="view-modal-{{ $destination->destination_id }}">
                     Close
                 </button>
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 "
                     onclick="window.open('{{ asset($destination->destination_photo) }}', '_blank')">
                     View Full Image
                 </button>

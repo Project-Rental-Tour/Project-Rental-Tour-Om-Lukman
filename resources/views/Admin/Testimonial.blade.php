@@ -33,7 +33,7 @@
                 <!-- Right Side - Sort Dropdown -->
                 <div class="relative">
                     <select
-                        class="appearance-none pl-3 pr-8 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        class="appearance-none pl-3 pr-8 py-2 border border-gray-300 rounded-md text-sm  focus:border-blue-500">
                         <option>Sort by: Newest</option>
                         <option>Sort by: Oldest</option>
                         <option>Sort by: Name (A-Z)</option>

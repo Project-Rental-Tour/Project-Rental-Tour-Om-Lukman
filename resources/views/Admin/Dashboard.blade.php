@@ -324,55 +324,50 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Website Name</label>
                         <input type="text" placeholder="Website Name"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo</label>
-                        <input type="file"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Jumbotron Heading</label>
                         <input type="text" placeholder="Title of Jumbotron"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Jumbotron Sub Heading</label>
-                        <textarea
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            rows="3" placeholder="Lorem Ipsum ..."></textarea>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
+                            placeholder="Lorem Ipsum ..."></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Image Jumbotron</label>
                         <input type="file" value="Travel Indonesia"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">About Heading</label>
                         <input type="text" placeholder="Title of About"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">About Description</label>
-                        <textarea
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            rows="3" placeholder="Lorem Ipsum 22..."></textarea>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
+                            placeholder="Lorem Ipsum 22..."></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                        <textarea
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            rows="3" placeholder="Address"></textarea>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
+                            placeholder="Address"></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
-                        <input type="email" placeholder="Email"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="email" placeholder="Email" class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                         <input type="tel" placeholder="Phone Number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Social Media Links</label>
@@ -382,24 +377,23 @@
                                     <i class="fab fa-facebook text-blue-600"></i>
                                 </span>
                                 <input type="text" value="travel.indonesia"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md ">
                             </div>
                             <div class="flex items-center">
                                 <span class="bg-blue-100 p-2 rounded-l-md">
                                     <i class="fab fa-instagram text-pink-600"></i>
                                 </span>
                                 <input type="text" value="@travel.indonesia"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md ">
                             </div>
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Operating Hours</label>
                         <input type="text" placeholder="Operating Hours"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
                     </div>
-                    <button type="submit"
-                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 ">
                         Update Profile
                     </button>
                 </form>
