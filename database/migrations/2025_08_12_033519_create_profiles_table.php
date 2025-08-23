@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id('profile_id');
             $table->string('website_name')->nullable();
-            $table->string('website_logo')->nullable(); // simpan path logo
+            $table->string('website_logo_light')->nullable();
+            $table->string('website_logo_dark')->nullable(); // simpan path logo
             $table->string('jumbotron_heading')->nullable();
             $table->text('jumbotron_subheading')->nullable();
             $table->string('jumbotron_image')->nullable(); // path gambar jumbotron

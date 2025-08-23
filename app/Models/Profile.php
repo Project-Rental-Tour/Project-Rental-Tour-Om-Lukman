@@ -12,7 +12,8 @@ class Profile extends Model
 
     protected $fillable = [
         'website_name',
-        'website_logo',
+        'website_logo_light',
+        'website_logo_dark',
         'jumbotron_heading',
         'jumbotron_subheading',
         'jumbotron_image',
