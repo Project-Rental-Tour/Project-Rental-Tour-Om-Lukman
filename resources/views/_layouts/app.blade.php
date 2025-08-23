@@ -13,6 +13,7 @@
 </head>
 
 <body class="h-full font-sans antialiased">
+    @include('components.admin.toast')
     <div class="flex h-screen bg-gray-50">
         <!-- Sidebar (seperti di atas) -->
         <div class="hidden md:flex md:flex-shrink-0">
@@ -38,6 +39,52 @@
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
 
     @stack('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const closeSidebarBtn = document.getElementById('close-sidebar');
+
+            // Function untuk membuka sidebar
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Function untuk menutup sidebar
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Event listener untuk tombol hamburger di header
+            document.querySelector('[data-drawer-target="sidebar-mobile"]').addEventListener('click', openSidebar);
+
+            // Event listener untuk tombol close di sidebar
+            closeSidebarBtn.addEventListener('click', closeSidebar);
+
+            // Event listener untuk overlay
+            sidebarOverlay.addEventListener('click', closeSidebar);
+
+            // Event listener untuk escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    closeSidebar();
+                }
+            });
+
+            // Auto close sidebar ketika link di klik (untuk mobile)
+            document.querySelectorAll('#sidebar nav a').forEach(link => {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth < 768) {
+                        closeSidebar();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
