@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->string('featured_image');
+            $table->string('type');
+            $table->integer('reading_time')->nullable();
             $table->string('author');
             $table->timestamps();
         });

@@ -15,6 +15,8 @@ class BlogPost extends Model
         'slug',
         'content',
         'featured_image',
+        'type',
+        'reading_time',
         'author',
     ];
 
