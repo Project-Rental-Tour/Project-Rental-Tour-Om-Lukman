@@ -32,7 +32,10 @@ class BlogController extends Controller
             if ($request->hasFile('featured_image')) {
                 $imagePath = $request->file('featured_image')->store('blogs', 'public');
             } else {
-                return back()->withInput()->with('error', 'Featured image is required');
+                return back()->withInput()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Featured image is required'
+                ]);
             }
 
             // Generate slug dari title
@@ -46,24 +49,24 @@ class BlogController extends Controller
                 $counter++;
             }
 
-            // Dapatkan username dari user yang login - PERBAIKAN DI SINI
+            // Dapatkan username dari user yang login
             $user = Auth::user();
             $author = $user->name ?? $user->username ?? $user->email ?? 'Unknown Author';
 
-            // Simpan data - PASTIKAN AUTHOR DIMASUKKAN
+            // Simpan data
             $blogPost = BlogPost::create([
                 'title' => $validatedData['title'],
-                'author' => $author, // PASTIKAN INI ADA
+                'author' => $author,
                 'slug' => $slug,
                 'content' => $validatedData['content'],
                 'featured_image' => $imagePath
             ]);
 
             return redirect()->route('manage-blog.index')
-                ->with('success', 'Blog post created successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Blog post created successfully']);
         } catch (\Exception $e) {
             return back()->withInput()
-                ->with('error', 'Failed to create blog post: ' . $e->getMessage());
+                ->with('toast', ['type' => 'error', 'message' => 'Failed to create blog post: ' . $e->getMessage()]);
         }
     }
 
@@ -81,7 +84,6 @@ class BlogController extends Controller
 
             // Handle upload gambar jika ada
             if ($request->hasFile('featured_image')) {
-                // Hapus gambar lama jika ada
                 if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                     Storage::disk('public')->delete($blogPost->featured_image);
                 }
@@ -97,7 +99,6 @@ class BlogController extends Controller
             if ($blogPost->isDirty('title')) {
                 $slug = Str::slug($validatedData['title']);
 
-                // Cek slug unik
                 $originalSlug = $slug;
                 $counter = 1;
                 while (BlogPost::where('slug', $slug)
@@ -113,12 +114,11 @@ class BlogController extends Controller
 
             $blogPost->save();
 
-            // PERBAIKAN DI SINI: Redirect ke index, bukan show
             return redirect()->route('manage-blog.index')
-                ->with('success', 'Blog post berhasil diperbarui');
+                ->with('toast', ['type' => 'success', 'message' => 'Blog post updated successfully']);
         } catch (\Exception $e) {
             return back()->withInput()
-                ->with('error', 'Gagal memperbarui blog post: ' . $e->getMessage());
+                ->with('toast', ['type' => 'error', 'message' => 'Failed to update blog post: ' . $e->getMessage()]);
         }
     }
 
@@ -127,7 +127,6 @@ class BlogController extends Controller
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
 
-            // Hapus gambar dari storage
             if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                 Storage::disk('public')->delete($blogPost->featured_image);
             }
@@ -135,15 +134,17 @@ class BlogController extends Controller
             $blogPost->delete();
 
             return redirect()->route('manage-blog.index')
-                ->with('success', 'Blog post berhasil dihapus');
+                ->with('toast', ['type' => 'success', 'message' => 'Blog post deleted successfully']);
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menghapus blog post: ' . $e->getMessage());
+            return back()->with('toast', [
+                'type' => 'error',
+                'message' => 'Failed to delete blog post: ' . $e->getMessage()
+            ]);
         }
     }
 
     public function bulkDestroy(Request $request)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'integer|exists:blog_posts,blog_post_id'
@@ -156,7 +157,6 @@ class BlogController extends Controller
                 $blogPost = BlogPost::find($id);
 
                 if ($blogPost) {
-                    // Hapus gambar dari storage
                     if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                         Storage::disk('public')->delete($blogPost->featured_image);
                     }
@@ -168,12 +168,12 @@ class BlogController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $deletedCount . ' blog post berhasil dihapus'
+                'toast' => ['type' => 'success', 'message' => $deletedCount . ' blog post(s) deleted successfully']
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal menghapus blog posts: ' . $e->getMessage()
+                'toast' => ['type' => 'error', 'message' => 'Failed to delete blog posts: ' . $e->getMessage()]
             ], 500);
         }
     }

@@ -16,7 +16,7 @@ class DestinationController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login')
-                ->withErrors(['error' => 'You need to login first']);
+                ->with('toast', ['type' => 'error', 'message' => 'You need to login first']);
         }
 
         $destinations = Destination::paginate(25);
@@ -28,7 +28,7 @@ class DestinationController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
         $request->validate([
@@ -43,7 +43,6 @@ class DestinationController extends Controller
         try {
             $imagePath = $request->file('destination_photo')->store('public/destinations');
 
-            // Handle nullable price
             $price = $request->price;
             if ($price !== null) {
                 $price = (float) $price;
@@ -59,10 +58,10 @@ class DestinationController extends Controller
             ]);
 
             return redirect()->route('manage-destination.index')
-                ->with('success', 'Destination added successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Destination added successfully']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Failed to upload: ' . $e->getMessage()])
-                ->withInput();
+            return back()->withInput()
+                ->with('toast', ['type' => 'error', 'message' => 'Failed to add destination: ' . $e->getMessage()]);
         }
     }
 
@@ -71,10 +70,9 @@ class DestinationController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
-        // Validasi input
         $request->validate([
             'name_package' => 'required|string|max:255',
             'place' => 'required|string|max:255',
@@ -87,10 +85,8 @@ class DestinationController extends Controller
         try {
             $destination = Destination::findOrFail($destination_id);
 
-            // Handle nullable price
             $price = $request->price;
             if ($price !== null) {
-                // Format ulang harga (hapus titik dan koma, kemudian konversi ke float)
                 $price = str_replace(['.', ','], '', $price);
                 $price = (float) $price;
             }
@@ -98,13 +94,12 @@ class DestinationController extends Controller
             $updateData = [
                 'name_package' => $request->name_package,
                 'place' => $request->place,
-                'price' => $price, // Bisa berupa float atau null
+                'price' => $price,
                 'time' => $request->time,
                 'facility' => $request->facility,
             ];
 
             if ($request->hasFile('destination_photo')) {
-                // Delete old image
                 if ($destination->destination_photo) {
                     $oldImagePath = str_replace('storage/', 'public/', $destination->destination_photo);
                     if (Storage::exists($oldImagePath)) {
@@ -112,7 +107,6 @@ class DestinationController extends Controller
                     }
                 }
 
-                // Store new image
                 $imagePath = $request->file('destination_photo')->store('public/destinations');
                 $updateData['destination_photo'] = str_replace('public/', 'storage/', $imagePath);
             }
@@ -120,10 +114,10 @@ class DestinationController extends Controller
             $destination->update($updateData);
 
             return redirect()->route('manage-destination.index')
-                ->with('success', 'Destination updated successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Destination updated successfully']);
         } catch (\Exception $e) {
             return back()->withInput()
-                ->withErrors(['error' => 'Update failed: ' . $e->getMessage()]);
+                ->with('toast', ['type' => 'error', 'message' => 'Failed to update destination: ' . $e->getMessage()]);
         }
     }
 
@@ -132,13 +126,12 @@ class DestinationController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
         try {
             $destination = Destination::findOrFail($destination_id);
 
-            // Delete associated image
             if ($destination->destination_photo) {
                 Storage::delete(str_replace('storage/', 'public/', $destination->destination_photo));
             }
@@ -146,9 +139,9 @@ class DestinationController extends Controller
             $destination->delete();
 
             return redirect()->route('manage-destination.index')
-                ->with('success', 'Destination deleted successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Destination deleted successfully']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Delete failed: ' . $e->getMessage()]);
+            return back()->with('toast', ['type' => 'error', 'message' => 'Failed to delete destination: ' . $e->getMessage()]);
         }
     }
 
@@ -156,7 +149,10 @@ class DestinationController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Unauthorized access']
+            ], 401);
         }
 
         $request->validate([
@@ -168,16 +164,21 @@ class DestinationController extends Controller
             $destinations = Destination::whereIn('destination_id', $request->ids)->get();
 
             foreach ($destinations as $destination) {
-                // Delete associated image
                 if ($destination->destination_photo) {
                     Storage::delete(str_replace('storage/', 'public/', $destination->destination_photo));
                 }
                 $destination->delete();
             }
 
-            return response()->json(['success' => 'Selected destinations deleted successfully']);
+            return response()->json([
+                'success' => true,
+                'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Bulk delete failed: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete destinations: ' . $e->getMessage()]
+            ], 500);
         }
     }
 }

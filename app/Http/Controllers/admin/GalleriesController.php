@@ -16,7 +16,7 @@ class GalleriesController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login.showLoginForm')
-                ->withErrors(['error' => 'You need to login first']);
+                ->with('toast', ['type' => 'error', 'message' => 'You need to login first']);
         }
 
         $galleries = Gallery::paginate(25);
@@ -28,7 +28,7 @@ class GalleriesController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login.showLoginForm')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
         $validated = $request->validate([
@@ -45,10 +45,10 @@ class GalleriesController extends Controller
             ]);
 
             return redirect()->route('manage-gallery.index')
-                ->with('success', 'Gallery item added successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Gallery item added successfully']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Failed to upload: ' . $e->getMessage()])
-                ->withInput();
+            return back()->withInput()
+                ->with('toast', ['type' => 'error', 'message' => 'Failed to upload: ' . $e->getMessage()]);
         }
     }
 
@@ -57,7 +57,7 @@ class GalleriesController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login.showLoginForm')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
         $validated = $request->validate([
@@ -81,9 +81,10 @@ class GalleriesController extends Controller
             $gallery->update($updateData);
 
             return redirect()->route('manage-gallery.index')
-                ->with('success', 'Gallery updated successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Gallery updated successfully']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Update failed: ' . $e->getMessage()]);
+            return back()->withInput()
+                ->with('toast', ['type' => 'error', 'message' => 'Update failed: ' . $e->getMessage()]);
         }
     }
 
@@ -92,7 +93,7 @@ class GalleriesController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login.showLoginForm')
-                ->withErrors(['error' => 'Unauthorized access']);
+                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
         }
 
         try {
@@ -101,9 +102,9 @@ class GalleriesController extends Controller
             $gallery->delete();
 
             return redirect()->route('manage-gallery.index')
-                ->with('success', 'Gallery deleted successfully');
+                ->with('toast', ['type' => 'success', 'message' => 'Gallery deleted successfully']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Delete failed: ' . $e->getMessage()]);
+            return back()->with('toast', ['type' => 'error', 'message' => 'Delete failed: ' . $e->getMessage()]);
         }
     }
 
@@ -111,7 +112,10 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Unauthorized']
+            ], 401);
         }
 
         $validated = $request->validate([
@@ -127,9 +131,15 @@ class GalleriesController extends Controller
                 $gallery->delete();
             }
 
-            return response()->json(['success' => 'Selected galleries deleted']);
+            return response()->json([
+                'success' => true,
+                'toast' => ['type' => 'success', 'message' => count($validated['ids']) . ' gallery item(s) deleted successfully']
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Bulk delete failed'], 500);
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Bulk delete failed: ' . $e->getMessage()]
+            ], 500);
         }
     }
 }
