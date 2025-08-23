@@ -24,7 +24,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Dashboard
-Route::resource('/dashboard', DashboardController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::post('/dashboard/profile/update', [DashboardController::class, 'update'])->name('dashboard.profile.update');
 // Manage Users
 Route::delete('/manage-user/bulk-destroy', [UserController::class, 'bulkDestroy'])->name('manage-user.bulk-destroy');
 Route::resource('/manage-user', UserController::class);
