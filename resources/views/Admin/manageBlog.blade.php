@@ -4,11 +4,7 @@
 
 @section('content')
     <div class="w-full">
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+
         <!-- Header Section -->
         <div class="px-4 md:px-6 py-4 md:py-6 bg-white shadow-sm">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
