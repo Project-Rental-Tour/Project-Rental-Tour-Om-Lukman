@@ -77,18 +77,6 @@
                 Manage Destination
             </a>
 
-            {{-- Tour Management --}}
-            <a href="#"
-                class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-tour.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                <svg class="w-5 h-5 mr-3 transition-colors duration-200 {{ request()->routeIs('manage-tour.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4">
-                    </path>
-                </svg>
-                Manage Tours
-            </a>
-
             {{-- Blog Management --}}
             <a href="{{ route('manage-blog.index')}}"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-blog.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">

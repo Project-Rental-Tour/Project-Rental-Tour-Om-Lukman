@@ -46,6 +46,3 @@ Route::resource('/manage-blog', BlogController::class);
 //Manage Destination
 Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');
 Route::resource('/manage-destination', DestinationController::class);
-// Manage Tours
-Route::delete('/manage-tour/bulk-destroy', [TourController::class, 'bulkDestroy'])->name('manage-tour.bulk-destroy');
-Route::resource('/manage-tour', TourController::class);
