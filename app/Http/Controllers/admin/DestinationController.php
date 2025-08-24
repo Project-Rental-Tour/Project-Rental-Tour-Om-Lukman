@@ -27,7 +27,12 @@ class DestinationController extends Controller
         return view('admin.manageDestination', compact('destinations'));
     }
 
-    public function detailDestination() {}
+    public function detailDestination($slug)
+    {
+        $destination = Destination::where('slug', $slug)->firstOrFail();
+
+        return view('client.detailDestination', compact('destination'));
+    }
 
     public function store(Request $request)
     {
