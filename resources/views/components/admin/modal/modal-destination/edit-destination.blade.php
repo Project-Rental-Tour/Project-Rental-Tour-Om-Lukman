@@ -1,9 +1,10 @@
-<div class="relative w-full max-w-3xl px-4 slide-down">
-    <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">
+<div class="relative w-full max-w-4xl px-4 slide-down" x-data="{ step: 1 }">
+    <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header -->
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
-                <h3 class="text-xl font-semibold text-gray-800">Edit Destination Item</h3>
-                <p class="text-sm text-gray-500 mt-1">Edit the destination details</p>
+                <h3 class="text-xl font-semibold text-gray-800">Edit Destination</h3>
+                <p class="text-sm text-gray-500 mt-1">Update travel package details step by step</p>
             </div>
             <button type="button" class="text-gray-400 hover:text-gray-500 transition-colors"
                 data-modal-toggle="edit-modal-{{ $destination->destination_id }}">
@@ -13,129 +14,172 @@
             </button>
         </div>
 
-        <div class="p-6">
-            <form class="grid gap-6 md:grid-cols-5" id="edit-form-{{ $destination->destination_id }}"
-                enctype="multipart/form-data"
-                action="{{ route('manage-destination.update', $destination->destination_id) }}" method="POST">
+        <div class="p-8">
+            <form id="edit-form-{{ $destination->destination_id }}" enctype="multipart/form-data"
+                action="{{ route('manage-destination.update', $destination->destination_id) }}" method="POST"
+                class="space-y-8">
                 @csrf
                 @method('PUT')
 
+                <!-- Hidden ID -->
                 <input type="hidden" name="id" value="{{ $destination->destination_id }}">
 
-                <div class="space-y-4 md:col-span-3">
-                    <div>
-                        <label for="edit-name_package-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Name Package <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="edit-name_package-{{ $destination->destination_id }}" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Name Package" name="name_package" value="{{ $destination->name_package }}">
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-name_package-error-{{ $destination->destination_id }}">
-                        </p>
-                    </div>
-
-                    <div>
-                        <label for="edit-place-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Place <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="edit-place-{{ $destination->destination_id }}" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Place" name="place" value="{{ $destination->place }}">
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-place-error-{{ $destination->destination_id }}">
-                        </p>
-                    </div>
-
-                    <div>
-                        <label for="edit-price-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Price <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="edit-price-{{ $destination->destination_id }}"
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 price-input"
-                            placeholder="Rp 1.000.000" name="price"
-                            value="{{ number_format((float) $destination->price, 0, ',', '.') }}">
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-price-error-{{ $destination->destination_id }}">
-                        </p>
-                    </div>
-
-                    <div>
-                        <label for="edit-time-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Time <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="edit-time-{{ $destination->destination_id }}" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="How Long" name="time" value="{{ $destination->time }}">
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-time-error-{{ $destination->destination_id }}">
-                        </p>
-                    </div>
-
-                    <div>
-                        <label for="edit-facility-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Facility <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="edit-facility-{{ $destination->destination_id }}" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="facility" name="facility" value="{{ $destination->facility }}">
-                        <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Gunakan
-                            koma untuk memisahkan fasilitas.
-                        </p>
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-facility-error-{{ $destination->destination_id }}">
-                        </p>
-                    </div>
-
-                    <div>
-                        <label for="edit-destination_photo-{{ $destination->destination_id }}"
-                            class="block mb-1 text-sm font-medium text-gray-700">
-                            Image (Leave empty to keep current)
-                        </label>
-                        <input type="file" id="edit-destination_photo-{{ $destination->destination_id }}"
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            name="destination_photo" accept="image/jpeg,image/png,image/jpg,image/gif">
-                        <p class="mt-1 text-sm text-gray-500">
-                            Current:
-                            <a href="{{ asset($destination->destination_photo) }}" target="_blank"
-                                class="text-blue-600 hover:underline current-image-link"
-                                id="current-image-link-{{ $destination->destination_id }}">
-                                View Image
-                            </a>
-                        </p>
-                        <p class="mt-1 text-sm text-red-600 hidden"
-                            id="edit-destination_photo-error-{{ $destination->destination_id }}">
-                        </p>
+                <!-- Progress indicator -->
+                <div class="flex justify-center mb-8">
+                    <div class="flex items-center space-x-4">
+                        <template x-for="i in 6" :key="i">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 flex items-center justify-center rounded-full font-medium"
+                                    :class="step >= i ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    <span x-text="i"></span>
+                                </div>
+                                <template x-if="i < 6">
+                                    <div class="w-12 h-1" :class="step > i ? 'bg-blue-600' : 'bg-gray-300'">
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 flex flex-col items-center justify-center">
-                    <div
-                        class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
-                        <img id="edit-preview-{{ $destination->destination_id }}"
-                            src="{{ asset($destination->destination_photo) }}" alt="Preview"
-                            class="w-full h-full object-cover rounded-lg">
+                <!-- STEP 1: Basic Info -->
+                <div x-show="step === 1" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Name Package</label>
+                        <input type="text" name="name_package" placeholder="Example: Bali Adventure Trip"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('name_package', $destination->name_package) }}" required>
+                        <p class="text-xs text-gray-400 mt-1">Enter a unique name for this package</p>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Place</label>
+                        <input type="text" name="place" placeholder="Bali, Indonesia"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('place', $destination->place) }}" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Category</label>
+                        <input type="text" name="category" placeholder="Adventure / Family / Romantic"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('category', $destination->category) }}" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Level</label>
+                        <input type="text" name="level" placeholder="Easy / Medium / Hard"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('level', $destination->level) }}">
                     </div>
                 </div>
 
-                <div class="flex justify-end pt-4 space-x-3 border-t border-gray-100 md:col-span-5">
-                    <button type="button"
-                        class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
-                        data-modal-toggle="edit-modal-{{ $destination->destination_id }}">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="flex items-center px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 ">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Update Destination
-                    </button>
+                <!-- STEP 2: Pricing & Time -->
+                <div x-show="step === 2" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Price</label>
+                        <input type="text" name="price" placeholder="Rp 1.500.000"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 price-input"
+                            value="{{ old('price', number_format((float) $destination->price, 0, ',', '.')) }}">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Duration</label>
+                        <input type="text" name="time" placeholder="3 Days 2 Nights"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('time', $destination->time) }}" required>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Location & Transport -->
+                <div x-show="step === 3" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Pickup Points</label>
+                        <input type="text" name="pickup_points" placeholder="Ngurah Rai Airport"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('pickup_points', $destination->pickup_points) }}">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Dropoff Points</label>
+                        <input type="text" name="dropoff_points" placeholder="Hotel / Villa"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('dropoff_points', $destination->dropoff_points) }}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Transportation</label>
+                        <input type="text" name="transportation" placeholder="Bus / Car / Boat"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('transportation', $destination->transportation) }}">
+                    </div>
+                </div>
+
+                <!-- STEP 4: Facilities -->
+                <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Activities</label>
+                        <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('activities', $destination->activities) }}">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Accommodation</label>
+                        <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('accommodation', $destination->accommodation) }}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Consumption</label>
+                        <input type="text" name="consumption" placeholder="Breakfast, Lunch, Dinner"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('consumption', $destination->consumption) }}">
+                    </div>
+                </div>
+
+                <!-- STEP 5: Package Content -->
+                <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Include</label>
+                        <textarea name="include" rows="4" placeholder="Accommodation, Meals, Transport..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('include', $destination->include) }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Exclude</label>
+                        <textarea name="exclude" rows="4" placeholder="Personal expenses, Tips, Insurance..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('exclude', $destination->exclude) }}</textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Itinerary & Photo -->
+                <div x-show="step === 6" class="grid gap-6">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Itinerary</label>
+                        <textarea name="itinerary" rows="6" placeholder="Day 1: Arrival ... Day 2: Adventure ..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('itinerary', $destination->itinerary) }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Destination Photo</label>
+                        <input type="file" name="destination_photo" accept="image/*"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-400 mt-1">Upload a new image (jpg, png, max 2MB). Leave empty to keep current.</p>
+                        @if($destination->destination_photo)
+                            <p class="mt-2 text-sm text-gray-500">
+                                Current: <a href="{{ asset($destination->destination_photo) }}" target="_blank"
+                                    class="text-blue-600 hover:underline">View Current Image</a>
+                            </p>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
+                    <button type="button" @click="step = Math.max(step - 1, 1)" x-show="step > 1"
+                        class="px-6 py-3 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Previous</button>
+
+                    <div class="ml-auto">
+                        <button type="button" @click="step = step + 1" x-show="step < 6"
+                            class="px-6 py-3 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Next</button>
+
+                        <button type="submit" x-show="step === 6"
+                            class="px-6 py-3 text-sm font-medium bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            Update
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

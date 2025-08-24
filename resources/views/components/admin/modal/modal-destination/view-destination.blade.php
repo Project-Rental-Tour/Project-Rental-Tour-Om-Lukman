@@ -1,9 +1,10 @@
-<div class="relative w-full max-w-3xl px-4 slide-down">
-    <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">
+<div class="relative w-full max-w-7xl px-4 slide-down">
+    <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header -->
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
-                <h3 class="text-xl font-semibold text-gray-800">Destination Package</h3>
-                <p class="text-sm text-gray-500 mt-1">Complete package details</p>
+                <h3 class="text-xl font-semibold text-gray-800">Destination Overview</h3>
+                <p class="text-sm text-gray-500 mt-1">Detailed summary in compact layout</p>
             </div>
             <button type="button" class="text-gray-400 hover:text-gray-500 transition-colors"
                 data-modal-toggle="view-modal-{{ $destination->destination_id }}">
@@ -13,110 +14,206 @@
             </button>
         </div>
 
-        <div class="p-6">
-            <!-- Header Card -->
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-xl text-white mb-6">
-                <h2 class="text-2xl font-bold mb-2">{{ $destination->name_package }}</h2>
-                <p class="text-blue-100">{{ $destination->place }}</p>
-                <div class="mt-4">
-                    <span class="text-3xl font-bold">Rp.
-                        {{ number_format((float) $destination->price, 0, ',', '.') }}</span>
-                    <span class="text-blue-200 ml-2">per person</span>
+        <div class="p-6 space-y-6">
+            <!-- Hero & Image Side-by-Side -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Hero Info -->
+                <div class="lg:col-span-1 space-y-5">
+                    <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-2xl text-white shadow-lg">
+                        <h2 class="text-2xl font-bold mb-1">{{ $destination->name_package }}</h2>
+                        <p class="text-blue-100 text-sm">{{ $destination->place }}</p>
+                        <div class="mt-4">
+                            <span
+                                class="text-3xl font-extrabold">Rp.{{ number_format((float) $destination->price, 0, ',', '.') }}</span>
+                            <span class="text-blue-200 block text-sm mt-1">/ person</span>
+                        </div>
+                        <div class="mt-3 text-xs bg-white bg-opacity-20 inline-block px-3 py-1 rounded-full">
+                            {{ $destination->time }}
+                        </div>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <label class="block font-medium text-gray-500">Created</label>
+                            <p class="text-gray-700">{{ $destination->created_at->format('d M Y') }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <label class="block font-medium text-gray-500">Updated</label>
+                            <p class="text-gray-700">{{ $destination->updated_at->format('d M Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="lg:col-span-2 rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                    <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
+                        class="w-full h-64 lg:h-80 object-cover">
                 </div>
             </div>
 
-            <div class="grid gap-6 md:grid-cols-2">
-                <!-- Image -->
-                <div class="rounded-lg overflow-hidden border border-gray-200 shadow-md">
-                    <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-                        class="w-full h-64 object-cover">
+            <!-- Key Info Grid (Category, Level, Location, etc.) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                @if($destination->category)
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+                        <div class="text-blue-600 font-medium text-xs uppercase tracking-wide">Category</div>
+                        <div class="text-blue-900 font-semibold mt-1">{{ ucfirst($destination->category) }}</div>
+                    </div>
+                @endif
+
+                @if($destination->level)
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
+                        <div class="text-purple-600 font-medium text-xs uppercase tracking-wide">Level</div>
+                        <div class="text-purple-900 font-semibold mt-1">{{ ucfirst($destination->level) }}</div>
+                    </div>
+                @endif
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                    <div class="text-green-600 font-medium text-xs uppercase tracking-wide">Duration</div>
+                    <div class="text-green-900 font-semibold mt-1">{{ $destination->time }}</div>
                 </div>
 
-                <!-- Details -->
-                <div class="space-y-4">
-                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                        <div class="flex items-center mb-2">
-                            <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <h4 class="font-semibold text-gray-800">Location</h4>
-                        </div>
-                        <p class="text-gray-600">{{ $destination->place }}</p>
-                    </div>
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                    <div class="text-yellow-600 font-medium text-xs uppercase tracking-wide">Transport</div>
+                    <div class="text-yellow-900 font-semibold mt-1">{{ $destination->transportation ?: '-' }}</div>
+                </div>
+            </div>
 
-                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                        <div class="flex items-center mb-2">
-                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <h4 class="font-semibold text-gray-800">Package Price</h4>
-                        </div>
-                        <p class="text-2xl font-bold text-green-600">Rp.
-                            {{ number_format((float) $destination->price, 0, ',', '.') }}
+            <!-- Facilities Row (Horizontal Badges) -->
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <h4 class="font-semibold text-gray-800 text-sm mb-3 flex items-center">
+                    <svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Activities
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                    @foreach(explode(',', $destination->activities ?? '') as $activity)
+                        @if(trim($activity))
+                            <span class="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
+                                {{ trim($activity) }}
+                            </span>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Accommodation & Consumption -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @if($destination->accommodation)
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-800 text-sm">Accommodation</h4>
+                        <p class="text-sm text-blue-700 mt-1">{{ $destination->accommodation }}</p>
+                    </div>
+                @endif
+
+                @if($destination->consumption)
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-800 text-sm">Meals</h4>
+                        <p class="text-sm text-green-700 mt-1">{{ $destination->consumption }}</p>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Pickup & Dropoff Points -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @if($destination->pickup_points)
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-emerald-800 text-sm">Pickup Points</h4>
+                        <p class="text-sm text-emerald-700 mt-1">
+                            @foreach(json_decode($destination->pickup_points, true) ?? [$destination->pickup_points] as $point)
+                                {{ trim($point) }}@unless($loop->last), @endunless
+                            @endforeach
                         </p>
                     </div>
+                @endif
 
-                    <!-- Duration/Time Section -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                        <div class="flex items-center mb-2">
-                            <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <h4 class="font-semibold text-gray-800">Duration</h4>
-                        </div>
-                        <p class="text-gray-600">{{ $destination->time }}</p>
-                    </div>
-
-                    <!-- Facilities Section -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                        <div class="flex items-center mb-2">
-                            <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                            <h4 class="font-semibold text-gray-800">Facilities</h4>
-                        </div>
-                        <div class="flex flex-wrap gap-2 mt-2">
-                            @foreach(explode(',', $destination->facility) as $facility)
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">
-                                    {{ trim($facility) }}
-                                </span>
+                @if($destination->dropoff_points)
+                    <div class="bg-rose-50 border border-rose-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-rose-800 text-sm">Dropoff Points</h4>
+                        <p class="text-sm text-rose-700 mt-1">
+                            @foreach(json_decode($destination->dropoff_points, true) ?? [$destination->dropoff_points] as $point)
+                                {{ trim($point) }}@unless($loop->last), @endunless
                             @endforeach
-                        </div>
+                        </p>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Created</label>
-                            <p class="text-sm text-gray-700">{{ $destination->created_at->format('M d, Y') }}</p>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Last Updated</label>
-                            <p class="text-sm text-gray-700">{{ $destination->updated_at->format('M d, Y') }}</p>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
 
-            <div class="flex justify-end pt-6 mt-6 border-t border-gray-100 space-x-3">
+            <!-- Include & Exclude Side by Side -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @if($destination->include)
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-5">
+                        <h4 class="font-semibold text-emerald-800 text-sm mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Included
+                        </h4>
+                        <ul class="space-y-1">
+                            @foreach(explode("\n", $destination->include) as $item)
+                                @if(trim($item))
+                                    <li class="text-xs text-emerald-700 flex items-center">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2"></span>
+                                        {{ trim($item) }}
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if($destination->exclude)
+                    <div class="bg-rose-50 border border-rose-200 rounded-lg p-5">
+                        <h4 class="font-semibold text-rose-800 text-sm mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Excluded
+                        </h4>
+                        <ul class="space-y-1">
+                            @foreach(explode("\n", $destination->exclude) as $item)
+                                @if(trim($item))
+                                    <li class="text-xs text-rose-700 flex items-center">
+                                        <span class="w-1.5 h-1.5 bg-rose-500 rounded-full mr-2"></span>
+                                        {{ trim($item) }}
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Itinerary (Full Width) -->
+            @if($destination->itinerary)
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-5">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7v8a2 2 0 002 2h6M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                        </svg>
+                        Itinerary
+                    </h4>
+                    <div class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">
+                        {{ strip_tags($destination->itinerary) }}
+                    </div>
+                </div>
+            @endif
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end pt-4 border-t border-gray-100 space-x-3">
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
+                    class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                     data-modal-toggle="view-modal-{{ $destination->destination_id }}">
                     Close
                 </button>
                 <button type="button"
-                    class="px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 "
+                    class="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                     onclick="window.open('{{ asset($destination->destination_photo) }}', '_blank')">
-                    View Full Image
+                    View Image
                 </button>
             </div>
         </div>

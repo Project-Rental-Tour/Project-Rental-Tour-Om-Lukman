@@ -1,9 +1,10 @@
-<div class="relative w-full max-w-3xl px-4 slide-down">
-    <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">
+<div class="relative w-full max-w-4xl px-4 slide-down" x-data="{ step: 1 }">
+    <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header -->
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
                 <h3 class="text-xl font-semibold text-gray-800">Add Destination</h3>
-                <p class="text-sm text-gray-500 mt-1">Fill the form below to add a new destination</p>
+                <p class="text-sm text-gray-500 mt-1">Complete each step to add a new travel package</p>
             </div>
             <button type="button" class="text-gray-400 hover:text-gray-500 transition-colors"
                 data-modal-toggle="add-modal">
@@ -13,100 +14,150 @@
             </button>
         </div>
 
-        <div class="p-6">
-            <form class="grid gap-6 md:grid-cols-5" id="add-form" enctype="multipart/form-data"
-                action="{{route('manage-destination.store')}}" method="POST">
+        <div class="p-8">
+            <form id="add-form" enctype="multipart/form-data" action="{{route('manage-destination.store')}}"
+                method="POST" class="space-y-8">
                 @csrf
 
-                <div class="space-y-4 md:col-span-3">
-                    <div>
-                        <label for="name_package" class="block mb-1 text-sm font-medium text-gray-700">
-                            Name Package <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="name_package" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Name Package" name="name_package">
-                        <p class="mt-1 text-sm text-red-600 hidden" id="name_package-error"></p>
-                    </div>
-
-                    <div>
-                        <label for="place" class="block mb-1 text-sm font-medium text-gray-700">
-                            Place <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="place" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Place" name="place">
-                        <p class="mt-1 text-sm text-red-600 hidden" id="place-error"></p>
-                    </div>
-
-                    <div>
-                        <label for="price" class="block mb-1 text-sm font-medium text-gray-700">
-                            Price <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="price"
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Rp 1.000.000" name="price">
-                        <p class="mt-1 text-sm text-red-600 hidden" id="price-error"></p>
-                    </div>
-
-                    <div>
-                        <label for="time" class="block mb-1 text-sm font-medium text-gray-700">
-                            Time <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="time" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="How Long" name="time">
-                        <p class="mt-1 text-sm text-red-600 hidden" id="time-error"></p>
-                    </div>
-
-                    <div>
-                        <label for="facility" class="block mb-1 text-sm font-medium text-gray-700">
-                            Facility <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="facility" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Facility" name="facility">
-                        <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Gunakan
-                            koma untuk memisahkan fasilitas.
-                        </p>
-                        <p class="mt-1 text-sm text-red-600 hidden" id="facility-error"></p>
-                    </div>
-
-                    <div>
-                        <label for="destination_photo" class="block mb-1 text-sm font-medium text-gray-700">
-                            Image Destination<span class="text-red-500">*</span>
-                        </label>
-                        <input type="file" id="destination_photo" required
-                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            name="destination_photo" accept="image/jpeg,image/png,image/jpg,image/gif">
-                        <p class="mt-1 text-sm text-gray-500">JPEG, PNG, JPG, GIF (Max 2MB)</p>
-                        <p class="mt-1 text-sm text-red-600 hidden" id="destination_photo-error"></p>
+                <!-- Progress indicator -->
+                <div class="flex justify-center mb-8">
+                    <div class="flex items-center space-x-4">
+                        <template x-for="i in 6" :key="i">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 flex items-center justify-center rounded-full font-medium"
+                                    :class="step >= i ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    <span x-text="i"></span>
+                                </div>
+                                <template x-if="i < 6">
+                                    <div class="w-12 h-1" :class="step > i ? 'bg-blue-600' : 'bg-gray-300'">
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 flex flex-col items-center justify-center">
-                    <div
-                        class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
-                        <img id="previewPhoto" src="" alt="Preview"
-                            class="w-full h-full object-cover rounded-lg hidden">
-                        <span id="placeholderText" class="text-gray-400 text-sm">Image Preview</span>
+                <!-- STEP 1: Basic Info -->
+                <div x-show="step === 1" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Name Package</label>
+                        <input type="text" name="name_package" placeholder="Example: Bali Adventure Trip"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                        <p class="text-xs text-gray-400 mt-1">Enter a unique name for this package</p>
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Place</label>
+                        <input type="text" name="place" placeholder="Bali, Indonesia"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Category</label>
+                        <input type="text" name="category" placeholder="Adventure / Family / Romantic"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Level</label>
+                        <input type="text" name="level" placeholder="Easy / Medium / Hard"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
 
-                <div class="flex justify-end pt-4 space-x-3 border-t border-gray-100 md:col-span-5">
-                    <button type="button"
-                        class="px-5 py-2.5 text-sm font-medium text-gray-700 transition-all bg-white border border-gray-300 rounded-lg hover:bg-gray-50 "
-                        data-modal-toggle="add-modal">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="flex items-center px-5 py-2.5 text-sm font-medium text-white transition-all bg-blue-600 rounded-lg hover:bg-blue-700 ">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        Add Destination
-                    </button>
+                <!-- STEP 2: Pricing & Time -->
+                <div x-show="step === 2" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Price</label>
+                        <input type="text" name="price" placeholder="Rp 1.500.000"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Duration</label>
+                        <input type="text" name="time" placeholder="3 Days 2 Nights"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- STEP 3: Location & Transport -->
+                <div x-show="step === 3" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Pickup Points</label>
+                        <input type="text" name="pickup_points" placeholder="Ngurah Rai Airport"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Dropoff Points</label>
+                        <input type="text" name="dropoff_points" placeholder="Hotel / Villa"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Transportation</label>
+                        <input type="text" name="transportation" placeholder="Bus / Car / Boat"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- STEP 4: Facilities -->
+                <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Activities</label>
+                        <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Accommodation</label>
+                        <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Consumption</label>
+                        <input type="text" name="consumption" placeholder="Breakfast, Lunch, Dinner"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- STEP 5: Package Content -->
+                <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Include</label>
+                        <textarea name="include" rows="4" placeholder="Accommodation, Meals, Transport..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Exclude</label>
+                        <textarea name="exclude" rows="4" placeholder="Personal expenses, Tips, Insurance..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Itinerary & Photo -->
+                <div x-show="step === 6" class="grid gap-6">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Itinerary</label>
+                        <textarea name="itinerary" rows="6" placeholder="Day 1: Arrival ... Day 2: Adventure ..."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Destination Photo</label>
+                        <input type="file" name="destination_photo" accept="image/*"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-400 mt-1">Upload a representative image (jpg, png, max 2MB)</p>
+                    </div>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
+                    <button type="button" @click="step = Math.max(step - 1, 1)" x-show="step > 1"
+                        class="px-6 py-3 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Previous</button>
+
+                    <div class="ml-auto">
+                        <button type="button" @click="step = step + 1" x-show="step < 6"
+                            class="px-6 py-3 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Next</button>
+
+                        <button type="submit" x-show="step === 6"
+                            class="px-6 py-3 text-sm font-medium bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            Submit
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
