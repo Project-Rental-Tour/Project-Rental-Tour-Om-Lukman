@@ -111,6 +111,11 @@
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Category
+                            </th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
                             </th>
                         </tr>
@@ -157,6 +162,12 @@
                                             </span>
                                         @endforeach
                                     </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 mt-1">
+                                        {{ $destination->category }}
+                                    </span>
                                 </td>
 
 
