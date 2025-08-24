@@ -23,7 +23,7 @@ class BookingController extends Controller
         return view('admin.manageBooking', compact('bookings'));
     }
 
-    public function store(Request $request)
+    public function bookingUser(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -41,6 +41,6 @@ class BookingController extends Controller
 
         Booking::create($validated);
 
-        return redirect()->route('manage-booking.index')->with('success', 'Booking created successfully.');
+        return redirect()->route('')->with('success', 'Booking created successfully.');
     }
 }
