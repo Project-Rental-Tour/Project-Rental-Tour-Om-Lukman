@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 // User-Route
 Route::resource('/', HomeController::class);
 Route::get('/blog/{slug}', [BlogController::class, 'detailBlog'])->name('blog.detail-blog');
+Route::get('/destination/{slug}', [DestinationController::class, 'detailDestination'])->name('detail-destination');
+Route::get('/booking', [BookingController::class, 'bookingUser'])->name('booking-user');
+
 
 // Admin Route
 
@@ -31,7 +34,7 @@ Route::post('/dashboard/profile/update', [DashboardController::class, 'update'])
 Route::delete('/manage-user/bulk-destroy', [UserController::class, 'bulkDestroy'])->name('manage-user.bulk-destroy');
 Route::resource('/manage-user', UserController::class);
 // Manage Bookings
-Route::resource('/manage-booking', BookingController::class);
+Route::get('/manage-booking', [BookingController::class, 'index'])->name('manage-booking.index');
 // Manage Gallery
 Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
 Route::resource('/manage-gallery', GalleriesController::class);
