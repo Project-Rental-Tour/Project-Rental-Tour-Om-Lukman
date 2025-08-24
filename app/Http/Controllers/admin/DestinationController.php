@@ -27,9 +27,8 @@ class DestinationController extends Controller
         return view('admin.manageDestination', compact('destinations'));
     }
 
-    /**
-     * Store a newly created destination.
-     */
+    public function detailDestination() {}
+
     public function store(Request $request)
     {
         $currentUser = Auth::user();
