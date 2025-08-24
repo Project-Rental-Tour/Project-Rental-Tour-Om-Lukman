@@ -21,7 +21,7 @@
             <!-- Filter and Sort Row -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <!-- Left Side - Delete Selected Button -->
-                <div class="flex gap-2">
+                {{-- <div class="flex gap-2">
                     <button
                         class="bulk-delete-btn px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 flex items-center"
                         data-route="{{ route('manage-booking.bulk-destroy') }}">
@@ -32,7 +32,7 @@
                         </svg>
                         Delete Selected
                     </button>
-                </div>
+                </div> --}}
 
                 <!-- Right Side - Sort Dropdown -->
                 <div class="relative">
