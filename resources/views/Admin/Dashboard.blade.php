@@ -320,55 +320,98 @@
             <!-- Website Profile Section -->
             <div class="dashboard-card bg-white shadow rounded-lg p-6">
                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Website Profile</h2>
-                <form class="space-y-4">
+                <form action="{{ route('dashboard.profile.update') }}" method="POST" enctype="multipart/form-data"
+                    class="space-y-6 bg-white p-6 rounded-xl shadow-md">
+                    @csrf
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Website Name</label>
-                        <input type="text" placeholder="Website Name"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="text" name="website_name"
+                            value="{{ old('website_name', $profile->website_name ?? '') }}"
+                            placeholder="Enter your website name"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo</label>
-                        <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo (Light)</label>
+                        <input type="file" name="website_logo_light"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        @if(!empty($profile->website_logo_light))
+                            <img src="{{ asset('storage/' . $profile->website_logo_light) }}"
+                                class="h-12 mt-2 rounded-md border">
+                        @endif
                     </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo (Dark)</label>
+                        <input type="file" name="website_logo_dark"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        @if(!empty($profile->website_logo_dark))
+                            <img src="{{ asset('storage/' . $profile->website_logo_dark) }}"
+                                class="h-12 mt-2 rounded-md border bg-gray-800 p-2">
+                        @endif
+                    </div>
+
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Jumbotron Heading</label>
-                        <input type="text" placeholder="Title of Jumbotron"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="text" name="jumbotron_heading"
+                            value="{{ old('jumbotron_heading', $profile->jumbotron_heading ?? '') }}"
+                            placeholder="Catchy main heading for your homepage"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Jumbotron Sub Heading</label>
-                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
-                            placeholder="Lorem Ipsum ..."></textarea>
+                        <textarea name="jumbotron_subheading" rows="3" placeholder="Add a short description or tagline"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('jumbotron_subheading', $profile->jumbotron_subheading ?? '') }}</textarea>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Image Jumbotron</label>
-                        <input type="file" value="Travel Indonesia"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="file" name="jumbotron_image"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        @if(!empty($profile->jumbotron_image))
+                            <img src="{{ asset('storage/' . $profile->jumbotron_image) }}" class="h-20 mt-2 rounded-md border">
+                        @endif
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">About Heading</label>
-                        <input type="text" placeholder="Title of About"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="text" name="about_heading"
+                            value="{{ old('about_heading', $profile->about_heading ?? '') }}"
+                            placeholder="Section title for About Us"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">About Description</label>
-                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
-                            placeholder="Lorem Ipsum 22..."></textarea>
+                        <textarea name="about_description" rows="3"
+                            placeholder="Write a short description about your company or website"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('about_description', $profile->about_description ?? '') }}</textarea>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md " rows="3"
-                            placeholder="Address"></textarea>
+                        <textarea name="address" rows="3" placeholder="Enter full address"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('address', $profile->address ?? '') }}</textarea>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
-                        <input type="email" placeholder="Email" class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="email" name="contact_email"
+                            value="{{ old('contact_email', $profile->contact_email ?? '') }}"
+                            placeholder="example@email.com"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" placeholder="Phone Number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="tel" name="phone_number"
+                            value="{{ old('phone_number', $profile->phone_number ?? '') }}" placeholder="+62 812 3456 7890"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Social Media Links</label>
                         <div class="grid grid-cols-2 gap-3">
@@ -376,27 +419,38 @@
                                 <span class="bg-blue-100 p-2 rounded-l-md">
                                     <i class="fab fa-facebook text-blue-600"></i>
                                 </span>
-                                <input type="text" value="travel.indonesia"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md ">
+                                <input type="text" name="facebook_link"
+                                    value="{{ old('facebook_link', $profile->facebook_link ?? '') }}"
+                                    placeholder="Facebook Page URL"
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             </div>
                             <div class="flex items-center">
                                 <span class="bg-blue-100 p-2 rounded-l-md">
                                     <i class="fab fa-instagram text-pink-600"></i>
                                 </span>
-                                <input type="text" value="@travel.indonesia"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md ">
+                                <input type="text" name="instagram_link"
+                                    value="{{ old('instagram_link', $profile->instagram_link ?? '') }}"
+                                    placeholder="Instagram Profile URL"
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
                             </div>
                         </div>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Operating Hours</label>
-                        <input type="text" placeholder="Operating Hours"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md ">
+                        <input type="text" name="operating_hours"
+                            value="{{ old('operating_hours', $profile->operating_hours ?? '') }}"
+                            placeholder="Mon - Fri, 08:00 - 17:00"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 ">
+
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-medium shadow hover:bg-blue-700 transition">
                         Update Profile
                     </button>
                 </form>
+
+
             </div>
         </div>
     </div>

@@ -12,11 +12,27 @@ class Destination extends Model
 
     protected $fillable = [
         'name_package',
+        'slug',
         'place',
         'price',
         'destination_photo',
         'time',
-        'facility',
+        'category',
+        'level',
+        'pickup_points',
+        'dropoff_points',
+        'activities',
+        'transportation',
+        'accommodation',
+        'consumption',
+        'include',
+        'exclude',
+        'itinerary',
+    ];
+
+    protected $casts = [
+        'pickup_points' => 'array',
+        'dropoff_points' => 'array',
     ];
 
     public $timestamps = true;

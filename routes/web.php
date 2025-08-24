@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // User-Route
 Route::resource('/', HomeController::class);
+Route::get('/blog/{slug}', [BlogController::class, 'detailBlog'])->name('blog.detail-blog');
 
 // Admin Route
 

@@ -65,9 +65,9 @@
 
         <!-- Profile -->
         <div class="relative" x-data="{ open: false }">
-            <span class="hidden md:block text-gray-500 font-small">
+            {{-- <span class="hidden md:block text-gray-500 font-small">
                 Hai, {{ Auth::user()->username }}
-            </span>
+            </span> --}}
         </div>
     </div>
 </header>

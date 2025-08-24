@@ -14,11 +14,22 @@ return new class extends Migration
         Schema::create('destinations', function (Blueprint $table) {
             $table->id('destination_id');
             $table->string('name_package');
+            $table->string('slug')->unique();
             $table->string('place');
             $table->decimal('price', 10, 2)->default('0.00')->nullable();
             $table->string('destination_photo')->nullable();
             $table->string('time');
-            $table->string('facility');
+            $table->string('category')->nullable();
+            $table->string('level')->nullable();
+            $table->json('pickup_points')->nullable();
+            $table->json('dropoff_points')->nullable();
+            $table->text('activities')->nullable();
+            $table->string('transportation')->nullable();
+            $table->string('accommodation')->nullable();
+            $table->string('consumption')->nullable();
+            $table->text('include')->nullable();
+            $table->text('exclude')->nullable();
+            $table->longText('itinerary')->nullable();
             $table->timestamps();
         });
     }

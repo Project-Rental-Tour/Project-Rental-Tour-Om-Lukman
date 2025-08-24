@@ -18,6 +18,11 @@ class BlogController extends Controller
         return view('admin.manageBlog', compact('blogPosts'));
     }
 
+    public function detailBlog()
+    {
+        return view('client.detailBlog');
+    }
+
     public function store(Request $request)
     {
         // Validasi input
