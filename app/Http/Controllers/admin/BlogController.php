@@ -25,46 +25,35 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'type' => 'required|string|max:50',
+            'reading_time' => 'required|integer|min:1|max:120',
         ]);
 
         try {
-            // Upload gambar
-            if ($request->hasFile('featured_image')) {
-                $imagePath = $request->file('featured_image')->store('blogs', 'public');
-            } else {
-                return back()->withInput()->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Featured image is required'
-                ]);
-            }
+            $imagePath = $request->file('featured_image')->store('blogs', 'public');
 
-            // Generate slug dari title
             $slug = Str::slug($validatedData['title']);
-
-            // Cek jika slug sudah ada, tambahkan angka unik
             $originalSlug = $slug;
             $counter = 1;
             while (BlogPost::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $counter;
-                $counter++;
+                $slug = $originalSlug . '-' . $counter++;
             }
 
-            // Dapatkan username dari user yang login
             $user = Auth::user();
             $author = $user->name ?? $user->username ?? $user->email ?? 'Unknown Author';
 
-            // Simpan data
-            $blogPost = BlogPost::create([
+            BlogPost::create([
                 'title' => $validatedData['title'],
-                'author' => $author,
-                'slug' => $slug,
                 'content' => $validatedData['content'],
-                'featured_image' => $imagePath
+                'featured_image' => $imagePath,
+                'type' => $validatedData['type'],
+                'reading_time' => $validatedData['reading_time'],
+                'slug' => $slug,
+                'author' => $author,
             ]);
 
             return redirect()->route('manage-blog.index')
@@ -77,43 +66,39 @@ class BlogController extends Controller
 
     public function update(Request $request, $blog_post_id)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'type' => 'required|string|max:50',
+            'reading_time' => 'required|integer|min:1|max:120',
         ]);
 
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
 
-            // Handle upload gambar jika ada
             if ($request->hasFile('featured_image')) {
                 if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                     Storage::disk('public')->delete($blogPost->featured_image);
                 }
-                $imagePath = $request->file('featured_image')->store('blogs', 'public');
-                $blogPost->featured_image = $imagePath;
+                $blogPost->featured_image = $request->file('featured_image')->store('blogs', 'public');
             }
 
-            // Update data
             $blogPost->title = $validatedData['title'];
             $blogPost->content = $validatedData['content'];
+            $blogPost->type = $validatedData['type'];
+            $blogPost->reading_time = $validatedData['reading_time'];
 
-            // Update slug hanya jika title berubah
             if ($blogPost->isDirty('title')) {
                 $slug = Str::slug($validatedData['title']);
-
                 $originalSlug = $slug;
                 $counter = 1;
                 while (BlogPost::where('slug', $slug)
                     ->where('blog_post_id', '!=', $blog_post_id)
                     ->exists()
                 ) {
-                    $slug = $originalSlug . '-' . $counter;
-                    $counter++;
+                    $slug = $originalSlug . '-' . $counter++;
                 }
-
                 $blogPost->slug = $slug;
             }
 
