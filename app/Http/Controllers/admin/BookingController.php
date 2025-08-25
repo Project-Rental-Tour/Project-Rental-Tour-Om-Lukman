@@ -176,4 +176,35 @@ class BookingController extends Controller
             \Illuminate\Support\Facades\Log::error('Telegram Notification Failed: ' . $e->getMessage());
         }
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Unauthorized access']
+            ], 401);
+        }
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:bookings,booking_id',
+        ]);
+
+        try {
+            $count = Booking::whereIn('booking_id', $request->ids)->count();
+            Booking::whereIn('booking_id', $request->ids)->delete();
+
+            return response()->json([
+                'success' => true,
+                'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} booking(s)."]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete bookings: ' . $e->getMessage()]
+            ], 500);
+        }
+    }
 }

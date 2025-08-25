@@ -109,4 +109,45 @@ class UserController extends Controller
                 ->with('toast', ['type' => 'error', 'message' => 'Failed to delete user: ' . $e->getMessage()]);
         }
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Unauthorized access']
+            ], 401);
+        }
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:users,user_id',
+        ]);
+
+        try {
+            $ids = $request->ids;
+
+            // Pastikan admin tidak menghapus akun sendiri
+            if (in_array($currentUser->user_id, $ids)) {
+                return response()->json([
+                    'success' => false,
+                    'toast' => ['type' => 'error', 'message' => 'You cannot delete your own account.']
+                ], 400);
+            }
+
+            $count = User::whereIn('user_id', $ids)->count();
+            User::whereIn('user_id', $ids)->delete();
+
+            return response()->json([
+                'success' => true,
+                'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} user(s)."]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete users: ' . $e->getMessage()]
+            ], 500);
+        }
+    }
 }
