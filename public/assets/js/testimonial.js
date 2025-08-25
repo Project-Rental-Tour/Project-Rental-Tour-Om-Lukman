@@ -1,22 +1,19 @@
 // testimonial.js
 
 class TestimonialModal {
-    constructor(addModalId, editModalId) {
+    constructor(addModalId) {
         this.addModal = document.getElementById(addModalId);
-        this.editModal = document.getElementById(editModalId);
 
+        // Setup Add Modal
         this.ratingInput = this.addModal?.querySelector('#rating');
-        this.editRatingInput = this.editModal?.querySelector('#edit-rating');
-
         this.addStars = this.addModal ? this.addModal.querySelectorAll('.star-btn[data-value]') : [];
-        this.editStars = this.editModal ? this.editModal.querySelectorAll('.star-btn[data-value]') : [];
 
         this.init();
     }
 
     init() {
+        // Setup bintang untuk modal "Add"
         this.setupStars(this.addStars, this.ratingInput);
-        this.setupStars(this.editStars, this.editRatingInput);
 
         // Reset rating ke 5 saat buka modal add
         if (this.addModal) {
@@ -30,10 +27,13 @@ class TestimonialModal {
                 });
             }
         }
+
+        // Setup semua modal edit (dinamis: edit-modal-1, edit-modal-2, dll)
+        this.setupAllEditModals();
     }
 
     setupStars(stars, input) {
-        if (!stars.length || !input) return;
+        if (!stars || !input) return;
 
         stars.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -49,29 +49,36 @@ class TestimonialModal {
             const icon = btn.querySelector('i');
             if (!icon) return;
             if (index < selectedValue) {
-                icon.className = 'fas fa-star text-yellow-400';
+                icon.className = 'fas fa-star text-yellow-400 text-lg';
             } else {
-                icon.className = 'far fa-star text-gray-300';
+                icon.className = 'far fa-star text-gray-300 text-lg';
             }
         });
     }
 
-    // Fungsi untuk di-call saat buka modal edit
-    fillStars(starContainer, rating) {
-        const stars = starContainer?.querySelectorAll('.star-btn');
-        if (!stars) return;
-        stars.forEach((btn, index) => {
-            const icon = btn.querySelector('i');
-            if (index < rating) {
-                icon.className = 'fas fa-star text-yellow-400';
-            } else {
-                icon.className = 'far fa-star text-gray-300';
+    // Setup semua modal edit (id mengandung "edit-modal-")
+    setupAllEditModals() {
+        document.querySelectorAll('[id^="edit-modal-"]').forEach(modal => {
+            const stars = modal.querySelectorAll('.star-btn[data-value]');
+            const ratingInput = modal.querySelector('#edit-rating');
+
+            if (!stars.length || !ratingInput) return;
+
+            // Saat modal dibuka, tampilkan bintang sesuai rating
+            const openButton = document.querySelector(`[data-modal-toggle="${modal.id}"]`);
+            if (openButton) {
+                openButton.addEventListener('click', () => {
+                    this.highlightStars(stars, parseInt(ratingInput.value));
+                });
             }
+
+            // Setup klik bintang
+            this.setupStars(stars, ratingInput);
         });
     }
 }
 
 // Inisialisasi saat DOM siap
 document.addEventListener('DOMContentLoaded', function () {
-    window.testimonialModal = new TestimonialModal('testimonial-modal', 'edit-modal');
+    window.testimonialModal = new TestimonialModal('add-modal'); // Ganti 'testimonial-modal' jadi 'add-modal'
 });
