@@ -15,7 +15,9 @@ class Booking extends Model
         'last_name',
         'email',
         'country',
+        'travel_date',
         'message',
+        'destination_name',
     ];
 
     public $timestamps = true;

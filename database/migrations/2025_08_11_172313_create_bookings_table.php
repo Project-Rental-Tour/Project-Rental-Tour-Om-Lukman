@@ -13,11 +13,25 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id('booking_id');
+            $table->unsignedBigInteger('destination_id')->nullable();
+            $table->string('destination_name')->nullable();
+            $table->date('travel_date');
+            $table->integer('duration_nights')->nullable();
+            $table->string('package_type')->default('regular');
+
+            // Informasi Pengguna
             $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('last_name')->nullable();
+            $table->string('email');
             $table->string('country');
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
+
+            // Custom Fields (nullable)
+            $table->json('interests')->nullable();
+            $table->integer('travelers')->default(1);
+            $table->string('budget_range')->nullable();
+            $table->string('custom_destinations')->nullable();
+
             $table->timestamps();
         });
     }
