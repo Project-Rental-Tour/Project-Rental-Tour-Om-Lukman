@@ -12,7 +12,10 @@ class Testimonial extends Model
 
     protected $fillable = [
         'name',
-        'message',
+        'role',
+        'location',
+        'content',
+        'rating',
     ];
 
     public $timestamps = true;
