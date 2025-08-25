@@ -1,12 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Fungsi untuk menangani bulk actions
-    function handleBulkAction() {
+    // Fungsi menampilkan toast (bisa diganti dengan Swal, atau tetap pakai alert/toast custom)
+    function showToast(message, type = 'info') {
+        // Jika pakai toast custom, implementasinya di sini
+        // Kalau tidak, pakai alert sementara
+        alert(message); // Ganti dengan toast system kamu jika ada
+    }
+
+    // Fungsi untuk menangani bulk action
+    function handleBulkAction(button) {
         const selectedCheckboxes = document.querySelectorAll('.bulk-checkbox:checked');
         const selectedIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
 
         if (selectedIds.length === 0) {
-            showToast('Please select at least one blog post.', 'error');
-            return false;
+            // Ambil tipe item dari tombol, default ke "item"
+            const itemType = button.getAttribute('data-item-type') || 'item';
+            const singular = itemType.replace(/s$/, ''); // Naive plural to singular
+            const message = `Please select at least one ${singular}.`;
+            showToast(message, 'error');
+            return null;
         }
 
         return selectedIds;
@@ -17,13 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (bulkDeleteBtn) {
         bulkDeleteBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const selectedIds = handleBulkAction();
+            const selectedIds = handleBulkAction(this);
             if (!selectedIds) return;
 
-            // Hapus langsung tanpa konfirmasi
+            // Buat form untuk submit DELETE
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = bulkDeleteBtn.dataset.route;
+            form.action = this.dataset.route;
 
             // CSRF Token
             const csrfToken = document.createElement('input');
@@ -39,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             methodInput.value = 'DELETE';
             form.appendChild(methodInput);
 
-            // Selected IDs
+            // Kirim semua ID
             selectedIds.forEach(id => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -53,26 +64,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Select all checkbox functionality
+    // Select all checkbox
     const selectAllCheckbox = document.getElementById('select-all');
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('.bulk-checkbox');
             checkboxes.forEach(checkbox => {
-                checkbox.checked = selectAllCheckbox.checked;
+                checkbox.checked = this.checked;
             });
         });
     }
 
-    // Update select all checkbox when individual checkboxes change
+    // Update indeterminate state
     const userCheckboxes = document.querySelectorAll('.bulk-checkbox');
     userCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             const allChecked = document.querySelectorAll('.bulk-checkbox:checked').length === userCheckboxes.length;
             const someChecked = document.querySelectorAll('.bulk-checkbox:checked').length > 0;
 
-            selectAllCheckbox.checked = allChecked;
-            selectAllCheckbox.indeterminate = someChecked && !allChecked;
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = allChecked;
+                selectAllCheckbox.indeterminate = someChecked && !allChecked;
+            }
         });
     });
 });
