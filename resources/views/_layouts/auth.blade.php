@@ -13,6 +13,7 @@
 </head>
 
 <body class="h-full font-sans antialiased">
+    @include('components.admin.toast')
     <div class="flex h-screen bg-gray-50">
         @yield('content')
     </div>
