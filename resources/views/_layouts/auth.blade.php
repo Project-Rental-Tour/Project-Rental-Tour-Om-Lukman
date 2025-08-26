@@ -1,8 +1,7 @@
 <!doctype html>
-<html lang="en" class="h-full bg-gray-100">
+<html lang="en" class="h-full">
 
 <head>
-    <!-- Meta tags dan CSS -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'SEPTEM TOUR')</title>
@@ -12,11 +11,12 @@
     @stack('styles')
 </head>
 
-<body class="h-full font-sans antialiased">
+<body class="h-full font-sans antialiased bg-gray-50">
     @include('components.admin.toast')
-    <div class="flex h-screen bg-gray-50">
-        @yield('content')
-    </div>
+
+    <!-- Konten penuh dikendalikan oleh child view -->
+    @yield('content')
+
     @stack('scripts')
 </body>
 

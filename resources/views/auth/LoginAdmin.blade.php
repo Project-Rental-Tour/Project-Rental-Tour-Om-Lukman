@@ -1,58 +1,92 @@
 @extends('_layouts.auth')
 
-@section('head')
-@endsection
 @section('content')
-    <div class="mx-auto flex items-center justify-center p-4">
-        <div class="w-full">
-            <div class="bg-white rounded-xl shadow-lg p-8 w-96">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
-                    <p class="text-gray-600 mt-2">Please enter your credentials</p>
+    <div
+        class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-12 relative overflow-hidden">
+        <!-- Overlay gradasi biru muda -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-transparent opacity-80"></div>
+
+        <!-- Card Login -->
+        <div class="w-full max-w-md relative z-10">
+            <div
+                class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all hover:shadow-2xl duration-300">
+                <!-- Header Gradient -->
+                <div class="bg-gradient-to-b from-blue-600 to-indigo-700 px-8 py-12 text-center text-white">
+                    <div class="mb-4">
+                        <svg class="w-10 h-10 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-bold">Welcome Back</h1>
+                    <p class="text-blue-100 mt-1 text-sm">Sign in to your account</p>
                 </div>
 
-                @if($errors->any())
-                    <div class="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
+                <!-- Form -->
+                <div class="p-8 space-y-6">
+                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                        @csrf
 
-                <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                    @csrf
-
-                    <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                        <input type="text" id="username" name="username" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            placeholder="Enter your username" autofocus>
-                    </div>
-
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="password" name="password" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            placeholder="Enter your password">
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember" name="remember" type="checkbox"
-                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                            <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        <!-- Username -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                            <div class="relative">
+                                <input type="text" id="username" name="username" required
+                                    class="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    placeholder="Enter your username" autofocus>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
 
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:text-blue-800">Forgot
-                                password?</a>
-                        @endif
-                    </div>
+                        <!-- Password -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password" required
+                                    class="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    placeholder="Enter your password">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
 
-                    <button type="submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200  focus:ring-offset-2">
-                        Login
-                    </button>
-                </form>
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform transition-all duration-200 focus:ring-4 focus:ring-blue-300">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-8 py-4 text-center text-xs text-gray-500 border-t border-gray-100">
+                    &copy; {{ date('Y') }} SEPTEMTOUR. All rights reserved.
+                </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <!-- Auto-focus error -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if ($errors->has('username') || $errors->has('password'))
+                const errorInput = document.querySelector('input:invalid') || document.getElementById('username');
+                if (errorInput) {
+                    errorInput.focus();
+                    errorInput.classList.add('ring-2', 'ring-red-500');
+                }
+            @endif
+                });
+    </script>
+@endpush
