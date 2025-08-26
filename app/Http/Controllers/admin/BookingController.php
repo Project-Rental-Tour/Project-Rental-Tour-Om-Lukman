@@ -17,8 +17,7 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->withErrors(['error' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $query = Booking::query();
@@ -72,7 +71,7 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You need to login to book.']);
         }
 
@@ -137,7 +136,7 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
+            return redirect()->route('login')
                 ->withErrors(['error' => 'You need to login to request a custom trip.']);
         }
 
@@ -227,7 +226,7 @@ class BookingController extends Controller
         if (!$currentUser) {
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Unauthorized access']
+                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
             ], 401);
         }
 

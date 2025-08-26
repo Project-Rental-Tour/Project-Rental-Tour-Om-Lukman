@@ -17,7 +17,7 @@ class TestimoniController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')->withErrors(['error' => 'You need to login first.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $query = Testimonial::query(); // Ganti dari latest() agar bisa di-sort
@@ -65,6 +65,11 @@ class TestimoniController extends Controller
      */
     public function store(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $validatedData = Validator::make($request->all(), [
             'name'      => 'required|string|max:255',
             'role'      => 'required|string|max:255',
@@ -91,6 +96,11 @@ class TestimoniController extends Controller
      */
     public function update(Request $request, $testimonial_id)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $testimonial = Testimonial::findOrFail($testimonial_id);
 
         $validatedData = Validator::make($request->all(), [
@@ -117,6 +127,11 @@ class TestimoniController extends Controller
      */
     public function destroy($testimonial_id)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $testimonial = Testimonial::findOrFail($testimonial_id);
         $testimonial->delete();
 
@@ -128,6 +143,14 @@ class TestimoniController extends Controller
      */
     public function bulkDestroy(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
+            ], 401);
+        }
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:testimonials,testimonial_id',

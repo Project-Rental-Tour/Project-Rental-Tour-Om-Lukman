@@ -13,6 +13,11 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $query = User::query();
 
         // Search
@@ -45,6 +50,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $validated = $request->validate([
             'username' => 'required|string|max:255',
             'password' => 'required|min:8|confirmed',
@@ -75,8 +85,7 @@ class UserController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         try {
@@ -114,8 +123,7 @@ class UserController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         try {
@@ -142,7 +150,7 @@ class UserController extends Controller
         if (!$currentUser) {
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Unauthorized access']
+                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
             ], 401);
         }
 

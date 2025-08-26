@@ -15,8 +15,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'You need to login first']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $query = Gallery::query();
@@ -52,8 +51,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $validated = $request->validate([
@@ -81,8 +79,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $validated = $request->validate([
@@ -117,8 +114,7 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login.showLoginForm')
-                ->with('toast', ['type' => 'error', 'message' => 'Unauthorized access']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         try {
@@ -139,7 +135,7 @@ class GalleriesController extends Controller
         if (!$currentUser) {
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Unauthorized']
+                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
             ], 401);
         }
 

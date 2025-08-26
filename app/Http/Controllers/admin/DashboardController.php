@@ -14,8 +14,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
         $profile = Profile::first();
@@ -26,6 +27,11 @@ class DashboardController extends Controller
 
     public function update(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $profile = Profile::first();
 
         if (!$profile) {

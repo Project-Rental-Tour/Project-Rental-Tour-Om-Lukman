@@ -14,6 +14,11 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $query = BlogPost::query();
 
         // Search
@@ -55,6 +60,11 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -96,6 +106,11 @@ class BlogController extends Controller
 
     public function update(Request $request, $blog_post_id)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -144,6 +159,11 @@ class BlogController extends Controller
 
     public function destroy($blog_post_id)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+        }
+
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
 
@@ -165,6 +185,14 @@ class BlogController extends Controller
 
     public function bulkDestroy(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json([
+                'success' => false,
+                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
+            ], 401);
+        }
+
         // Validate the request
         $validated = $request->validate([
             'ids' => 'required|array',
