@@ -49,12 +49,20 @@
 
                 <!-- Right Side - Sort Dropdown -->
                 <div class="relative">
-                    <select
-                        class="appearance-none pl-3 pr-8 py-2 border border-gray-300 rounded-md text-sm  focus:border-blue-500">
-                        <option>Sort by: Newest</option>
-                        <option>Sort by: Oldest</option>
-                        <option>Sort by: Name (A-Z)</option>
-                        <option>Sort by: Name (Z-A)</option>
+                    <select onchange="window.location.href = '{{ route('manage-destination.index') }}' + this.value"
+                        class="appearance-none pl-3 pr-8 py-2 border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-full md:w-auto">
+                        <option value="?sort=newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>
+                            Sort by: Newest
+                        </option>
+                        <option value="?sort=oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>
+                            Sort by: Oldest
+                        </option>
+                        <option value="?sort=name-asc" {{ request('sort') == 'name-asc' ? 'selected' : '' }}>
+                            Sort by: Name (A-Z)
+                        </option>
+                        <option value="?sort=name-desc" {{ request('sort') == 'name-desc' ? 'selected' : '' }}>
+                            Sort by: Name (Z-A)
+                        </option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
