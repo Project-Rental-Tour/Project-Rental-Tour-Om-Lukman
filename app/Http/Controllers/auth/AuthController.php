@@ -41,7 +41,6 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            // 🔥 Catat log: Admin Login
             LogActivity::create([
                 'username' => $request->username,
                 'action' => 'Admin logged in',
@@ -53,7 +52,6 @@ class AuthController extends Controller
             ]);
         }
 
-        // 🔥 Catat log: Login Failed
         LogActivity::create([
             'username' => $request->username,
             'action' => 'Failed login attempt',
@@ -73,7 +71,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // 🔥 Catat log: Admin Logout
         LogActivity::create([
             'username' => $username,
             'action' => 'Admin logged out',

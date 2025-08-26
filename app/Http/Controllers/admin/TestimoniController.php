@@ -90,7 +90,6 @@ class TestimoniController extends Controller
             'user_id'    => Auth::id(),
         ]);
 
-        // 🔥 Catat log: Admin tambah testimonial
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => 'Added testimonial: "' . $testimonial->content . '" by ' . $testimonial->name,
@@ -134,7 +133,6 @@ class TestimoniController extends Controller
         $testimonial->rating     = $validatedData['rating'];
         $testimonial->save();
 
-        // 🔥 Catat log: Admin edit testimonial
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => "Updated testimonial: '{$oldName}' → '{$testimonial->name}' (Content: \"{$oldContent}...\")"
@@ -162,7 +160,6 @@ class TestimoniController extends Controller
 
         $testimonial->delete();
 
-        // 🔥 Catat log: Admin hapus testimonial
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => "Deleted testimonial: '{$deletedName}' (Content: \"{$deletedContent}...\")"
@@ -197,7 +194,6 @@ class TestimoniController extends Controller
 
         Testimonial::whereIn('testimonial_id', $request->ids)->delete();
 
-        // 🔥 Catat log: Bulk delete
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => "Bulk deleted {$count} testimonial(s): " . $testimonials->pluck('name')->join(', ')

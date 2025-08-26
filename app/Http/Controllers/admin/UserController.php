@@ -68,7 +68,6 @@ class UserController extends Controller
                 'password' => bcrypt($validated['password']),
             ]);
 
-            // 🔥 Catat log: Admin tambah user
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Created user: ' . $user->username,
@@ -111,7 +110,6 @@ class UserController extends Controller
             $oldUsername = $userToUpdate->username;
             $userToUpdate->update($validated);
 
-            // 🔥 Catat log: Admin edit username
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Edited user: {$oldUsername} → {$userToUpdate->username}",
@@ -144,7 +142,6 @@ class UserController extends Controller
             $deletedUsername = $userToDelete->username;
             $userToDelete->delete();
 
-            // 🔥 Catat log: Admin hapus user
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Deleted user: ' . $deletedUsername,
@@ -188,7 +185,6 @@ class UserController extends Controller
 
             User::whereIn('user_id', $ids)->delete();
 
-            // 🔥 Catat log: Bulk delete
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Bulk deleted {$count} user(s): " . $deletedUsernames->join(', '),

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Destination;
-use App\Models\LogActivity; // ✅ Import model LogActivity
+use App\Models\LogActivity;
 
 class DestinationController extends Controller
 {
@@ -133,7 +133,6 @@ class DestinationController extends Controller
                 'itinerary' => $request->itinerary,
             ]);
 
-            // 🔥 Catat log: Tambah destinasi
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '" in ' . $destination->place,
@@ -230,8 +229,6 @@ class DestinationController extends Controller
 
             $destination->update($updateData);
 
-            // 🔥 Catat log: Edit destinasi
-            // 🔥 Catat log: Edit destinasi
             $changes = [];
             if ($oldName !== $updateData['name_package']) {
                 $changes[] = "name: '{$oldName}' → '{$updateData['name_package']}'";
@@ -286,7 +283,6 @@ class DestinationController extends Controller
 
             $destination->delete();
 
-            // 🔥 Catat log: Hapus destinasi
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Deleted destination: "' . $deletedName . '" in ' . $deletedPlace,
@@ -333,7 +329,6 @@ class DestinationController extends Controller
                 $destination->delete();
             }
 
-            // 🔥 Catat log: Bulk delete
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Bulk deleted {$deletedCount} destination(s): " . $deletedNames->join(', '),

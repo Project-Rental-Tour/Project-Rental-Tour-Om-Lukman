@@ -97,7 +97,6 @@ class BlogController extends Controller
                 'author' => $author,
             ]);
 
-            // 🔥 Catat log: Admin tambah blog
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Created blog post: "' . Str::limit($blogPost->title, 50) . '" (Type: ' . $blogPost->type . ')',
@@ -160,7 +159,6 @@ class BlogController extends Controller
 
             $blogPost->save();
 
-            // 🔥 Catat log: Admin edit blog
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Updated blog post: '{$oldTitle}' → '{$blogPost->title}' (Type: {$oldType} → {$blogPost->type})",
@@ -193,7 +191,6 @@ class BlogController extends Controller
 
             $blogPost->delete();
 
-            // 🔥 Catat log: Admin hapus blog
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Deleted blog post: '{$deletedTitle}' (Type: {$deletedType})",
@@ -248,7 +245,6 @@ class BlogController extends Controller
                 $deletedCount++;
             }
 
-            // 🔥 Catat log: Bulk delete
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Bulk deleted {$deletedCount} blog post(s): " . implode(', ', $deletedTitles),

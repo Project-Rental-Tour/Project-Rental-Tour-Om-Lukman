@@ -65,7 +65,6 @@ class BookingController extends Controller
 
         $bookings = $query->paginate(25)->appends($request->except('page'));
 
-        // 🔥 Catat log: Admin lihat daftar booking
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => 'Viewed bookings list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
@@ -116,7 +115,6 @@ class BookingController extends Controller
 
         $fullName = $booking->first_name . ' ' . $booking->last_name;
 
-        // 🔥 Catat log: Guest booking (regular)
         LogActivity::create([
             'username' => $fullName,
             'action' => "Submitted regular booking for {$booking->destination_name} on {$booking->travel_date}"
@@ -189,7 +187,6 @@ class BookingController extends Controller
         $fullName = $booking->first_name . ' ' . $booking->last_name;
         $interests = $booking->interests ? implode(', ', $booking->interests) : 'Not specified';
 
-        // 🔥 Catat log: Guest booking (custom)
         LogActivity::create([
             'username' => $fullName,
             'action' => "Submitted custom trip request for: {$booking->custom_destinations} (Travelers: {$booking->travelers}, Budget: {$booking->budget_range})"
@@ -257,7 +254,6 @@ class BookingController extends Controller
 
             Booking::whereIn('booking_id', $request->ids)->delete();
 
-            // 🔥 Catat log: Admin hapus booking
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Bulk deleted {$count} booking(s): " . $bookings->map(fn($b) => $b->first_name . ' ' . $b->last_name)->join(', ')

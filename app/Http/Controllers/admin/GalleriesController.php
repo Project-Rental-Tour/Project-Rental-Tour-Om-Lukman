@@ -71,7 +71,6 @@ class GalleriesController extends Controller
                 'gallery_photo' => $photoPath,
             ]);
 
-            // 🔥 Catat log: Tambah gallery
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Added gallery item: "' . Str::limit($gallery->title, 50) . '"',
@@ -116,7 +115,6 @@ class GalleriesController extends Controller
 
             $gallery->update($updateData);
 
-            // 🔥 Catat log: Edit gallery
             $logAction = "Updated gallery item: '{$oldTitle}'";
             if ($request->hasFile('gallery_photo')) {
                 $logAction .= " (new image uploaded)";
@@ -153,7 +151,6 @@ class GalleriesController extends Controller
             Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
             $gallery->delete();
 
-            // 🔥 Catat log: Hapus gallery
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Deleted gallery item: "' . $deletedTitle . '"',
@@ -192,7 +189,6 @@ class GalleriesController extends Controller
                 $gallery->delete();
             }
 
-            // 🔥 Catat log: Bulk delete
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => "Bulk deleted {$deletedCount} gallery item(s): " . $deletedTitles->join(', '),
