@@ -115,76 +115,101 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Employee Row 1 -->
-                        @foreach ($blogPosts as $blogPost)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" name="ids[]" value="{{ $blogPost->blog_post_id }}"
-                                        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
-                                        aria-label="Select blog: {{ $blogPost->title }}">
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <img src="{{ asset('storage/' . $blogPost->featured_image) }}"
-                                        alt="{{ $blogPost->name_package }}" class="w-1/8 h-1/8 object-cover rounded mx-auto">
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $blogPost->title }}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $blogPost->content }}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{$blogPost->slug}}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{$blogPost->type}}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{$blogPost->reading_time}}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
-                                    <div class="inline-block relative">
-                                        <button onclick="toggleMenu(this)" class="focus:outline-none">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div
-                                            class="absolute right-0 mt-0 w-36 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden transform translate-y-1">
-                                            <ul class="py-2">
-                                                <li>
-                                                    <a data-modal-target="view-modal-{{ $blogPost->blog_post_id }}"
-                                                        data-modal-toggle="view-modal-{{ $blogPost->blog_post_id }}"
-                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                                        <i class="fa-solid fa-eye mr-2 text-blue-500"></i> View
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-modal-target="edit-modal-{{ $blogPost->blog_post_id }}"
-                                                        data-modal-toggle="edit-modal-{{ $blogPost->blog_post_id }}"
-                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                                        <i class="fa-solid fa-pen-to-square mr-2 text-yellow-500"></i> Edit
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-modal-target="delete-modal-{{ $blogPost->blog_post_id }}"
-                                                        data-modal-toggle="delete-modal-{{ $blogPost->blog_post_id }}"
-                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                                        <i class="fa-solid fa-trash mr-2 text-red-500"></i> Delete
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                        @if($blogPosts->isEmpty())
+                            <tr>
+                                <td colspan="8" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center text-gray-500">
+                                        <i class="fa-regular fa-face-frown text-3xl mb-2"></i>
+                                        <h3 class="text-lg font-medium">Tidak ada data ditemukan</h3>
+                                        <p class="mt-1 text-sm">
+                                            @if(request()->filled('search'))
+                                                Tidak ada blog post yang cocok dengan pencarian
+                                                "<strong>{{ request('search') }}</strong>".
+                                            @else
+                                                Belum ada blog post yang dibuat.
+                                            @endif
+                                        </p>
+                                        @if(request()->filled('search'))
+                                            <button type="button" onclick="window.location.href='{{ route('manage-blog.index') }}'"
+                                                class="mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                                Reset Pencarian
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($blogPosts as $blogPost)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" name="ids[]" value="{{ $blogPost->blog_post_id }}"
+                                            class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
+                                            aria-label="Select blog: {{ $blogPost->title }}">
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img src="{{ asset('storage/' . $blogPost->featured_image) }}" alt="{{ $blogPost->title }}"
+                                            class="w-16 h-16 object-cover rounded mx-auto">
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->title }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap max-w-xs truncate">
+                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->content }}
+                                        </div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->slug }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->type }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->reading_time }} menit</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
+                                        <div class="inline-block relative">
+                                            <button onclick="toggleMenu(this)" class="focus:outline-none">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <!-- Dropdown menu -->
+                                            <div
+                                                class="absolute right-0 mt-0 w-36 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden transform translate-y-1">
+                                                <ul class="py-2">
+                                                    <li>
+                                                        <a data-modal-target="view-modal-{{ $blogPost->blog_post_id }}"
+                                                            data-modal-toggle="view-modal-{{ $blogPost->blog_post_id }}"
+                                                            class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                            <i class="fa-solid fa-eye mr-2 text-blue-500"></i> View
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a data-modal-target="edit-modal-{{ $blogPost->blog_post_id }}"
+                                                            data-modal-toggle="edit-modal-{{ $blogPost->blog_post_id }}"
+                                                            class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                            <i class="fa-solid fa-pen-to-square mr-2 text-yellow-500"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a data-modal-target="delete-modal-{{ $blogPost->blog_post_id }}"
+                                                            data-modal-toggle="delete-modal-{{ $blogPost->blog_post_id }}"
+                                                            class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                            <i class="fa-solid fa-trash mr-2 text-red-500"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

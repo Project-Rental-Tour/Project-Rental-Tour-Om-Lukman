@@ -96,45 +96,69 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Employee Row 1 -->
-                        @foreach ($bookings as $booking)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" name="ids[]" value="{{ $booking->booking_id }}"
-                                        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
-                                        aria-label="Select booking from {{ $booking->first_name }}">
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $booking->username }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">********</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
-                                    <div class="inline-block relative">
-                                        <button onclick="toggleMenu(this)" class="focus:outline-none">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div
-                                            class="absolute right-0 mt-0 w-36 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden transform translate-y-1">
-                                            <ul class="py-2">
-                                                <li>
-                                                    <a data-modal-target="view-modal-{{ $booking->booking_id }}"
-                                                        data-modal-toggle="view-modal-{{ $booking->booking_id }}"
-                                                        class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                                        <i class="fa-solid fa-eye mr-2 text-blue-500"></i> View
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
+                        @if($bookings->isEmpty())
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center text-gray-500">
+                                        <i class="fa-regular fa-face-frown text-3xl mb-2"></i>
+                                        <h3 class="text-lg font-medium">Tidak ada data ditemukan</h3>
+                                        <p class="mt-1 text-sm">
+                                            @if(request()->filled('search'))
+                                                Tidak ada booking yang cocok dengan pencarian
+                                                "<strong>{{ request('search') }}</strong>".
+                                            @else
+                                                Belum ada booking yang terdaftar.
+                                            @endif
+                                        </p>
+                                        @if(request()->filled('search'))
+                                            <button type="button"
+                                                onclick="window.location.href='{{ route('manage-booking.index') }}'"
+                                                class="mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                                Reset Pencarian
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($bookings as $booking)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" name="ids[]" value="{{ $booking->booking_id }}"
+                                            class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
+                                            aria-label="Select booking from {{ $booking->first_name }}">
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->username }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">********</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
+                                        <div class="inline-block relative">
+                                            <button onclick="toggleMenu(this)" class="focus:outline-none">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <!-- Dropdown menu -->
+                                            <div
+                                                class="absolute right-0 mt-0 w-36 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden transform translate-y-1">
+                                                <ul class="py-2">
+                                                    <li>
+                                                        <a data-modal-target="view-modal-{{ $booking->booking_id }}"
+                                                            data-modal-toggle="view-modal-{{ $booking->booking_id }}"
+                                                            class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                                            <i class="fa-solid fa-eye mr-2 text-blue-500"></i> View
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
