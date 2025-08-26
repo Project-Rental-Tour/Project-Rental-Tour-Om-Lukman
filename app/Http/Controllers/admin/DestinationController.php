@@ -298,14 +298,25 @@ class DestinationController extends Controller
     /**
      * Bulk delete destinations.
      */
+    /**
+     * Bulk delete destinations.
+     */
     public function bulkDestroy(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            // Jika AJAX
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'toast' => ['type' => 'error', 'message' => 'Unauthorized.']
+                ], 401);
+            }
+            // Jika web
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $request->validate([
@@ -317,7 +328,7 @@ class DestinationController extends Controller
             $destinations = Destination::whereIn('destination_id', $request->ids)->get();
 
             $deletedCount = $destinations->count();
-            $deletedNames = $destinations->pluck('name_package');
+            $deletedNames = $destinations->pluck('name_package')->join(', ');
 
             foreach ($destinations as $destination) {
                 if ($destination->destination_photo) {
@@ -331,18 +342,34 @@ class DestinationController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => "Bulk deleted {$deletedCount} destination(s): " . $deletedNames->join(', '),
+                'action' => "Bulk deleted {$deletedCount} destination(s): " . $deletedNames,
             ]);
 
-            return response()->json([
-                'success' => true,
-                'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']
+            // Jika AJAX
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']
+                ]);
+            }
+
+            // Jika form submit (web) → redirect
+            return redirect()->route('manage-destination.index')->with('toast', [
+                'type' => 'success',
+                'message' => 'Selected destinations deleted successfully'
             ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete destinations: ' . $e->getMessage()]
-            ], 500);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete: ' . $e->getMessage()]
+                ], 500);
+            }
+
+            return redirect()->back()->with('toast', [
+                'type' => 'error',
+                'message' => 'Failed to bulk delete destinations.'
+            ]);
         }
     }
 }

@@ -178,10 +178,10 @@ class TestimoniController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $request->validate([
@@ -189,19 +189,55 @@ class TestimoniController extends Controller
             'ids.*' => 'exists:testimonials,testimonial_id',
         ]);
 
-        $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
-        $count = $testimonials->count();
+        try {
+            $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
+            $count = $testimonials->count();
 
-        Testimonial::whereIn('testimonial_id', $request->ids)->delete();
+            if ($count === 0) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'No testimonials selected.'
+                ]);
+            }
 
-        LogActivity::create([
-            'username' => $currentUser->username,
-            'action' => "Bulk deleted {$count} testimonial(s): " . $testimonials->pluck('name')->join(', ')
-        ]);
+            $names = $testimonials->pluck('name')->join(', ');
 
-        return response()->json([
-            'success' => true,
-            'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} testimonial(s)."]
-        ]);
+            Testimonial::whereIn('testimonial_id', $request->ids)->delete();
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk deleted {$count} testimonial(s): {$names}"
+            ]);
+
+            if (!$request->expectsJson()) {
+                return redirect()->route('manage-testimonials.index')->with('toast', [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} testimonial(s)."
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'toast' => [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} testimonial(s)."
+                ]
+            ]);
+        } catch (\Exception $e) {
+            if (!$request->expectsJson()) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Bulk delete failed: ' . $e->getMessage()
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'toast' => [
+                    'type' => 'error',
+                    'message' => 'Bulk delete failed: ' . $e->getMessage()
+                ]
+            ], 500);
+        }
     }
 }

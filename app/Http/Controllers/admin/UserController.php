@@ -159,10 +159,10 @@ class UserController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $request->validate([
@@ -173,7 +173,15 @@ class UserController extends Controller
         try {
             $ids = $request->ids;
 
+            // Cegah delete akun sendiri
             if (in_array($currentUser->user_id, $ids)) {
+                if (!$request->expectsJson()) {
+                    return redirect()->back()->with('toast', [
+                        'type' => 'error',
+                        'message' => 'You cannot delete your own account.'
+                    ]);
+                }
+
                 return response()->json([
                     'success' => false,
                     'toast' => ['type' => 'error', 'message' => 'You cannot delete your own account.']
@@ -187,17 +195,37 @@ class UserController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => "Bulk deleted {$count} user(s): " . $deletedUsernames->join(', '),
+                'action' => "Bulk deleted {$count} user(s): " . $deletedUsernames->join(', ')
             ]);
+
+            if (!$request->expectsJson()) {
+                return redirect()->route('manage-user.index')->with('toast', [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} user(s)."
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
-                'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} user(s)."]
+                'toast' => [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} user(s)."
+                ]
             ]);
         } catch (\Exception $e) {
+            if (!$request->expectsJson()) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Failed to bulk delete users: ' . $e->getMessage()
+                ]);
+            }
+
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete users: ' . $e->getMessage()]
+                'toast' => [
+                    'type' => 'error',
+                    'message' => 'Failed to bulk delete users: ' . $e->getMessage()
+                ]
             ], 500);
         }
     }

@@ -237,10 +237,10 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $request->validate([
@@ -252,6 +252,13 @@ class BookingController extends Controller
             $bookings = Booking::whereIn('booking_id', $request->ids)->get();
             $count = $bookings->count();
 
+            if ($count === 0) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'No bookings selected.'
+                ]);
+            }
+
             Booking::whereIn('booking_id', $request->ids)->delete();
 
             LogActivity::create([
@@ -259,14 +266,34 @@ class BookingController extends Controller
                 'action' => "Bulk deleted {$count} booking(s): " . $bookings->map(fn($b) => $b->first_name . ' ' . $b->last_name)->join(', ')
             ]);
 
+            if (!$request->expectsJson()) {
+                return redirect()->route('manage-booking.index')->with('toast', [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} booking(s)."
+                ]);
+            }
+
             return response()->json([
                 'success' => true,
-                'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} booking(s)."]
+                'toast' => [
+                    'type' => 'success',
+                    'message' => "Successfully deleted {$count} booking(s)."
+                ]
             ]);
         } catch (\Exception $e) {
+            if (!$request->expectsJson()) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Failed to bulk delete bookings: ' . $e->getMessage()
+                ]);
+            }
+
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete bookings: ' . $e->getMessage()]
+                'toast' => [
+                    'type' => 'error',
+                    'message' => 'Failed to bulk delete bookings: ' . $e->getMessage()
+                ]
             ], 500);
         }
     }

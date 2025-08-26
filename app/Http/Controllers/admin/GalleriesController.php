@@ -167,10 +167,10 @@ class GalleriesController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $validated = $request->validate([
@@ -181,8 +181,15 @@ class GalleriesController extends Controller
         try {
             $galleries = Gallery::whereIn('gallery_id', $validated['ids'])->get();
 
-            $deletedCount = $galleries->count();
+            if ($galleries->isEmpty()) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'No gallery items selected.'
+                ]);
+            }
+
             $deletedTitles = $galleries->pluck('title');
+            $count = $galleries->count();
 
             foreach ($galleries as $gallery) {
                 Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
@@ -191,17 +198,37 @@ class GalleriesController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => "Bulk deleted {$deletedCount} gallery item(s): " . $deletedTitles->join(', '),
+                'action' => "Bulk deleted {$count} gallery item(s): " . $deletedTitles->join(', '),
             ]);
+
+            if (!$request->expectsJson()) {
+                return redirect()->route('manage-gallery.index')->with('toast', [
+                    'type' => 'success',
+                    'message' => "{$count} gallery item(s) deleted successfully."
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
-                'toast' => ['type' => 'success', 'message' => "{$deletedCount} gallery item(s) deleted successfully"]
+                'toast' => [
+                    'type' => 'success',
+                    'message' => "{$count} gallery item(s) deleted successfully."
+                ]
             ]);
         } catch (\Exception $e) {
+            if (!$request->expectsJson()) {
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'Bulk delete failed: ' . $e->getMessage()
+                ]);
+            }
+
             return response()->json([
                 'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'Bulk delete failed: ' . $e->getMessage()]
+                'toast' => [
+                    'type' => 'error',
+                    'message' => 'Bulk delete failed: ' . $e->getMessage()
+                ]
             ], 500);
         }
     }

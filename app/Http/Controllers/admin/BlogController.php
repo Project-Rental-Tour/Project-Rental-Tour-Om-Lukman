@@ -210,10 +210,10 @@ class BlogController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return response()->json([
-                'success' => false,
-                'toast' => ['type' => 'error', 'message' => 'You do not have permission to view this page.']
-            ], 401);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $validated = $request->validate([
@@ -225,42 +225,55 @@ class BlogController extends Controller
             $posts = BlogPost::whereIn('blog_post_id', $validated['ids'])->get();
 
             if ($posts->isEmpty()) {
-                return redirect()->back()
-                    ->with('toast', [
-                        'type' => 'error',
-                        'message' => 'No valid blog posts found to delete.'
-                    ]);
+                return redirect()->back()->with('toast', [
+                    'type' => 'error',
+                    'message' => 'No valid blog posts found to delete.'
+                ]);
             }
 
-            $deletedCount = 0;
             $deletedTitles = [];
-
             foreach ($posts as $post) {
                 if ($post->featured_image && Storage::disk('public')->exists($post->featured_image)) {
                     Storage::disk('public')->delete($post->featured_image);
                 }
-
                 $deletedTitles[] = $post->title;
                 $post->delete();
-                $deletedCount++;
             }
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => "Bulk deleted {$deletedCount} blog post(s): " . implode(', ', $deletedTitles),
+                'action' => "Bulk deleted " . count($deletedTitles) . " blog post(s): " . implode(', ', $deletedTitles),
             ]);
 
-            return redirect()->route('manage-blog.index')
-                ->with('toast', [
+            if (!$request->expectsJson()) {
+                return redirect()->route('manage-blog.index')->with('toast', [
                     'type' => 'success',
-                    'message' => $deletedCount . ' blog post(s) deleted successfully.'
+                    'message' => count($deletedTitles) . ' blog post(s) deleted successfully.'
                 ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'toast' => [
+                    'type' => 'success',
+                    'message' => count($deletedTitles) . ' blog post(s) deleted successfully.'
+                ]
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('toast', [
+            if (!$request->expectsJson()) {
+                return redirect()->back()->with('toast', [
                     'type' => 'error',
                     'message' => 'Failed to delete blog posts: ' . $e->getMessage()
                 ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'toast' => [
+                    'type' => 'error',
+                    'message' => 'Failed to delete blog posts: ' . $e->getMessage()
+                ]
+            ], 500);
         }
     }
 }
