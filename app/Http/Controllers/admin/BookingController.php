@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Booking;
 use App\Models\Destination;
@@ -22,6 +23,7 @@ class BookingController extends Controller
 
         $query = Booking::query();
 
+        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('first_name', 'like', "%{$search}%")
@@ -33,7 +35,36 @@ class BookingController extends Controller
                 ->orWhere('destination_name', 'like', "%{$search}%");
         }
 
-        $bookings = $query->paginate(25)->appends($request->query());
+        // Sort
+        $sort = $request->get('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+
+            case 'name-asc':
+                $query->orderBy(DB::raw("CONCAT(first_name, ' ', last_name)"), 'asc');
+                break;
+
+            case 'name-desc':
+                $query->orderBy(DB::raw("CONCAT(first_name, ' ', last_name)"), 'desc');
+                break;
+
+            case 'email-asc':
+                $query->orderBy('email', 'asc');
+                break;
+
+            case 'email-desc':
+                $query->orderBy('email', 'desc');
+                break;
+
+            case 'newest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $bookings = $query->paginate(25)->appends($request->except('page'));
         return view('admin.manageBooking', compact('bookings'));
     }
 

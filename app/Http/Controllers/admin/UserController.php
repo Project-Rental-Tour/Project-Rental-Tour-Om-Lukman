@@ -15,12 +15,31 @@ class UserController extends Controller
     {
         $query = User::query();
 
+        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('username', 'like', "%{$search}%");
         }
 
-        $users = $query->paginate(25)->appends($request->query());
+        // Sort
+        $sort = $request->get('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'username-asc':
+                $query->orderBy('username', 'asc');
+                break;
+            case 'username-desc':
+                $query->orderBy('username', 'desc');
+                break;
+            case 'newest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $users = $query->paginate(25)->appends($request->except('page'));
         return view('admin.manageUser', compact('users'));
     }
 

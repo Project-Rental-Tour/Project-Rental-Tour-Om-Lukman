@@ -25,6 +25,7 @@ class DestinationController extends Controller
 
         $query = Destination::query();
 
+        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('name_package', 'like', "%{$search}%")
@@ -36,7 +37,31 @@ class DestinationController extends Controller
                 ->orWhere('activities', 'like', "%{$search}%");
         }
 
-        $destinations = $query->paginate(25)->appends($request->query());
+        // Sort
+        $sort = $request->get('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'name-asc':
+                $query->orderBy('name_package', 'asc');
+                break;
+            case 'name-desc':
+                $query->orderBy('name_package', 'desc');
+                break;
+            case 'price-low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price-high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'newest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $destinations = $query->paginate(25)->appends($request->except('page'));
         return view('admin.manageDestination', compact('destinations'));
     }
 

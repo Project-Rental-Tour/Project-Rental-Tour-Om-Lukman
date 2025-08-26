@@ -20,8 +20,9 @@ class TestimoniController extends Controller
             return redirect()->route('login')->withErrors(['error' => 'You need to login first.']);
         }
 
-        $query = Testimonial::latest();
+        $query = Testimonial::query(); // Ganti dari latest() agar bisa di-sort
 
+        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('name', 'like', "%{$search}%")
@@ -31,7 +32,31 @@ class TestimoniController extends Controller
                 ->orWhere('rating', 'like', "%{$search}%");
         }
 
-        $testimonials = $query->paginate(10)->appends($request->query());
+        // Sort
+        $sort = $request->get('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'name-asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name-desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'rating-high':
+                $query->orderBy('rating', 'desc');
+                break;
+            case 'rating-low':
+                $query->orderBy('rating', 'asc');
+                break;
+            case 'newest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $testimonials = $query->paginate(10)->appends($request->except('page'));
         return view('admin.manageTestimonial', compact('testimonials'));
     }
 

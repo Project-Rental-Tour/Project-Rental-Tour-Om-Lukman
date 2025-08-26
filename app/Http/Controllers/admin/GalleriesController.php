@@ -21,15 +21,33 @@ class GalleriesController extends Controller
 
         $query = Gallery::query();
 
+        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('title', 'like', "%{$search}%");
         }
 
-        $galleries = $query->paginate(25)->appends($request->query());
+        // Sort
+        $sort = $request->get('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'title-asc':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'title-desc':
+                $query->orderBy('title', 'desc');
+                break;
+            case 'newest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $galleries = $query->paginate(25)->appends($request->except('page'));
         return view('admin.manageGallery', compact('galleries'));
     }
-
     public function store(Request $request)
     {
         $currentUser = Auth::user();
