@@ -13,16 +13,25 @@ class TestimoniController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $currentUser = Auth::user();
-
         if (!$currentUser) {
             return redirect()->route('login')->withErrors(['error' => 'You need to login first.']);
         }
 
-        $testimonials = Testimonial::latest()->paginate(10);
+        $query = Testimonial::latest();
 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('role', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%")
+                ->orWhere('rating', 'like', "%{$search}%");
+        }
+
+        $testimonials = $query->paginate(10)->appends($request->query());
         return view('admin.manageTestimonial', compact('testimonials'));
     }
 

@@ -11,9 +11,16 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(25);
+        $query = User::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('username', 'like', "%{$search}%");
+        }
+
+        $users = $query->paginate(25)->appends($request->query());
         return view('admin.manageUser', compact('users'));
     }
 

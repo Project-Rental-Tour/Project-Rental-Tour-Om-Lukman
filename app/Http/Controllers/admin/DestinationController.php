@@ -15,7 +15,7 @@ class DestinationController extends Controller
     /**
      * Display a listing of destinations.
      */
-    public function index()
+    public function index(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -23,7 +23,20 @@ class DestinationController extends Controller
                 ->with('toast', ['type' => 'error', 'message' => 'You need to login first']);
         }
 
-        $destinations = Destination::paginate(25);
+        $query = Destination::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name_package', 'like', "%{$search}%")
+                ->orWhere('place', 'like', "%{$search}%")
+                ->orWhere('price', 'like', "%{$search}%")
+                ->orWhere('time', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%")
+                ->orWhere('level', 'like', "%{$search}%")
+                ->orWhere('activities', 'like', "%{$search}%");
+        }
+
+        $destinations = $query->paginate(25)->appends($request->query());
         return view('admin.manageDestination', compact('destinations'));
     }
 

@@ -12,9 +12,20 @@ use App\Models\BlogPost;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blogPosts = BlogPost::paginate(25);
+        $query = BlogPost::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%")
+                ->orWhere('type', 'like', "%{$search}%")
+                ->orWhere('author', 'like', "%{$search}%")
+                ->orWhere('reading_time', 'like', "%{$search}%");
+        }
+
+        $blogPosts = $query->paginate(25)->appends($request->query());
         return view('admin.manageBlog', compact('blogPosts'));
     }
 

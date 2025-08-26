@@ -11,7 +11,7 @@ use App\Models\Gallery;
 
 class GalleriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -19,7 +19,14 @@ class GalleriesController extends Controller
                 ->with('toast', ['type' => 'error', 'message' => 'You need to login first']);
         }
 
-        $galleries = Gallery::paginate(25);
+        $query = Gallery::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        $galleries = $query->paginate(25)->appends($request->query());
         return view('admin.manageGallery', compact('galleries'));
     }
 

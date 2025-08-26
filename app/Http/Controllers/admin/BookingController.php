@@ -12,7 +12,7 @@ use App\Models\Destination;
 
 class BookingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -20,7 +20,20 @@ class BookingController extends Controller
                 ->withErrors(['error' => 'You do not have permission to view this page.']);
         }
 
-        $bookings = Booking::paginate(25);; // Assuming you have a Booking model
+        $query = Booking::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('country', 'like', "%{$search}%")
+                ->orWhere('travel_date', 'like', "%{$search}%")
+                ->orWhere('message', 'like', "%{$search}%")
+                ->orWhere('destination_name', 'like', "%{$search}%");
+        }
+
+        $bookings = $query->paginate(25)->appends($request->query());
         return view('admin.manageBooking', compact('bookings'));
     }
 
