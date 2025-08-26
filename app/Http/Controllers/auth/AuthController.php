@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\LogActivity;
+
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -17,7 +19,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validate the login form
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|exists:users,username',
             'password' => 'required|string|min:8',
@@ -28,20 +29,23 @@ class AuthController extends Controller
             'password.min' => 'Password must be at least 8 characters long.',
         ]);
 
-        // If validation fails, redirect back with errors
         if ($validator->fails()) {
             return back()->with('toast', [
                 'type' => 'error',
-                'message' => $validator->errors()->first() // Ambil pesan error pertama
+                'message' => $validator->errors()->first()
             ])->withInput();
         }
 
-        // Get credentials
         $credentials = $request->only('username', 'password');
 
-        // Attempt to log in
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            // 🔥 Catat log: Admin Login
+            LogActivity::create([
+                'username' => $request->username,
+                'action' => 'Admin logged in',
+            ]);
 
             return redirect()->intended('dashboard')->with('toast', [
                 'type' => 'success',
@@ -49,7 +53,12 @@ class AuthController extends Controller
             ]);
         }
 
-        // Authentication failed
+        // 🔥 Catat log: Login Failed
+        LogActivity::create([
+            'username' => $request->username,
+            'action' => 'Failed login attempt',
+        ]);
+
         return back()->with('toast', [
             'type' => 'error',
             'message' => 'Invalid username or password. Please try again.'
@@ -58,11 +67,21 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        $username = Auth::user()->username;
 
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        // 🔥 Catat log: Admin Logout
+        LogActivity::create([
+            'username' => $username,
+            'action' => 'Admin logged out',
+        ]);
+
+        return redirect('/login')->with('toast', [
+            'type' => 'info',
+            'message' => 'You have been logged out.'
+        ]);
     }
 }

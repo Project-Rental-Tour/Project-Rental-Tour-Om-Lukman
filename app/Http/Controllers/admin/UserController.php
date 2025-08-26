@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+
 use App\Models\User;
+use App\Models\LogActivity;
 
 class UserController extends Controller
 {
@@ -56,20 +58,20 @@ class UserController extends Controller
         }
 
         $validated = $request->validate([
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
             'password' => 'required|min:8|confirmed',
-            'password_confirmation' => 'required|min:8',
         ]);
 
-        if ($validated['password'] !== $request->input('password_confirmation')) {
-            return redirect()->back()
-                ->with('toast', ['type' => 'error', 'message' => 'Passwords do not match.']);
-        }
-
         try {
-            User::create([
+            $user = User::create([
                 'username' => $validated['username'],
                 'password' => bcrypt($validated['password']),
+            ]);
+
+            // 🔥 Catat log: Admin tambah user
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Created user: ' . $user->username,
             ]);
 
             return redirect()->route('manage-user.index')
@@ -106,8 +108,13 @@ class UserController extends Controller
                     ->withInput();
             }
 
-            $userToUpdate->update([
-                'username' => $validated['username']
+            $oldUsername = $userToUpdate->username;
+            $userToUpdate->update($validated);
+
+            // 🔥 Catat log: Admin edit username
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Edited user: {$oldUsername} → {$userToUpdate->username}",
             ]);
 
             return back()
@@ -134,7 +141,14 @@ class UserController extends Controller
                     ->with('toast', ['type' => 'error', 'message' => 'You cannot delete your own account.']);
             }
 
+            $deletedUsername = $userToDelete->username;
             $userToDelete->delete();
+
+            // 🔥 Catat log: Admin hapus user
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Deleted user: ' . $deletedUsername,
+            ]);
 
             return redirect()->route('manage-user.index')
                 ->with('toast', ['type' => 'success', 'message' => 'User has been deleted successfully.']);
@@ -162,7 +176,6 @@ class UserController extends Controller
         try {
             $ids = $request->ids;
 
-            // Pastikan admin tidak menghapus akun sendiri
             if (in_array($currentUser->user_id, $ids)) {
                 return response()->json([
                     'success' => false,
@@ -170,8 +183,16 @@ class UserController extends Controller
                 ], 400);
             }
 
-            $count = User::whereIn('user_id', $ids)->count();
+            $deletedUsernames = User::whereIn('user_id', $ids)->pluck('username');
+            $count = $deletedUsernames->count();
+
             User::whereIn('user_id', $ids)->delete();
+
+            // 🔥 Catat log: Bulk delete
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk deleted {$count} user(s): " . $deletedUsernames->join(', '),
+            ]);
 
             return response()->json([
                 'success' => true,

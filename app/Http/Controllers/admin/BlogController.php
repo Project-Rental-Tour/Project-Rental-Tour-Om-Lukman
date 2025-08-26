@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\BlogPost;
+use App\Models\LogActivity;
 
 class BlogController extends Controller
 {
@@ -86,7 +87,7 @@ class BlogController extends Controller
             $user = Auth::user();
             $author = $user->name ?? $user->username ?? $user->email ?? 'Unknown Author';
 
-            BlogPost::create([
+            $blogPost = BlogPost::create([
                 'title' => $validatedData['title'],
                 'content' => $validatedData['content'],
                 'featured_image' => $imagePath,
@@ -94,6 +95,12 @@ class BlogController extends Controller
                 'reading_time' => $validatedData['reading_time'],
                 'slug' => $slug,
                 'author' => $author,
+            ]);
+
+            // 🔥 Catat log: Admin tambah blog
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Created blog post: "' . Str::limit($blogPost->title, 50) . '" (Type: ' . $blogPost->type . ')',
             ]);
 
             return redirect()->route('manage-blog.index')
@@ -122,6 +129,10 @@ class BlogController extends Controller
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
 
+            // Simpan data lama untuk log
+            $oldTitle = $blogPost->title;
+            $oldType = $blogPost->type;
+
             if ($request->hasFile('featured_image')) {
                 if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                     Storage::disk('public')->delete($blogPost->featured_image);
@@ -149,6 +160,12 @@ class BlogController extends Controller
 
             $blogPost->save();
 
+            // 🔥 Catat log: Admin edit blog
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Updated blog post: '{$oldTitle}' → '{$blogPost->title}' (Type: {$oldType} → {$blogPost->type})",
+            ]);
+
             return redirect()->route('manage-blog.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Blog post updated successfully']);
         } catch (\Exception $e) {
@@ -167,11 +184,20 @@ class BlogController extends Controller
         try {
             $blogPost = BlogPost::findOrFail($blog_post_id);
 
+            $deletedTitle = $blogPost->title;
+            $deletedType = $blogPost->type;
+
             if ($blogPost->featured_image && Storage::disk('public')->exists($blogPost->featured_image)) {
                 Storage::disk('public')->delete($blogPost->featured_image);
             }
 
             $blogPost->delete();
+
+            // 🔥 Catat log: Admin hapus blog
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Deleted blog post: '{$deletedTitle}' (Type: {$deletedType})",
+            ]);
 
             return redirect()->route('manage-blog.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Blog post deleted successfully']);
@@ -193,14 +219,12 @@ class BlogController extends Controller
             ], 401);
         }
 
-        // Validate the request
         $validated = $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'integer|exists:blog_posts,blog_post_id',
         ]);
 
         try {
-            // Get all blog posts with the given IDs
             $posts = BlogPost::whereIn('blog_post_id', $validated['ids'])->get();
 
             if ($posts->isEmpty()) {
@@ -212,16 +236,23 @@ class BlogController extends Controller
             }
 
             $deletedCount = 0;
+            $deletedTitles = [];
+
             foreach ($posts as $post) {
-                // Delete the featured image if it exists
                 if ($post->featured_image && Storage::disk('public')->exists($post->featured_image)) {
                     Storage::disk('public')->delete($post->featured_image);
                 }
 
-                // Delete the post
+                $deletedTitles[] = $post->title;
                 $post->delete();
                 $deletedCount++;
             }
+
+            // 🔥 Catat log: Bulk delete
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk deleted {$deletedCount} blog post(s): " . implode(', ', $deletedTitles),
+            ]);
 
             return redirect()->route('manage-blog.index')
                 ->with('toast', [

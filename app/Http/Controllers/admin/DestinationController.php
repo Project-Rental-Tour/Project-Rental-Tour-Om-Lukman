@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
 use App\Models\Destination;
+use App\Models\LogActivity; // ✅ Import model LogActivity
 
 class DestinationController extends Controller
 {
@@ -67,7 +67,6 @@ class DestinationController extends Controller
     public function detailDestination($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
-
         return view('client.detail-destination', compact('destination'));
     }
 
@@ -103,17 +102,18 @@ class DestinationController extends Controller
             $imagePath = $request->file('destination_photo')->store('public/destinations');
             $photoUrl = str_replace('public/', 'storage/', $imagePath);
 
-            // Parse price (handle Indonesian format: 1.500.000 → 1500000)
+            // Parse price
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : 0.00;
 
-            // Generate slug if not provided
+            // Generate slug
             $slug = $request->slug ?? Str::slug($request->name_package);
-            $slugCount = Destination::where('slug', 'like', $slug . '%')->count();
-            if ($slugCount > 0) {
-                $slug = $slug . '-' . ($slugCount + 1);
+            $originalSlug = $slug;
+            $counter = 1;
+            while (Destination::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter++;
             }
 
-            Destination::create([
+            $destination = Destination::create([
                 'name_package' => $request->name_package,
                 'slug' => $slug,
                 'place' => $request->place,
@@ -131,6 +131,12 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
+            ]);
+
+            // 🔥 Catat log: Tambah destinasi
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '" in ' . $destination->place,
             ]);
 
             return redirect()->route('manage-destination.index')
@@ -174,6 +180,11 @@ class DestinationController extends Controller
         try {
             $destination = Destination::findOrFail($destination_id);
 
+            // Simpan data lama untuk log
+            $oldName = $destination->name_package;
+            $oldPrice = $destination->price;
+            $oldPlace = $destination->place;
+
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
 
             $updateData = [
@@ -197,7 +208,6 @@ class DestinationController extends Controller
 
             // Handle photo upload
             if ($request->hasFile('destination_photo')) {
-                // Delete old photo
                 if ($destination->destination_photo) {
                     $oldPath = str_replace('storage/', 'public/', $destination->destination_photo);
                     if (Storage::exists($oldPath)) {
@@ -205,7 +215,6 @@ class DestinationController extends Controller
                     }
                 }
 
-                // Store new photo
                 $imagePath = $request->file('destination_photo')->store('public/destinations');
                 $updateData['destination_photo'] = str_replace('public/', 'storage/', $imagePath);
             }
@@ -220,6 +229,29 @@ class DestinationController extends Controller
             }
 
             $destination->update($updateData);
+
+            // 🔥 Catat log: Edit destinasi
+            // 🔥 Catat log: Edit destinasi
+            $changes = [];
+            if ($oldName !== $updateData['name_package']) {
+                $changes[] = "name: '{$oldName}' → '{$updateData['name_package']}'";
+            }
+            if ($oldPrice != $price) {
+                $changes[] = "price: {$oldPrice} → {$price}";
+            }
+            if ($oldPlace !== $request->place) {
+                $changes[] = "place: '{$oldPlace}' → '{$request->place}'";
+            }
+            if ($request->hasFile('destination_photo')) {
+                $changes[] = "new image uploaded";
+            }
+
+            $changeText = !empty($changes) ? ' (' . implode(', ', $changes) . ')' : '';
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Updated destination: "' . Str::limit($updateData['name_package'], 50) . '"' . $changeText,
+            ]);
 
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination updated successfully']);
@@ -241,6 +273,8 @@ class DestinationController extends Controller
 
         try {
             $destination = Destination::findOrFail($destination_id);
+            $deletedName = $destination->name_package;
+            $deletedPlace = $destination->place;
 
             // Delete photo
             if ($destination->destination_photo) {
@@ -251,6 +285,12 @@ class DestinationController extends Controller
             }
 
             $destination->delete();
+
+            // 🔥 Catat log: Hapus destinasi
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Deleted destination: "' . $deletedName . '" in ' . $deletedPlace,
+            ]);
 
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination deleted successfully']);
@@ -280,6 +320,9 @@ class DestinationController extends Controller
         try {
             $destinations = Destination::whereIn('destination_id', $request->ids)->get();
 
+            $deletedCount = $destinations->count();
+            $deletedNames = $destinations->pluck('name_package');
+
             foreach ($destinations as $destination) {
                 if ($destination->destination_photo) {
                     $path = str_replace('storage/', 'public/', $destination->destination_photo);
@@ -289,6 +332,12 @@ class DestinationController extends Controller
                 }
                 $destination->delete();
             }
+
+            // 🔥 Catat log: Bulk delete
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk deleted {$deletedCount} destination(s): " . $deletedNames->join(', '),
+            ]);
 
             return response()->json([
                 'success' => true,

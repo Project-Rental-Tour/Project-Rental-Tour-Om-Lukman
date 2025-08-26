@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Booking;
 use App\Models\Destination;
+use App\Models\LogActivity;
 
 class BookingController extends Controller
 {
@@ -17,7 +19,10 @@ class BookingController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->with('toast', [
+                'type' => 'error',
+                'message' => 'You do not have permission to view this page.'
+            ]);
         }
 
         $query = Booking::query();
@@ -40,23 +45,18 @@ class BookingController extends Controller
             case 'oldest':
                 $query->orderBy('created_at', 'asc');
                 break;
-
             case 'name-asc':
                 $query->orderBy(DB::raw("CONCAT(first_name, ' ', last_name)"), 'asc');
                 break;
-
             case 'name-desc':
                 $query->orderBy(DB::raw("CONCAT(first_name, ' ', last_name)"), 'desc');
                 break;
-
             case 'email-asc':
                 $query->orderBy('email', 'asc');
                 break;
-
             case 'email-desc':
                 $query->orderBy('email', 'desc');
                 break;
-
             case 'newest':
             default:
                 $query->orderBy('created_at', 'desc');
@@ -64,6 +64,13 @@ class BookingController extends Controller
         }
 
         $bookings = $query->paginate(25)->appends($request->except('page'));
+
+        // 🔥 Catat log: Admin lihat daftar booking
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed bookings list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         return view('admin.manageBooking', compact('bookings'));
     }
 
@@ -107,7 +114,14 @@ class BookingController extends Controller
             'budget_range' => null,
         ]);
 
-        // ✅ Gunakan variabel sementara
+        $fullName = $booking->first_name . ' ' . $booking->last_name;
+
+        // 🔥 Catat log: Guest booking (regular)
+        LogActivity::create([
+            'username' => $fullName,
+            'action' => "Submitted regular booking for {$booking->destination_name} on {$booking->travel_date}"
+        ]);
+
         $durationNights = $booking->duration_nights ?? 'N/A';
         $messageText = $booking->message ? "<b>Message:</b> " . htmlspecialchars($booking->message) . "\n" : "";
 
@@ -148,7 +162,6 @@ class BookingController extends Controller
             'budget_range' => 'nullable|string|max:50',
             'interests' => 'nullable|array',
             'interests.*' => 'string|max:50',
-
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:bookings,email',
@@ -156,33 +169,36 @@ class BookingController extends Controller
             'message' => 'nullable|string|max:1000',
         ]);
 
-        // ✅ Simpan hasil create ke variabel $booking
         $booking = Booking::create([
             'destination_id' => null,
             'destination_name' => 'Custom Trip Request',
             'travel_date' => $validated['travel_date'],
             'duration_nights' => $validated['duration_nights'],
             'package_type' => 'custom',
-
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'country' => $validated['country'],
             'message' => $validated['message'],
-
             'custom_destinations' => $validated['custom_destinations'],
             'interests' => $validated['interests'] ?? null,
             'travelers' => $validated['travelers'],
             'budget_range' => $validated['budget_range'],
         ]);
 
-        // ✅ Sekarang $booking sudah ada, aman dipakai
+        $fullName = $booking->first_name . ' ' . $booking->last_name;
         $interests = $booking->interests ? implode(', ', $booking->interests) : 'Not specified';
+
+        // 🔥 Catat log: Guest booking (custom)
+        LogActivity::create([
+            'username' => $fullName,
+            'action' => "Submitted custom trip request for: {$booking->custom_destinations} (Travelers: {$booking->travelers}, Budget: {$booking->budget_range})"
+        ]);
+
         $durationNights = $booking->duration_nights ?? 'Not specified';
         $budgetRange = $booking->budget_range ?? 'Not specified';
         $messageText = $booking->message ? "<b>Message:</b> " . htmlspecialchars($booking->message) . "\n" : '';
 
-        // ✅ Kirim notifikasi
         $this->sendTelegramNotification(
             "✨ <b>New Custom Trip Request!</b>\n\n" .
                 "<b>Name:</b> {$booking->first_name} {$booking->last_name}\n" .
@@ -209,14 +225,14 @@ class BookingController extends Controller
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
         try {
-            \Illuminate\Support\Facades\Http::post($url, [
+            Http::post($url, [
                 'chat_id' => $chatId,
                 'text' => $message,
                 'parse_mode' => 'HTML',
                 'disable_web_page_preview' => true,
             ]);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Telegram Notification Failed: ' . $e->getMessage());
+            Log::error('Telegram Notification Failed: ' . $e->getMessage());
         }
     }
 
@@ -236,8 +252,16 @@ class BookingController extends Controller
         ]);
 
         try {
-            $count = Booking::whereIn('booking_id', $request->ids)->count();
+            $bookings = Booking::whereIn('booking_id', $request->ids)->get();
+            $count = $bookings->count();
+
             Booking::whereIn('booking_id', $request->ids)->delete();
+
+            // 🔥 Catat log: Admin hapus booking
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk deleted {$count} booking(s): " . $bookings->map(fn($b) => $b->first_name . ' ' . $b->last_name)->join(', ')
+            ]);
 
             return response()->json([
                 'success' => true,

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 use App\Models\Testimonial;
+use App\Models\LogActivity;
 
 class TestimoniController extends Controller
 {
@@ -20,7 +23,7 @@ class TestimoniController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
-        $query = Testimonial::query(); // Ganti dari latest() agar bisa di-sort
+        $query = Testimonial::query();
 
         // Search
         if ($request->filled('search')) {
@@ -78,8 +81,7 @@ class TestimoniController extends Controller
             'rating'    => 'required|integer|between:1,5',
         ])->validate();
 
-
-        Testimonial::create([
+        $testimonial = Testimonial::create([
             'name'       => $validatedData['name'],
             'role'       => $validatedData['role'],
             'location'   => $validatedData['location'],
@@ -88,7 +90,16 @@ class TestimoniController extends Controller
             'user_id'    => Auth::id(),
         ]);
 
-        return redirect()->route('manage-testimonials.index')->with('success', 'Testimonial added successfully.');
+        // 🔥 Catat log: Admin tambah testimonial
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Added testimonial: "' . $testimonial->content . '" by ' . $testimonial->name,
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial added successfully.'
+        ]);
     }
 
     /**
@@ -111,7 +122,11 @@ class TestimoniController extends Controller
             'rating'    => 'required|integer|between:1,5',
         ])->validate();
 
-        // Update menggunakan assignment (seperti BlogPost)
+        // Simpan nama lama untuk log
+        $oldName = $testimonial->name;
+        $oldContent = Str::limit($testimonial->content, 50);
+
+        // Update data
         $testimonial->name       = $validatedData['name'];
         $testimonial->role       = $validatedData['role'];
         $testimonial->location   = $validatedData['location'];
@@ -119,7 +134,16 @@ class TestimoniController extends Controller
         $testimonial->rating     = $validatedData['rating'];
         $testimonial->save();
 
-        return redirect()->route('manage-testimonials.index')->with('success', 'Testimonial updated successfully.');
+        // 🔥 Catat log: Admin edit testimonial
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => "Updated testimonial: '{$oldName}' → '{$testimonial->name}' (Content: \"{$oldContent}...\")"
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial updated successfully.'
+        ]);
     }
 
     /**
@@ -133,9 +157,21 @@ class TestimoniController extends Controller
         }
 
         $testimonial = Testimonial::findOrFail($testimonial_id);
+        $deletedName = $testimonial->name;
+        $deletedContent = Str::limit($testimonial->content, 30);
+
         $testimonial->delete();
 
-        return redirect()->route('manage-testimonials.index')->with('success', 'Testimonial deleted successfully.');
+        // 🔥 Catat log: Admin hapus testimonial
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => "Deleted testimonial: '{$deletedName}' (Content: \"{$deletedContent}...\")"
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial deleted successfully.'
+        ]);
     }
 
     /**
@@ -156,8 +192,20 @@ class TestimoniController extends Controller
             'ids.*' => 'exists:testimonials,testimonial_id',
         ]);
 
+        $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
+        $count = $testimonials->count();
+
         Testimonial::whereIn('testimonial_id', $request->ids)->delete();
 
-        return redirect()->route('manage-testimonials.index')->with('success', 'Selected testimonials deleted successfully.');
+        // 🔥 Catat log: Bulk delete
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => "Bulk deleted {$count} testimonial(s): " . $testimonials->pluck('name')->join(', ')
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'toast' => ['type' => 'success', 'message' => "Successfully deleted {$count} testimonial(s)."]
+        ]);
     }
 }
