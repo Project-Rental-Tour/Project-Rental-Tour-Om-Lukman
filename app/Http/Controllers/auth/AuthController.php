@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -16,24 +17,43 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
+        // Validate the login form
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|exists:users,username',
+            'password' => 'required|string|min:8',
+        ], [
+            'username.required' => 'Username is required.',
+            'username.exists' => 'The username you entered does not exist.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters long.',
         ]);
 
-        if (mb_strlen($request->password) < 8) {
-            return back()->withErrors(['password' => 'Password must be at least 8 characters.']);
+        // If validation fails, redirect back with errors
+        if ($validator->fails()) {
+            return back()->with('toast', [
+                'type' => 'error',
+                'message' => $validator->errors()->first() // Ambil pesan error pertama
+            ])->withInput();
         }
 
-        if (Auth::attempt($credentials, $request->remember)) {
+        // Get credentials
+        $credentials = $request->only('username', 'password');
+
+        // Attempt to log in
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard'); // Change to your desired redirect path
+            return redirect()->intended('dashboard')->with('toast', [
+                'type' => 'success',
+                'message' => 'Login successful. Welcome back!'
+            ]);
         }
 
-        return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ])->onlyInput('username');
+        // Authentication failed
+        return back()->with('toast', [
+            'type' => 'error',
+            'message' => 'Invalid username or password. Please try again.'
+        ])->withInput($request->only('username'));
     }
 
     public function logout(Request $request)
