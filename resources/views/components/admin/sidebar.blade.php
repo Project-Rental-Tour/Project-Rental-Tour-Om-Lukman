@@ -1,13 +1,9 @@
 <aside id="sidebar"
     class="fixed top-0 left-0 z-50 h-full w-64 -translate-x-full transform border-r border-gray-200 bg-white transition-transform duration-300 ease-in-out md:translate-x-0"
     aria-label="Sidebar">
-    <div class="flex h-16 items-center justify-between border-b border-gray-200 px-4">
+    <div class="relative flex h-16 items-center justify-center border-b border-gray-200 px-4">
         <div class="flex items-center">
-            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 12h14M5 12l4-4m-4 4l4 4m7-4h.01M12 12h.01M16 12h.01M3 20h18a2 2 0 002-2V6a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
-                </path>
-            </svg>
+            <img src="{{ asset('assets/images/logo/logo-blue.png') }}" alt="" class="w-5.5 h-5.5 mr-2">
             <span class="ml-2 text-xl font-bold text-gray-900">SEPTEMTOUR</span>
         </div>
         <button id="close-sidebar"

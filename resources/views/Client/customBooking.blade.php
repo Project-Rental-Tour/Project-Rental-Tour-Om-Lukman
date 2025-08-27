@@ -5,7 +5,7 @@
 
 @section('content')
     @include('components.client.navbar')
-    <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-20">
+    <section class="bg-primary text-white py-20" id="jumbotron">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Design Your Dream Trip</h1>
             <p class="text-xl md:text-2xl text-indigo-100 max-w-3xl mx-auto leading-relaxed">
@@ -16,16 +16,7 @@
         </div>
     </section>
 
-    <!-- Breadcrumb -->
-    <nav class="bg-gray-50 py-4">
-        <div class="container mx-auto px-6">
-            <ol class="flex space-x-2 text-sm text-gray-600">
-                <li><a href="{{ route('home') }}" class="hover:text-blue-600">Home</a></li>
-                <li>/</li>
-                <li class="text-gray-900">Custom Trip</li>
-            </ol>
-        </div>
-    </nav>
+
 
     <!-- Custom Booking Form -->
     <section class="container mx-auto px-6 py-16">
@@ -150,18 +141,18 @@
                         <select name="country" required
                             class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
                             <option value="">Select country</option>
-                            <option value="ID">Indonesia</option>
-                            <option value="SG">Singapore</option>
-                            <option value="MY">Malaysia</option>
-                            <option value="TH">Thailand</option>
-                            <option value="AU">Australia</option>
-                            <option value="US">United States</option>
-                            <option value="GB">United Kingdom</option>
-                            <option value="DE">Germany</option>
-                            <option value="JP">Japan</option>
-                            <option value="KR">South Korea</option>
-                            <option value="CN">China</option>
-                            <option value="NL">Netherlands</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Australia">Australia</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Japan">Japan</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="China">China</option>
+                            <option value="Netherlands">Netherlands</option>
                         </select>
                     </div>
                 </div>
@@ -178,7 +169,7 @@
                 <!-- Submit Button -->
                 <div class="pt-4">
                     <button type="submit"
-                        class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold py-4 px-8 rounded-lg text-lg transition transform hover:scale-105">
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-transform hover:scale-105 focus:ring-4 focus:ring-indigo-300 focus:outline-none">
                         Send My Request
                     </button>
                     <p class="text-xs text-gray-500 text-center mt-3">

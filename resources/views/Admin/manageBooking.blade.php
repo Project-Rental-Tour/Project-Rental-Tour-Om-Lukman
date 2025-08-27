@@ -85,6 +85,11 @@
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Name Package
+                            </th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Email
                             </th>
 
@@ -92,7 +97,6 @@
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Country
                             </th>
-
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Message
@@ -138,10 +142,25 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-center text-gray-900">{{ $booking->username }}</div>
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->first_name }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-center text-gray-900">********</div>
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->last_name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->destination_name }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->email }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->country }}</div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $booking->message }}</div>
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">
@@ -181,7 +200,7 @@
     @foreach ($bookings as $booking)
         <div id="view-modal-{{ $booking->booking_id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-user.view-user', ['user' => $booking])
+            @include('components.admin.modal.modal-user.view-user', ['booking' => $booking])
         </div>
     @endforeach
 @endsection
