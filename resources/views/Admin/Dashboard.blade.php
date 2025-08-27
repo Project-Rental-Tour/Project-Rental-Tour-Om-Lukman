@@ -329,28 +329,31 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Social Media Links</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="flex items-center">
-                                <span class="bg-blue-100 p-2 rounded-l-md">
-                                    <i class="fab fa-facebook text-blue-600"></i>
-                                </span>
-                                <input type="text" name="facebook_link"
-                                    value="{{ old('facebook_link', $profile->facebook_link ?? '') }}"
-                                    placeholder="Facebook Page URL"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            <div class="flex items-center">
-                                <span class="bg-blue-100 p-2 rounded-l-md">
-                                    <i class="fab fa-instagram text-pink-600"></i>
-                                </span>
-                                <input type="text" name="instagram_link"
-                                    value="{{ old('instagram_link', $profile->instagram_link ?? '') }}"
-                                    placeholder="Instagram Profile URL"
-                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
-                            </div>
+                        <div class="flex items-center flex-1">
+                            <span class="bg-blue-100 p-2 rounded-l-md">
+                                <i class="fab fa-facebook text-blue-600"></i>
+                            </span>
+                            <input type="text" name="facebook_link"
+                                value="{{ old('facebook_link', $profile->facebook_link ?? '') }}"
+                                placeholder="Facebook Page URL"
+                                class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
-                    </div>
 
+                        <!-- Facebook -->
+
+
+                        <!-- Instagram -->
+                        <div class="flex items-center flex-1 mt-4">
+                            <span class="bg-pink-100 p-2 rounded-l-md">
+                                <i class="fab fa-instagram text-pink-600"></i>
+                            </span>
+                            <input type="text" name="instagram_link"
+                                value="{{ old('instagram_link', $profile->instagram_link ?? '') }}"
+                                placeholder="Instagram Profile URL"
+                                class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
+                        </div>
+
+                    </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Operating Hours</label>
                         <input type="text" name="operating_hours"
