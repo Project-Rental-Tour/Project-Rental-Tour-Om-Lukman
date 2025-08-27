@@ -220,33 +220,28 @@
     </div>
 
     <!-- Add Modal -->
-    <div id="add-modal" tabindex="-1" aria-hidden="true"
-        class="fixed inset-0 z-50 hidden  items-center justify-center w-full h-full  bg-opacity-50 backdrop-blur-sm">
+    <div id="add-modal" tabindex="-1" role="dialog" aria-modal="true"
+        class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-black-20 bg-opacity-50 backdrop-blur-sm">
         @include('components.admin.modal.modal-testimoni.add-testimoni')
     </div>
 
-    {{-- Update Modal --}}
     @foreach ($testimonials as $testimoni)
-        <div id="edit-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+        <div id="edit-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" role="dialog" aria-modal="true"
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-black-20 bg-opacity-50 backdrop-blur-sm">
             @include('components.admin.modal.modal-testimoni.edit-testimoni', ['testimoni' => $testimoni])
         </div>
     @endforeach
 
-
-    {{-- Delete Modal --}}
     @foreach ($testimonials as $testimoni)
-        <!-- Delete Modal (unique ID for each user) -->
-        <div id="delete-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+        <div id="delete-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" role="dialog" aria-modal="true"
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-black-20 bg-opacity-50 backdrop-blur-sm">
             @include('components.admin.modal.modal-testimoni.delete-testimoni', ['testimoni' => $testimoni])
         </div>
     @endforeach
 
-    {{-- View Modal --}}
     @foreach ($testimonials as $testimoni)
-        <div id="view-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+        <div id="view-modal-{{ $testimoni->testimonial_id }}" tabindex="-1" role="dialog" aria-modal="true"
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-black-20 bg-opacity-50 backdrop-blur-sm">
             @include('components.admin.modal.modal-testimoni.view-testimoni', ['testimoni' => $testimoni])
         </div>
     @endforeach
