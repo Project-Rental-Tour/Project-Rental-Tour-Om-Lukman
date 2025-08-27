@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
         $recentBlogs = BlogPost::latest()->take(3)->get();
 
-        $recentActivities = LogActivity::latest()->take(26)->get();
+        $recentActivities = LogActivity::latest()->take(27)->get();
 
         $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
             ->orWhere('action', 'like', '%Submitted regular booking%')
