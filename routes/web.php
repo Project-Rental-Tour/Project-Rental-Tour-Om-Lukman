@@ -10,15 +10,16 @@ use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\GalleriesController;
 use App\Http\Controllers\admin\DestinationController;
-
 use Illuminate\Support\Facades\Route;
 
 // User-Route
 Route::resource('/', HomeController::class);
 Route::get('/blog/{slug}', [BlogController::class, 'detailBlog'])->name('blog.detail-blog');
 
+Route::get('/destinations/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
 Route::get('/destinations/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
 Route::post('/booking/regular', [BookingController::class, 'bookingRegular'])->name('booking.regular.store');
+
 Route::get('/custom-trip', [BookingController::class, 'showCustomForm'])->name('booking.custom');
 Route::post('/booking/custom', [BookingController::class, 'bookingCustom'])->name('booking.custom.store');
 
