@@ -60,8 +60,19 @@ class DestinationController extends Controller
                 break;
         }
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed Destination list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         $destinations = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageDestination', compact('destinations'));
+        return view('admin.manageDestination', compact('destinations', 'notifications'));
     }
 
     public function detailDestination($slug)

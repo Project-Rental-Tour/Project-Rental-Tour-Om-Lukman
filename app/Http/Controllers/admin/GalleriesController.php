@@ -46,8 +46,20 @@ class GalleriesController extends Controller
                 break;
         }
 
+
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed Gallery list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         $galleries = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageGallery', compact('galleries'));
+        return view('admin.manageGallery', compact('galleries', 'notifications'));
     }
 
     public function store(Request $request)

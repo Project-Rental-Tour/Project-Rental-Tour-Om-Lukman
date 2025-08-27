@@ -42,6 +42,18 @@ class DashboardController extends Controller
 
         $recentActivities = LogActivity::latest()->take(26)->get();
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed Dashboard list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
+
         return view('admin.Dashboard', compact(
             'profile',
             'totalUsers',
@@ -52,7 +64,8 @@ class DashboardController extends Controller
             'totalTestimonials',
             'recentBookings',
             'recentBlogs',
-            'recentActivities'
+            'recentActivities',
+            'notifications'
         ));
     }
 

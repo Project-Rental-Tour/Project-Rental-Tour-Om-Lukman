@@ -59,8 +59,19 @@ class TestimoniController extends Controller
                 break;
         }
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed Testimoni list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         $testimonials = $query->paginate(10)->appends($request->except('page'));
-        return view('admin.manageTestimonial', compact('testimonials'));
+        return view('admin.manageTestimonial', compact('testimonials', 'notifications'));
     }
 
     /**

@@ -65,12 +65,18 @@ class BookingController extends Controller
 
         $bookings = $query->paginate(25)->appends($request->except('page'));
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
         LogActivity::create([
             'username' => $currentUser->username,
-            'action' => 'Viewed bookings list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+            'action' => 'Viewed Booking list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
         ]);
 
-        return view('admin.manageBooking', compact('bookings'));
+        return view('admin.manageBooking', compact('bookings', 'notifications'));
     }
 
     public function bookingRegular(Request $request)

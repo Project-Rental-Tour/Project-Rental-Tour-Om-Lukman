@@ -50,8 +50,19 @@ class BlogController extends Controller
                 break;
         }
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed Blog list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         $blogPosts = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageBlog', compact('blogPosts'));
+        return view('admin.manageBlog', compact('blogPosts', 'notifications'));
     }
 
     public function detailBlog()

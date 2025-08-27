@@ -46,8 +46,19 @@ class UserController extends Controller
                 break;
         }
 
+        $notifications = LogActivity::where('action', 'like', '%Submitted custom trip request%')
+            ->orWhere('action', 'like', '%Submitted regular booking%')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Viewed User list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
+        ]);
+
         $users = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageUser', compact('users'));
+        return view('admin.manageUser', compact('users', 'notifications'));
     }
 
     public function store(Request $request)
