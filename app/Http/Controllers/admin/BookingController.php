@@ -79,6 +79,13 @@ class BookingController extends Controller
         return view('admin.manageBooking', compact('bookings', 'notifications'));
     }
 
+    public function showRegularForm($slug)
+    {
+        $destination = Destination::where('slug', $slug)->firstOrFail();
+
+        return view('client.regularBooking', compact('destination'));
+    }
+
     public function bookingRegular(Request $request)
     {
         $currentUser = Auth::user();
@@ -147,7 +154,7 @@ class BookingController extends Controller
 
     public function showCustomForm()
     {
-        return view('user.custom-trip');
+        return view('client.customBooking');
     }
 
     public function bookingCustom(Request $request)
@@ -217,7 +224,7 @@ class BookingController extends Controller
                 "\n📅 <i>Requested at: " . now()->format('M d, Y H:i') . "</i>"
         );
 
-        return redirect()->route('booking.custom')
+        return redirect()->route('index')
             ->with('toast', ['type' => 'success', 'message' => 'Custom trip request sent! We’ll design your dream package.']);
     }
 
@@ -225,6 +232,7 @@ class BookingController extends Controller
     {
         $token = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
+
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
         try {

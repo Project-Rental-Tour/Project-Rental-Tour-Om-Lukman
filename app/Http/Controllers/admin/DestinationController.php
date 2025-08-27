@@ -78,7 +78,8 @@ class DestinationController extends Controller
     public function detailDestination($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
-        return view('client.detail-destination', compact('destination'));
+
+        return view('client.detailDestination', compact('destination'));
     }
 
     public function store(Request $request)
