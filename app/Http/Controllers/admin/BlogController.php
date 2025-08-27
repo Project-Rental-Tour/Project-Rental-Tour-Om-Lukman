@@ -65,9 +65,27 @@ class BlogController extends Controller
         return view('admin.manageBlog', compact('blogPosts', 'notifications'));
     }
 
-    public function detailBlog()
+    public function detailBlog($slug)
     {
-        return view('client.detailBlog');
+        // Ambil blog berdasarkan slug, atau 404 jika tidak ditemukan
+        $blog = BlogPost::where('slug', $slug)->firstOrFail();
+
+        // Ambil 3 artikel terkait (berbeda dari yang sedang dibaca, berdasarkan type yang sama)
+        $relatedBlogs = BlogPost::where('type', $blog->type)
+            ->where('blog_post_id', '!=', $blog->blog_post_id)
+            ->limit(3)
+            ->get();
+
+        // Jika tidak cukup artikel sejenis, ambil dari yang lain
+        if ($relatedBlogs->count() < 3) {
+            $additional = BlogPost::where('blog_post_id', '!=', $blog->blog_post_id)
+                ->whereNotIn('blog_post_id', $relatedBlogs->pluck('blog_post_id'))
+                ->limit(3 - $relatedBlogs->count())
+                ->get();
+            $relatedBlogs = $relatedBlogs->concat($additional);
+        }
+
+        return view('client.detailBlog', compact('blog', 'relatedBlogs'));
     }
 
     public function store(Request $request)
