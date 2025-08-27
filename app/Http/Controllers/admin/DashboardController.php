@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Profile;
+use App\Models\User;
+use App\Models\Destination;
+use App\Models\Booking;
+use App\Models\BlogPost;
+use App\Models\Gallery;
+use App\Models\Testimonial;
+use App\Models\LogActivity;
 
 class DashboardController extends Controller
 {
@@ -21,8 +28,32 @@ class DashboardController extends Controller
 
         $profile = Profile::first();
 
+        // Hitung data dari database
+        $totalUsers = User::count();
+        $totalDestinations = Destination::count();
+        $totalBookings = Booking::count();
+        $totalBlogs = BlogPost::count();
+        $totalGalleries = Gallery::count();
+        $totalTestimonials = Testimonial::count();
 
-        return view('admin.Dashboard', compact('profile'));
+        $recentBookings = Booking::latest()->take(4)->get();
+
+        $recentBlogs = BlogPost::latest()->take(3)->get();
+
+        $recentActivities = LogActivity::latest()->take(26)->get();
+
+        return view('admin.Dashboard', compact(
+            'profile',
+            'totalUsers',
+            'totalDestinations',
+            'totalBookings',
+            'totalBlogs',
+            'totalGalleries',
+            'totalTestimonials',
+            'recentBookings',
+            'recentBlogs',
+            'recentActivities'
+        ));
     }
 
     public function update(Request $request)
