@@ -55,6 +55,7 @@
 </head>
 
 <body>
+    @include('components.admin.toast')
     @yield('content')
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
     <script src="{{ asset('assets/js/navbar.js') }}"></script>
