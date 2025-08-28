@@ -18,7 +18,6 @@
         <!-- Filter and Content Section -->
         <div class="bg-white px-4 md:px-6 py-4">
             <!-- Filter and Sort Row -->
-            <!-- Filter and Sort Row -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <!-- Left Side - Delete Selected Button -->
                 <div class="flex gap-2">
@@ -200,7 +199,7 @@
     @foreach ($bookings as $booking)
         <div id="view-modal-{{ $booking->booking_id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-user.view-user', ['booking' => $booking])
+            @include('components.admin.modal.modal-booking.view-booking', ['booking' => $booking])
         </div>
     @endforeach
 @endsection

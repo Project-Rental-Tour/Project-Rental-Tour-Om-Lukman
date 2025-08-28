@@ -88,12 +88,6 @@ class BookingController extends Controller
 
     public function bookingRegular(Request $request)
     {
-        $currentUser = Auth::user();
-        if (!$currentUser) {
-            return redirect()->route('login')
-                ->withErrors(['error' => 'You need to login to book.']);
-        }
-
         $destination = Destination::findOrFail($request->destination_id);
 
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
@@ -159,11 +153,7 @@ class BookingController extends Controller
 
     public function bookingCustom(Request $request)
     {
-        $currentUser = Auth::user();
-        if (!$currentUser) {
-            return redirect()->route('login')
-                ->withErrors(['error' => 'You need to login to request a custom trip.']);
-        }
+
 
         $validated = $request->validate([
             'custom_destinations' => 'required|string|max:500',
@@ -228,22 +218,49 @@ class BookingController extends Controller
             ->with('toast', ['type' => 'success', 'message' => 'Custom trip request sent! We’ll design your dream package.']);
     }
 
-    protected function sendTelegramNotification($message)
+    public function sendTelegramNotification($message)
     {
         $token = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
 
+        // ✅ Fix: Hapus spasi di URL
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
         try {
-            Http::post($url, [
+            $response = Http::timeout(15)->post($url, [
                 'chat_id' => $chatId,
                 'text' => $message,
                 'parse_mode' => 'HTML',
                 'disable_web_page_preview' => true,
             ]);
+
+            // ✅ Cek respons dari Telegram
+            if ($response->successful() && $response->json('ok') === true) {
+                Log::info('✅ Telegram Notification Sent Successfully', [
+                    'chat_id' => $chatId,
+                    'message_preview' => substr(strip_tags($message), 0, 100) . '...'
+                ]);
+                return true;
+            } else {
+                $errorCode = $response->json('error_code');
+                $description = $response->json('description');
+                Log::error('❌ Telegram API Error', [
+                    'error_code' => $errorCode,
+                    'description' => $description,
+                    'chat_id' => $chatId,
+                    'url' => $url
+                ]);
+                return false;
+            }
         } catch (\Exception $e) {
-            Log::error('Telegram Notification Failed: ' . $e->getMessage());
+            // 🔴 Cetak error jaringan (timeout, SSL, blocked, dll)
+            Log::error('🚨 Telegram Notification Failed (Network/Connection)', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'chat_id' => $chatId
+            ]);
+            return false;
         }
     }
 
