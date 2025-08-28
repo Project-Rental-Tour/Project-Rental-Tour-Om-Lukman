@@ -440,59 +440,22 @@
                 </div>
             </div>
         </section>
+        <a 
+            href="https://wa.me/6281234567890" 
+            target="_blank"
+            id="whatsapp-float"
+            class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group"
+        >
+            <i class="fab fa-whatsapp text-2xl"></i>
+            <span class="whatsapp-text text-white font-medium whitespace-nowrap ml-1 mt-0.5">Need Help?</span>
+        </a>
+    @include('components.client.footer')
 
-        @include('components.client.footer')
-
-        @push('scripts')
+    @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="{{ asset('assets/js/swiper.js') }}"></script>
+        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.testimonial-swiper', {
-            // Default untuk mobile
-            slidesPerView: 1,
-            spaceBetween: 24,
-
-            // Loop dan autoplay (opsional)
-            loop: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-
-            // Pagination & Navigation
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-
-            // Responsive breakpoints
-            breakpoints: {
-                // Tablet: 768px → tampilkan 2 card
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 10
-                },
-
-                // Desktop kecil: 1024px → tampilkan 3 card
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 10
-                },
-
-                // Desktop besar: 1280px → tampilkan 4 card
-                1280: {
-                    slidesPerView: 4,
-                    spaceBetween: 10
-                }
-            }
-        });
-    });
-</script>
             <script src="{{ asset('assets/js/stats.js')}}"></script>
             <script src="{{ asset('assets/js/filterBlogTravel.js') }}"></script>
         @endpush
