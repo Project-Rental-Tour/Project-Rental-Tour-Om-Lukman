@@ -1,55 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "tailwindcss";
 @source "../views";
 
 * {
-  font-family:'Poppins'
+    font-family: "Poppins";
 }
 
 @layer {
-  :root {
-    /* Color Palette */
-    --color-primary: #799EFF;
-    --color-primary-hover: #6a8de8;
-    --color-dark: #1E293B;
-    --color-light: #F8FAFC;
-    --color-success: #10B981;
-    --color-warning: #F59E0B;
-    --color-danger: #EF4444;
-    
-    /* Additional Colors */
-    --color-mediumWhite: #FAF9EE;
-    --color-lightGold: #FEFFC4;
-    --color-darkGold: #FFBC4C;
-    --color-mediumYellow: #FFDE63;
-  }
+    :root {
+        /* Color Palette */
+        --color-primary: #799eff;
+        --color-primary-hover: #6a8de8;
+        --color-dark: #1e293b;
+        --color-light: #f8fafc;
+        --color-success: #10b981;
+        --color-warning: #f59e0b;
+        --color-danger: #ef4444;
+
+        /* Additional Colors */
+        --color-mediumWhite: #faf9ee;
+        --color-lightGold: #feffc4;
+        --color-darkGold: #ffbc4c;
+        --color-mediumYellow: #ffde63;
+    }
 }
 
 @layer utilities {
-  /* Text Colors */
-  .text-primary { color: var(--color-primary); }
-  .text-dark { color: var(--color-dark); }
-  .text-light { color: var(--color-light); }
-  .text-success { color: var(--color-success); }
-  .text-warning { color: var(--color-warning); }
-  .text-danger { color: var(--color-danger); }
+    /* Text Colors */
+    .text-primary {
+        color: var(--color-primary);
+    }
+    .text-dark {
+        color: var(--color-dark);
+    }
+    .text-light {
+        color: var(--color-light);
+    }
+    .text-success {
+        color: var(--color-success);
+    }
+    .text-warning {
+        color: var(--color-warning);
+    }
+    .text-danger {
+        color: var(--color-danger);
+    }
 
-  /* Background Colors */
-  .bg-primary { background-color: var(--color-primary); }
-  .bg-dark { background-color: var(--color-dark); }
-  .bg-light { background-color: var(--color-light); }
-  .bg-success { background-color: var(--color-success); }
-  .bg-warning { background-color: var(--color-warning); }
-  .bg-danger { background-color: var(--color-danger); }
+    /* Background Colors */
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+    .bg-dark {
+        background-color: var(--color-dark);
+    }
+    .bg-light {
+        background-color: var(--color-light);
+    }
+    .bg-success {
+        background-color: var(--color-success);
+    }
+    .bg-warning {
+        background-color: var(--color-warning);
+    }
+    .bg-danger {
+        background-color: var(--color-danger);
+    }
 
-  /* Hover States */
-  .hover\:bg-primary:hover { background-color: var(--color-primary-hover); }
-  .hover\:text-primary:hover { color: var(--color-primary-hover); }
+    /* Hover States */
+    .hover\:bg-primary:hover {
+        background-color: var(--color-primary-hover);
+    }
+    .hover\:text-primary:hover {
+        color: var(--color-primary-hover);
+    }
 
-  /* Special Colors */
-  .bg-mediumWhite { background-color: var(--color-mediumWhite); }
-  .text-lightGold { color: var(--color-lightGold); }
-  .bg-darkGold { background-color: var(--color-darkGold); }
-  .text-mediumYellow { color: var(--color-mediumYellow); }
+    /* Special Colors */
+    .bg-mediumWhite {
+        background-color: var(--color-mediumWhite);
+    }
+    .text-lightGold {
+        color: var(--color-lightGold);
+    }
+    .bg-darkGold {
+        background-color: var(--color-darkGold);
+    }
+    .text-mediumYellow {
+        color: var(--color-mediumYellow);
+    }
 }

@@ -16,7 +16,10 @@
                         </div>
                     </div>
                     <p class="text-blue-100 mb-6 leading-relaxed">
-                        Welcome to Septem Tour! We provide the best travel and tour services to make your journey
+                        Welcome to {{optional($profiles)->$profiles->website_name ?? "Septem Tour"}}! We provide the
+                        best travel and tour
+                        services to make
+                        your journey
                         unforgettable. From local trips to international adventures, we are here to guide you every step
                         of the way.
                     </p>
@@ -24,15 +27,16 @@
                     <!-- Social Media -->
                     <!-- Social Media -->
                     <div class="flex gap-x-4 mb-6">
-                        <a href="#"
-                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#"
-                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
+                        <a href="{{ optional($profiles)->instagram_link }}"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"
+                            target="_blank">
                             <i class="fab fa-instagram"></i>
                         </a>
-
+                        <a href="{{ optional($profiles)->facebook_link }}"
+                            class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"
+                            target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
                     </div>
 
                 </div>

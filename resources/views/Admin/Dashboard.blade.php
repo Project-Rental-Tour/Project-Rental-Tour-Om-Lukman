@@ -330,12 +330,12 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Social Media Links</label>
                         <div class="flex items-center flex-1">
-                            <span class="bg-blue-100 p-2 rounded-l-md">
-                                <i class="fab fa-facebook text-blue-600"></i>
+                            <span class="bg-black p-2 rounded-l-md">
+                                <i class="fab fa-tiktok text-white"></i>
                             </span>
                             <input type="text" name="facebook_link"
                                 value="{{ old('facebook_link', $profile->facebook_link ?? '') }}"
-                                placeholder="Facebook Page URL"
+                                placeholder="Tiktok Page URL"
                                 class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
 

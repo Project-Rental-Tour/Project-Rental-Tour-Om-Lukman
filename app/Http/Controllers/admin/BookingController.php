@@ -99,9 +99,14 @@ class BookingController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:bookings,email',
             'country' => 'required|string|max:255',
+            'country_code' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:15',
             'travel_date' => 'required|date|after_or_equal:today',
             'message' => 'nullable|string|max:1000',
         ]);
+
+        // Gabungkan country code dan phone number
+        $fullPhoneNumber = $validated['country_code'] . ltrim($validated['phone_number'], '0');
 
         $booking = Booking::create([
             'destination_id' => $validated['destination_id'],
@@ -113,6 +118,7 @@ class BookingController extends Controller
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'country' => $validated['country'],
+            'phone_number' => $fullPhoneNumber,
             'message' => $validated['message'],
             'custom_destinations' => null,
             'interests' => null,
@@ -134,6 +140,7 @@ class BookingController extends Controller
             "✅ <b>New Regular Booking!</b>\n\n" .
                 "<b>Name:</b> {$booking->first_name} {$booking->last_name}\n" .
                 "<b>Email:</b> {$booking->email}\n" .
+                "<b>Phone:</b> <a href='https://wa.me/{$booking->phone_number}'>{$booking->phone_number}</a>\n" .
                 "<b>Destination:</b> {$booking->destination_name}\n" .
                 "<b>Travel Date:</b> {$booking->travel_date}\n" .
                 "<b>Nights:</b> {$durationNights}\n" .
@@ -141,6 +148,7 @@ class BookingController extends Controller
                 $messageText .
                 "\n📅 <i>Booked at: " . now()->format('M d, Y H:i') . "</i>"
         );
+
 
         return redirect()->route('destination.show', $destination->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Booking submitted! We will contact you soon.']);
@@ -153,8 +161,6 @@ class BookingController extends Controller
 
     public function bookingCustom(Request $request)
     {
-
-
         $validated = $request->validate([
             'custom_destinations' => 'required|string|max:500',
             'travel_date' => 'required|date|after_or_equal:today',
@@ -167,8 +173,12 @@ class BookingController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:bookings,email',
             'country' => 'required|string|max:255',
+            'country_code' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:15',
             'message' => 'nullable|string|max:1000',
         ]);
+
+        $fullPhoneNumber = $validated['country_code'] . ltrim($validated['phone_number'], '0');
 
         $booking = Booking::create([
             'destination_id' => null,
@@ -180,6 +190,7 @@ class BookingController extends Controller
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'country' => $validated['country'],
+            'phone_number' => $fullPhoneNumber,
             'message' => $validated['message'],
             'custom_destinations' => $validated['custom_destinations'],
             'interests' => $validated['interests'] ?? null,
@@ -203,6 +214,7 @@ class BookingController extends Controller
             "✨ <b>New Custom Trip Request!</b>\n\n" .
                 "<b>Name:</b> {$booking->first_name} {$booking->last_name}\n" .
                 "<b>Email:</b> {$booking->email}\n" .
+                "<b>Phone:</b> <a href='https://wa.me/{$booking->phone_number}'>{$booking->phone_number}</a>\n" .
                 "<b>Destinations:</b> {$booking->custom_destinations}\n" .
                 "<b>Travel Date:</b> {$booking->travel_date}\n" .
                 "<b>Nights:</b> {$durationNights}\n" .
@@ -223,7 +235,6 @@ class BookingController extends Controller
         $token = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
 
-        // ✅ Fix: Hapus spasi di URL
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
         try {
@@ -234,7 +245,6 @@ class BookingController extends Controller
                 'disable_web_page_preview' => true,
             ]);
 
-            // ✅ Cek respons dari Telegram
             if ($response->successful() && $response->json('ok') === true) {
                 Log::info('✅ Telegram Notification Sent Successfully', [
                     'chat_id' => $chatId,
