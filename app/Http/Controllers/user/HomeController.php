@@ -25,6 +25,6 @@ class HomeController extends Controller
         $latestGalleries = Gallery::orderBy('created_at', 'desc')->take(3)->get();
         $types = BlogPost::select('type')->distinct()->pluck('type');
 
-        return view('client.Home', compact('blogs', 'types', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
+        return view('Client.Home', compact('blogs', 'types', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
     }
 }
