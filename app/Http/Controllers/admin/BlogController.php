@@ -62,7 +62,7 @@ class BlogController extends Controller
         ]);
 
         $blogPosts = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.ManageBlog', compact('blogPosts', 'notifications'));
+        return view('Admin.manageBlog', compact('blogPosts', 'notifications'));
     }
 
     public function detailBlog($slug)
@@ -85,7 +85,7 @@ class BlogController extends Controller
             $relatedBlogs = $relatedBlogs->concat($additional);
         }
 
-        return view('Client.DetailBlog', compact('blog', 'relatedBlogs'));
+        return view('Client.detailBlog', compact('blog', 'relatedBlogs'));
     }
 
     public function store(Request $request)

@@ -77,7 +77,7 @@ class BookingController extends Controller
             'action' => 'Viewed Booking list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
         ]);
 
-        return view('Admin.ManageBooking', compact('bookings', 'notifications'));
+        return view('Admin.manageBooking', compact('bookings', 'notifications'));
     }
 
     public function showRegularForm($slug)

@@ -73,7 +73,7 @@ class DestinationController extends Controller
         ]);
 
         $destinations = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.ManageDestination', compact('destinations', 'notifications'));
+        return view('Admin.manageDestination', compact('destinations', 'notifications'));
     }
 
     public function detailDestination($slug)
@@ -81,7 +81,7 @@ class DestinationController extends Controller
         $destination = Destination::where('slug', $slug)->firstOrFail();
         $profiles = Profile::find(1);
 
-        return view('Client.DetailDestination', compact('destination', 'profiles'));
+        return view('Client.detailDestination', compact('destination', 'profiles'));
     }
 
     public function store(Request $request)

@@ -59,7 +59,7 @@ class GalleriesController extends Controller
         ]);
 
         $galleries = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.ManageGallery', compact('galleries', 'notifications'));
+        return view('Admin.manageGallery', compact('galleries', 'notifications'));
     }
 
     public function store(Request $request)
