@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <p class="text-blue-100 mb-6 leading-relaxed">
-                        Welcome to {{optional($profiles)->profiles->website_name ?? "Septem Tour"}}! We provide the
+                        Welcome to {{ optional($profiles)->website_name ?? "Septem Tour" }}! We provide the
                         best travel and tour
                         services to make
                         your journey

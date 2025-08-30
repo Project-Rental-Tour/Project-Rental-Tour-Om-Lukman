@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Booking;
 use App\Models\Destination;
 use App\Models\LogActivity;
+use App\Models\Profile;
 
 class BookingController extends Controller
 {
@@ -82,13 +83,15 @@ class BookingController extends Controller
     public function showRegularForm($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
+        $profiles = Profile::find(1);
 
-        return view('Client.RegularBooking', compact('destination'));
+        return view('Client.RegularBooking', compact('destination', 'profiles'));
     }
 
     public function bookingRegular(Request $request)
     {
         $destination = Destination::findOrFail($request->destination_id);
+        $profiles = Profile::find(1);
 
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
         $nights = $matches[1] ?? null;
@@ -155,7 +158,9 @@ class BookingController extends Controller
 
     public function showCustomForm()
     {
-        return view('Client.CustomBooking');
+        $profiles = Profile::find(1);
+
+        return view('Client.CustomBooking', compact('profiles'));
     }
 
     public function bookingCustom(Request $request)

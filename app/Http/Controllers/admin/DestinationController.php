@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Destination;
 use App\Models\LogActivity;
+use App\Models\Profile;
 
 class DestinationController extends Controller
 {
@@ -78,8 +79,9 @@ class DestinationController extends Controller
     public function detailDestination($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
+        $profiles = Profile::find(1);
 
-        return view('Client.DetailDestination', compact('destination'));
+        return view('Client.DetailDestination', compact('destination', 'profiles'));
     }
 
     public function store(Request $request)
