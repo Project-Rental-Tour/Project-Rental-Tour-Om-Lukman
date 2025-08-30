@@ -85,7 +85,7 @@ class BookingController extends Controller
         $destination = Destination::where('slug', $slug)->firstOrFail();
         $profiles = Profile::find(1);
 
-        return view('client.regularBooking', compact('destination', 'profiles'));
+        return view('Client.regularBooking', compact('destination', 'profiles'));
     }
 
     public function bookingRegular(Request $request)
@@ -160,7 +160,7 @@ class BookingController extends Controller
     {
         $profiles = Profile::find(1);
 
-        return view('client.customBooking', compact('profiles'));
+        return view('Client.customBooking', compact('profiles'));
     }
 
     public function bookingCustom(Request $request)
