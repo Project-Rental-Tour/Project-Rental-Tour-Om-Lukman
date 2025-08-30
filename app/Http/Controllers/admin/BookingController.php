@@ -76,14 +76,14 @@ class BookingController extends Controller
             'action' => 'Viewed Booking list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
         ]);
 
-        return view('admin.manageBooking', compact('bookings', 'notifications'));
+        return view('Admin.ManageBooking', compact('bookings', 'notifications'));
     }
 
     public function showRegularForm($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
 
-        return view('client.regularBooking', compact('destination'));
+        return view('Client.RegularBooking', compact('destination'));
     }
 
     public function bookingRegular(Request $request)
@@ -156,7 +156,7 @@ class BookingController extends Controller
 
     public function showCustomForm()
     {
-        return view('client.customBooking');
+        return view('Client.CustomBooking');
     }
 
     public function bookingCustom(Request $request)
