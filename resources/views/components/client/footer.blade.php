@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <p class="text-blue-100 mb-6 leading-relaxed">
-                        Welcome to {{optional($profiles)->$profiles->website_name ?? "Septem Tour"}}! We provide the
+                        Welcome to {{optional($profiles)->profiles->website_name ?? "Septem Tour"}}! We provide the
                         best travel and tour
                         services to make
                         your journey
@@ -76,23 +76,23 @@
                     <ul class="space-y-3">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt text-white mt-1 mr-3"></i>
-                            <span class="text-blue-100">{{ optional($profiles)->$address ?? "Jl. Batubara 12 A, Kel. Purwantoro, Kec. Blimbing. Malang - Jawa
-                                Timur 65122" }}</span>
+                            <span class="text-blue-100">{{ optional($profiles)->address ?? "Jl. Batubara 12 A, Kel. Purwantoro, Kec. Blimbing. Malang - Jawa
+                                Timur 65122" }}
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-phone text-white mt-1 mr-3"></i>
                             <span
-                                class="text-blue-100">{{ optional($profiles)->$phone_number ?? "0812-2000-5276" }}</span>
+                                class="text-blue-100">{{ optional($profiles)->phone_number ?? "0812-2000-5276" }}</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-envelope text-white mt-1 mr-3"></i>
-                            <span class="text-blue-100">{{ optional($profiles)->$contact_email ??
+                            <span class="text-blue-100">{{ optional($profiles)->contact_email ??
                                 "support@septemtour.com" }}</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-clock text-white mt-1 mr-3"></i>
                             <span
-                                class="text-blue-100">{{ optional($profiles)->$operating_hours ?? "Mon - Sunday: 9:00 AM - 6:00 PM"}}</span>
+                                class="text-blue-100">{{ optional($profiles)->operating_hours ?? "Mon - Sunday: 9:00 AM - 6:00 PM"}}</span>
                         </li>
                     </ul>
                 </div>
@@ -104,7 +104,7 @@
             <!-- Bottom Footer -->
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <span class="text-sm text-blue-100">© 2025 {{ optional($profiles)->$website_name ?? "Septem Tour"}}.
+                    <span class="text-sm text-blue-100">© 2025 {{ optional($profiles)->website_name ?? "Septem Tour"}}.
                         All rights reserved.</span>
                 </div>
                 <div class="flex space-x-6">
