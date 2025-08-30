@@ -105,7 +105,6 @@ class BookingController extends Controller
             'message' => 'nullable|string|max:1000',
         ]);
 
-        // Gabungkan country code dan phone number
         $fullPhoneNumber = $validated['country_code'] . ltrim($validated['phone_number'], '0');
 
         $booking = Booking::create([
