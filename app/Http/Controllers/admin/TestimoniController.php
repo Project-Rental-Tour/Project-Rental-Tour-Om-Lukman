@@ -71,7 +71,7 @@ class TestimoniController extends Controller
         ]);
 
         $testimonials = $query->paginate(10)->appends($request->except('page'));
-        return view('admin.manageTestimonial', compact('testimonials', 'notifications'));
+        return view('Admin.ManageTestimonial', compact('testimonials', 'notifications'));
     }
 
     /**

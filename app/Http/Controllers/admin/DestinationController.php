@@ -72,14 +72,14 @@ class DestinationController extends Controller
         ]);
 
         $destinations = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageDestination', compact('destinations', 'notifications'));
+        return view('Admin.ManageDestination', compact('destinations', 'notifications'));
     }
 
     public function detailDestination($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
 
-        return view('client.detailDestination', compact('destination'));
+        return view('Client.DetailDestination', compact('destination'));
     }
 
     public function store(Request $request)

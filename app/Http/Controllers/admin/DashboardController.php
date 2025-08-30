@@ -54,7 +54,7 @@ class DashboardController extends Controller
         ]);
 
 
-        return view('admin.Dashboard', compact(
+        return view('Admin.Dashboard', compact(
             'profile',
             'totalUsers',
             'totalDestinations',

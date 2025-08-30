@@ -58,7 +58,7 @@ class UserController extends Controller
         ]);
 
         $users = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageUser', compact('users', 'notifications'));
+        return view('Admin.ManageUser', compact('users', 'notifications'));
     }
 
     public function store(Request $request)
