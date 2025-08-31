@@ -12,8 +12,8 @@
                 <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
                     <img 
             src="{{ optional($profiles)->background_image
-        ? asset(optional($profile)->background_image)
-        : asset('assets/images/jumbotron/background-jumbo.png') }}" 
+    ? asset(optional($profile)->background_image)
+    : asset('assets/images/jumbotron/background-jumbo.png') }}" 
             alt="Travel Destination"
             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 transition-opacity duration-500">
 
@@ -172,6 +172,7 @@
                         <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col h-[350px] cursor-pointer group animate-fade-up" style="transition-delay: 0.4s" onclick="window.location='{{ route('booking.custom') }}'">
                             <div class="relative h-48 overflow-hidden">
                                 <div class="absolute inset-0 bg-black/20"></div>
+                                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Custom Trip" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="text-center text-white">
                                         <i class="fas fa-magic text-6xl mb-4 opacity-90 group-hover:scale-110 transition-transform"></i>
@@ -219,10 +220,10 @@
                             ['98%', 'Satisfaction Rate'],
                             ['15', 'Years Experience']
                         ] as $index => $stat)
-                                                                                                                        <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
-                                                                                                                            <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
-                                                                                                                            <div class="text-gray-600">{{ $stat[1] }}</div>
-                                                                                                                        </div>
+                                                                                                                                                    <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
+                                                                                                                                                        <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
+                                                                                                                                                        <div class="text-gray-600">{{ $stat[1] }}</div>
+                                                                                                                                                    </div>
                     @endforeach
                 </div>
             </section>
@@ -249,19 +250,19 @@
                                     ['Flexible Booking', 'Easy rescheduling and cancellation policies for peace of mind.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'indigo'],
                                     ['Ultimate Flexibility', 'Flexible booking options and customizable travel plans.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'purple']
                                 ] as $feature)
-                                                                                                                                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
-                                                                                                                                        <div class="flex items-start">
-                                                                                                                                            <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
-                                                                                                                                                <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
-                                                                                                                                                </svg>
-                                                                                                                                            </div>
-                                                                                                                                            <div>
-                                                                                                                                                <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
-                                                                                                                                                <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
+                                                                                                                                                                    <div class="flex items-start">
+                                                                                                                                                                        <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
+                                                                                                                                                                            <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
+                                                                                                                                                                            </svg>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div>
+                                                                                                                                                                            <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
+                                                                                                                                                                            <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -405,7 +406,7 @@
             <div class="swiper-wrapper">
                 @foreach($testimonials as $testimoni)
                     <div class="swiper-slide px-4 py-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col h-full">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col h-[280px] sm:h-[230px]">
 
                             <!-- Quote Icon -->
                             <div class="mb-4 text-blue-500">
