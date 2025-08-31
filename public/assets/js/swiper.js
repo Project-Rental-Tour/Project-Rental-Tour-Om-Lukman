@@ -31,7 +31,7 @@
 
                 // Desktop kecil: 1024px → tampilkan 3 card
                 1024: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 10
                 },
 
