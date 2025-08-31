@@ -392,7 +392,7 @@
                     <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full">
                         TESTIMONIALS
                     </span>
-                    <h3 class="text-4xl font-bold text-gray-900 mt-4 mb-6">What People Say About Us</h3>
+                    <h3 class="text-4xl font-bold text-gray-900 mt-4 mb-6">What People afu About Us</h3>
                     <p class="text-gray-600 max-w-2xl mx-auto">
                         Discover why our customers love our services and how we've helped  them achieve their travel dreams.
                     </p>
