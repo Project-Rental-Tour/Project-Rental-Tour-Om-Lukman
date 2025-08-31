@@ -220,10 +220,10 @@
                         ['98%', 'Satisfaction Rate'],
                         ['15', 'Years Experience']
                     ] as $index => $stat)
-                                                                                                            <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
-                                                                                                                <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
-                                                                                                                <div class="text-gray-600">{{ $stat[1] }}</div>
-                                                                                                            </div>
+                                                                                                                                                    <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
+                                                                                                                                                        <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
+                                                                                                                                                        <div class="text-gray-600">{{ $stat[1] }}</div>
+                                                                                                                                                    </div>
                 @endforeach
             </div>
         </section>
@@ -250,19 +250,19 @@
                                 ['Flexible Booking', 'Easy rescheduling and cancellation policies for peace of mind.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'indigo'],
                                 ['Ultimate Flexibility', 'Flexible booking options and customizable travel plans.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'purple']
                             ] as $feature)
-                                                                                                                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
-                                                                                                                            <div class="flex items-start">
-                                                                                                                                <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
-                                                                                                                                    <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
-                                                                                                                                    </svg>
-                                                                                                                                </div>
-                                                                                                                                <div>
-                                                                                                                                    <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
-                                                                                                                                    <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                                                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
+                                                                                                                                                                    <div class="flex items-start">
+                                                                                                                                                                        <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
+                                                                                                                                                                            <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
+                                                                                                                                                                            </svg>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div>
+                                                                                                                                                                            <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
+                                                                                                                                                                            <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div>
                         @endforeach
                     </div>
                 </div>
@@ -403,7 +403,7 @@
                     <div class="swiper-wrapper">
                         @foreach($testimonials as $testimoni)
                             <div class="swiper-slide px-4 py-8">
-                                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col h-[220px]">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col h-[220px] lg:h-[280px]">
                                     <div class="mb-4 text-blue-500 self-start">
                                         <i class="fas fa-quote-left text-2xl opacity-80"></i>
                                     </div>
@@ -425,14 +425,12 @@
                                     </p>
 
                                     <!-- Profile -->
-                                    <div class="flex items-center mt-5">
-                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
-                                            alt="{{ $testimoni->name }}"
-                                            class="w-8 h-8 rounded-full object-cover mr-3 border-2 border-blue-500">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-900 text-sm">{{ $testimoni->name }}</h4>
-                                            <p class="text-gray-500 text-xs">{{ $testimoni->role }}, {{ $testimoni->location }}</p>
-                                        </div>
+                                    <div class="mt-auto text-center w-full">
+
+                                            <div>
+                                                <h4 class="font-semibold text-gray-900 text-sm">{{ $testimoni->name }}</h4>
+                                                <p class="text-gray-500 text-xs">{{ $testimoni->role }}, {{ $testimoni->location }}</p>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
