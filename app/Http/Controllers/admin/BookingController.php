@@ -168,7 +168,7 @@ class BookingController extends Controller
         $validated = $request->validate([
             'custom_destinations' => 'required|string|max:500',
             'travel_date' => 'required|date|after_or_equal:today',
-            'duration_nights' => 'nullable|integer|min:1|max:60',
+            'duration_nights' => 'required|string|max:20',
             'travelers' => 'required|integer|min:1|max:20',
             'budget_range' => 'nullable|string|max:50',
             'interests' => 'nullable|array',
