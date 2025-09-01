@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('destination_id')->nullable();
             $table->string('destination_name')->nullable();
             $table->date('travel_date');
-            $table->string('duration_nights');
+            $table->string('duration_nights')->nullable();
             $table->string('package_type')->default('regular');
 
             // Informasi Pengguna
