@@ -241,38 +241,55 @@ class BookingController extends Controller
 
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
-        try {
-            $response = Http::timeout(15)->post($url, [
-                'chat_id' => $chatId,
-                'text' => $message,
-                'parse_mode' => 'HTML',
-                'disable_web_page_preview' => true,
-            ]);
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML',
+            'disable_web_page_preview' => true,
+        ];
 
-            if ($response->successful() && $response->json('ok') === true) {
-                Log::info('✅ Telegram Notification Sent Successfully', [
-                    'chat_id' => $chatId,
-                    'message_preview' => substr(strip_tags($message), 0, 100) . '...'
-                ]);
-                return true;
-            } else {
-                $errorCode = $response->json('error_code');
-                $description = $response->json('description');
-                Log::error('❌ Telegram API Error', [
-                    'error_code' => $errorCode,
-                    'description' => $description,
-                    'chat_id' => $chatId,
-                    'url' => $url
-                ]);
-                return false;
-            }
-        } catch (\Exception $e) {
-            // 🔴 Cetak error jaringan (timeout, SSL, blocked, dll)
-            Log::error('🚨 Telegram Notification Failed (Network/Connection)', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'chat_id' => $chatId
+        // Use curl instead of Http::post()
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query($data),
+            CURLOPT_TIMEOUT => 15,
+            CURLOPT_SSL_VERIFYPEER => false, // ⚠️ Hanya untuk debug / server tidak aman
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_USERAGENT => 'Laravel Booking System',
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($error) {
+            Log::error('❌ Telegram Notification Failed (cURL)', [
+                'error' => $error,
+                'message' => $message,
+                'chat_id' => $chatId,
+            ]);
+            return false;
+        }
+
+        $result = json_decode($response, true);
+
+        if ($httpCode == 200 && $result['ok'] === true) {
+            Log::info('✅ Telegram Notification Sent Successfully', [
+                'chat_id' => $chatId,
+                'message_preview' => substr(strip_tags($message), 0, 100) . '...'
+            ]);
+            return true;
+        } else {
+            Log::error('❌ Telegram API Error', [
+                'error_code' => $result['error_code'] ?? null,
+                'description' => $result['description'] ?? null,
+                'http_code' => $httpCode,
+                'message' => $message,
+                'chat_id' => $chatId,
             ]);
             return false;
         }
