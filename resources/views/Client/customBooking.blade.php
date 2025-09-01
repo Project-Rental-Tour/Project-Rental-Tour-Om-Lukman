@@ -53,10 +53,20 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Duration (Nights) <span class="text-red-500">*</span>
+                            Trip Duration <span class="text-red-500">*</span>
                         </label>
-                        <input type="number" name="duration_nights" min="1" max="60" placeholder="e.g. 5"
-                            class="w-full p-3 border border-gray-300 rounded-lg  focus:border-blue-500" required>
+                        <input type="text" name="duration_nights" placeholder="e.g. 2d 3n, 5n, or 1d"
+                            pattern="(\d+\s*d)?\s*(\d+\s*n)?"
+                            title="Use d for days and n for nights. Example: 2d 3n, 5n, 1d"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Specify duration using <code class="bg-gray-100 px-1 py-0.5 rounded">d</code> for days and <code
+                                class="bg-gray-100 px-1 py-0.5 rounded">n</code> for nights.
+                            Examples: <code class="bg-gray-100 px-1 py-0.5 rounded">1d 2n</code>, <code
+                                class="bg-gray-100 px-1 py-0.5 rounded">3d</code>, <code
+                                class="bg-gray-100 px-1 py-0.5 rounded">5n</code>.
+                        </p>
                     </div>
                 </div>
 
@@ -379,7 +389,7 @@
                         </p>
                     </div>
 
-                    <div class="w-full">
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Country <span class="text-red-500">*</span>
                         </label>
