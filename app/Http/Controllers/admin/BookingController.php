@@ -236,8 +236,8 @@ class BookingController extends Controller
 
     public function sendTelegramNotification($message)
     {
-        $token = env('TELEGRAM_BOT_TOKEN');
-        $chatId = env('TELEGRAM_CHAT_ID');
+        $token = config('telegram.bot_token');
+        $chatId = config('telegram.chat_id');
 
         $url = "https://api.telegram.org/bot{$token}/sendMessage";
 
