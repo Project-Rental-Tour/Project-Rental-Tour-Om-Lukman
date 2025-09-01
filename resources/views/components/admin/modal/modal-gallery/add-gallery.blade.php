@@ -14,8 +14,8 @@
         </div>
 
         <div class="p-6">
-            <form class="grid gap-6 md:grid-cols-5" id="add-form" enctype="multipart/form-data"
-                action="{{route('manage-gallery.store')}}" method="POST">
+            <form class="grid gap-6 md:grid-cols-5" id="add-form" action="{{route('manage-gallery.store')}}"
+                method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="space-y-4 md:col-span-3">
