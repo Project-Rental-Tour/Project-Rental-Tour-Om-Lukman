@@ -7,85 +7,64 @@
     font-family: "Poppins";
 }
 
-@layer {
-    :root {
-        /* Color Palette */
-        --color-primary: #799eff;
-        --color-primary-hover: #6a8de8;
-        --color-dark: #1e293b;
-        --color-light: #f8fafc;
-        --color-success: #10b981;
-        --color-warning: #f59e0b;
-        --color-danger: #ef4444;
-
-        /* Additional Colors */
-        --color-mediumWhite: #faf9ee;
-        --color-lightGold: #feffc4;
-        --color-darkGold: #ffbc4c;
-        --color-mediumYellow: #ffde63;
-    }
+/* Text Colors */
+.text-primary {
+    color: #799eff;
+}
+.text-dark {
+    color: #1e293b;
+}
+.text-light {
+    color: #f8fafc;
+}
+.text-success {
+    color: #10b981;
+}
+.text-warning {
+    color: #f59e0b;
+}
+.text-danger {
+    color: #ef4444;
 }
 
-@layer utilities {
-    /* Text Colors */
-    .text-primary {
-        color: var(--color-primary);
-    }
-    .text-dark {
-        color: var(--color-dark);
-    }
-    .text-light {
-        color: var(--color-light);
-    }
-    .text-success {
-        color: var(--color-success);
-    }
-    .text-warning {
-        color: var(--color-warning);
-    }
-    .text-danger {
-        color: var(--color-danger);
-    }
+/* Background Colors */
+.bg-primary {
+    background-color: #799eff;
+}
+.bg-dark {
+    background-color: #1e293b;
+}
+.bg-light {
+    background-color: #f8fafc;
+}
+.bg-success {
+    background-color: #10b981;
+}
+.bg-warning {
+    background-color: #f59e0b;
+}
+.bg-danger {
+    background-color: #ef4444;
+}
+.bg-mediumWhite {
+    background-color: #faf9ee;
+}
+.bg-darkGold {
+    background-color: #ffbc4c;
+}
 
-    /* Background Colors */
-    .bg-primary {
-        background-color: var(--color-primary);
-    }
-    .bg-dark {
-        background-color: var(--color-dark);
-    }
-    .bg-light {
-        background-color: var(--color-light);
-    }
-    .bg-success {
-        background-color: var(--color-success);
-    }
-    .bg-warning {
-        background-color: var(--color-warning);
-    }
-    .bg-danger {
-        background-color: var(--color-danger);
-    }
+/* Hover States */
+.hover-bg-primary:hover {
+    background-color: #6a8de8;
+}
+.hover-text-primary:hover {
+    color: #6a8de8;
+}
 
-    /* Hover States */
-    .hover\:bg-primary:hover {
-        background-color: var(--color-primary-hover);
-    }
-    .hover\:text-primary:hover {
-        color: var(--color-primary-hover);
-    }
-
-    /* Special Colors */
-    .bg-mediumWhite {
-        background-color: var(--color-mediumWhite);
-    }
-    .text-lightGold {
-        color: var(--color-lightGold);
-    }
-    .bg-darkGold {
-        background-color: var(--color-darkGold);
-    }
-    .text-mediumYellow {
-        color: var(--color-mediumYellow);
-    }
+/* Special */
+.text-lightGold {
+    color: #feffc4;
+}
+.text-mediumYellow {
+    color: #ffde63;
 }
