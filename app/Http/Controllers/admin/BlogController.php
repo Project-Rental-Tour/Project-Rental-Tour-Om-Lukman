@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\BlogPost;
+use App\Models\Profile;
 use App\Models\LogActivity;
 
 class BlogController extends Controller
@@ -76,6 +77,9 @@ class BlogController extends Controller
             ->limit(3)
             ->get();
 
+        // Profile User
+        $profiles = Profile::find(1);
+
         // Jika tidak cukup artikel sejenis, ambil dari yang lain
         if ($relatedBlogs->count() < 3) {
             $additional = BlogPost::where('blog_post_id', '!=', $blog->blog_post_id)
@@ -85,7 +89,7 @@ class BlogController extends Controller
             $relatedBlogs = $relatedBlogs->concat($additional);
         }
 
-        return view('Client.detailBlog', compact('blog', 'relatedBlogs'));
+        return view('Client.detailBlog', compact('blog', 'relatedBlogs', 'profiles'));
     }
 
     public function store(Request $request)

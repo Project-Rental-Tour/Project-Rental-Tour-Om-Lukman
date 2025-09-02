@@ -25,7 +25,8 @@
             <!-- Featured Image with Category Badge -->
             <div class="relative rounded-xl overflow-hidden shadow-lg mb-6">
                 @if($blog->featured_image)
-                    <img src="{{ asset($blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-96 object-cover">
+                    <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}"
+                        class="w-full h-96 object-cover">
                 @else
                     <div class="w-full h-96 bg-gray-200 flex items-center justify-center">
                         <i class="fas fa-image text-6xl text-gray-400"></i>
@@ -46,7 +47,8 @@
                     <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
                         <i class="fas fa-user text-gray-600"></i>
                     </div>
-                    <span>By {{ $blog->author }}</span>
+                    {{-- <span>By {{ $blog->author }}</span> --}}
+                    <span>By SEPTEM TOUR</span>
                 </div>
                 <!-- Posted Date -->
                 <div class="flex items-center">
@@ -60,31 +62,6 @@
                 </div>
             </div>
 
-            <!-- Share Buttons -->
-            <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-3">Share this article:</h3>
-                <div class="flex flex-wrap gap-3">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blog.detail-blog', $blog->slug)) }}"
-                        target="_blank"
-                        class="share-btn bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
-                        <i class="fab fa-facebook-f mr-2"></i> Facebook
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('blog.detail-blog', $blog->slug)) }}&text={{ urlencode($blog->title) }}"
-                        target="_blank"
-                        class="share-btn bg-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
-                        <i class="fab fa-twitter mr-2"></i> Twitter
-                    </a>
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(route('blog.detail-blog', $blog->slug)) }}&title={{ urlencode($blog->title) }}"
-                        target="_blank"
-                        class="share-btn bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
-                        <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
-                    </a>
-                    <button onclick="copyLink()"
-                        class="share-btn bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
-                        <i class="fas fa-link mr-2"></i> Copy Link
-                    </button>
-                </div>
-            </div>
         </header>
 
         <!-- Article Content -->
@@ -112,6 +89,10 @@
                     class="share-btn bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
                     <i class="fab fa-linkedin-in mr-2"></i> Share
                 </a>
+                <button onclick="copyLink()"
+                    class="share-btn bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
+                    <i class="fas fa-link mr-2"></i> Copy Link
+                </button>
             </div>
         </div>
 
