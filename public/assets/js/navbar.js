@@ -1,28 +1,32 @@
+// resources/js/navbar.js
 document.addEventListener('DOMContentLoaded', function () {
     const nav = document.querySelector('nav[data-navbar]');
+    if (!nav) return;
+
     const jumbotron = document.getElementById('jumbotron');
     const logoWhite = document.getElementById('logo-white');
     const logoDark = document.getElementById('logo-dark');
-    const links = document.querySelectorAll('nav a');
-    const menuIcon = document.querySelector('nav svg');
-
-    if (!nav) return;
+    const menuToggle = nav.querySelector('[data-collapse-toggle]');
+    const menuIcon = nav.querySelector('svg');
+    const menuTargetId = menuToggle?.getAttribute('aria-controls');
+    const menuTarget = menuTargetId ? document.getElementById(menuTargetId) : null;
 
     let triggerPoint = 0;
     let hasJumbotron = !!jumbotron;
+    let isMobileMenuOpen = false;
 
-    // Jika jumbotron ada, hitung trigger point
+    // Tentukan trigger point
     if (hasJumbotron) {
         triggerPoint = jumbotron.offsetHeight * 0.8;
     } else {
-        // Jika TIDAK ADA jumbotron → langsung pakai navbar putih
+        // Tanpa jumbotron → langsung putih
         nav.classList.add('bg-white', 'shadow-md');
         nav.classList.remove('bg-transparent');
 
         if (logoWhite) logoWhite.classList.add('hidden');
         if (logoDark) logoDark.classList.remove('hidden');
 
-        links.forEach(link => {
+        nav.querySelectorAll('a').forEach(link => {
             link.classList.remove('text-white');
             link.classList.add('text-gray-800');
         });
@@ -33,59 +37,89 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Fungsi update navbar
     function updateNavbar() {
         const scrolled = window.pageYOffset;
 
-        if (hasJumbotron) {
-            if (scrolled > triggerPoint) {
-                // Sudah lewati 80% jumbotron → navbar putih
+        // Jika menu mobile terbuka → paksa jadi putih
+        if (isMobileMenuOpen) {
+            nav.classList.add('bg-white', 'shadow-md');
+            nav.classList.remove('bg-transparent');
+
+            if (logoWhite) logoWhite.classList.add('hidden');
+            if (logoDark) logoDark.classList.remove('hidden');
+
+            nav.querySelectorAll('a').forEach(link => {
+                link.classList.remove('text-white');
+                link.classList.add('text-gray-800');
+            });
+
+            if (menuIcon) {
+                menuIcon.classList.remove('text-white');
+                menuIcon.classList.add('text-gray-800');
+            }
+        } 
+        // Jika tidak terbuka → ikuti scroll
+        else {
+            if (hasJumbotron && scrolled > triggerPoint) {
                 nav.classList.add('bg-white', 'shadow-md');
                 nav.classList.remove('bg-transparent');
-
-                if (logoWhite) logoWhite.classList.add('hidden');
-                if (logoDark) logoDark.classList.remove('hidden');
-
-                links.forEach(link => {
-                    link.classList.remove('text-white');
-                    link.classList.add('text-gray-800');
-                });
-
-                if (menuIcon) {
-                    menuIcon.classList.remove('text-white');
-                    menuIcon.classList.add('text-gray-800');
-                }
             } else {
-                // Masih di atas 80% → navbar transparan
                 nav.classList.remove('bg-white', 'shadow-md');
                 nav.classList.add('bg-transparent');
+            }
 
-                if (logoWhite) logoWhite.classList.remove('hidden');
-                if (logoDark) logoDark.classList.add('hidden');
-
-                links.forEach(link => {
-                    link.classList.add('text-white');
-                    link.classList.remove('text-gray-800');
-                });
-
-                if (menuIcon) {
-                    menuIcon.classList.add('text-white');
-                    menuIcon.classList.remove('text-gray-800');
+            // Update logo & text sesuai posisi scroll
+            if (hasJumbotron) {
+                if (scrolled > triggerPoint) {
+                    if (logoWhite) logoWhite.classList.add('hidden');
+                    if (logoDark) logoDark.classList.remove('hidden');
+                    nav.querySelectorAll('a').forEach(link => {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-gray-800');
+                    });
+                    if (menuIcon) {
+                        menuIcon.classList.remove('text-white');
+                        menuIcon.classList.add('text-gray-800');
+                    }
+                } else {
+                    if (logoWhite) logoWhite.classList.remove('hidden');
+                    if (logoDark) logoDark.classList.add('hidden');
+                    nav.querySelectorAll('a').forEach(link => {
+                        link.classList.add('text-white');
+                        link.classList.remove('text-gray-800');
+                    });
+                    if (menuIcon) {
+                        menuIcon.classList.add('text-white');
+                        menuIcon.classList.remove('text-gray-800');
+                    }
                 }
             }
         }
-        // Jika tidak ada jumbotron, tidak perlu ubah → sudah putih dari awal
     }
 
     // Jalankan saat load
     updateNavbar();
 
-    // Hanya tambahkan event scroll jika ada jumbotron
+    // Scroll listener
     if (hasJumbotron) {
         window.addEventListener('scroll', updateNavbar);
-
         window.addEventListener('resize', function () {
-            const newHeight = jumbotron.offsetHeight;
-            triggerPoint = newHeight * 0.8;
+            triggerPoint = jumbotron.offsetHeight * 0.8;
+            updateNavbar();
+        });
+    }
+
+    // Handle klik hamburger
+    if (menuToggle && menuTarget) {
+        menuToggle.addEventListener('click', function () {
+            // Toggle hidden class
+            menuTarget.classList.toggle('hidden');
+
+            // Update status: jika tidak hidden → terbuka
+            isMobileMenuOpen = !menuTarget.classList.contains('hidden');
+
+            // Update UI
             updateNavbar();
         });
     }
