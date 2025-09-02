@@ -104,7 +104,7 @@
                     <div class="blog-card bg-white rounded-xl shadow-md overflow-hidden">
                         <div class="relative overflow-hidden h-48">
                             @if($related->featured_image)
-                                <img src="{{ asset($related->featured_image) }}" alt="{{ $related->title }}"
+                                <img src="{{ asset('storage/' . $related->featured_image) }}" alt="{{ $related->title }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gray-100 flex items-center justify-center">
