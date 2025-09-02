@@ -132,7 +132,8 @@
                                     <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
                                         <i class="fas fa-user text-gray-600"></i>
                                     </div>
-                                    <span class="text-sm font-medium">{{ $related->author }}</span>
+                                    {{-- <span class="text-sm font-medium">{{ $related->author }}</span> --}}
+                                    <span class="text-sm font-medium">SEPTEM TOUR</span>
                                 </div>
                                 <a href="{{ route('blog.detail-blog', $related->slug) }}"
                                     class="text-blue-600 font-semibold text-sm flex items-center hover:underline">
