@@ -1,6 +1,15 @@
 @extends('_layouts.user')
 
 @section('head')
+    <style>
+        .bg-primary {
+            background-color: #799eff;
+        }
+
+        .text-primary {
+            color: #799eff;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -136,7 +145,7 @@
                                     <span class="text-sm font-medium">SEPTEM TOUR</span>
                                 </div>
                                 <a href="{{ route('blog.detail-blog', $related->slug) }}"
-                                    class="text-blue-600 font-semibold text-sm flex items-center hover:underline">
+                                    class="text-primary font-semibold text-sm flex items-center hover:underline">
                                     Read More
                                     <i class="fas fa-arrow-right ml-2 text-xs"></i>
                                 </a>
