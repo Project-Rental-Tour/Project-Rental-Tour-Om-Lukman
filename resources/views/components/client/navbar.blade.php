@@ -24,10 +24,10 @@
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-6 md:mt-0">
                 <li><a href="{{ route('index') }}"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Home</a></li>
+                <li><a href="#about" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About</a>
                 <li><a href="#destination"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
                 <li><a href="#blog" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Blog</a></li>
-                <li><a href="#about" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About</a>
                 </li>
                 <li><a href="#booking-process"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Booking Guide</a></li>
