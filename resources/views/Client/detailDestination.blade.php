@@ -4,9 +4,9 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section id="jumbotron" class="relative overflow-hidden bg-black/70">
-        <img src="{{ $destination->destination_photo ? asset($destination->destination_photo) : asset('assets/images/placeholder.jpg') }}"
-            alt="{{ $destination->name_package }}"
+    <section class="relative bg-gray-900 text-white" id="jumbotron">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
             class="w-full h-[400px] object-cover object-center transition-opacity duration-500">
 
         <div class="relative container mx-auto px-6 py-24">
