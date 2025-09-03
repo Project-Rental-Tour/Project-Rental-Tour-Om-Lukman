@@ -11,14 +11,14 @@
 
         <!-- Overlay & Konten -->
         <div class="absolute inset-0 flex items-center justify-center px-6">
-            <div class="max-w-3xl text-center text-white">
+            <div class="max-w-3xl">
                 <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
                     {{ ucfirst($destination->category) }} Trip
                 </span>
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ $destination->name_package }}</h1>
-                <p class="text-lg text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
-                <div class="flex flex-wrap items-center gap-4 justify-center text-lg">
-                    <span class="font-bold text-yellow-300">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
+                <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
+                <div class="flex flex-wrap items-center gap-6 text-lg">
+                    <span class="font-bold text-yellow-300 text-2xl">
                         Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
                             class="text-sm font-normal">/person</span>
                     </span>
