@@ -4,26 +4,25 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
-        <img src="{{ $destination->destination_photo ? asset($destination->destination_photo) : asset('assets/images/placeholder.jpg') }}"
-            alt="{{ $destination->name_package }}"
-            class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500">
-        <!-- Overlay Gelap -->
-        <div class="absolute inset-0 bg-black opacity-60"></div>
+    <section class="relative bg-gray-900 text-white" id="jumbotron">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
+            class="inset-0 w-full h-full object-cover object-center transition-opacity duration-500">
 
-        <!-- Konten -->
-        <div class="container mx-auto px-6 relative z-20 text-center text-white">
-            <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
-                {{ ucfirst($destination->category) }} Trip
-            </span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
-            <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
-            <div class="flex flex-wrap items-center gap-6 text-lg">
-                <span class="font-bold text-yellow-300 text-2xl">
-                    Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
-                        class="text-sm font-normal">/person</span>
+        <div class="relative container mx-auto px-6 py-24">
+            <div class="max-w-3xl">
+                <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
+                    {{ ucfirst($destination->category) }} Trip
                 </span>
-                <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }} Level</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
+                <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
+                <div class="flex flex-wrap items-center gap-6 text-lg">
+                    <span class="font-bold text-yellow-300 text-2xl">
+                        Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
+                            class="text-sm font-normal">/person</span>
+                    </span>
+                    <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }} Level</span>
+                </div>
             </div>
         </div>
     </section>
@@ -54,7 +53,10 @@
                 <ul class="text-sm text-gray-700 space-y-1">
                     @foreach(explode(',', $destination->include) as $item)
                         @if(trim($item) && $loop->iteration <= 4)
-                            <li>✓ {{ Str::limit(trim($item), 50) }}</li>
+                            <li class="text-gray-700 flex items-start">
+    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 mt-1"></span>
+    {{ trim($item) }}
+</li>
                         @endif
                     @endforeach
                 </ul>
@@ -149,8 +151,8 @@
                             <ul class="space-y-2">
                                 @foreach(explode(',', $destination->include) as $item)
                                     @if(trim($item))
-                                        <li class="text-gray-700 flex items-center">
-                                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                        <li class="text-gray-700 flex items-start">
+                                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 mt-1"></span>
                                             {{ trim($item) }}
                                         </li>
                                     @endif
@@ -170,8 +172,8 @@
                             <ul class="space-y-2">
                                 @foreach(explode(',', $destination->exclude) as $item)
                                     @if(trim($item))
-                                        <li class="text-gray-700 flex items-center">
-                                            <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                        <li class="text-gray-700 flex items-start">
+                                            <span class="w-2 h-2 bg-red-500 rounded-full mr-2 mt-1"></span>
                                             {{ trim($item) }}
                                         </li>
                                     @endif
