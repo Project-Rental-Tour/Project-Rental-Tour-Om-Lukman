@@ -4,7 +4,7 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section class="relative bg-gray-900 text-white h-96" id="jumbotron">
+    <section class="relative bg-gray-900 text-white h-1/2" id="jumbotron">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
             class="w-full h-full object-cover object-center">
