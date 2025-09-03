@@ -14,16 +14,26 @@ use App\Models\Profile;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = BlogPost::orderBy('created_at', 'desc')->get();
         $testimonials = Testimonial::orderBy('created_at')->get();
         $galleries = Gallery::orderBy('created_at')->get();
         $destinations = Destination::orderBy('created_at')->get();
         $profiles = Profile::find(1);
 
         $latestGalleries = Gallery::orderBy('created_at', 'desc')->take(3)->get();
-        $types = BlogPost::select('type')->distinct()->pluck('type');
+        $query = BlogPost::query();
+
+        // Filter by type jika ada
+        if ($request->filled('type')) {
+            $query->where('type', 'like', '%' . $request->type . '%');
+        }
+
+        // Ambil 3 terbaru
+        $blogs = $query->latest()->take(3)->get();
+
+        // Untuk filter button
+        $types = BlogPost::whereNotNull('type')->distinct()->pluck('type');
 
         return view('Client.Home', compact('blogs', 'types', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
     }
