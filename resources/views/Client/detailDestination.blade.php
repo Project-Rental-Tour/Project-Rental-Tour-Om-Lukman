@@ -9,7 +9,7 @@
         <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
             class="w-full h-full object-cover object-center">
 
-        <div class="absolute container mx-auto px-6 -top-10">
+        <div class="absolute container mx-auto px-6 bottom-10">
             <div class="max-w-3xl">
                 <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
                     {{ ucfirst($destination->category) }} Trip
