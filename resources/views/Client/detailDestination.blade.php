@@ -4,25 +4,26 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section class="relative bg-gray-900 text-white" id="jumbotron">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-            class="w-full h-96 object-cover object-center">
+    <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+        <img src="{{ $destination->destination_photo ? asset($destination->destination_photo) : asset('assets/images/placeholder.jpg') }}"
+            alt="{{ $destination->name_package }}"
+            class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500">
+        <!-- Overlay Gelap -->
+        <div class="absolute inset-0 bg-black opacity-60"></div>
 
-        <div class="relative container mx-auto px-6 py-24">
-            <div class="max-w-3xl">
-                <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
-                    {{ ucfirst($destination->category) }} Trip
+        <!-- Konten -->
+        <div class="container mx-auto px-6 relative z-20 text-center text-white">
+            <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
+                {{ ucfirst($destination->category) }} Trip
+            </span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
+            <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
+            <div class="flex flex-wrap items-center gap-6 text-lg">
+                <span class="font-bold text-yellow-300 text-2xl">
+                    Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
+                        class="text-sm font-normal">/person</span>
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
-                <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
-                <div class="flex flex-wrap items-center gap-6 text-lg">
-                    <span class="font-bold text-yellow-300 text-2xl">
-                        Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
-                            class="text-sm font-normal">/person</span>
-                    </span>
-                    <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }} Level</span>
-                </div>
+                <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }} Level</span>
             </div>
         </div>
     </section>
@@ -51,7 +52,7 @@
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">
                 <h4 class="font-semibold text-gray-800">What's Included?</h4>
                 <ul class="text-sm text-gray-700 space-y-1">
-                    @foreach(explode("\n", $destination->include) as $item)
+                    @foreach(explode(',', $destination->include) as $item)
                         @if(trim($item) && $loop->iteration <= 4)
                             <li>✓ {{ Str::limit(trim($item), 50) }}</li>
                         @endif
@@ -146,7 +147,7 @@
                                 Included
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode("\n", $destination->include) as $item)
+                                @foreach(explode(',', $destination->include) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-center">
                                             <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
@@ -167,7 +168,7 @@
                                 Not Included
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode("\n", $destination->exclude) as $item)
+                                @foreach(explode(',', $destination->exclude) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-center">
                                             <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
