@@ -4,20 +4,21 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section class="relative bg-gray-900 text-white" id="jumbotron">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-            class="inset-0 w-full h-full object-fit object-center transition-opacity duration-500">
+    <section id="jumbotron" class="relative overflow-hidden bg-black/70">
+        <img src="{{ $destination->destination_photo ? asset($destination->destination_photo) : asset('assets/images/placeholder.jpg') }}"
+            alt="{{ $destination->name_package }}"
+            class="w-full h-[400px] object-cover object-center transition-opacity duration-500">
 
-        <div class="relative container mx-auto px-6 py-24">
-            <div class="max-w-3xl">
+        <!-- Overlay & Konten -->
+        <div class="absolute inset-0 flex items-center justify-center px-6">
+            <div class="max-w-3xl text-center text-white">
                 <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
                     {{ ucfirst($destination->category) }} Trip
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
-                <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
-                <div class="flex flex-wrap items-center gap-6 text-lg">
-                    <span class="font-bold text-yellow-300 text-2xl">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ $destination->name_package }}</h1>
+                <p class="text-lg text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
+                <div class="flex flex-wrap items-center gap-4 justify-center text-lg">
+                    <span class="font-bold text-yellow-300">
                         Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
                             class="text-sm font-normal">/person</span>
                     </span>
