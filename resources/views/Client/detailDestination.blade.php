@@ -54,9 +54,9 @@
                     @foreach(explode(',', $destination->include) as $item)
                         @if(trim($item) && $loop->iteration <= 4)
                             <li class="text-gray-700 flex items-start">
-    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 mt-1"></span>
-    {{ trim($item) }}
-</li>
+                                ✓
+                                {{ trim($item) }}
+                            </li>
                         @endif
                     @endforeach
                 </ul>
