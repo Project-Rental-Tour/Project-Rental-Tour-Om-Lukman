@@ -7,7 +7,7 @@
     <section class="relative bg-gray-900 text-white" id="jumbotron">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-            class="inset-0 w-full h-full object-cover object-center transition-opacity duration-500">
+            class="inset-0 w-full h-full object-fit object-center transition-opacity duration-500">
 
         <div class="relative container mx-auto px-6 py-24">
             <div class="max-w-3xl">
@@ -51,7 +51,7 @@
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">
                 <h4 class="font-semibold text-gray-800">What's Included?</h4>
                 <ul class="text-sm text-gray-700 space-y-1">
-                    @foreach(explode(',', $destination->include) as $item)
+                    @foreach(explode('.', $destination->include) as $item)
                         @if(trim($item) && $loop->iteration <= 4)
                             <li class="text-gray-700 flex items-start">
                                 ✓
@@ -149,7 +149,7 @@
                                 Included
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode(',', $destination->include) as $item)
+                                @foreach(explode('.', $destination->include) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-start">
                                             <span class="w-2 h-2 bg-green-500 rounded-full mr-2 mt-1"></span>
@@ -170,7 +170,7 @@
                                 Not Included
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode(',', $destination->exclude) as $item)
+                                @foreach(explode('.', $destination->exclude) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-start">
                                             <span class="w-2 h-2 bg-red-500 rounded-full mr-2 mt-1"></span>
