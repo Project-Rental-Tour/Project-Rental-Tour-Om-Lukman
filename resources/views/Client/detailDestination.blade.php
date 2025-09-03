@@ -11,7 +11,7 @@
             class="w-full h-full object-cover object-center transition-opacity duration-500">
 
         <!-- Konten di Pojok Kiri Bawah -->
-        <div class="absolute bottom-20 left-20 text-white z-[9999px] max-w-lg">
+        <div class="absolute bottom-20 left-20 text-white z-[9999] max-w-lg">
             <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
                 {{ ucfirst($destination->category) }} Trip
             </span>
