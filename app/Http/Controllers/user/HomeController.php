@@ -35,6 +35,6 @@ class HomeController extends Controller
         // Untuk filter button
         $types = BlogPost::whereNotNull('type')->distinct()->pluck('type');
 
-        return view('Client.Home', compact('blogs', 'types', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
+        return view('Client.Home', compact('blogs', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
     }
 }
