@@ -4,14 +4,29 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section class="relative bg-gray-900 text-white" id="jumbotron">
+    <section class="relative bg-gray-900 text-white h-96" id="jumbotron">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-            class="w-full h-72 object-cover object-center md:h-80">
+            class="w-full h-full object-cover object-center">
 
-        <div class="relative container mx-auto px-6 py-16">
-            <h1 class="text-3xl md:text-4xl font-bold">Booking: {{ $destination->name_package }}</h1>
-            <p class="text-blue-200 mt-2">{{ $destination->place }} • {{ $destination->time }}</p>
+        <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl">
+                    <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
+                        {{ ucfirst($destination->category) }} Trip
+                    </span>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
+                    <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
+                    <div class="flex flex-wrap items-center gap-6 text-lg">
+                        <span class="font-bold text-yellow-300 text-2xl">
+                            Rp.{{ number_format($destination->price, 0, ',', '.') }} <span
+                                class="text-sm font-normal">/person</span>
+                        </span>
+                        <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }}
+                            Level</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
