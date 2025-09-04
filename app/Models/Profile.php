@@ -9,6 +9,7 @@ class Profile extends Model
     protected $table = 'profiles';
 
     protected $primaryKey = 'profile_id';
+    public $incrementing = true;
 
     protected $fillable = [
         'website_name',

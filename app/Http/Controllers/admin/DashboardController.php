@@ -84,7 +84,7 @@ class DashboardController extends Controller
 
         // validasi
         $request->validate([
-            'website_name' => 'required|string|max:255',
+            'website_name' => 'nullable|string|max:255',
             'website_logo_light' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'website_logo_dark' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'jumbotron_heading' => 'nullable|string|max:255',
@@ -125,21 +125,25 @@ class DashboardController extends Controller
             $profile->jumbotron_image = $request->file('jumbotron_image')->store('jumbotrons', 'public');
         }
 
-        // isi field lain
-        $profile->website_name = $request->website_name;
-        $profile->jumbotron_heading = $request->jumbotron_heading;
-        $profile->jumbotron_subheading = $request->jumbotron_subheading;
-        $profile->about_heading = $request->about_heading;
-        $profile->about_description = $request->about_description;
-        $profile->address = $request->address;
-        $profile->contact_email = $request->contact_email;
-        $profile->phone_number = $request->phone_number;
-        $profile->facebook_link = $request->facebook_link;
-        $profile->instagram_link = $request->instagram_link;
-        $profile->operating_hours = $request->operating_hours;
+        try {
+            // isi field lain
+            $profile->website_name = $request->website_name;
+            $profile->jumbotron_heading = $request->jumbotron_heading;
+            $profile->jumbotron_subheading = $request->jumbotron_subheading;
+            $profile->about_heading = $request->about_heading;
+            $profile->about_description = $request->about_description;
+            $profile->address = $request->address;
+            $profile->contact_email = $request->contact_email;
+            $profile->phone_number = $request->phone_number;
+            $profile->facebook_link = $request->facebook_link;
+            $profile->instagram_link = $request->instagram_link;
+            $profile->operating_hours = $request->operating_hours;
 
-        $profile->save();
+            $profile->save();
 
-        return redirect()->route('dashboard.index')->with('success', 'Profile berhasil diperbarui');
+            return redirect()->route('dashboard.index')->with('toast', ['type' => 'success', 'message' => 'Success update profile']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('toast', ['type' => 'danger', 'message' => 'Cant update profile because $e->message()']);
+        }
     }
 }

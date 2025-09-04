@@ -16,7 +16,7 @@
     <!-- Hero Section -->
     <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
         <img 
-            src="{{ optional($profiles)->background_image ? asset(optional($profile)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
+            src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
             alt="Travel Destination"
             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 transition-opacity duration-500">
 
@@ -25,7 +25,7 @@
                 {{ optional($profiles)->jumbotron_heading ?? "Let's Journey and Discover a Place" }}
             </h1>
             <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up" style="transition-delay: 0.2s">
-                {{ optional($profiles)->jumbotron_subheading ?? "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s."}}
+                {{ optional($profiles)->jumbotron_subheading ?? "Discover the world's hidden gems and create unforgettable memories through our meticulously crafted travel experiences, designed for those who seek authentic adventures and cultural immersion beyond the ordinary tourist path." }}
             </p>
             <a href="#destination"
                 class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-full hover-bg-primary transition-transform hover:scale-105 shadow-lg animate-fade-up"

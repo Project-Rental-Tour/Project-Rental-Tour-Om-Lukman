@@ -19,7 +19,9 @@ class HomeController extends Controller
         $testimonials = Testimonial::orderBy('created_at')->get();
         $galleries = Gallery::orderBy('created_at')->get();
         $destinations = Destination::orderBy('created_at')->get();
-        $profiles = Profile::find(1);
+
+        // Gunakan first() sebagai fallback jika find(1) tidak ada
+        $profiles = Profile::find(1) ?? Profile::first();
 
         $latestGalleries = Gallery::orderBy('created_at', 'desc')->take(3)->get();
         $query = BlogPost::query();
