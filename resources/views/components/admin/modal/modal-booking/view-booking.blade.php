@@ -61,7 +61,11 @@
                             <p><strong>Duration:</strong> {{ $booking->duration_nights ?? 'Not specified' }} nights</p>
                             <p><strong>Budget:</strong> {{ $booking->budget_range ?? 'Not specified' }}</p>
                             <p><strong>Interests:</strong>
-                                {{ $booking->interests ? implode(', ', json_decode($booking->interests, true)) : 'Not specified' }}
+                                @forelse($booking->interests as $interest)
+                                    <span class="badge">{{ $interest }}</span>
+                                @empty
+                                    <span class="text-gray-500">Tidak ada minat</span>
+                                @endforelse
                             </p>
                         </div>
                     </div>

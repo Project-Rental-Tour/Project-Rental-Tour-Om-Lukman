@@ -203,7 +203,9 @@ class BookingController extends Controller
         ]);
 
         $fullName = $booking->first_name . ' ' . $booking->last_name;
-        $interests = $booking->interests ? implode(', ', $booking->interests) : 'Not specified';
+        $interests = collect($booking->interests)->isNotEmpty()
+            ? collect($booking->interests)->map(fn($i) => htmlspecialchars($i))->join(', ')
+            : 'Not specified';
 
         LogActivity::create([
             'username' => $fullName,

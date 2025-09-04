@@ -29,7 +29,8 @@ class Booking extends Model
     ];
 
     protected $casts = [
-        'interests' => 'json',
+        'interests' => 'array',
+
     ];
 
     public $timestamps = true;
