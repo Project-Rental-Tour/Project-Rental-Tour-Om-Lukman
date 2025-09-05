@@ -27,8 +27,12 @@
         <div class="grid gap-6 md:grid-cols-2">
             <!-- Image -->
             <div class="rounded-lg overflow-hidden border border-gray-200 shadow-md">
-                <img src="{{ asset('storage/' . $blogPost->featured_image) }}" alt="{{ $blogPost->title }}"
-                    class="w-full h-64 object-cover">
+                <img 
+                    src="{{ asset('storage/' . $blogPost->featured_image) }}" 
+                    alt="{{ $blogPost->title }}"
+                    class="w-full h-64 object-cover"
+                    onerror="this.src=''; this.alt='Image not found';"
+                >
             </div>
 
             <!-- Details -->

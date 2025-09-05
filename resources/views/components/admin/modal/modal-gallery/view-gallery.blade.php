@@ -32,8 +32,12 @@
 
                 <div class="md:col-span-2 flex flex-col items-center justify-center">
                     <div class="w-60 h-60 rounded-lg overflow-hidden border border-gray-200">
-                        <img src="{{ asset($gallery->gallery_photo) }}" alt="Gallery Image"
-                            class="w-full h-full object-cover">
+                        <img 
+                            src="{{ asset($gallery->gallery_photo) }}" 
+                            alt="Gallery Image"
+                            class="w-full h-full object-cover"
+                            onerror="this.src=''; this.alt='Image not found';"
+                        >
                     </div>
                 </div>
             </div>

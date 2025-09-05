@@ -18,7 +18,6 @@
         <!-- Statistik Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Total Users Card -->
-            <!-- Total Users Card -->
             <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500 mb-2">Total Users</p>
@@ -249,21 +248,67 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo (Light)</label>
-                        <input type="file" name="website_logo_light"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        <input 
+                            id="featured_image" 
+                            type="file" 
+                            name="website_logo_light" 
+                            accept="image/*"
+                            data-preview="previewPhoto"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                        >
                         @if(!empty($profile->website_logo_light))
-                            <img src="{{ asset('storage/' . $profile->website_logo_light) }}"
-                                class="h-12 mt-2 rounded-md border">
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img src="{{ asset('storage/' . $profile->website_logo_light) }}"
+                                    id="previewPhoto"
+                                    class="h-full mt-2 rounded-md"
+                                    data-original-src="{{ asset('storage/' . $profile->website_logo_light) }}"
+                                >
+                            </div>
+                        @else
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img 
+                                    id="previewPhoto" 
+                                    src="" 
+                                    alt="Preview" 
+                                    class="h-full mt-2 rounded-md hidden"
+                                >
+                            </div>
+                            <span id="placeholder-preview-logo-light" class="text-gray-400 text-sm">No image</span>
                         @endif
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Website Logo (Dark)</label>
-                        <input type="file" name="website_logo_dark"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        <input 
+                            id="featured_image" 
+                            type="file" 
+                            name="website_logo_dark" 
+                            accept="image/*"
+                            data-preview="previewPhoto"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                        >
                         @if(!empty($profile->website_logo_dark))
-                            <img src="{{ asset('storage/' . $profile->website_logo_dark) }}"
-                                class="h-12 mt-2 rounded-md border bg-gray-800 p-2">
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img src="{{ asset('storage/' . $profile->website_logo_dark) }}"
+                                    id="previewPhoto"
+                                    class="h-full mt-2 rounded-md bg-gray-800 p-2"
+                                    data-original-src="{{ asset('storage/' . $profile->website_logo_dark) }}"
+                                >
+                            </div>
+                        @else
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img 
+                                    id="previewPhoto" 
+                                    src="" 
+                                    alt="Preview" 
+                                    class="h-full mt-2 rounded-md bg-gray-800 p-2 hidden"
+                                >
+                            </div>
+                            <span id="placeholder-preview-logo-dark" class="text-gray-400 text-sm">No image</span>
                         @endif
                     </div>
 
@@ -284,10 +329,34 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Image Jumbotron</label>
-                        <input type="file" name="jumbotron_image"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                        <input 
+                            id="featured_image" 
+                            type="file" 
+                            name="jumbotron_image" 
+                            accept="image/*"
+                            data-preview="previewPhoto"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                        >
                         @if(!empty($profile->jumbotron_image))
-                            <img src="{{ asset('storage/' . $profile->jumbotron_image) }}" class="h-20 mt-2 rounded-md border">
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img src="{{ asset('storage/' . $profile->jumbotron_image) }}"
+                                    id="previewPhoton"
+                                    class="h-20 mt-2 rounded-md"
+                                    data-original-src="{{ asset('storage/' . $profile->jumbotron_image) }}"
+                                >
+                            </div>
+                        @else
+                            <div
+                                class="w-full mt-2 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                                <img 
+                                    id="previewPhoto" 
+                                    src="" 
+                                    alt="Preview" 
+                                    class="h-20 mt-2 rounded-md hidden"
+                                >
+                            </div>
+                            <span id="placeholder-preview-jumbotron" class="text-gray-400 text-sm">No image</span>
                         @endif
                     </div>
 

@@ -80,8 +80,15 @@
                     <label for="edit-featured_image" class="block mb-1 text-sm font-medium text-gray-700">
                         Featured Image
                     </label>
-                    <input type="file" id="edit-featured_image" name="featured_image" accept="image/*"
-                        class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <input 
+                        type="file" 
+                        id="edit-featured_image" 
+                        name="featured_image" 
+                        accept="image/*"
+                        data-original-src="{{ asset('storage/' . $blogPost->featured_image) }}"
+                        data-preview="edit-previewImage"
+                        class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
                     <p class="mt-1 text-sm text-gray-500">
                         Current: <a href="{{ asset('storage/' . $blogPost->featured_image) }}" target="_blank"
                             class="text-blue-600 hover:underline">View Image</a>
@@ -92,8 +99,13 @@
                 <div class="flex flex-col items-center justify-center mt-4">
                     <div
                         class="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
-                        <img id="edit-previewImage" src="{{ asset('storage/' . $blogPost->featured_image) }}"
-                            alt="Preview" class="w-full h-full object-cover rounded-lg">
+                        <img 
+                            id="edit-previewImage" 
+                            src="{{ asset('storage/' . $blogPost->featured_image) }}" 
+                            alt="Preview" 
+                            class="w-full h-full object-cover rounded-lg"
+                            onerror="this.src=''; this.alt='Image not found';"
+                        >
                     </div>
                 </div>
             </div>

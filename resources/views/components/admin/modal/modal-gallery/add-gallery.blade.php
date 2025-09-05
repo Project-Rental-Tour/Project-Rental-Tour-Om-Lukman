@@ -33,19 +33,23 @@
                         <label for="gallery_photo" class="block mb-1 text-sm font-medium text-gray-700">
                             Image <span class="text-red-500">*</span>
                         </label>
-                        <input type="file" id="gallery_photo" required
+                        <input 
+                            type="file" 
+                            id="gallery_photo" 
+                            name="gallery_photo" 
+                            accept="image/jpeg,image/png,image/jpg,image/gif"
+                            data-preview="previewPhoto"  
+                            required
                             class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            name="gallery_photo" accept="image/jpeg,image/png,image/jpg,image/gif">
+                        >
                         <p class="mt-1 text-sm text-gray-500">JPEG, PNG, JPG, GIF (Max 2MB)</p>
                         <p class="mt-1 text-sm text-red-600 hidden" id="photo-error"></p>
                     </div>
                 </div>
 
                 <div class="md:col-span-2 flex flex-col items-center justify-center">
-                    <div
-                        class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
-                        <img id="previewPhoto" src="" alt="Preview"
-                            class="w-full h-full object-cover rounded-lg hidden">
+                    <div class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
+                        <img id="previewPhoto" src="" alt="Preview" class="w-full h-full object-cover rounded-lg hidden">
                         <span id="placeholderText" class="text-gray-400 text-sm">Image Preview</span>
                     </div>
                 </div>

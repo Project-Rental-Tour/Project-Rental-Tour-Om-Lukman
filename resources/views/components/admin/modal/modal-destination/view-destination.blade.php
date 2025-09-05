@@ -47,8 +47,12 @@
 
                 <!-- Image -->
                 <div class="lg:col-span-2 rounded-xl overflow-hidden shadow-lg border border-gray-200">
-                    <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-                        class="w-full h-64 lg:h-80 object-cover">
+                    <img 
+                        src="{{ asset($destination->destination_photo) }}" 
+                        alt="{{ $destination->name_package }}"
+                        class="w-full h-64 lg:h-80 object-cover"
+                        onerror="this.src=''; this.alt='Image not found';"
+                    >
                 </div>
             </div>
 

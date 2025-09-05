@@ -190,6 +190,7 @@ class DestinationController extends Controller
             'itinerary' => 'nullable|string',
         ]);
 
+
         try {
             $destination = Destination::findOrFail($destination_id);
 

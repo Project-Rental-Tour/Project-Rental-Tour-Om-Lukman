@@ -154,9 +154,29 @@
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Destination Photo</label>
-                        <input type="file" name="destination_photo" accept="image/*"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <input 
+                            type="file" 
+                            name="destination_photo" 
+                            accept="image/*"
+                            data-original-src="{{ asset($destination->destination_photo) }}"
+                            data-preview="edit-preview-photo-{{ $destination->destination_id }}"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                        >
                         <p class="text-xs text-gray-400 mt-1">Upload a new image (jpg, png, max 2MB). Leave empty to keep current.</p>
+
+                        <!-- Preview Container -->
+                        <div class="mt-4 flex flex-col items-center">
+                            <div class="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                                <img 
+                                    id="edit-preview-photo-{{ $destination->destination_id }}" 
+                                    src="{{ asset($destination->destination_photo) }}" 
+                                    alt="Preview" 
+                                    class="w-full h-full object-cover rounded-lg"
+                                    onerror="this.src=''; this.alt='Image not found';"
+                                >
+                            </div>
+                        </div>
+
                         @if($destination->destination_photo)
                             <p class="mt-2 text-sm text-gray-500">
                                 Current: <a href="{{ asset($destination->destination_photo) }}" target="_blank"

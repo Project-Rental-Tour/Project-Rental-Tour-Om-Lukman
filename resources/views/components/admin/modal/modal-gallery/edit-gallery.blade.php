@@ -41,9 +41,15 @@
                             class="block mb-1 text-sm font-medium text-gray-700">
                             Image (Leave empty to keep current)
                         </label>
-                        <input type="file" id="edit-gallery_photo-{{ $gallery->gallery_id }}"
+                        <input 
+                            type="file" 
+                            id="edit-gallery_photo-{{ $gallery->gallery_id }}" 
+                            name="gallery_photo" 
+                            accept="image/jpeg,image/png,image/jpg,image/gif"
+                            data-original-src="{{ asset($gallery->gallery_photo) }}"
+                            data-preview="edit-preview-{{ $gallery->gallery_id }}"
                             class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            name="gallery_photo" accept="image/jpeg,image/png,image/jpg,image/gif">
+                        >
                         <p class="mt-1 text-sm text-gray-500">
                             Current:
                             <a href="{{ asset($gallery->gallery_photo) }}" target="_blank"
@@ -60,8 +66,13 @@
                 <div class="md:col-span-2 flex flex-col items-center justify-center">
                     <div
                         class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
-                        <img id="edit-preview-{{ $gallery->gallery_id }}" src="{{ asset($gallery->gallery_photo) }}"
-                            alt="Preview" class="w-full h-full object-cover rounded-lg">
+                        <img 
+                            id="edit-preview-{{ $gallery->gallery_id }}" 
+                            src="{{ asset($gallery->gallery_photo) }}" 
+                            alt="Preview" 
+                            class="w-full h-full object-cover rounded-lg"
+                            onerror="this.src=''; this.alt='Image not found';"
+                        >
                     </div>
                 </div>
 

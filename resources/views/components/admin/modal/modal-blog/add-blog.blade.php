@@ -69,8 +69,16 @@
                     <label for="featured_image" class="block mb-1 text-sm font-medium text-gray-700">
                         Featured Image <span class="text-red-500">*</span>
                     </label>
-                    <input type="file" id="featured_image" name="featured_image" accept="image/*" required
-                        class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <!-- Tambahkan data-preview agar JS bisa deteksi -->
+                    <input 
+                        type="file" 
+                        id="featured_image" 
+                        name="featured_image" 
+                        accept="image/*" 
+                        required
+                        data-preview="previewPhoto"
+                        class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
                     <p class="mt-1 text-sm text-gray-500">JPEG, PNG, JPG, GIF (Max 2MB)</p>
                     <p class="mt-1 text-sm text-red-600 hidden" id="featured_image-error"></p>
                 </div>
