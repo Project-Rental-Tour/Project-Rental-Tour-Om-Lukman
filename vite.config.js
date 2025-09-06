@@ -10,4 +10,15 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        minify: true,
+        sourcemap: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['swiper', 'flowbite']
+                }
+            }
+        }
+    }
 })

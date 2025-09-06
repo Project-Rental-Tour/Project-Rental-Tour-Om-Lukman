@@ -34,7 +34,7 @@
             <!-- Featured Image with Category Badge -->
             <div class="relative rounded-xl overflow-hidden shadow-lg mb-6">
                 @if($blog->featured_image)
-                    <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}"
+                    <img loading="lazy" src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}"
                         class="w-full h-96 object-cover">
                 @else
                     <div class="w-full h-96 bg-gray-200 flex items-center justify-center">
@@ -113,7 +113,7 @@
                     <div class="blog-card bg-white rounded-xl shadow-md overflow-hidden">
                         <div class="relative overflow-hidden h-48">
                             @if($related->featured_image)
-                                <img src="{{ asset('storage/' . $related->featured_image) }}" alt="{{ $related->title }}"
+                                <img loading="lazy" src="{{ asset('storage/' . $related->featured_image) }}" alt="{{ $related->title }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gray-100 flex items-center justify-center">

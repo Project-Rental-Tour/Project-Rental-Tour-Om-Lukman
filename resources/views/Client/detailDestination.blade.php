@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section class="relative bg-gray-900 text-white h-96" id="jumbotron">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
+        <img loading="lazy" src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
             class="w-full h-full object-cover object-center">
 
         <div class="absolute inset-0 flex items-center">
@@ -48,7 +48,7 @@
         <!-- Gallery + Info -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="md:col-span-2">
-                <img src="{{ asset($destination->destination_photo) }}" alt="Main View"
+                <img loading="lazy" src="{{ asset($destination->destination_photo) }}" alt="Main View"
                     class="w-full h-80 object-cover rounded-xl shadow-lg">
             </div>
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">

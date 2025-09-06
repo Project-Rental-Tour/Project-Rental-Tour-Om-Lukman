@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section class="relative bg-gray-900 text-white h-96" id="jumbotron">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
+        <img loading="lazy" src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
             class="w-full h-full object-cover object-center">
 
         <div class="absolute inset-0 flex items-center">

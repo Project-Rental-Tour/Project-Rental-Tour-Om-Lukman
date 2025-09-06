@@ -15,7 +15,7 @@
 
     <!-- Hero Section -->
     <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
-        <img 
+        <img loading="lazy" 
             src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
             alt="Travel Destination"
             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 transition-opacity duration-500">
@@ -67,7 +67,7 @@
                             <!-- Gambar 1 (col-span-1) -->
                             <div class="col-span-1">
                                 <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img src="{{ asset($gallery->gallery_photo) }}"
+                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
                                         alt="{{ $gallery->title }}"
                                         class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -77,7 +77,7 @@
                             <!-- Gambar 2 (row-span-2) -->
                             <div class="row-span-2">
                                 <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img src="{{ asset($gallery->gallery_photo) }}"
+                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
                                         alt="{{ $gallery->title }}"
                                         class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -87,7 +87,7 @@
                             <!-- Gambar 3 (col-span-1) -->
                             <div class="col-span-1">
                                 <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img src="{{ asset($gallery->gallery_photo) }}"
+                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
                                         alt="{{ $gallery->title }}"
                                         class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -99,7 +99,7 @@
                     <!-- Fallback: Tampilkan gambar dari Unsplash -->
                     <div class="col-span-1">
                         <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
                                 alt="Travel experience"
                                 class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="row-span-2">
                         <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
                                 alt="Mountain adventure"
                                 class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="col-span-1">
                         <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
                                 alt="Beach sunset"
                                 class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -144,7 +144,7 @@
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col h-[350px] animate-fade-up" style="transition-delay: 0.1s">
                     <!-- Gambar -->
                     <div class="relative h-48 overflow-hidden">
-                        <img src="{{ asset($destination->destination_photo) }}"
+                        <img loading="lazy" src="{{ asset($destination->destination_photo) }}"
                              alt="{{ $destination->name_package }}"
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -186,7 +186,7 @@
                  onclick="window.location='{{ route('booking.custom') }}'">
                 <!-- Gambar dengan overlay gelap -->
                 <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
                          alt="Custom Trip"
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -315,7 +315,7 @@
         <div class="columns-2 md:columns-4 gap-4 space-y-4">
             @foreach ($galleries as $gallery)
                 <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
-                    <img 
+                    <img loading="lazy" 
                         src="{{ asset($gallery->gallery_photo) }}" 
                         alt="{{ $gallery->title }}"
                         class="w-full h-full rounded-lg object-auto transition-transform duration-300 group-hover:scale-105"
@@ -350,7 +350,7 @@
                 <div class="blog-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-up">
                     <div class="relative overflow-hidden h-56">
                         @if($blog->featured_image)
-                            <img src="{{ asset('storage/' . $blog->featured_image) }}" 
+                            <img loading="lazy" src="{{ asset('storage/' . $blog->featured_image) }}" 
                                  alt="{{ $blog->title }}" 
                                  class="w-full h-full object-cover">
                         @else
