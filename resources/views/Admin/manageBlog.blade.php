@@ -164,8 +164,9 @@
                                         <div class="text-sm text-center text-gray-900">{{ $blogPost->title }}</div>
                                     </td>
 
-                                    <td class="px-6 py-4 whitespace-nowrap max-w-xs truncate">
-                                        <div class="text-sm text-center text-gray-900">{{ $blogPost->content }}
+                                   <td class="px-6 py-4 max-w-xs truncate">
+                                        <div class="text-sm text-gray-900" title="{{ strip_tags($blogPost->content) }}">
+                                            {{ Str::limit(strip_tags($blogPost->content), 100) }}
                                         </div>
                                     </td>
 

@@ -16,9 +16,6 @@
             <h2 class="text-2xl font-bold mb-2">{{ $blogPost->title }}</h2>
             <p class="text-blue-100">{{ $blogPost->type }}</p>
             <div class="mt-4 flex flex-wrap items-center gap-x-4 text-sm">
-                <span class="bg-blue-700 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded">
-                    {{ ucfirst($blogPost->status ?? 'draft') }}
-                </span>
                 <span class="text-blue-200"><i class="far fa-clock mr-1"></i>
                     {{ $blogPost->created_at->format('M d, Y') }}</span>
             </div>
@@ -78,7 +75,7 @@
         <div class="mt-6">
             <h4 class="font-semibold text-gray-800 mb-2">Content Preview</h4>
             <div class="prose max-w-none text-gray-700 leading-relaxed">
-                {!! Str::limit(strip_tags($blogPost->content), 300) !!}
+                {!! Str::limit(strip_tags($blogPost->content), 300, '...') !!}
                 @if (strlen(strip_tags($blogPost->content)) > 300)
                     <span class="text-gray-500 text-sm">... continue reading</span>
                 @endif

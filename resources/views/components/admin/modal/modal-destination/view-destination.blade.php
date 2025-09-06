@@ -202,7 +202,7 @@
                         Itinerary
                     </h4>
                     <div class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">
-                        {{ strip_tags($destination->itinerary) }}
+                        {!! $destination->itinerary !!}
                     </div>
                 </div>
             @endif

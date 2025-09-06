@@ -133,8 +133,12 @@
                 <div x-show="step === 6" class="grid gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Itinerary</label>
-                        <textarea name="itinerary" rows="6" placeholder="Day 1: Arrival ... Day 2: Adventure ..."
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                        <input id="itinerary" type="hidden" name="itinerary" value="{{ old('itinerary') }}">
+                        <trix-editor 
+                            input="itinerary"
+                            class="border border-gray-300 rounded-lg bg-white"
+                            style="min-height: 200px;"
+                        ></trix-editor>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Destination Photo</label>
