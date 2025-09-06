@@ -1,7 +1,7 @@
 @extends('_layouts.user')
 
 @section('head')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         .bg-primary { background-color: #799eff; }
         .text-primary { color: #799eff; }
@@ -530,11 +530,11 @@
     @include('components.client.footer')
 
     @push('scripts')
-        <script src="{{ asset('assets/js/smoothScroll.js') }}" defer></script>
-        <script src="{{ asset('assets/js/swiper.js') }}" defer></script>
-        <script src="{{ asset('assets/js/whatsAppIcon.js') }}" defer></script>
+        <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
+        <script src="{{ asset('assets/js/swiper.js') }}"></script>
+        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
         {{-- <script src="{{ asset('assets/js/filterBlogTravel.js') }}"></script> --}}
-        <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> --}}
     @endpush
 @endsection
