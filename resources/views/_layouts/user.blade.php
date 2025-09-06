@@ -107,7 +107,7 @@
         },
         "telephone": "+628123456789",
         "openingHours": "Mo-Su 08:00-22:00",
-        "priceRange": "Rp200.000 - Rp1.500.000",
+        "priceRange": "Rp3.650.000 - Rp10.000.000",
         "sameAs": [
             "https://www.instagram.com/septemtour",
             "https://www.facebook.com/septemtour"
