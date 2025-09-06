@@ -126,14 +126,14 @@
     @yield('content')
     
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js" defer></script>
     
     <!-- Custom Scripts -->
-    <script src="{{ asset('assets/js/navbar.js') }}"></script>
-    <script src="{{ asset('assets/js/stats.js') }}"></script>
-    <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
+    <script src="{{ asset('assets/js/navbar.js') }}" defer></script>
+    <script src="{{ asset('assets/js/stats.js') }}" defer></script>
+    <script src="{{ asset('assets/js/whatsAppIcon.js') }}" defer></script>
     
     <script>
         // Initialize animations
