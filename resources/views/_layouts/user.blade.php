@@ -87,6 +87,33 @@
             overflow: hidden;
         }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["TravelAgency", "TouristAttraction"],
+        "name": "Septem Tour",
+        "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Gunung Semeru, dan Air Terjun Tumpak Sewu.",
+        "url": "https://www.septemtour.com",,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Malang",
+            "addressRegion": "Jawa Timur",
+            "addressCountry": "ID"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -7.9666,
+            "longitude": 112.6326
+        },
+        "telephone": "+628123456789",
+        "openingHours": "Mo-Su 08:00-22:00",
+        "priceRange": "Rp200.000 - Rp1.500.000",
+        "sameAs": [
+            "https://www.instagram.com/septemtour",
+            "https://www.facebook.com/septemtour"
+        ]
+    }
+    </script>
     
     @stack('styles')
 </head>
@@ -154,6 +181,7 @@
             });
         });
     </script>
+    
     
     @stack('scripts')
 </body>
