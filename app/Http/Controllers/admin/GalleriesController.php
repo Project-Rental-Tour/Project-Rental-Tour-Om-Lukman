@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Gallery;
 use App\Models\LogActivity;
+use App\Models\Profile;
 
 class GalleriesController extends Controller
 {
@@ -21,6 +22,8 @@ class GalleriesController extends Controller
         }
 
         $query = Gallery::query();
+
+        $profiles = Profile::find(1) ?? Profile::first();
 
         // Search
         if ($request->filled('search')) {
@@ -59,7 +62,7 @@ class GalleriesController extends Controller
         ]);
 
         $galleries = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.manageGallery', compact('galleries', 'notifications'));
+        return view('Admin.manageGallery', compact('galleries', 'notifications', 'profiles'));
     }
 
     public function store(Request $request)

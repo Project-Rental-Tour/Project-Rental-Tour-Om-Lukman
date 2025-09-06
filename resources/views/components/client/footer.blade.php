@@ -8,10 +8,10 @@
                     <!-- Logo Section -->
                     <div class="logo-container">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-3 mb-3">
-                            <img src="{{ asset('assets/images/logo/logo-white.png')}}" alt="Septem Tour Logo">
+                            <img src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" alt="Septem Tour Logo">
                         </div>
                         <div class="mb-3">
-                            <h2 class="text-xl font-bold">SEPTEM TOUR</h2>
+                            <h2 class="text-xl font-bold uppercase">{{ optional($profiles)->website_name ?? "SEPTEMTOUR" }}</h2>
                             <p class="text-blue-100 text-sm">Travel & Tour Agency</p>
                         </div>
                     </div>
@@ -24,7 +24,6 @@
                         of the way.
                     </p>
 
-                    <!-- Social Media -->
                     <!-- Social Media -->
                     <div class="flex gap-x-4 mb-6">
                         <a href="{{ optional($profiles)->instagram_link }}"

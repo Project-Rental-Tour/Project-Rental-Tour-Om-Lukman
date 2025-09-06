@@ -263,7 +263,7 @@
                 <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
                     OUR SUCCESS
                 </span>
-                <h3 class="text-4xl font-bold text-gray-900 mb-6">Why Choose {{ optional($profiles)->website_name ?? "Ann Trans"}}</h3>
+                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "SEPTEMTOUR"}}</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto">
                     Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
                 </p>

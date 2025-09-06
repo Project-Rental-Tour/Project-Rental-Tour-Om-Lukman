@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Testimonial;
 use App\Models\LogActivity;
+use App\Models\Profile;
 
 class TestimoniController extends Controller
 {
@@ -22,6 +23,8 @@ class TestimoniController extends Controller
         if (!$currentUser) {
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
+
+        $profiles = Profile::find(1) ?? Profile::first();
 
         $query = Testimonial::query();
 
@@ -71,7 +74,7 @@ class TestimoniController extends Controller
         ]);
 
         $testimonials = $query->paginate(10)->appends($request->except('page'));
-        return view('Admin.manageTestimonial', compact('testimonials', 'notifications'));
+        return view('Admin.manageTestimonial', compact('testimonials', 'notifications', 'profiles'));
     }
 
     /**

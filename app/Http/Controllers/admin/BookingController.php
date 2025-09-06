@@ -28,6 +28,8 @@ class BookingController extends Controller
 
         $query = Booking::query();
 
+        $profiles = Profile::find(1) ?? Profile::first();
+
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
@@ -77,13 +79,13 @@ class BookingController extends Controller
             'action' => 'Viewed Booking list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
         ]);
 
-        return view('Admin.manageBooking', compact('bookings', 'notifications'));
+        return view('Admin.manageBooking', compact('bookings', 'notifications', 'profiles'));
     }
 
     public function showRegularForm($slug)
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
-        $profiles = Profile::find(1);
+        $profiles = Profile::find(1) ?? Profile::first();
 
         return view('Client.regularBooking', compact('destination', 'profiles'));
     }
@@ -91,7 +93,6 @@ class BookingController extends Controller
     public function bookingRegular(Request $request)
     {
         $destination = Destination::findOrFail($request->destination_id);
-        $profiles = Profile::find(1);
 
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
         $nights = $matches[1] ?? null;
@@ -158,7 +159,7 @@ class BookingController extends Controller
 
     public function showCustomForm()
     {
-        $profiles = Profile::find(1);
+        $profiles = Profile::find(1) ?? Profile::first();
 
         return view('Client.customBooking', compact('profiles'));
     }

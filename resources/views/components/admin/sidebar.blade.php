@@ -3,8 +3,12 @@
     aria-label="Sidebar">
     <div class="relative flex h-16 items-center justify-center border-b border-gray-200 px-4">
         <div class="flex items-center">
-            <img src="{{ asset('assets/images/logo/logo-blue.png') }}" alt="" class="w-5.5 h-5.5 mr-2">
-            <span class="ml-2 text-xl font-bold text-gray-900">SEPTEMTOUR</span>
+            <img 
+                src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-dark.png') }}" 
+                alt="Logo" 
+                class="w-6 h-6 mr-2"
+            >
+            <span class="ml-2 text-xl font-bold text-gray-900 uppercase">{{ optional($profiles)->website_name ?? "SEPTEMTOUR"}}</span>
         </div>
         <button id="close-sidebar"
             class="p-2 text-gray-500 rounded-md md:hidden hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"

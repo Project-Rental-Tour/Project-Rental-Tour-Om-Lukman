@@ -22,6 +22,7 @@ class BlogController extends Controller
         }
 
         $query = BlogPost::query();
+        $profiles = Profile::find(1) ?? Profile::first();
 
         // Search
         if ($request->filled('search')) {
@@ -63,7 +64,7 @@ class BlogController extends Controller
         ]);
 
         $blogPosts = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.manageBlog', compact('blogPosts', 'notifications'));
+        return view('Admin.manageBlog', compact('blogPosts', 'notifications', 'profiles'));
     }
 
     public function detailBlog($slug)
@@ -78,7 +79,7 @@ class BlogController extends Controller
             ->get();
 
         // Profile User
-        $profiles = Profile::find(1);
+        $profiles = Profile::find(1) ?? Profile::first();
 
         // Jika tidak cukup artikel sejenis, ambil dari yang lain
         if ($relatedBlogs->count() < 3) {

@@ -25,6 +25,8 @@ class DestinationController extends Controller
 
         $query = Destination::query();
 
+        $profiles = Profile::find(1) ?? Profile::first();
+
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
@@ -73,7 +75,7 @@ class DestinationController extends Controller
         ]);
 
         $destinations = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.manageDestination', compact('destinations', 'notifications'));
+        return view('Admin.manageDestination', compact('destinations', 'notifications', 'profiles'));
     }
 
     public function detailDestination($slug)
@@ -310,9 +312,6 @@ class DestinationController extends Controller
         }
     }
 
-    /**
-     * Bulk delete destinations.
-     */
     /**
      * Bulk delete destinations.
      */

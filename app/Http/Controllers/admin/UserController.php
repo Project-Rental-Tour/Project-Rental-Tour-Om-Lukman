@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\LogActivity;
+use App\Models\Profile;
 
 class UserController extends Controller
 {
@@ -21,6 +22,8 @@ class UserController extends Controller
         }
 
         $query = User::query();
+
+        $profiles = Profile::find(1) ?? Profile::first();
 
         // Search
         if ($request->filled('search')) {
@@ -58,7 +61,7 @@ class UserController extends Controller
         ]);
 
         $users = $query->paginate(25)->appends($request->except('page'));
-        return view('Admin.manageUser', compact('users', 'notifications'));
+        return view('Admin.manageUser', compact('users', 'notifications', 'profiles'));
     }
 
     public function store(Request $request)

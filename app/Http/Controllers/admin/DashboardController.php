@@ -28,6 +28,8 @@ class DashboardController extends Controller
 
         $profile = Profile::first();
 
+        $profiles = Profile::find(1) ?? Profile::first();
+
         // Hitung data dari database
         $totalUsers = User::count();
         $totalDestinations = Destination::count();
@@ -65,7 +67,8 @@ class DashboardController extends Controller
             'recentBookings',
             'recentBlogs',
             'recentActivities',
-            'notifications'
+            'notifications',
+            'profiles'
         ));
     }
 

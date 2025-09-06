@@ -2,9 +2,9 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <!-- Logo -->
         <a href="/" class="flex items-center space-x-3 sm:ml-5">
-            <img id="logo-white" src="{{ asset('assets/images/logo/logo-white.png') }}" alt="Logo White"
+            <img id="logo-white" src="{{ optional($profiles)->website_logo_light ? asset('storage/'. optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" alt="Logo White"
                 class="w-8 h-8 block">
-            <img id="logo-dark" src="{{ asset('assets/images/logo/logo-blue.png') }}" alt="Logo Dark"
+            <img id="logo-dark" src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-blue.png') }}" alt="Logo Dark"
                 class="w-8 h-8 hidden">
         </a>
 
