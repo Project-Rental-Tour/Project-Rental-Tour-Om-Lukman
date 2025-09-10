@@ -444,70 +444,70 @@
                     <p class="text-gray-600 leading-relaxed">
                         {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
                     </p>
-                    <form action="" method="POST" class="space-y-5">
+                     <form action="{{ route('store') }}" method="POST" class="space-y-5">
                         @csrf
 
-                        <!-- Nama Lengkap -->
+                        <!-- Full Name -->
                         <div>
-                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap</label>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
                             <input type="text" id="name" name="name" required
-                                placeholder="Contoh: Budi Santoso"
+                                placeholder="e.g. John Doe"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
                             <input type="email" id="email" name="email" required
-                                placeholder="contoh@domain.com"
+                                placeholder="john@example.com"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
-                        <!-- Nomor Telepon -->
+                        <!-- Phone -->
                         <div>
-                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-1">Nomor Telepon</label>
+                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
                             <input type="tel" id="phone" name="phone"
-                                placeholder="+62 812 3456 7890"
+                                placeholder="+1 (555) 123-4567"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
-                        <!-- Subjek Pesan -->
+                        <!-- Subject -->
                         <div>
-                            <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subjek</label>
+                            <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subject</label>
                             <input type="text" id="subject" name="subject" required
-                                placeholder="Misalnya: Pertanyaan Paket Tour, Kerjasama, dll"
+                                placeholder="e.g. Booking Inquiry, Partnership, Feedback"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
-                        <!-- Perusahaan/Organisasi -->
+                        <!-- Company/Organization -->
                         <div>
-                            <label for="company" class="block text-sm font-semibold text-gray-700 mb-1">Perusahaan/Organisasi (Opsional)</label>
+                            <label for="company" class="block text-sm font-semibold text-gray-700 mb-1">Company/Organization (Optional)</label>
                             <input type="text" id="company" name="company"
-                                placeholder="PT Jalan Jalan Indonesia"
+                                placeholder="TravelEase Inc."
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
-                        <!-- Lokasi/Alamat -->
+                        <!-- Location -->
                         <div>
-                            <label for="location" class="block text-sm font-semibold text-gray-700 mb-1">Lokasi/Alamat Anda</label>
+                            <label for="location" class="block text-sm font-semibold text-gray-700 mb-1">Your Location</label>
                             <input type="text" id="location" name="location"
-                                placeholder="Jakarta, Indonesia"
+                                placeholder="New York, USA"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
                         </div>
 
-                        <!-- Pesan (Textarea) -->
+                        <!-- Message -->
                         <div>
-                            <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Pesan Anda</label>
+                            <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Your Message</label>
                             <textarea id="message" name="message" rows="5" required
-                                    placeholder="Ceritakan kebutuhan Anda secara detail agar kami bisa bantu dengan lebih baik... 🙌"
+                                    placeholder="Tell us how we can help you. The more details, the better! 😊"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md resize-none"></textarea>
                         </div>
 
-                        <!-- Tombol Submit -->
+                        <!-- Submit Button -->
                         <div class="pt-2">
                             <button type="submit"
-                                    class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
-                                📩 Kirim Pesan Sekarang
+                                    class="w-full py-3 px-6 bg-primary text-white font-medium rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                                📩 Send Message Now
                             </button>
                         </div>
                     </form>
