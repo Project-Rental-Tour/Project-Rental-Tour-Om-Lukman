@@ -444,7 +444,7 @@
                     <p class="text-gray-600 leading-relaxed">
                         {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
                     </p>
-                    <form action="{{ route('contact.store') }}" method="POST" class="space-y-4">
+                    <form action="" method="POST" class="space-y-4">
                         @csrf
 
                         <!-- Nama Lengkap -->
