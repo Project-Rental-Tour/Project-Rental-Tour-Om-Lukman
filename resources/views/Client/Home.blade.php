@@ -332,7 +332,7 @@
     </section>
 
     <!-- Blog Section -->
-    <section class="max-w-7xl mx-auto px-6 py-16" id="blog">
+    {{-- <section class="max-w-7xl mx-auto px-6 py-16" id="blog">
         <div class="text-center mb-12 animate-fade-up">
             <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full">
                 TRAVEL INSIGHTS
@@ -397,7 +397,7 @@
                 </div>
             @endforelse
         </div>
-    </section>
+    </section> --}}
 
     <!-- Testimonials Section -->
     <section class="max-w-7xl mx-auto px-6 py-24">
