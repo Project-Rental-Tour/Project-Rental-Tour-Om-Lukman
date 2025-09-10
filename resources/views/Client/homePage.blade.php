@@ -5,6 +5,7 @@
     <style>
         .bg-primary { background-color: #799eff; }
         .text-primary { color: #799eff; }
+        .bg-primary-opacity { background-color: rgba(121, 158, 255, 0.05);}
         .text-white { color: #ffffff; }
         .text-green { color: #10b981; }
     </style>
@@ -77,91 +78,93 @@
     </section>
 
     <!-- About Section -->
-    <section class="max-w-7xl mx-auto px-6 py-24" id="about">
-        <div class="flex flex-col lg:flex-row gap-16 items-center">
-            <div class="lg:w-1/2 space-y-6 animate-fade-up">
-                <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block">
-                    ABOUT US
-                </span>
-                <h3 class="text-4xl font-bold text-gray-900">{{ optional($profiles)->about_heading ?? "Your Journey, Our Passion"}}</h3>
-                <p class="text-gray-600 leading-relaxed">
-                    {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
-                </p>
-                <ul class="space-y-3">
-                    @foreach(['Expert Local Guides', 'Best Price Guarantee', '24/7 Customer Support', 'Sustainable Travel'] as $item)
-                        <li class="flex items-center text-gray-700">
-                            <i class="fas fa-check text-blue-500 mr-3"></i> {{ $item }}
-                        </li>
-                    @endforeach
-                </ul>
-                <button class="bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary transition flex items-center shadow-md hover:shadow-lg">
-                    Explore Our Story <i class="fas fa-arrow-right ml-3"></i>
-                </button>
-            </div>
+    <section class="bg-primary-opacity" id="about">
+        <div class="max-w-7xl mx-auto px-6 py-24">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2 space-y-6 animate-fade-up">
+                    <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block">
+                        ABOUT US
+                    </span>
+                    <h3 class="text-4xl font-bold text-gray-900">{{ optional($profiles)->about_heading ?? "Your Journey, Our Passion"}}</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
+                    </p>
+                    <ul class="space-y-3">
+                        @foreach(['Expert Local Guides', 'Best Price Guarantee', '24/7 Customer Support', 'Sustainable Travel'] as $item)
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-blue-500 mr-3"></i> {{ $item }}
+                            </li>
+                        @endforeach
+                    </ul>
+                    <button class="bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary transition flex items-center shadow-md hover:shadow-lg">
+                        Explore Our Story <i class="fas fa-arrow-right ml-3"></i>
+                    </button>
+                </div>
 
-            <!-- Image Grid -->
-            <div class="lg:w-1/2 grid grid-cols-2 gap-6 animate-fade-up" style="transition-delay: 0.3s">
-                @if($latestGalleries && $latestGalleries->count() > 0)
-                    @foreach ($latestGalleries as $index => $gallery)
-                        @if ($index == 0)
-                            <!-- Gambar 1 (col-span-1) -->
-                            <div class="col-span-1">
-                                <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                        alt="{{ $gallery->title }}"
-                                        class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <!-- Image Grid -->
+                <div class="lg:w-1/2 grid grid-cols-2 gap-6 animate-fade-up" style="transition-delay: 0.3s">
+                    @if($latestGalleries && $latestGalleries->count() > 0)
+                        @foreach ($latestGalleries as $index => $gallery)
+                            @if ($index == 0)
+                                <!-- Gambar 1 (col-span-1) -->
+                                <div class="col-span-1">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        @elseif ($index == 1)
-                            <!-- Gambar 2 (row-span-2) -->
-                            <div class="row-span-2">
-                                <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                        alt="{{ $gallery->title }}"
-                                        class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            @elseif ($index == 1)
+                                <!-- Gambar 2 (row-span-2) -->
+                                <div class="row-span-2">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        @else
-                            <!-- Gambar 3 (col-span-1) -->
-                            <div class="col-span-1">
-                                <div class="relative h-full rounded-2xl overflow-hidden group">
-                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                        alt="{{ $gallery->title }}"
-                                        class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            @else
+                                <!-- Gambar 3 (col-span-1) -->
+                                <div class="col-span-1">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
                                 </div>
+                            @endif
+                        @endforeach
+                    @else
+                        <!-- Fallback: Tampilkan gambar dari Unsplash -->
+                        <div class="col-span-1">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
+                                    alt="Travel experience"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
-                        @endif
-                    @endforeach
-                @else
-                    <!-- Fallback: Tampilkan gambar dari Unsplash -->
-                    <div class="col-span-1">
-                        <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
-                                alt="Travel experience"
-                                class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
-                    </div>
-                    <div class="row-span-2">
-                        <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
-                                alt="Mountain adventure"
-                                class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="row-span-2">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
+                                    alt="Mountain adventure"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="relative h-full rounded-2xl overflow-hidden group">
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
-                                alt="Beach sunset"
-                                class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="col-span-1">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
+                                    alt="Beach sunset"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
             </div>
         </div>
     </section>
@@ -270,29 +273,31 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="max-w-7xl mx-auto px-6 py-24 text-center">
-        <div class="animate-fade-up mb-20">
-            <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
-                KEY STATISTICS
-            </span>
-            <h3 class="text-4xl font-bold text-gray-900 mb-6">Trusted by Thousands</h3>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                Our success is measured by the smiles of our travelers and the milestones we've achieved together.
-            </p>
-        </div>
+    <section class="bg-primary-opacity">
+        <div class="max-w-7xl mx-auto px-6 py-24 text-center">
+            <div class="animate-fade-up mb-20">
+                <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
+                    KEY STATISTICS
+                </span>
+                <h3 class="text-4xl font-bold text-gray-900 mb-6">Trusted by Thousands</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our success is measured by the smiles of our travelers and the milestones we've achieved together.
+                </p>
+            </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            @foreach([
-                ['300+', 'Happy Customers'],
-                ['120+', 'Destinations'],
-                ['98%', 'Satisfaction Rate'],
-                ['15', 'Years Experience']
-            ] as $index => $stat)
-                <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
-                    <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
-                    <div class="text-gray-600">{{ $stat[1] }}</div>
-                </div>
-            @endforeach
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                @foreach([
+                    ['300+', 'Happy Customers'],
+                    ['120+', 'Destinations'],
+                    ['98%', 'Satisfaction Rate'],
+                    ['15', 'Years Experience']
+                ] as $index => $stat)
+                    <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
+                        <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
+                        <div class="text-gray-600">{{ $stat[1] }}</div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -400,53 +405,55 @@
     </section> --}}
 
     <!-- Testimonials Section -->
-    <section class="max-w-7xl mx-auto px-6 py-24">
-        <div class="text-center mb-8 animate-fade-up">
-            <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full">
-                TESTIMONIALS
-            </span>
-            <h3 class="text-4xl font-bold text-gray-900 mt-4 mb-6">What People About Us</h3>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                Discover why our customers love our services and how we've helped  them achieve their travel dreams.
-            </p>
-        </div>
+    <section class="bg-primary-opacity">
+        <div class="max-w-7xl mx-auto px-6 py-24">
+            <div class="text-center mb-8 animate-fade-up">
+                <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full">
+                    TESTIMONIALS
+                </span>
+                <h3 class="text-4xl font-bold text-gray-900 mt-4 mb-6">What People About Us</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Discover why our customers love our services and how we've helped  them achieve their travel dreams.
+                </p>
+            </div>
 
-        <!-- Swiper Container -->
-        <div class="swiper testimonial-swiper">
-            <div class="swiper-wrapper">
-                @foreach($testimonials as $testimoni)
-                    <div class="swiper-slide px-4 py-8">
-                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col min-h-[330px] h-full">
-                            <div class="mb-4 text-blue-500 self-start">
-                                <i class="fas fa-quote-left text-2xl opacity-80"></i>
-                            </div>
+            <!-- Swiper Container -->
+            <div class="swiper testimonial-swiper">
+                <div class="swiper-wrapper">
+                    @foreach($testimonials as $testimoni)
+                        <div class="swiper-slide px-4 py-8">
+                            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col min-h-[330px] h-full">
+                                <div class="mb-4 text-blue-500 self-start">
+                                    <i class="fas fa-quote-left text-2xl opacity-80"></i>
+                                </div>
 
-                            <!-- Rating -->
-                            <div class="flex items-center justify-center mb-4 text-yellow-400">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $testimoni->rating)
-                                        <i class="fas fa-star text-sm"></i>
-                                    @else
-                                        <i class="far fa-star text-sm text-gray-300"></i>
-                                    @endif
-                                @endfor
-                            </div>
+                                <!-- Rating -->
+                                <div class="flex items-center justify-center mb-4 text-yellow-400">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $testimoni->rating)
+                                            <i class="fas fa-star text-sm"></i>
+                                        @else
+                                            <i class="far fa-star text-sm text-gray-300"></i>
+                                        @endif
+                                    @endfor
+                                </div>
 
-                            <!-- Testimonial -->
-                            <p class="text-gray-600 italic flex-grow leading-relaxed text-sm text-center">
-                                {{ $testimoni->content }}
-                            </p>
+                                <!-- Testimonial -->
+                                <p class="text-gray-600 italic flex-grow leading-relaxed text-sm text-center">
+                                    {{ $testimoni->content }}
+                                </p>
 
-                            <!-- Profile -->
-                            <div class="mt-auto text-center w-full">
-                                <div>
-                                    <h4 class="font-semibold text-gray-900 text-sm">{{ $testimoni->name }}</h4>
-                                    <p class="text-gray-500 text-xs">{{ $testimoni->role }}, {{ $testimoni->location }}</p>
+                                <!-- Profile -->
+                                <div class="mt-auto text-center w-full">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ $testimoni->name }}</h4>
+                                        <p class="text-gray-500 text-xs">{{ $testimoni->role }}, {{ $testimoni->location }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
