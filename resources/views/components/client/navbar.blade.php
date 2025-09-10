@@ -28,6 +28,9 @@
                 <li><a href="#destination"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
                 </li>
+                <li><a href="#destination"
+                        class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About Us</a></li>
+                </li>
             </ul>
         </div>
     </div>
