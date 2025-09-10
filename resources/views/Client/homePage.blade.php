@@ -438,19 +438,72 @@
             <div class="flex flex-col lg:flex-row gap-16 items-center">
                 <div class="lg:w-1/2 space-y-6 animate-fade-up">
                     <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block">
-                        ABOUT US
+                        Contact US
                     </span>
                     <h3 class="text-4xl font-bold text-gray-900">{{ optional($profiles)->about_heading ?? "Your Journey, Our Passion"}}</h3>
                     <p class="text-gray-600 leading-relaxed">
                         {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
                     </p>
-                    <ul class="space-y-3">
-                        @foreach(['Expert Local Guides', 'Best Price Guarantee', '24/7 Customer Support', 'Sustainable Travel'] as $item)
-                            <li class="flex items-center text-gray-700">
-                                <i class="fas fa-check text-blue-500 mr-3"></i> {{ $item }}
-                            </li>
-                        @endforeach
-                    </ul>
+                    <form action="{{ route('contact.store') }}" method="POST" class="space-y-4">
+                        @csrf
+
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                            <input type="tel" id="phone" name="phone"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Subjek Pesan -->
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Subjek</label>
+                            <input type="text" id="subject" name="subject" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Perusahaan/Organisasi (opsional) -->
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700">Perusahaan/Organisasi</label>
+                            <input type="text" id="company" name="company"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Lokasi/Alamat -->
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Lokasi/Alamat</label>
+                            <input type="text" id="location" name="location"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Pesan (Textarea) -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Pesan Anda</label>
+                            <textarea id="message" name="message" rows="5" required
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+
+                        <!-- Tombol Submit -->
+                        <div>
+                            <button type="submit"
+                                    class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Kirim Pesan
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Image Grid -->
