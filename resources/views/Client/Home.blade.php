@@ -36,6 +36,46 @@
         </div>
     </section>
 
+    <!-- Why Choose Us Section -->
+    <section class="w-full py-24 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 animate-fade-up">
+                <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
+                    OUR SUCCESS
+                </span>
+                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "SEPTEMTOUR"}}</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                @foreach([
+                    ['Expert Local Guides', 'We partner with knowledgeable local guides who bring destinations to life with authentic stories and insights.', 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'blue'],
+                    ['Competitive Pricing', 'Affordable prices with best value packages for all travelers.', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'yellow'],
+                    ['24/7 Support', 'Round-the-clock customer service to assist you before, during, and after your journey.', 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'green'],
+                    ['Sustainable Travel', 'We promote eco-friendly practices and support local communities in every destination.', 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'red'],
+                    ['Flexible Booking', 'Easy rescheduling and cancellation policies for peace of mind.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'indigo'],
+                    ['Ultimate Flexibility', 'Flexible booking options and customizable travel plans.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'purple']
+                ] as $feature)
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
+                        <div class="flex items-start">
+                            <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
+                                <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section class="max-w-7xl mx-auto px-6 py-24" id="about">
         <div class="flex flex-col lg:flex-row gap-16 items-center">
@@ -253,46 +293,6 @@
                     <div class="text-gray-600">{{ $stat[1] }}</div>
                 </div>
             @endforeach
-        </div>
-    </section>
-
-    <!-- Why Choose Us Section -->
-    <section class="w-full py-24 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20 animate-fade-up">
-                <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
-                    OUR SUCCESS
-                </span>
-                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "SEPTEMTOUR"}}</h3>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                @foreach([
-                    ['Expert Local Guides', 'We partner with knowledgeable local guides who bring destinations to life with authentic stories and insights.', 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'blue'],
-                    ['Competitive Pricing', 'Affordable prices with best value packages for all travelers.', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'yellow'],
-                    ['24/7 Support', 'Round-the-clock customer service to assist you before, during, and after your journey.', 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'green'],
-                    ['Sustainable Travel', 'We promote eco-friendly practices and support local communities in every destination.', 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'red'],
-                    ['Flexible Booking', 'Easy rescheduling and cancellation policies for peace of mind.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'indigo'],
-                    ['Ultimate Flexibility', 'Flexible booking options and customizable travel plans.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'purple']
-                ] as $feature)
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
-                        <div class="flex items-start">
-                            <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
-                                <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
-                                <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
         </div>
     </section>
 
