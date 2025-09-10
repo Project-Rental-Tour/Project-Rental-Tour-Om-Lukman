@@ -96,9 +96,6 @@
                             </li>
                         @endforeach
                     </ul>
-                    <button class="bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary transition flex items-center shadow-md hover:shadow-lg">
-                        Explore Our Story <i class="fas fa-arrow-right ml-3"></i>
-                    </button>
                 </div>
 
                 <!-- Image Grid -->
