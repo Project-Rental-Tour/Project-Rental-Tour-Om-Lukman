@@ -77,95 +77,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="bg-primary-opacity" id="about">
-        <div class="max-w-7xl mx-auto px-6 py-24">
-            <div class="flex flex-col lg:flex-row gap-16 items-center">
-                <div class="lg:w-1/2 space-y-6 animate-fade-up">
-                    <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block">
-                        ABOUT US
-                    </span>
-                    <h3 class="text-4xl font-bold text-gray-900">{{ optional($profiles)->about_heading ?? "Your Journey, Our Passion"}}</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
-                    </p>
-                    <ul class="space-y-3">
-                        @foreach(['Expert Local Guides', 'Best Price Guarantee', '24/7 Customer Support', 'Sustainable Travel'] as $item)
-                            <li class="flex items-center text-gray-700">
-                                <i class="fas fa-check text-blue-500 mr-3"></i> {{ $item }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <!-- Image Grid -->
-                <div class="lg:w-1/2 grid grid-cols-2 gap-6 animate-fade-up" style="transition-delay: 0.3s">
-                    @if($latestGalleries && $latestGalleries->count() > 0)
-                        @foreach ($latestGalleries as $index => $gallery)
-                            @if ($index == 0)
-                                <!-- Gambar 1 (col-span-1) -->
-                                <div class="col-span-1">
-                                    <div class="relative h-full rounded-2xl overflow-hidden group">
-                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                            alt="{{ $gallery->title }}"
-                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    </div>
-                                </div>
-                            @elseif ($index == 1)
-                                <!-- Gambar 2 (row-span-2) -->
-                                <div class="row-span-2">
-                                    <div class="relative h-full rounded-2xl overflow-hidden group">
-                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                            alt="{{ $gallery->title }}"
-                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    </div>
-                                </div>
-                            @else
-                                <!-- Gambar 3 (col-span-1) -->
-                                <div class="col-span-1">
-                                    <div class="relative h-full rounded-2xl overflow-hidden group">
-                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
-                                            alt="{{ $gallery->title }}"
-                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @else
-                        <!-- Fallback: Tampilkan gambar dari Unsplash -->
-                        <div class="col-span-1">
-                            <div class="relative h-full rounded-2xl overflow-hidden group">
-                                <img loading="lazy" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
-                                    alt="Travel experience"
-                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </div>
-                        </div>
-                        <div class="row-span-2">
-                            <div class="relative h-full rounded-2xl overflow-hidden group">
-                                <img loading="lazy" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
-                                    alt="Mountain adventure"
-                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </div>
-                        </div>
-                        <div class="col-span-1">
-                            <div class="relative h-full rounded-2xl overflow-hidden group">
-                                <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
-                                    alt="Beach sunset"
-                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Top Destination Section -->
     <section id="destination" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-20 animate-fade-up">
@@ -517,6 +428,95 @@
                    class="mt-6 inline-flex items-center px-6 py-3 bg-light font-semibold rounded-lg hover:bg-light/80 transition w-full justify-center shadow-md hover:shadow-lg" style="color: #6a8de8;" >
                     Customize Your Trip <i class="fas fa-arrow-right ml-2"></i>
                 </a>
+            </div>
+        </div>
+    </section>
+
+        <!-- About Section -->
+    <section class="bg-primary-opacity" id="about">
+        <div class="max-w-7xl mx-auto px-6 py-24">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2 space-y-6 animate-fade-up">
+                    <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block">
+                        ABOUT US
+                    </span>
+                    <h3 class="text-4xl font-bold text-gray-900">{{ optional($profiles)->about_heading ?? "Your Journey, Our Passion"}}</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
+                    </p>
+                    <ul class="space-y-3">
+                        @foreach(['Expert Local Guides', 'Best Price Guarantee', '24/7 Customer Support', 'Sustainable Travel'] as $item)
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-blue-500 mr-3"></i> {{ $item }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <!-- Image Grid -->
+                <div class="lg:w-1/2 grid grid-cols-2 gap-6 animate-fade-up" style="transition-delay: 0.3s">
+                    @if($latestGalleries && $latestGalleries->count() > 0)
+                        @foreach ($latestGalleries as $index => $gallery)
+                            @if ($index == 0)
+                                <!-- Gambar 1 (col-span-1) -->
+                                <div class="col-span-1">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                </div>
+                            @elseif ($index == 1)
+                                <!-- Gambar 2 (row-span-2) -->
+                                <div class="row-span-2">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                </div>
+                            @else
+                                <!-- Gambar 3 (col-span-1) -->
+                                <div class="col-span-1">
+                                    <div class="relative h-full rounded-2xl overflow-hidden group">
+                                        <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}"
+                                            alt="{{ $gallery->title }}"
+                                            class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
+                        <!-- Fallback: Tampilkan gambar dari Unsplash -->
+                        <div class="col-span-1">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80"
+                                    alt="Travel experience"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="row-span-2">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80"
+                                    alt="Mountain adventure"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <div class="relative h-full rounded-2xl overflow-hidden group">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
+                                    alt="Beach sunset"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </section>
