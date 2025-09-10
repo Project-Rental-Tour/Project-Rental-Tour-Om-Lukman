@@ -7,11 +7,10 @@
                 <div class="lg:col-span-2 flex flex-col text-left">
                     <!-- Logo Section -->
                     <div class="logo-container">
-                        <div class="rounded-lg flex items-center justify-center mr-3 mb-3">
+                        <div class="w-1/2 rounded-lg flex items-center justify-center mr-3 mb-3">
                             <img src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" alt="Septem Tour Logo">
                         </div>
                         <div class="mb-3">
-                            <h2 class="text-xl font-bold uppercase">{{ optional($profiles)->website_name ?? "SEPTEMTOUR" }}</h2>
                             <p class="text-blue-100 text-sm">Travel & Tour Agency</p>
                         </div>
                     </div>
