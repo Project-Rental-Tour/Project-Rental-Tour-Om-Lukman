@@ -518,7 +518,7 @@
     </section>
 
     <a 
-        href="https://wa.me/6281234567890" 
+        href="https://wa.me/6281220005276" 
         target="_blank"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group"
