@@ -7,7 +7,7 @@
                 <div class="lg:col-span-2 flex flex-col text-left">
                     <!-- Logo Section -->
                     <div class="logo-container">
-                        <div class="w-1/4 rounded-lg flex items-center justify-center mr-3 mb-3">
+                        <div class="w-24 rounded-lg flex items-center justify-center mr-3 mb-3">
                             <img src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" alt="Septem Tour Logo">
                         </div>
                         <div class="mb-3">
