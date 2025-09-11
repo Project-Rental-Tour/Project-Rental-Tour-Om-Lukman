@@ -58,11 +58,9 @@ class DashboardController extends Controller
             'totalUsers',
             'totalDestinations',
             'totalBookings',
-            'totalBlogs',
             'totalGalleries',
             'totalTestimonials',
             'recentBookings',
-            'recentBlogs',
             'recentActivities',
             'notifications',
             'profiles'

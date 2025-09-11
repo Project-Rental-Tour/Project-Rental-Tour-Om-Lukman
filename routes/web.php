@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\TestimoniController;
 use App\Http\Controllers\admin\UserController;

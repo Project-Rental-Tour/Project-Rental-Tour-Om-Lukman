@@ -54,17 +54,7 @@
                 </div>
             </div>
 
-            <!-- Total Blog Card -->
-            <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">Total Blog</p>
-                    <h3 class="text-3xl font-bold text-gray-800">{{ $totalBlogs }}</h3>
-                    <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 5% from last month</p>
-                </div>
-                <div class="icon-container w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-blog text-purple-600 text-xl"></i>
-                </div>
-            </div>
+            
 
             <!-- Total Gallery Card -->
             <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
