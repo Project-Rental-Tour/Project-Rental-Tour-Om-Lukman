@@ -3,9 +3,9 @@
         <!-- Logo -->
         <a href="/" class="flex items-center space-x-3 sm:ml-5">
             <img id="logo-white" src="{{ optional($profiles)->website_logo_light ? asset('storage/'. optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" alt="Logo White"
-                class="w-20 h-8 block">
+                class="w-16 block">
             <img id="logo-dark" src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-blue.png') }}" alt="Logo Dark"
-                class="w-20 h-8 hidden">
+                class="w-16 hidden">
         </a>
 
         <!-- Mobile Menu Button -->
