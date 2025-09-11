@@ -398,67 +398,56 @@
                 <p class="text-gray-600 leading-relaxed">
                     {{ optional($profiles)->about_description ?? "With over 15 years of experience, we've crafted unforgettable journeys for thousands of travelers. Our passion for exploration and cultural connection drives everything we do." }}
                 </p>
-                <form action="{{ route('store') }}" method="POST" class="space-y-5">
+                <form action="{{ route('store') }}" method="POST" class="space-y-4">
                     @csrf
 
-                    <!-- Grid for First 4 Fields -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <!-- Full Name -->
+                    <!-- First & Last Name -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
-                            <input type="text" id="name" name="name" required
-                                placeholder="e.g. John Doe"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                            <input type="text" id="first_name" name="first_name" required
+                                placeholder="First Name"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                         </div>
 
-                        <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
-                            <input type="email" id="email" name="email" required
-                                placeholder="john@example.com"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
-                        </div>
-
-                        <!-- Phone -->
-                        <div>
-                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" id="phone" name="phone"
-                                placeholder="+1 (555) 123-4567"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
-                        </div>
-
-                        <!-- Subject -->
-                        <div>
-                            <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subject</label>
-                            <input type="text" id="subject" name="subject" required
-                                placeholder="e.g. Booking Inquiry, Partnership, Feedback"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" required
+                                placeholder="Last Name"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                         </div>
                     </div>
 
-                    <!-- Remaining Fields (Stacked) -->
-                    <!-- Company/Organization -->
+                    <!-- Email -->
                     <div>
-                        <label for="company" class="block text-sm font-semibold text-gray-700 mb-1">Company/Organization (Optional)</label>
-                        <input type="text" id="company" name="company"
-                            placeholder="TravelEase Inc."
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" required
+                            placeholder="Email Address"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                     </div>
 
-                    <!-- Location -->
+                    <!-- Phone Number -->
                     <div>
-                        <label for="location" class="block text-sm font-semibold text-gray-700 mb-1">Your Location</label>
-                        <input type="text" id="location" name="location"
-                            placeholder="New York, USA"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md">
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required
+                            placeholder="Phone Number"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                    </div>
+
+                    <!-- Country -->
+                    <div>
+                        <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                        <input type="text" id="country" name="country" required
+                            placeholder="Country"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                     </div>
 
                     <!-- Message -->
                     <div>
-                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Your Message</label>
-                        <textarea id="message" name="message" rows="5" required
-                                placeholder="Tell us how we can help you. The more details, the better! 😊"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm hover:shadow-md resize-none"></textarea>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="4" required
+                                placeholder="Message"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm resize-none"></textarea>
                     </div>
 
                     <!-- Submit Button -->

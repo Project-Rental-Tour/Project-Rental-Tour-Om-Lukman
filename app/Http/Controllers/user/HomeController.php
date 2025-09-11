@@ -45,28 +45,30 @@ class HomeController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|max:255',
-            'phone'    => 'nullable|string|max:50',
-            'subject'  => 'required|string|max:255',
-            'company'  => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'message'  => 'required|string|max:2000',
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'      => 'required|email|max:255',
+            'phone'      => 'nullable|string|max:50',
+            'subject'    => 'required|string|max:255',
+            'country'    => 'required|string|max:100', // misalnya: Indonesia, Japan, dll
+            'message'    => 'required|string|max:2000',
         ]);
 
+        // Gabungkan nama depan dan belakang
+        $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
+
         // Siapkan pesan untuk Telegram (format HTML)
-        $message = "<b>📩 New Contact Message</b>\n";
-        $message .= "<b>👤 Name:</b> " . htmlspecialchars($validated['name']) . "\n";
-        $message .= "<b>📧 Email:</b> " . htmlspecialchars($validated['email']) . "\n";
-        $message .= "<b>📞 Phone:</b> " . htmlspecialchars($validated['phone'] ?? '—') . "\n";
-        $message .= "<b>📌 Subject:</b> " . htmlspecialchars($validated['subject']) . "\n";
-        $message .= "<b>🏢 Company:</b> " . htmlspecialchars($validated['company'] ?? '—') . "\n";
-        $message .= "<b>📍 Location:</b> " . htmlspecialchars($validated['location'] ?? '—') . "\n";
-        $message .= "<b>💬 Message:</b>\n" . htmlspecialchars($validated['message']) . "\n";
-        $message .= "<b>📅 Received:</b> " . now()->format('d M Y H:i:s') . " WIB";
+        $telegramMessage = "<b>📩 New Contact Message</b>\n\n";
+        $telegramMessage .= "<b>👤 Full Name:</b> " . htmlspecialchars($fullName) . "\n";
+        $telegramMessage .= "<b>📧 Email:</b> " . htmlspecialchars($validated['email']) . "\n";
+        $telegramMessage .= "<b>📞 Phone:</b> " . htmlspecialchars($validated['phone'] ?? '—') . "\n";
+        $telegramMessage .= "<b>📌 Subject:</b> " . htmlspecialchars($validated['subject']) . "\n";
+        $telegramMessage .= "<b>🌍 Country:</b> " . htmlspecialchars($validated['country']) . "\n";
+        $telegramMessage .= "\n<b>💬 Message:</b>\n" . nl2br(htmlspecialchars($validated['message'])) . "\n\n";
+        $telegramMessage .= "<b>📅 Received:</b> " . now()->format('d M Y H:i:s') . " WIB";
 
         // Kirim notifikasi ke Telegram
-        $this->sendTelegramNotification($message);
+        $this->sendTelegramNotification($telegramMessage);
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Your message has been sent successfully!');
