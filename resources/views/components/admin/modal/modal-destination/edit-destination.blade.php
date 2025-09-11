@@ -110,24 +110,60 @@
                 </div>
 
                 <!-- STEP 4: Facilities -->
-                <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
+                 <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
                         <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                            value="{{ old('activities', $destination->activities) }}">
+                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                               value="{{ old('activities', $destination->activities) }}">
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Accommodation</label>
                         <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                            value="{{ old('accommodation', $destination->accommodation) }}">
+                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                               value="{{ old('accommodation', $destination->accommodation) }}">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block mb-2 text-sm font-medium">Consumption</label>
-                        <input type="text" name="consumption" placeholder="Breakfast, Lunch, Dinner"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                            value="{{ old('consumption', $destination->consumption) }}">
+                        <label class="block mb-2 text-sm font-medium">Tags (Optional)</label>
+                        <div class="border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
+                            <div id="tags-container-edit-{{ $destination->destination_id }}" class="flex flex-wrap gap-2 mb-2 min-h-10">
+                                @foreach(old('tag', $destination->tag ?? []) as $tag)
+                                    <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                        {{ trim($tag) }}
+                                        <button type="button" onclick="this.parentElement.remove(); removeHiddenInput('{{ trim($tag) }}', 'edit')" class="ml-1 text-blue-600">×</button>
+                                    </span>
+                                @endforeach
+                            </div>
+                            <input
+                                type="text"
+                                id="tag-input-edit-{{ $destination->destination_id }}"
+                                placeholder="Type a tag and press Enter..."
+                                class="w-full outline-none"
+                                @keydown.enter.prevent="
+                                    const val = $event.target.value.trim();
+                                    if (val && !Array.from($refs.tagHiddenEdit.children).map(el => el.value).includes(val)) {
+                                        const input = document.createElement('input');
+                                        input.type = 'hidden';
+                                        input.name = 'tag[]';
+                                        input.value = val;
+                                        $refs.tagHiddenEdit.appendChild(input);
+
+                                        const span = document.createElement('span');
+                                        span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
+                                        span.innerHTML = val + '<button type=\'button\' onclick=\'this.parentElement.remove(); removeHiddenInput(\''+val+'\', \'edit\')\' class=\'ml-1 text-blue-600\'>×</button>';
+                                        $refs.tagsContainerEdit.appendChild(span);
+
+                                        $event.target.value = '';
+                                    }
+                                "
+                            >
+                            <div id="tag-hidden-inputs-edit-{{ $destination->destination_id }}" x-ref="tagHiddenEdit">
+                                @foreach(old('tag', $destination->tag ?? []) as $tag)
+                                    <input type="hidden" name="tag[]" value="{{ trim($tag) }}">
+                                @endforeach
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag.</p>
                     </div>
                 </div>
 

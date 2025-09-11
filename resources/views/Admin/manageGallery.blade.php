@@ -95,6 +95,10 @@
                                 Image
                             </th>
 
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Tag
+                            </th>
 
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -142,6 +146,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <img src="{{ asset($gallery->gallery_photo) }}" alt="{{ $gallery->title }}"
                                             class="w-1/2 h-1/2 object-cover rounded mx-auto">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-center text-gray-900">{{ $gallery->tag }}</div>
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium relative text-center">

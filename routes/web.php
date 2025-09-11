@@ -3,7 +3,6 @@
 use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\TestimoniController;
-use App\Http\Controllers\admin\TourController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\auth\AuthController;
@@ -11,10 +10,16 @@ use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\GalleriesController;
 use App\Http\Controllers\admin\DestinationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\user\UserGalleryController;
+use App\Http\Controllers\user\UserDestinationController;
 
 // User-Route
 Route::resource('/', HomeController::class);
-Route::get('/blog/{slug}', [BlogController::class, 'detailBlog'])->name('blog.detail-blog');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+Route::get('/gallery', [UserGalleryController::class, 'index'])->name('gallery.index');
+Route::get('/destination', [UserDestinationController::class, 'index'])->name('destination.index');
 
 Route::get('/destinations/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
 Route::get('/destinations/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
@@ -53,10 +58,6 @@ Route::middleware('auth')->group(function () {
     // Manage Testimoni
     Route::delete('/manage-testimonials/bulk-destroy', [TestimoniController::class, 'bulkDestroy'])->name('manage-testimonials.bulk-destroy');
     Route::resource('/manage-testimonials', TestimoniController::class);
-
-    // Manage Blog
-    Route::delete('/manage-blog/bulk-destroy', [BlogController::class, 'bulkDestroy'])->name('manage-blog.bulk-destroy');
-    Route::resource('/manage-blog', BlogController::class);
 
     // Manage Destination
     Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');

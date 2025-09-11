@@ -113,7 +113,7 @@
         <!-- Three Column Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <!-- Recent Bookings -->
-            <div class="dashboard-card bg-white shadow rounded-lg p-6 lg:col-span-2">
+            <div class="dashboard-card bg-white shadow rounded-lg p-6 lg:col-span-3">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg font-semibold text-gray-800">Booking Terbaru</h2>
                     <a href="{{ route('manage-booking.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Lihat
@@ -159,39 +159,7 @@
             </div>
 
             <!-- Latest Blogs -->
-            <div class="dashboard-card bg-white shadow rounded-lg p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-lg font-semibold text-gray-800">Blog Terkini</h2>
-                    <a href="{{ route('manage-blog.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Lihat
-                        Semua</a>
-                </div>
-                <div class="space-y-4">
-                    @forelse($recentBlogs as $blog)
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
-                                @if($blog->featured_image)
-                                    <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}"
-                                        class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                                        <i class="fas fa-file-alt text-gray-400"></i>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-sm font-medium text-gray-900">{{ Str::limit($blog->title, 25) }}</h3>
-                                <p class="text-xs text-gray-500 mt-1">{{ $blog->created_at->format('M d, Y') }}</p>
-                                <div class="flex items-center mt-2">
-                                    <span
-                                        class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">{{ $blog->type }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-sm text-gray-500">No blog posts yet.</p>
-                    @endforelse
-                </div>
-            </div>
+            
         </div>
 
         <!-- Two Column Layout -->

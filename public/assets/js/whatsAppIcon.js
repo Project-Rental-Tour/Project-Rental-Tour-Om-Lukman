@@ -3,17 +3,22 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!whatsappButton) return;
 
     const jumbotron = document.getElementById('jumbotron');
-    if (!jumbotron) return;
 
-    // Hitung 80% dari tinggi jumbotron
+    // Jika jumbotron TIDAK ADA, langsung tampilkan tombol
+    if (!jumbotron) {
+        whatsappButton.classList.remove('scale-0', 'opacity-0');
+        whatsappButton.classList.add('scale-100', 'opacity-100');
+        whatsappButton.classList.add('animate-bounce-slow');
+        return; // Hentikan eksekusi lebih lanjut
+    }
+
+    // Jika jumbotron ADA, gunakan logika scroll (80% tinggi jumbotron)
     const eightyPercentHeight = jumbotron.offsetHeight * 0.5;
 
-    // Fungsi untuk cek scroll dan tampilkan/menyembunyikan tombol
     function toggleWhatsApp() {
         if (window.scrollY > eightyPercentHeight) {
             whatsappButton.classList.remove('scale-0', 'opacity-0');
             whatsappButton.classList.add('scale-100', 'opacity-100');
-            // Tambahkan animasi bounce ringan
             whatsappButton.classList.add('animate-bounce-slow');
         } else {
             whatsappButton.classList.remove('scale-100', 'opacity-100', 'animate-bounce-slow');
@@ -21,12 +26,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Cek saat halaman dimuat dan saat scroll
-    window.addEventListener('load', toggleWhatsApp);
+    // Jalankan sekali saat halaman selesai loading
+    toggleWhatsApp();
+
+    // Pasang event listener scroll dengan throttle
     window.addEventListener('scroll', throttle(toggleWhatsApp, 100));
 });
 
-// Optimasi performa: throttle untuk scroll event
+// Fungsi throttle untuk optimasi performa
 function throttle(func, limit) {
     let inThrottle;
     return function () {
@@ -37,5 +44,5 @@ function throttle(func, limit) {
             inThrottle = true;
             setTimeout(() => inThrottle = false, limit);
         }
-    }
+    };
 }

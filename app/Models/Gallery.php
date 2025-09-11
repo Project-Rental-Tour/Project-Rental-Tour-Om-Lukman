@@ -13,6 +13,7 @@ class Gallery extends Model
     protected $fillable = [
         'title',
         'gallery_photo',
+        'tag',
     ];
 
     public $timestamps = true;

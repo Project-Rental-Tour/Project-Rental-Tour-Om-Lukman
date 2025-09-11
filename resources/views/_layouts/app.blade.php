@@ -10,6 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- JS sudah termasuk admin.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet">
     @yield('head')
     @stack('styles')
     <style>
@@ -62,7 +63,14 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
     <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="{{ asset('assets/js/drawer.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Tagify(document.querySelector('#tag'));
+        });
+    </script>
 
     @stack('scripts')
 </body>

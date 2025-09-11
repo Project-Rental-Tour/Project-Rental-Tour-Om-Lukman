@@ -21,6 +21,20 @@
                         <p class="text-gray-900 font-medium">{{ $gallery->title }}</p>
                     </div>
                     <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Tags</label>
+                        @if(!empty($gallery->tag) && count($gallery->tag) > 0)
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($gallery->tag as $tag)
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                        {{ trim($tag) }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-gray-500 text-sm">No tags</p>
+                        @endif
+                    </div>
+                    <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Created At</label>
                         <p class="text-gray-600">{{ $gallery->created_at->format('M d, Y H:i') }}</p>
                     </div>

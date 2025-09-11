@@ -37,6 +37,18 @@
                     </div>
 
                     <div>
+                        <label for="edit-tag-{{ $gallery->gallery_id }}" class="block mb-1 text-sm font-medium text-gray-700">
+                            Tags (Optional)
+                        </label>
+                        <input type="text" id="edit-tag-{{ $gallery->gallery_id }}" name="tag"
+                            class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g. bali, beach, sunset, adventure"
+                            value="{{ implode(', ', $gallery->tag ?? []) }}">
+                        <p class="mt-1 text-sm text-gray-500">Separate tags with commas</p>
+                        <p class="mt-1 text-sm text-red-600 hidden" id="edit-tag-error-{{ $gallery->gallery_id }}"></p>
+                    </div>
+
+                    <div>
                         <label for="edit-gallery_photo-{{ $gallery->gallery_id }}"
                             class="block mb-1 text-sm font-medium text-gray-700">
                             Image (Leave empty to keep current)

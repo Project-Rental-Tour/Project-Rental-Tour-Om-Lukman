@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('gallery_id');
             $table->string('title');
             $table->string('gallery_photo')->nullable();
+            $table->string('tag')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,17 @@
 @extends('_layouts.user')
 
+@section('head')
+<style>
+.text-muted {
+    color: #64748b;
+}
+
+ .header-gap {
+        margin-top: 3rem; /* ~48px */
+    }
+</style>
+@endsection
+
 @section('content')
     @include('components.client.navbar')
 
@@ -34,9 +46,9 @@
     <nav class="bg-white py-4 shadow-sm sticky top-16 z-30">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-600">
-                <li class="hover:text-blue-600 transition">Home</li>
+                <li class="font-medium text-gray-900"><a href="{{route('index')}}">Home</a></li>
                 <li class="text-gray-400">/</li>
-                <li class="hover:text-blue-600 transition">Destinations</li>
+                <li class="font-medium text-gray-900"><a href="{{route('destination.index')}}">Destinations</a></li>
                 <li class="text-gray-400">/</li>
                 <li class="font-medium text-gray-900">{{ $destination->name_package }}</li>
             </ol>
@@ -70,92 +82,105 @@
         </div>
 
         <!-- Tabs -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="border-b border-gray-200">
-                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
-                    data-tabs-toggle="#myTabContent" role="tablist">
-                    <li class="me-2" role="presentation">
+        <!-- Tabs -->
+        <div class="rounded-xl shadow-lg overflow-hidden bg-white">
+            <!-- Tabs Header -->
+            <div class="px-2 py-2 border-gray-200">
+                <ul class="flex flex-wrap text-sm font-medium text-center -mb-px" role="tablist">
+                    <!-- Tab 1: Details -->
+                    <li class="me-1" role="presentation">
                         <button
-                            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                            id="itinerary-tab" data-tabs-target="#itinerary" type="button" role="tab"
-                            aria-controls="itinerary" aria-selected="false">
-                            Itinerary
-                        </button>
-                    </li>
-                    <li class="me-2" role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                            id="inclusion-tab" data-tabs-target="#inclusion" type="button" role="tab"
-                            aria-controls="inclusion" aria-selected="false">
-                            Inclusions
-                        </button>
-                    </li>
-                    <li class="me-2" role="presentation">
-                        <button class="inline-block p-4 border-b-2 border-blue-500 text-blue-600 rounded-t-lg active"
-                            id="details-tab" data-tabs-target="#details" type="button" role="tab" aria-controls="details"
-                            aria-selected="true">
+                            id="details-tab"
+                            data-tabs-target="#details"
+                            type="button"
+                            role="tab"
+                            aria-controls="details"
+                            aria-selected="true"
+                            class="inline-block px-6 py-3 rounded-xl text-blue-700 bg-blue-100 transition-all duration-300 hover:bg-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
                             Details
+                        </button>
+                    </li>
+
+                    <!-- Tab 2: Facility -->
+                    <li class="me-1" role="presentation">
+                        <button
+                            id="inclusion-tab"
+                            data-tabs-target="#inclusion"
+                            type="button"
+                            role="tab"
+                            aria-controls="inclusion"
+                            aria-selected="false"
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700 transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
+                            Facility
+                        </button>
+                    </li>
+
+                    <!-- Tab 3: Itinerary -->
+                    <li class="me-1" role="presentation">
+                        <button
+                            id="itinerary-tab"
+                            data-tabs-target="#itinerary"
+                            type="button"
+                            role="tab"
+                            aria-controls="itinerary"
+                            aria-selected="false"
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
+                            Itinerary
                         </button>
                     </li>
                 </ul>
             </div>
 
+            <!-- Tabs Content -->
             <div id="myTabContent" class="p-6">
                 <!-- Details Tab -->
-                <div class="p-4 rounded-lg" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Trip Details</h3>
+                <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
+                    <h3 class="text-xl font-bold text-gray-800 mb-5">Trip Overview</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-medium text-gray-700">Location</h4>
-                            <p class="text-gray-600">{{ $destination->place }}</p>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Location</h4>
+                            <p class="text-gray-800 text-base">{{ $destination->place }}</p>
                         </div>
                         <div>
-                            <h4 class="font-medium text-gray-700">Duration</h4>
-                            <p class="text-gray-600">{{ $destination->time }}</p>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Duration</h4>
+                            <p class="text-gray-800">{{ $destination->time }}</p>
                         </div>
                         <div>
-                            <h4 class="font-medium text-gray-700">Transportation</h4>
-                            <p class="text-gray-600">{{ $destination->transportation }}</p>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Transportation</h4>
+                            <p class="text-gray-800">{{ $destination->transportation }}</p>
                         </div>
                         <div>
-                            <h4 class="font-medium text-gray-700">Accommodation</h4>
-                            <p class="text-gray-600">{{ $destination->accommodation }}</p>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Highlights</h4>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach(explode(',', $destination->activities) as $activity)
+                                    @if(trim($activity))
+                                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full border border-blue-100">
+                                            {{ trim($activity) }}
+                                        </span>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Itinerary Tab -->
-                <div class="hidden p-4 rounded-lg" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Detailed Itinerary</h3>
-                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
-                        @foreach(explode("\n\n", $destination->itinerary) as $day)
-                            @if(trim($day))
-                                <div class="itinerary-day">
-                                    {!! nl2br(e(trim($day))) !!}
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Inclusion Tab -->
-                <div class="hidden p-4 rounded-lg" id="inclusion" role="tabpanel" aria-labelledby="inclusion-tab">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">What's Included & Excluded</h3>
+                <!-- Facility Tab -->
+                <div class="hidden animate-fade-in" id="inclusion" role="tabpanel" aria-labelledby="inclusion-tab">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Inclusions & Exclusions</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Include -->
                         <div>
-                            <h4 class="font-semibold text-green-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
+                            <h4 class="font-bold text-green-700 mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                Included
+                                What's Included
                             </h4>
                             <ul class="space-y-2">
                                 @foreach(explode('.', $destination->include) as $item)
                                     @if(trim($item))
-                                        <li class="text-gray-700 flex items-start">
-                                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 mt-1"></span>
+                                        <li class="text-gray-700 flex items-start gap-2">
+                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
                                             {{ trim($item) }}
                                         </li>
                                     @endif
@@ -165,18 +190,17 @@
 
                         <!-- Exclude -->
                         <div>
-                            <h4 class="font-semibold text-red-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
+                            <h4 class="font-bold text-red-700 mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                                 Not Included
                             </h4>
                             <ul class="space-y-2">
                                 @foreach(explode('.', $destination->exclude) as $item)
                                     @if(trim($item))
-                                        <li class="text-gray-700 flex items-start">
-                                            <span class="w-2 h-2 bg-red-500 rounded-full mr-2 mt-1"></span>
+                                        <li class="text-gray-700 flex items-start gap-2">
+                                            <span class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></span>
                                             {{ trim($item) }}
                                         </li>
                                     @endif
@@ -185,19 +209,39 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Itinerary Tab -->
+                <div class="hidden animate-fade-in" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Day-by-Day Itinerary</h3>
+                    <div class="prose prose-gray max-w-none leading-relaxed space-y-5">
+                        @foreach(explode("\n\n", $destination->itinerary) as $day)
+                            @if(trim($day))
+                                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-400">
+                                    {!! nl2br(e(trim($day))) !!}
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Activities -->
         <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Activities & Facilities</h3>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Gallery {{ $destination->name_package }}</h3>
             <div class="flex flex-wrap gap-3">
-                @foreach(explode(',', $destination->activities) as $activity)
-                    @if(trim($activity))
-                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full">
-                            {{ trim($activity) }}
-                        </span>
-                    @endif
+                @forelse($relatedGalleries as $gallery)
+                    <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
+                        <img loading="lazy" 
+                            src="{{ asset($gallery->gallery_photo) }}" 
+                            alt="{{ $gallery->title }}"
+                            class="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <!-- Overlay saat hover -->
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <p class="text-white text-sm font-medium px-3 text-center">{{ $gallery->title }}</p>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -223,4 +267,38 @@
     </section>
 
     @include('components.client.footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const contents = document.querySelectorAll('[role="tabpanel"]');
+
+            function deactivateAll() {
+                tabs.forEach(tab => {
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.classList.remove('text-blue-700', 'bg-blue-100');
+                    tab.classList.add('text-gray-700');
+                });
+                contents.forEach(content => content.classList.add('hidden'));
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.getAttribute('aria-selected') === 'true') return;
+
+                    deactivateAll();
+
+                    // Aktifkan tab terpilih
+                    tab.setAttribute('aria-selected', 'true');
+                    tab.classList.remove('text-gray-700');
+                    tab.classList.add('text-blue-700', 'bg-blue-100');
+
+                    // Tampilkan konten
+                    const target = document.querySelector(tab.dataset.tabsTarget);
+                    target.classList.remove('hidden');
+                    target.classList.add('animate-fade-in');
+                });
+            });
+        });
+    </script>
+   
 @endsection

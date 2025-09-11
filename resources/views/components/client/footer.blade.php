@@ -49,18 +49,16 @@
                             & Service</span>
                     </div>
                     <ul class="space-y-3">
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
-                                    class="fas fa-arrow-right text-xs mr-2"></i>Travel Blog</a></li>
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
-                                    class="fas fa-arrow-right text-xs mr-2"></i>Guides & Tips</a></li>
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                        <li><a href="{{ route('index') }}" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Home</a></li>
+                        <li><a href="{{ route('destination.index') }}" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Destination</a></li>
+                        <li><a href="{{ route('gallery.index') }}" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>Gallery</a></li>
+                        <li><a href="{{ route('about') }}" class="footer-link text-blue-100 hover:text-white flex items-center"><i
+                                    class="fas fa-arrow-right text-xs mr-2"></i>About Us</a></li>
+                        <li><a href="{{ route('faq') }}" class="footer-link text-blue-100 hover:text-white flex items-center"><i
                                     class="fas fa-arrow-right text-xs mr-2"></i>FAQs</a></li>
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
-                                    class="fas fa-arrow-right text-xs mr-2"></i>Photo Gallery</a></li>
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
-                                    class="fas fa-arrow-right text-xs mr-2"></i>Tour Packages</a></li>
-                        <li><a href="#" class="footer-link text-blue-100 hover:text-white flex items-center"><i
-                                    class="fas fa-arrow-right text-xs mr-2"></i>Travel Insurance</a></li>
                     </ul>
                 </div>
 

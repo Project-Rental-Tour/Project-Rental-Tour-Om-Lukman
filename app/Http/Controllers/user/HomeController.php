@@ -41,6 +41,18 @@ class HomeController extends Controller
         return view('Client.homePage', compact('blogs', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
     }
 
+    public function about()
+    {
+        $profiles = Profile::find(1) ?? Profile::first();
+        return view('Client.aboutPage', compact('profiles'));
+    }
+
+    public function faq()
+    {
+        $profiles = Profile::find(1) ?? Profile::first();
+        return view('Client.faqPage', compact('profiles'));
+    }
+
     public function store(Request $request)
     {
         // Validasi input

@@ -56,6 +56,19 @@
                 </div>
             </div>
 
+            @if(!empty($destination->tag))
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-3">Tags</h4>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach($destination->tag as $tag)
+                            <span class="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
+                                {{ trim($tag) }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <!-- Key Info Grid (Category, Level, Location, etc.) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 @if($destination->category)

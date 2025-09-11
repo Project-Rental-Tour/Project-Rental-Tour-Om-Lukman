@@ -75,20 +75,30 @@ class GalleriesController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'gallery_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tag' => 'nullable|string|max:500', // tambahkan validasi tag
         ]);
 
         try {
             $imagePath = $request->file('gallery_photo')->store('public/galleries');
             $photoPath = str_replace('public/', 'storage/', $imagePath);
 
+            // Proses tag → pecah jadi array, filter kosong, trim
+            $tags = collect(explode(',', $request->tag))
+                ->map(fn($tag) => trim($tag))
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
+
             $gallery = Gallery::create([
                 'title' => $validated['title'],
                 'gallery_photo' => $photoPath,
+                'tag' => $tags, // simpan sebagai JSON array
             ]);
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added gallery item: "' . Str::limit($gallery->title, 50) . '"',
+                'action' => 'Added gallery item: "' . Str::limit($gallery->title, 50) . '" with tags: ' . implode(', ', $tags),
             ]);
 
             return redirect()->route('manage-gallery.index')
@@ -109,21 +119,29 @@ class GalleriesController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'gallery_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tag' => 'nullable|string|max:500',
         ]);
 
         try {
             $gallery = Gallery::findOrFail($gallery_id);
-
-            // Simpan data lama untuk log
             $oldTitle = $gallery->title;
 
-            $updateData = ['title' => $validated['title']];
+            $updateData = [
+                'title' => $validated['title'],
+            ];
+
+            // Proses tag
+            $tags = collect(explode(',', $request->tag ?? ''))
+                ->map(fn($tag) => trim($tag))
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
+
+            $updateData['tag'] = $tags;
 
             if ($request->hasFile('gallery_photo')) {
-                // Hapus gambar lama
                 Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
-
-                // Simpan gambar baru
                 $imagePath = $request->file('gallery_photo')->store('public/galleries');
                 $updateData['gallery_photo'] = str_replace('public/', 'storage/', $imagePath);
             }
@@ -131,11 +149,14 @@ class GalleriesController extends Controller
             $gallery->update($updateData);
 
             $logAction = "Updated gallery item: '{$oldTitle}'";
-            if ($request->hasFile('gallery_photo')) {
-                $logAction .= " (new image uploaded)";
-            }
             if ($oldTitle !== $validated['title']) {
                 $logAction = "Updated gallery item: '{$oldTitle}' → '{$validated['title']}'";
+            }
+            if ($request->hasFile('gallery_photo')) {
+                $logAction .= " (new image)";
+            }
+            if (!empty($tags)) {
+                $logAction .= " [tags: " . implode(', ', $tags) . "]";
             }
 
             LogActivity::create([

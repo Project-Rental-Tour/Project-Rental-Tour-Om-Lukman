@@ -5,10 +5,24 @@
 
 @section('content')
     @include('components.client.navbar')
-    <section class="bg-primary text-white py-20" id="jumbotron">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Design Your Dream Trip</h1>
-            <p class="text-xl md:text-2xl text-indigo-100 max-w-3xl mx-auto leading-relaxed">
+    <section class="bg-primary text-white py-20 relative overflow-hidden" id="jumbotron">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img loading="lazy" 
+                src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
+                alt="Dream Travel Experience"
+                class="w-full h-full object-cover object-center opacity-70 transition-opacity duration-500 hover:opacity-80">
+            
+            <!-- Optional Overlay Gradient for Better Text Readability -->
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-transparent"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+                Design Your Dream Trip
+            </h1>
+            <p class="text-lg md:text-xl text-indigo-100 max-w-3xl mx-auto leading-relaxed">
                 No package fits your dream? <br>
                 Tell us your ideal destination, dates, and preferences —
                 we’ll create a personalized travel experience just for you.

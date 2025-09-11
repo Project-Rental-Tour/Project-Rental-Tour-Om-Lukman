@@ -82,8 +82,9 @@ class DestinationController extends Controller
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
         $profiles = Profile::find(1);
+        $relatedGalleries = $destination->relatedGalleries();
 
-        return view('Client.detailDestination', compact('destination', 'profiles'));
+        return view('Client.detailDestination', compact('destination', 'profiles', 'relatedGalleries'));
     }
 
     public function store(Request $request)
