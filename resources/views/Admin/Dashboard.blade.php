@@ -101,7 +101,7 @@
         </div>
 
         <!-- Three Column Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 gap-6 mb-8">
             <!-- Recent Bookings -->
             <div class="dashboard-card bg-white shadow rounded-lg p-6 lg:col-span-3">
                 <div class="flex justify-between items-center mb-6">
