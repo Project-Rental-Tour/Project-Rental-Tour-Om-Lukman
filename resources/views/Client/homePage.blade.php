@@ -407,31 +407,32 @@
                             <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                             <input type="text" id="first_name" name="first_name" required
                                 placeholder="First Name"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                         </div>
 
                         <div>
                             <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
                             <input type="text" id="last_name" name="last_name" required
                                 placeholder="Last Name"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                         </div>
                     </div>
 
-                    <!-- Email -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <input type="email" id="email" name="email" required
-                            placeholder="Email Address"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required
-                            placeholder="Phone Number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" required
+                                placeholder="Email Address"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                        </div>
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required
+                                placeholder="Phone Number"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                        </div>
                     </div>
 
                     <!-- Country -->
@@ -439,7 +440,7 @@
                         <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
                         <input type="text" id="country" name="country" required
                             placeholder="Country"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm">
                     </div>
 
                     <!-- Message -->
@@ -447,14 +448,14 @@
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
                         <textarea id="message" name="message" rows="4" required
                                 placeholder="Message"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none shadow-sm resize-none"></textarea>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-transparent transition-all duration-200 outline-none shadow-sm resize-none"></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="pt-2">
                         <button type="submit"
                                 class="w-full py-3 px-6 bg-primary text-white font-medium rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
-                            📩 Send Message Now
+                            Send Message Now
                         </button>
                     </div>
                 </form>
