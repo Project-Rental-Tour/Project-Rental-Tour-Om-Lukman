@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-use App\Models\BlogPost;
 use App\Models\Destination;
 use App\Models\Testimonial;
 use App\Models\Gallery;
@@ -25,20 +24,9 @@ class HomeController extends Controller
         $profiles = Profile::find(1) ?? Profile::first();
 
         $latestGalleries = Gallery::orderBy('created_at', 'desc')->take(3)->get();
-        $query = BlogPost::query();
 
-        // Filter by type jika ada
-        if ($request->filled('type')) {
-            $query->where('type', 'like', '%' . $request->type . '%');
-        }
 
-        // Ambil 3 terbaru
-        $blogs = $query->latest()->take(3)->get();
-
-        // Untuk filter button
-        $types = BlogPost::whereNotNull('type')->distinct()->pluck('type');
-
-        return view('Client.homePage', compact('blogs', 'testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
+        return view('Client.homePage', compact('testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
     }
 
     public function about()
