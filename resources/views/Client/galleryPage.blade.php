@@ -63,13 +63,13 @@
 
     <!-- WhatsApp Floating Button -->
     <a 
-        href="https://wa.me/6281220005276"
+        href="https://wa.me/6281220005276?text=Halo%20Septem%20Tour!%20Saya%20ingin%20bertanya%20tentang%3A%0A-%20Tujuan%3A%20%5BIsi%20di%20sini%5D%0A-%20Jumlah%20orang%3A%20%5BIsi%20di%20sini%5D%0A-%20Tanggal%20perjalanan%3A%20%5BIsi%20di%20sini%5D%0A-%20Lainnya%3A%20%5BTulis%20pertanyaanmu%5D" 
         target="_blank"
         id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-600 text-white px-5 py-4 rounded-full shadow-lg hover:bg-green-700 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-3 group"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
     </a>
 
     @include('components.client.footer')
