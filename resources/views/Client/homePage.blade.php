@@ -242,7 +242,7 @@
 
         <!-- Masonry Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[600px]">
-            @foreach ($galleries->take(5) as $gallery)
+            @foreach ($galleries->take(4) as $gallery)
                 <div class="relative overflow-hidden rounded-lg break-inside-avoid group aspect-w-3 aspect-h-4">
                     <!-- Gambar -->
                     <img loading="lazy"
