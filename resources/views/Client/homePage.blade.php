@@ -241,20 +241,22 @@
         </div>
 
         <!-- Masonry Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[500px]">
-            @foreach ($galleries->take(4) as $gallery)
-                <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[600px]">
+            @foreach ($galleries->take(5) as $gallery)
+                <div class="relative overflow-hidden rounded-lg break-inside-avoid group aspect-w-3 aspect-h-4">
+                    <!-- Gambar -->
                     <img loading="lazy"
                         src="{{ asset($gallery->gallery_photo) }}"
                         alt="{{ $gallery->title }}"
                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        style="aspect-ratio: 3/4;"
                     />
-                    <!-- Overlay -->
+
+                    <!-- Overlay gelap saat hover -->
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-opacity duration-300"></div>
-                    <!-- Title -->
-                    <div class="absolute bottom-0 left-0 w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <p class="text-white text-sm font-medium text-center truncate">{{ $gallery->title }}</p>
+
+                    <!-- Title di pojok kanan bawah -->
+                    <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs md:text-sm font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                        {{ $gallery->title }}
                     </div>
                 </div>
             @endforeach
