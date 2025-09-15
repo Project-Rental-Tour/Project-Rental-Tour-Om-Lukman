@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('destination_id');
             $table->string('name_package');
             $table->string('slug')->unique();
+            $table->string('description')->nullable();
             $table->string('place');
             $table->decimal('price', 10, 2)->default('0.00')->nullable();
             $table->string('destination_photo')->nullable();

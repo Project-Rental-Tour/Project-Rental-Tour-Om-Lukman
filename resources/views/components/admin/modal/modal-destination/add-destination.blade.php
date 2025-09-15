@@ -73,6 +73,10 @@
                         <input type="text" name="time" placeholder="3 Days 2 Nights"
                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Description</label>
+                        <textarea name="description"></textarea>
+                    </div>
                 </div>
 
                 <!-- STEP 3: Location & Transport -->
@@ -169,7 +173,7 @@
                         <p class="text-xs text-gray-400 mt-1">Upload a representative image (jpg, png, max 2MB)</p>
 
                         <div class="mt-4 flex flex-col items-center">
-                            <div class="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                            <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
                                 <img id="add-preview-photo" src="" alt="Preview"
                                      class="w-full h-full object-cover rounded-lg hidden">
                                 <span id="placeholder-add-preview-photo" class="text-gray-400 text-sm">Image Preview</span>

@@ -97,6 +97,7 @@ class DestinationController extends Controller
         $request->validate([
             'name_package' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:destinations,slug',
+            'description' => 'nullable|string|max:500',
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -133,6 +134,7 @@ class DestinationController extends Controller
             $destination = Destination::create([
                 'name_package' => $request->name_package,
                 'slug' => $slug,
+                'description' => $request->description,
                 'place' => $request->place,
                 'price' => $price,
                 'destination_photo' => $photoUrl,
@@ -176,6 +178,7 @@ class DestinationController extends Controller
         $request->validate([
             'name_package' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:destinations,slug,' . $destination_id . ',destination_id',
+            'description' => 'nullable|string|max:500',
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -207,6 +210,7 @@ class DestinationController extends Controller
             $updateData = [
                 'name_package' => $request->name_package,
                 'slug' => $request->slug ?? Str::slug($request->name_package),
+                'description' => $request->description,
                 'place' => $request->place,
                 'price' => $price,
                 'time' => $request->time,

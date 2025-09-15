@@ -13,6 +13,7 @@ class Destination extends Model
     protected $fillable = [
         'name_package',
         'slug',
+        'description',
         'place',
         'price',
         'destination_photo',
