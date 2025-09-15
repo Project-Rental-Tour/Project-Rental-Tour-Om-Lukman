@@ -97,7 +97,7 @@ class DestinationController extends Controller
         $request->validate([
             'name_package' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:destinations,slug',
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string',
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
