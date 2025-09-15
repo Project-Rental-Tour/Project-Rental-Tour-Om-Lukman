@@ -65,16 +65,7 @@
             </div>
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">
                 <h4 class="font-semibold text-gray-800">What's Included?</h4>
-                <ul class="text-sm text-gray-700 space-y-1">
-                    @foreach(explode('.', $destination->include) as $item)
-                        @if(trim($item) && $loop->iteration <= 4)
-                            <li class="text-gray-700 flex items-start">
-                                ✓
-                                {{ trim($item) }}
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
+                <div class="text-sm">{{$destination->description}}</div>
                 <div class="pt-2">
                     <span class="text-xs text-gray-500">Based on {{ $destination->name_package }}</span>
                 </div>
