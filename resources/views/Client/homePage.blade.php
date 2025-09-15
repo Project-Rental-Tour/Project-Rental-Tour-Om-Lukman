@@ -212,7 +212,7 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             @foreach([
-                ['3k', 'Happy Customers'],
+                ['3.500+', 'Happy Customers'],
                 ['120+', 'Destinations'],
                 ['98%', 'Satisfaction Rate'],
                 ['5', 'Years Experience']
