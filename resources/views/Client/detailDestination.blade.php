@@ -64,8 +64,8 @@
                     class="w-full h-80 object-cover rounded-xl shadow-lg">
             </div>
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">
-                <h4 class="font-semibold text-xl text-gray-800">What's Included?</h4>
-                <div class="text-md">{{$destination->description}}</div>
+                <h4 class="font-semibold text-lg text-gray-800">What's Included?</h4>
+                <div class="text-sm">{{$destination->description}}</div>
                 <div class="pt-2">
                     <span class="text-xs text-gray-500">Based on {{ $destination->name_package }}</span>
                 </div>
