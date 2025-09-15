@@ -64,7 +64,7 @@
                     class="w-full h-80 object-cover rounded-xl shadow-lg">
             </div>
             <div class="bg-blue-50 p-6 rounded-xl space-y-4">
-                <h4 class="font-semibold text-lg text-gray-800">What's Included?</h4>
+                <h4 class="font-semibold text-lg text-gray-800">Description</h4>
                 <div class="text-sm">{{$destination->description}}</div>
                 <div class="pt-2">
                     <span class="text-xs text-gray-500">Based on {{ $destination->name_package }}</span>
@@ -205,7 +205,13 @@
                 <div class="hidden animate-fade-in" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
                     <h3 class="text-xl font-bold text-gray-800 mb-6">Day-by-Day Itinerary</h3>
                     <div class="prose prose-gray max-w-none leading-relaxed space-y-5">
-                        {{$destination->itinerary}}
+                        @foreach(explode("\n\n", $destination->itinerary) as $day)
+                            @if(trim($day))
+                                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-400">
+                                    {!! nl2br(e(trim($day))) !!}
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
