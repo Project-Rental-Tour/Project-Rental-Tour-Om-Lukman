@@ -241,14 +241,21 @@
         </div>
 
         <!-- Masonry Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach($images as $image)
-                <div class="bg-gray-100 rounded-xl overflow-hidden aspect-[3/4] flex items-center justify-center group animate-fade-up">
-                    <img 
-                        src="{{ $image }}" 
-                        alt="Travel destination" 
-                        class="w-full h-full object-cover"
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[500px]">
+            @foreach ($galleries->take(4) as $gallery)
+                <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
+                    <img loading="lazy"
+                        src="{{ asset($gallery->gallery_photo) }}"
+                        alt="{{ $gallery->title }}"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        style="aspect-ratio: 3/4;"
                     />
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-opacity duration-300"></div>
+                    <!-- Title -->
+                    <div class="absolute bottom-0 left-0 w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-sm font-medium text-center truncate">{{ $gallery->title }}</p>
+                    </div>
                 </div>
             @endforeach
         </div>
