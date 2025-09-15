@@ -75,7 +75,7 @@
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Description</label>
-                        <textarea name="description"></textarea>
+                        <textarea name="description" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                 </div>
 
