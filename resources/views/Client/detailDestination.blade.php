@@ -211,7 +211,7 @@
                         @foreach($lines as $line)
                             @if(trim($line))
                                 <div class="flex items-start gap-2 py-1">
-                                    <span class="font-semibold text-blue-600 min-w-[50px]">{{ trim($line, '. ') }}</span>
+                                    {{-- <span class="font-semibold text-blue-600 min-w-[50px]">{{ trim($line, '. ') }}</span> --}}
                                     <span class="text-gray-700">{!! trim($line) !!}</span>
                                 </div>
                             @endif
