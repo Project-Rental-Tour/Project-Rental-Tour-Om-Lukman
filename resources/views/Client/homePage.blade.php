@@ -64,7 +64,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
+                                <h4 class="font-semibold text-lg mb-2 text-gray-900 group-hover:text-{{ $feature[3] }}-600 transition-colors">{{ $feature[0] }}</h4>
                                 <p class="text-gray-600 text-sm leading-relaxed">{{ $feature[1] }}</p>
                             </div>
                         </div>
