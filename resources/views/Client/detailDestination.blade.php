@@ -205,13 +205,7 @@
                 <div class="hidden animate-fade-in" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
                     <h3 class="text-xl font-bold text-gray-800 mb-6">Day-by-Day Itinerary</h3>
                     <div class="prose prose-gray max-w-none leading-relaxed space-y-5">
-                        @foreach(explode("\n\n", $destination->itinerary) as $day)
-                            @if(trim($day))
-                                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-400">
-                                    {!! nl2br(e(trim($day))) !!}
-                                </div>
-                            @endif
-                        @endforeach
+                        {{$destination->itinerary}}
                     </div>
                 </div>
             </div>
