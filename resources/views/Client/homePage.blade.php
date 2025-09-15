@@ -241,7 +241,7 @@
         </div>
 
         <!-- Masonry Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[600px]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[400px]">
             @foreach ($galleries->take(4) as $gallery)
                 <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
                     <img loading="lazy"
