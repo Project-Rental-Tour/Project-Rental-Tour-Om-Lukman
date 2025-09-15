@@ -77,7 +77,7 @@
     <!-- Top Destination Section -->
     <section id="destination" class="bg-primary">
             <div class="max-w-7xl mx-auto px-6 py-24">
-                <div class="animate-fade-up mb-20">
+                <div class="animate-fade-up mb-20 text-center">
                     <h3 class="text-4xl font-bold text-blue-100 mb-6">Top Destination</h3>
                 </div>
             <div class="flex flex-col md:flex-row gap-8 items-stretch">
@@ -242,7 +242,7 @@
 
         <!-- Masonry Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[600px]">
-            @foreach ($galleries->take(5) as $gallery)
+            @foreach ($galleries->take(4) as $gallery)
                 <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
                     <img loading="lazy"
                         src="{{ asset($gallery->gallery_photo) }}"
