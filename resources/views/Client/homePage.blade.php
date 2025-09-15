@@ -47,7 +47,7 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach([
                     ['Expert Local Guides', 'We partner with knowledgeable local guides who bring destinations to life with authentic stories and insights.', 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'blue'],
                     ['Competitive Pricing', 'Affordable prices with best value packages for all travelers.', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'yellow'],
@@ -57,7 +57,7 @@
                     ['Ultimate Flexibility', 'Flexible booking options and customizable travel plans.', 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4', 'purple']
                 ] as $feature)
                     <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group animate-fade-up" style="transition-delay: 0.1s">
-                        <div class="flex items-start py-3">
+                        <div class="flex items-start">
                             <div class="bg-{{ $feature[3] }}-100 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
                                 <svg class="w-7 h-7 text-{{ $feature[3] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feature[2] }}"></path>
