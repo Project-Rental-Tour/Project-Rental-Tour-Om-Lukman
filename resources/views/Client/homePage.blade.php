@@ -76,7 +76,10 @@
 
     <!-- Top Destination Section -->
     <section id="destination" class="bg-primary">
-        <div class="max-w-7xl mx-auto px-6 py-24">
+            <div class="max-w-7xl mx-auto px-6 py-24">
+                <div class="animate-fade-up mb-20">
+                    <h3 class="text-4xl font-bold text-blue-100 mb-6">Top Destination</h3>
+                </div>
             <div class="flex flex-col md:flex-row gap-8 items-stretch">
                 <!-- Bagian Kiri: Ayo Mulai Explore! -->
                 <div class="md:w-1/4 flex flex-col p-8  text-white rounded-xl ">
@@ -238,13 +241,14 @@
         </div>
 
         <!-- Masonry Grid -->
-        <div class="columns-2 md:columns-4 gap-4 space-y-4">
-            @foreach ($galleries->take(10) as $gallery) <!-- Hanya tampilkan 6 gambar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[600px]">
+            @foreach ($galleries->take(5) as $gallery)
                 <div class="relative overflow-hidden rounded-lg break-inside-avoid group">
-                    <img loading="lazy" 
-                        src="{{ asset($gallery->gallery_photo) }}" 
+                    <img loading="lazy"
+                        src="{{ asset($gallery->gallery_photo) }}"
                         alt="{{ $gallery->title }}"
-                        class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        style="aspect-ratio: 3/4;"
                     />
                     <!-- Overlay -->
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-opacity duration-300"></div>
