@@ -31,7 +31,7 @@
             <a href="#destination"
                 class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-full hover-bg-primary transition-transform hover:scale-105 shadow-lg animate-fade-up"
                 style="background-color: #799eff; transition-delay: 0.4s">
-                Explore Destinations
+                Top Destinations
                 <i class="fas fa-arrow-down ml-8 mt-1"></i>
             </a>
         </div>
@@ -77,9 +77,7 @@
     <!-- Top Destination Section -->
     <section id="destination" class="bg-primary">
             <div class="max-w-7xl mx-auto px-6 py-24">
-                <div class="animate-fade-up mb-20 text-center">
-                    <h3 class="text-4xl font-bold text-blue-100 mb-6">Top Destination</h3>
-                </div>
+                
             <div class="flex flex-col md:flex-row gap-8 items-stretch">
                 <!-- Bagian Kiri: Ayo Mulai Explore! -->
                 <div class="md:w-1/4 flex flex-col p-8  text-white rounded-xl ">
