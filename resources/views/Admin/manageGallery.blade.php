@@ -149,8 +149,33 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex flex-wrap gap-2 justify-center">
-                                            @if(!empty($gallery->tag) && is_array($gallery->tag))
-                                                @foreach($gallery->tag as $tag)
+                                            @php
+                                                $tags = [];
+                                                if (!empty($gallery->tag)) {
+                                                    if (is_string($gallery->tag)) {
+                                                        $decoded = json_decode($gallery->tag, true) ?? [];
+                                                        
+                                                        // Extract values from the complex structure
+                                                        foreach ($decoded as $item) {
+                                                            if (isset($item['value'])) {
+                                                                $tags[] = $item['value'];
+                                                            }
+                                                        }
+                                                    } elseif (is_array($gallery->tag)) {
+                                                        // Handle if it's already an array
+                                                        foreach ($gallery->tag as $item) {
+                                                            if (isset($item['value'])) {
+                                                                $tags[] = $item['value'];
+                                                            } elseif (is_string($item)) {
+                                                                $tags[] = $item;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @if(!empty($tags))
+                                                @foreach($tags as $tag)
                                                     <span class="inline-block px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">
                                                         {{ ucfirst($tag) }}
                                                     </span>

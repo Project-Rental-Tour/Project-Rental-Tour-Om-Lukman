@@ -212,10 +212,10 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             @foreach([
-                ['300+', 'Happy Customers'],
+                ['3k', 'Happy Customers'],
                 ['120+', 'Destinations'],
                 ['98%', 'Satisfaction Rate'],
-                ['15', 'Years Experience']
+                ['5', 'Years Experience']
             ] as $index => $stat)
                 <div class="stats-box text-center p-6 bg-white rounded-xl shadow-md animate-fade-up" style="transition-delay: {{ 0.1 + $index * 0.1 }}s">
                     <div class="text-4xl font-bold text-primary mb-2" data-target="{{ $stat[0] }}">0</div>
