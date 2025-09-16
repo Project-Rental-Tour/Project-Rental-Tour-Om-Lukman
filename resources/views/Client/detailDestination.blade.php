@@ -168,9 +168,15 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Accommodation</h4>
-                            <div class="flex flex-wrap gap-2">
-                                {{ $destination->accommodation }}
-                            </div>
+                             <p class="text-gray-800">{{ $destination->accommodation }}</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Pickup Point</h4>
+                            <p class="text-gray-800">{{ $destination->pickup_points }}</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Dropoff Point</h4>
+                            <p class="text-gray-800">{{ $destination->dropoff_points }}</p>
                         </div>
                     </div>
                 </div>
