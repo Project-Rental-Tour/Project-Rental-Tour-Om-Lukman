@@ -64,9 +64,9 @@
 
                         <!-- Aktivitas -->
                         <div class="flex flex-wrap gap-1 mb-4">
-                            @foreach(explode(',', $destination->activities) as $activity)
+                            @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
                                 @if(trim($activity))
-                                    <span class="bg-blue-50 text-primary px-2 py-0.5 rounded-full text-xs font-medium border border-primary/30">
+                                    <span class="bg-light/70 text-primary px-2 py-0.5 rounded-full text-xs font-medium border border-primary/30">
                                         {{ trim($activity) }}
                                     </span>
                                 @endif
