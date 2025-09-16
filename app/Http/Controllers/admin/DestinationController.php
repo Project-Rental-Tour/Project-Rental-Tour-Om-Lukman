@@ -224,7 +224,7 @@ class DestinationController extends Controller
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
             'itinerary' => 'nullable|string',
-            'tag' => 'nullable|string|max:500', // Tetap string
+            'tag' => 'nullable|string|max:500',
             'note' => 'nullable|string',
         ]);
 
@@ -235,11 +235,13 @@ class DestinationController extends Controller
             $oldName = $destination->name_package;
             $oldPrice = $destination->price;
             $oldPlace = $destination->place;
+            $oldTags = $destination->tag ?? 'none';
 
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
 
             // Proses tag - langsung terima sebagai string
             $tagString = !empty(trim($request->tag)) ? trim($request->tag) : null;
+            $newTags = $tagString ?? 'none';
 
             // DEBUG: Log tag processing
             Log::info('Processed Update Tag:', ['tagString' => $tagString]);
@@ -262,7 +264,7 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
-                'tag' => $tagString, // Simpan sebagai string
+                'tag' => $tagString,
                 'note' => $request->note,
             ];
 
@@ -303,9 +305,7 @@ class DestinationController extends Controller
             if ($request->hasFile('destination_photo')) {
                 $changes[] = "new image uploaded";
             }
-            if ($destination->tag != $tagString) {
-                $oldTags = $destination->tag ?? 'none';
-                $newTags = $tagString ?? 'none';
+            if ($oldTags != $newTags) {
                 $changes[] = "tags: '{$oldTags}' → '{$newTags}'";
             }
 
@@ -319,6 +319,9 @@ class DestinationController extends Controller
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination updated successfully']);
         } catch (\Exception $e) {
+            // DEBUG: Log error
+            Log::error('Error updating destination:', ['error' => $e->getMessage()]);
+
             return back()->withInput()
                 ->with('toast', ['type' => 'error', 'message' => 'Failed to update destination: ' . $e->getMessage()]);
         }
