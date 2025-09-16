@@ -299,4 +299,50 @@
             updateTagInput();
         }
         </script>
+        <script>
+// Fungsi untuk update tag input pada form edit
+function updateEditTagInput(destinationId) {
+    const tagElements = document.querySelectorAll(`#tags-container-edit-${destinationId} span`);
+    const tags = Array.from(tagElements).map(span => {
+        return span.textContent.replace('×', '').trim();
+    });
+    document.getElementById(`tag-hidden-input-edit-${destinationId}`).value = tags.join(', ');
+    console.log('Edit tags updated:', document.getElementById(`tag-hidden-input-edit-${destinationId}`).value);
+}
+
+// Fungsi untuk menghapus tag (umum untuk add dan edit)
+function removeTag(button) {
+    const tagElement = button.parentElement;
+    const container = tagElement.closest('[id^="tags-container-"]');
+    const containerId = container.id;
+    
+    // Cari destination_id dari container ID
+    const destinationId = containerId.includes('edit-') ? containerId.replace('tags-container-edit-', '') : null;
+    
+    tagElement.remove();
+    
+    // Update input yang sesuai
+    if (destinationId) {
+        updateEditTagInput(destinationId);
+    } else {
+        updateTagInput(); // Untuk form add
+    }
+}
+
+// Inisialisasi tag untuk form edit saat modal dibuka
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener untuk modal edit yang dibuka
+    document.querySelectorAll('[data-modal-toggle^="edit-modal-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal-toggle');
+            const destinationId = modalId.replace('edit-modal-', '');
+            
+            // Beri waktu sedikit untuk modal render dulu
+            setTimeout(() => {
+                updateEditTagInput(destinationId);
+            }, 100);
+        });
+    });
+});
+</script>
 @endpush

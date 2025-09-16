@@ -133,31 +133,42 @@
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Tags (Optional)</label>
                         <div class="border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
-                            <div id="tags-container-add" class="flex flex-wrap gap-2 mb-2 min-h-10"></div>
+                            <div id="tags-container-edit-{{ $destination->destination_id }}" class="flex flex-wrap gap-2 mb-2 min-h-10">
+                                <!-- Tampilkan tag yang sudah ada -->
+                                @if(!empty($destination->tag))
+                                    @foreach(explode(',', $destination->tag) as $tag)
+                                        @if(trim($tag))
+                                            <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                                {{ trim($tag) }}
+                                                <button type="button" onclick="removeTag(this)" class="ml-1 text-blue-600 hover:text-blue-800">×</button>
+                                            </span>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
                             <input
                                 type="text"
-                                id="tag-input-add"
+                                id="tag-input-edit-{{ $destination->destination_id }}"
                                 placeholder="Type a tag and press Enter..."
                                 class="w-full outline-none"
                                 @keydown.enter.prevent="
                                     const val = $event.target.value.trim();
-                                    if (val && !Array.from($refs.tagHiddenAdd.children).map(el => el.value).includes(val)) {
-                                        const input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = 'tag[]'; // Pastikan name adalah array
-                                        input.value = val;
-                                        $refs.tagHiddenAdd.appendChild(input);
-
+                                    if (val) {
+                                        // Tambahkan tag ke container yang terlihat
                                         const span = document.createElement('span');
                                         span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
-                                        span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600\'>×</button>';
-                                        $refs.tagsContainerAdd.appendChild(span);
+                                        span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600 hover:text-blue-800\'>×</button>';
+                                        document.getElementById('tags-container-edit-{{ $destination->destination_id }}').appendChild(span);
+
+                                        // Update input hidden dengan semua tag
+                                        updateEditTagInput('{{ $destination->destination_id }}');
 
                                         $event.target.value = '';
                                     }
                                 "
                             >
-                            <div id="tag-hidden-inputs-add" x-ref="tagHiddenAdd"></div>
+                            <!-- Input hidden untuk menyimpan semua tag sebagai string -->
+                            <input type="hidden" name="tag" id="tag-hidden-input-edit-{{ $destination->destination_id }}" value="{{ $destination->tag ?? '' }}">
                         </div>
                         <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag. E.g.: Bali, Beach, Romantic</p>
                     </div>
