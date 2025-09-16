@@ -151,6 +151,7 @@
                                 id="tag-input-edit-{{ $destination->destination_id }}"
                                 placeholder="Type a tag and press Enter..."
                                 class="w-full outline-none"
+                                value="{{ $destination->tag ?? '' }}"
                                 @keydown.enter.prevent="
                                     const val = $event.target.value.trim();
                                     if (val) {

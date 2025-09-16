@@ -201,50 +201,60 @@ class DestinationController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
-        // DEBUG: Log request data
-        Log::info('Update Request Data:', $request->all());
-        Log::info('Update Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
-
-        $request->validate([
-            'name_package' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:destinations,slug,' . $destination_id . ',destination_id',
-            'description' => 'nullable|string|max:500',
-            'place' => 'required|string|max:255',
-            'price' => 'nullable|numeric|min:0',
-            'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'time' => 'required|string|max:255',
-            'category' => 'required|string|max:100',
-            'level' => 'nullable|string|max:50',
-            'pickup_points' => 'nullable|string|max:500',
-            'dropoff_points' => 'nullable|string|max:500',
-            'activities' => 'nullable|string|max:500',
-            'transportation' => 'nullable|string|max:255',
-            'accommodation' => 'nullable|string|max:255',
-            'consumption' => 'nullable|string|max:500',
-            'include' => 'nullable|string',
-            'exclude' => 'nullable|string',
-            'itinerary' => 'nullable|string',
-            'tag' => 'nullable|string|max:500',
-            'note' => 'nullable|string',
-        ]);
-
         try {
+            // DEBUG: Log request data
+            Log::info('Update Request Data:', $request->all());
+            Log::info('Update Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
+
+            $request->validate([
+                'name_package' => 'required|string|max:255',
+                'slug' => 'nullable|string|max:255|unique:destinations,slug,' . $destination_id . ',destination_id',
+                'description' => 'nullable|string|max:500',
+                'place' => 'required|string|max:255',
+                'price' => 'nullable|numeric|min:0',
+                'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'time' => 'required|string|max:255',
+                'category' => 'required|string|max:100',
+                'level' => 'nullable|string|max:50',
+                'pickup_points' => 'nullable|string|max:500',
+                'dropoff_points' => 'nullable|string|max:500',
+                'activities' => 'nullable|string|max:500',
+                'transportation' => 'nullable|string|max:255',
+                'accommodation' => 'nullable|string|max:255',
+                'consumption' => 'nullable|string|max:500',
+                'include' => 'nullable|string',
+                'exclude' => 'nullable|string',
+                'itinerary' => 'nullable|string',
+                'tag' => 'nullable|string|max:500',
+                'note' => 'nullable|string',
+            ]);
+
             $destination = Destination::findOrFail($destination_id);
 
             // Simpan data lama untuk log
             $oldName = $destination->name_package;
             $oldPrice = $destination->price;
             $oldPlace = $destination->place;
-            $oldTags = $destination->tag ?? 'none';
+
+            try {
+                $oldTags = $destination->tag ?? 'none';
+            } catch (\Exception $e) {
+                Log::error('Error getting old tags:', ['error' => $e->getMessage()]);
+                $oldTags = 'none';
+            }
 
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
 
-            // Proses tag - langsung terima sebagai string
-            $tagString = !empty(trim($request->tag)) ? trim($request->tag) : null;
-            $newTags = $tagString ?? 'none';
-
-            // DEBUG: Log tag processing
-            Log::info('Processed Update Tag:', ['tagString' => $tagString]);
+            // Proses tag dengan try-catch
+            try {
+                $tagString = !empty(trim($request->tag)) ? trim($request->tag) : null;
+                $newTags = $tagString ?? 'none';
+                Log::info('Processed Update Tag:', ['tagString' => $tagString]);
+            } catch (\Exception $e) {
+                Log::error('Error processing update tag:', ['error' => $e->getMessage(), 'tag' => $request->tag]);
+                $tagString = $destination->tag; // Keep old value if error
+                $newTags = $oldTags;
+            }
 
             $updateData = [
                 'name_package' => $request->name_package,
@@ -270,24 +280,34 @@ class DestinationController extends Controller
 
             // Handle photo upload
             if ($request->hasFile('destination_photo')) {
-                if ($destination->destination_photo) {
-                    $oldPath = str_replace('storage/', 'public/', $destination->destination_photo);
-                    if (Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                try {
+                    if ($destination->destination_photo) {
+                        $oldPath = str_replace('storage/', 'public/', $destination->destination_photo);
+                        if (Storage::exists($oldPath)) {
+                            Storage::delete($oldPath);
+                        }
                     }
-                }
 
-                $imagePath = $request->file('destination_photo')->store('public/destinations');
-                $updateData['destination_photo'] = str_replace('public/', 'storage/', $imagePath);
+                    $imagePath = $request->file('destination_photo')->store('public/destinations');
+                    $updateData['destination_photo'] = str_replace('public/', 'storage/', $imagePath);
+                } catch (\Exception $e) {
+                    Log::error('Error handling photo upload:', ['error' => $e->getMessage()]);
+                    return back()->withInput()
+                        ->with('toast', ['type' => 'error', 'message' => 'Failed to upload photo: ' . $e->getMessage()]);
+                }
             }
 
             // Ensure slug is unique
-            $slug = $updateData['slug'];
-            $slugCount = Destination::where('slug', $slug)
-                ->where('destination_id', '!=', $destination_id)
-                ->count();
-            if ($slugCount > 0) {
-                $updateData['slug'] = $slug . '-' . uniqid();
+            try {
+                $slug = $updateData['slug'];
+                $slugCount = Destination::where('slug', $slug)
+                    ->where('destination_id', '!=', $destination_id)
+                    ->count();
+                if ($slugCount > 0) {
+                    $updateData['slug'] = $slug . '-' . uniqid();
+                }
+            } catch (\Exception $e) {
+                Log::error('Error checking slug uniqueness:', ['error' => $e->getMessage()]);
             }
 
             $destination->update($updateData);
@@ -311,17 +331,19 @@ class DestinationController extends Controller
 
             $changeText = !empty($changes) ? ' (' . implode(', ', $changes) . ')' : '';
 
-            LogActivity::create([
-                'username' => $currentUser->username,
-                'action' => 'Updated destination: "' . Str::limit($updateData['name_package'], 50) . '"' . $changeText,
-            ]);
+            try {
+                LogActivity::create([
+                    'username' => $currentUser->username,
+                    'action' => 'Updated destination: "' . Str::limit($updateData['name_package'], 50) . '"' . $changeText,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Error creating update log activity:', ['error' => $e->getMessage()]);
+            }
 
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination updated successfully']);
         } catch (\Exception $e) {
-            // DEBUG: Log error
             Log::error('Error updating destination:', ['error' => $e->getMessage()]);
-
             return back()->withInput()
                 ->with('toast', ['type' => 'error', 'message' => 'Failed to update destination: ' . $e->getMessage()]);
         }
