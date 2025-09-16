@@ -30,6 +30,7 @@ class Destination extends Model
         'exclude',
         'itinerary',
         'tag',
+        'note',
     ];
 
     protected $casts = [
@@ -40,17 +41,33 @@ class Destination extends Model
 
     public function relatedGalleries()
     {
-        $tags = $this->tag; // JSON array dari DB
+        $tags = $this->tag;
 
+        // Normalisasi tags menjadi array
+        if (!is_array($tags)) {
+            $decoded = json_decode($tags, true);
+            if (is_array($decoded)) {
+                $tags = $decoded;
+            } else {
+                $tags = $tags ? array_map('trim', explode(',', $tags)) : [];
+            }
+        }
+
+        $tags = array_filter(array_map('trim', (array) $tags));
         if (empty($tags)) {
-            return collect(); // kembalikan koleksi kosong jika tidak ada tag
+            return collect();
         }
 
         return Gallery::where(function ($query) use ($tags) {
             foreach ($tags as $tag) {
-                $query->orWhereRaw('JSON_CONTAINS(tag, ?)', ['"' . $tag . '"']);
+                if (empty($tag)) continue;
+
+                // Gunakan JSON_SEARCH untuk mencari nilai di dalam objek
+                $query->orWhereRaw("
+                JSON_SEARCH(tag, 'one', ?) IS NOT NULL
+            ", [$tag]);
             }
-        })->orWhereIn('tag', $tags) // untuk yang tag-nya string biasa (opsional)
+        })
             ->limit(4)
             ->get();
     }

@@ -62,16 +62,18 @@
                 </div>
 
                 <!-- STEP 2: Pricing & Time -->
-                <div x-show="step === 2" class="grid gap-6 md:grid-cols-2">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Price</label>
-                        <input type="text" name="price" placeholder="Rp 1.500.000"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Duration</label>
-                        <input type="text" name="time" placeholder="3 Days 2 Nights"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                <div x-show="step === 2" class="space-y-6">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Price</label>
+                            <input type="text" name="price" placeholder="Rp 1.500.000"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Duration</label>
+                            <input type="text" name="time" placeholder="3 Days 2 Nights"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        </div>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Description</label>
@@ -143,17 +145,23 @@
                     </div>
                 </div>
 
-                <!-- STEP 5: Include & Exclude -->
+                <!-- STEP 5: Include, Exclude & Note -->
                 <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Include</label>
                         <textarea name="include" rows="4" placeholder="Accommodation, Meals, Transport..."
-                                  class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Exclude</label>
                         <textarea name="exclude" rows="4" placeholder="Personal expenses, Tips, Insurance..."
-                                  class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
+                        <textarea name="note" rows="3" placeholder="Additional notes for travelers, e.g., visa requirements, weather tips, etc."
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
+                        <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
                     </div>
                 </div>
 

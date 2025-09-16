@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 use App\Models\Destination;
 use App\Models\LogActivity;
 use App\Models\Profile;
@@ -113,6 +115,9 @@ class DestinationController extends Controller
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
             'itinerary' => 'nullable|string',
+            'tag' => 'nullable|array',
+            'tag.*' => 'string|max:50',
+            'note' => 'nullable|string',
         ]);
 
         try {
@@ -150,6 +155,8 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
+                'tag' => $request->tag ? json_encode($request->tag) : null, // ← INI YANG PERLU DIPERBAIKI
+                'note' => $request->note,
             ]);
 
             LogActivity::create([
@@ -194,6 +201,9 @@ class DestinationController extends Controller
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
             'itinerary' => 'nullable|string',
+            'tag' => 'nullable|array',
+            'tag.*' => 'string|max:50',
+            'note' => 'nullable|string',
         ]);
 
 
@@ -225,6 +235,8 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
+                'tag' => $request->tag ? json_encode($request->tag) : null, // ← PERBAIKAN UTAMA
+                'note' => $request->note,
             ];
 
             // Handle photo upload

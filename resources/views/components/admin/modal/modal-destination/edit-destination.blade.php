@@ -72,18 +72,24 @@
                 </div>
 
                 <!-- STEP 2: Pricing & Time -->
-                <div x-show="step === 2" class="grid gap-6 md:grid-cols-2">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Price</label>
-                        <input type="text" name="price" placeholder="Rp 1.500.000"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 price-input"
-                            value="{{ old('price', number_format((float) $destination->price, 0, ',', '.')) }}">
+                <div x-show="step === 2" class="space-y-6">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Price</label>
+                            <input type="text" name="price" placeholder="Rp 1.500.000"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 price-input"
+                                value="{{ old('price', number_format((float) $destination->price, 0, ',', '.')) }}">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Duration</label>
+                            <input type="text" name="time" placeholder="3 Days 2 Nights"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                                value="{{ old('time', $destination->time) }}" required>
+                        </div>
                     </div>
                     <div>
-                        <label class="block mb-2 text-sm font-medium">Duration</label>
-                        <input type="text" name="time" placeholder="3 Days 2 Nights"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                            value="{{ old('time', $destination->time) }}" required>
+                        <label class="block mb-2 text-sm font-medium">Description</label>
+                        <textarea name="description" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ $destination->description }}</textarea>
                     </div>
                 </div>
 
@@ -110,28 +116,36 @@
                 </div>
 
                 <!-- STEP 4: Facilities -->
-                 <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
+                <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
                         <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                               value="{{ old('activities', $destination->activities) }}">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('activities', $destination->activities) }}">
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Accommodation</label>
                         <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                               value="{{ old('accommodation', $destination->accommodation) }}">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                            value="{{ old('accommodation', $destination->accommodation) }}">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Tags (Optional)</label>
                         <div class="border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
                             <div id="tags-container-edit-{{ $destination->destination_id }}" class="flex flex-wrap gap-2 mb-2 min-h-10">
-                                @foreach(old('tag', $destination->tag ?? []) as $tag)
-                                    <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                                        {{ trim($tag) }}
-                                        <button type="button" onclick="this.parentElement.remove(); removeHiddenInput('{{ trim($tag) }}', 'edit')" class="ml-1 text-blue-600">×</button>
-                                    </span>
+                                @php
+                                    // Decode tag dari JSON ke array
+                                    $tags = old('tag', $destination->tag ? json_decode($destination->tag, true) : []);
+                                    if (!is_array($tags)) $tags = [];
+                                @endphp
+                                @foreach($tags as $tag)
+                                    @php $tag = trim($tag); @endphp
+                                    @if($tag)
+                                        <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                            {{ $tag }}
+                                            <button type="button" onclick="this.parentElement.remove(); removeHiddenInput('{{ addslashes($tag) }}', 'edit')" class="ml-1 text-blue-600">×</button>
+                                        </span>
+                                    @endif
                                 @endforeach
                             </div>
                             <input
@@ -150,7 +164,7 @@
 
                                         const span = document.createElement('span');
                                         span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
-                                        span.innerHTML = val + '<button type=\'button\' onclick=\'this.parentElement.remove(); removeHiddenInput(\''+val+'\', \'edit\')\' class=\'ml-1 text-blue-600\'>×</button>';
+                                        span.innerHTML = val + '<button type=\'button\' onclick=\'this.parentElement.remove(); removeHiddenInput(\''+val.replace(/'/g, '\\\'')+'\', \'edit\')\' class=\'ml-1 text-blue-600\'>×</button>';
                                         $refs.tagsContainerEdit.appendChild(span);
 
                                         $event.target.value = '';
@@ -158,8 +172,11 @@
                                 "
                             >
                             <div id="tag-hidden-inputs-edit-{{ $destination->destination_id }}" x-ref="tagHiddenEdit">
-                                @foreach(old('tag', $destination->tag ?? []) as $tag)
-                                    <input type="hidden" name="tag[]" value="{{ trim($tag) }}">
+                                @foreach($tags as $tag)
+                                    @php $tag = trim($tag); @endphp
+                                    @if($tag)
+                                        <input type="hidden" name="tag[]" value="{{ $tag }}">
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -178,6 +195,12 @@
                         <label class="block mb-2 text-sm font-medium">Exclude</label>
                         <textarea name="exclude" rows="4" placeholder="Personal expenses, Tips, Insurance..."
                             class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('exclude', $destination->exclude) }}</textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
+                        <textarea name="note" rows="3" placeholder="Additional notes for travelers, e.g., visa requirements, weather tips, etc."
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('note', $destination->note) }}</textarea>
+                        <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
                     </div>
                 </div>
 

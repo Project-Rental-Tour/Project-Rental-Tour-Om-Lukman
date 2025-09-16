@@ -56,14 +56,38 @@
                 </div>
             </div>
 
-            @if(!empty($destination->tag))
+            <!-- Description -->
+            @if($destination->description)
+                <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Description
+                    </h4>
+                    <div class="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                        {!! nl2br(e($destination->description)) !!}
+                    </div>
+                </div>
+            @endif
+
+            @php
+                $tags = $destination->tag ? json_decode($destination->tag, true) : [];
+                if (!is_array($tags)) $tags = [];
+            @endphp
+
+            @if(!empty($tags))
                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <h4 class="font-semibold text-gray-800 text-sm mb-3">Tags</h4>
                     <div class="flex flex-wrap gap-2">
-                        @foreach($destination->tag as $tag)
-                            <span class="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
-                                {{ trim($tag) }}
-                            </span>
+                        @foreach($tags as $tag)
+                            @php $tag = trim($tag); @endphp
+                            @if($tag)
+                                <span class="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
+                                    {{ $tag }}
+                                </span>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -203,6 +227,22 @@
                     </div>
                 @endif
             </div>
+
+            <!-- Note -->
+            @if($destination->note)
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-5">
+                    <h4 class="font-semibold text-amber-800 text-sm mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Important Note
+                    </h4>
+                    <div class="text-sm text-amber-700 leading-relaxed whitespace-pre-line">
+                        {!! nl2br(e($destination->note)) !!}
+                    </div>
+                </div>
+            @endif
 
             <!-- Itinerary (Full Width) -->
             @if($destination->itinerary)

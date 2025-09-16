@@ -87,8 +87,21 @@
                             role="tab"
                             aria-controls="details"
                             aria-selected="true"
-                            class="inline-block px-6 py-3 rounded-xl text-blue-700 bg-blue-100 transition-all duration-300 hover:bg-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
+                            class="inline-block px-6 py-3 rounded-xl text-blue-700 bg-blue-100 transition-all duration-300 hover:bg-blue-200 focus:outline-none focus:ring-blue-100 font-semibold">
                             Details
+                        </button>
+                    </li>
+
+                    <li class="me-1" role="presentation">
+                        <button
+                            id="tour-tab"
+                            data-tabs-target="#tour"
+                            type="button"
+                            role="tab"
+                            aria-controls="tour"
+                            aria-selected="false"
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
+                            Tour Highlights
                         </button>
                     </li>
 
@@ -101,7 +114,7 @@
                             role="tab"
                             aria-controls="inclusion"
                             aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700 transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700 transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
                             Facility
                         </button>
                     </li>
@@ -115,8 +128,21 @@
                             role="tab"
                             aria-controls="itinerary"
                             aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 font-semibold">
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
                             Itinerary
+                        </button>
+                    </li>
+
+                    <li class="me-1" role="presentation">
+                        <button
+                            id="note-tab"
+                            data-tabs-target="#note"
+                            type="button"
+                            role="tab"
+                            aria-controls="note"
+                            aria-selected="false"
+                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
+                            Note
                         </button>
                     </li>
                 </ul>
@@ -141,17 +167,28 @@
                             <p class="text-gray-800">{{ $destination->transportation }}</p>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Highlights</h4>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Accommodation</h4>
                             <div class="flex flex-wrap gap-2">
-                                @foreach(explode(',', $destination->activities) as $activity)
-                                    @if(trim($activity))
-                                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full border border-blue-100">
-                                            {{ trim($activity) }}
-                                        </span>
-                                    @endif
-                                @endforeach
+                                {{ $destination->accommodation }}
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Tour Highlights Tab -->
+                <div class="hidden animate-fade-in" id="tour" role="tabpanel" aria-labelledby="tour-tab">
+                    <h3 class="text-xl font-bold text-gray-800 mb-5">Tour Highlights</h3>
+                    <div class="flex flex-wrap gap-2">
+                       <ul class="space-y-2">
+                                @foreach(explode('.', $destination->activities) as $item)
+                                    @if(trim($item))
+                                        <li class="text-gray-700 flex items-start gap-2">
+                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
+                                            {{ trim($item) }}
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
                     </div>
                 </div>
 
@@ -218,13 +255,29 @@
                         @endforeach
                     </div>
                 </div>
+
+                <div class="hidden animate-fade-in" id="note" role="tabpanel" aria-labelledby="note-tab">
+                    <h3 class="text-xl font-bold text-gray-800 mb-5">Note</h3>
+                    <div class="flex flex-wrap gap-2">
+                       <ul class="space-y-2">
+                                @foreach(explode('.', $destination->note) as $item)
+                                    @if(trim($item))
+                                        <li class="text-gray-700 flex items-start gap-2">
+                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
+                                            {{ trim($item) }}
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Activities -->
         <div class="bg-white p-8 rounded-xl shadow-lg">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Gallery {{ $destination->name_package }}</h3>
-            <div class="flex flex-wrap gap-3">
+            <div class="columns-2 md:columns-4 gap-4 space-y-6">
                 @forelse($relatedGalleries as $gallery)
                     <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
                         <img loading="lazy" 
