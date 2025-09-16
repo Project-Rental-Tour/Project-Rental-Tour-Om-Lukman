@@ -188,7 +188,7 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-5">Tour Highlights</h3>
                     <div class="flex flex-wrap gap-2">
                        <ul class="space-y-2">
-                                @foreach(explode('.', $destination->activities) as $item)
+                                @foreach(explode(',', $destination->activities) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-start gap-2">
                                             <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
