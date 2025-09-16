@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Destination;
 use App\Models\LogActivity;
 use App\Models\Profile;
+use App\Models\Gallery;
 
 class DestinationController extends Controller
 {
@@ -84,7 +85,13 @@ class DestinationController extends Controller
     {
         $destination = Destination::where('slug', $slug)->firstOrFail();
         $profiles = Profile::find(1);
+
+        Log::info('Destination Tag:', ['value' => $destination->tag]);
+        Log::info('All Gallery Tags:', ['tags' => Gallery::pluck('tag')->toArray()]);
+
         $relatedGalleries = $destination->relatedGalleries();
+
+        Log::info('Related Galleries Count:', [$relatedGalleries->count()]);
 
         return view('Client.detailDestination', compact('destination', 'profiles', 'relatedGalleries'));
     }
@@ -95,6 +102,10 @@ class DestinationController extends Controller
         if (!$currentUser) {
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
+
+        // DEBUG: Log request data
+        Log::info('Request Data:', $request->all());
+        Log::info('Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
 
         $request->validate([
             'name_package' => 'required|string|max:255',
@@ -115,8 +126,7 @@ class DestinationController extends Controller
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
             'itinerary' => 'nullable|string',
-            'tag' => 'nullable|array',
-            'tag.*' => 'string|max:50',
+            'tag' => 'nullable|string|max:500', // Tetap string
             'note' => 'nullable|string',
         ]);
 
@@ -135,6 +145,12 @@ class DestinationController extends Controller
             while (Destination::where('slug', $slug)->exists()) {
                 $slug = $originalSlug . '-' . $counter++;
             }
+
+            // Proses tag - langsung terima sebagai string
+            $tagString = $request->tag ?: null;
+
+            // DEBUG: Log tag processing
+            Log::info('Processed Tag:', ['tagString' => $tagString]);
 
             $destination = Destination::create([
                 'name_package' => $request->name_package,
@@ -155,32 +171,39 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
-                'tag' => $request->tag ? json_encode($request->tag) : null, // ← INI YANG PERLU DIPERBAIKI
+                'tag' => $tagString, // Simpan sebagai string
                 'note' => $request->note,
             ]);
 
+            // DEBUG: Log created destination
+            Log::info('Created Destination:', ['destination' => $destination->toArray()]);
+
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '" in ' . $destination->place,
+                'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '" in ' . $destination->place . ' with tags: ' . $tagString,
             ]);
 
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination added successfully']);
         } catch (\Exception $e) {
+            // DEBUG: Log error
+            Log::error('Error creating destination:', ['error' => $e->getMessage()]);
+
             return back()->withInput()
                 ->with('toast', ['type' => 'error', 'message' => 'Failed to add destination: ' . $e->getMessage()]);
         }
     }
 
-    /**
-     * Update the specified destination.
-     */
     public function update(Request $request, $destination_id)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
+
+        // DEBUG: Log request data
+        Log::info('Update Request Data:', $request->all());
+        Log::info('Update Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
 
         $request->validate([
             'name_package' => 'required|string|max:255',
@@ -201,11 +224,9 @@ class DestinationController extends Controller
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
             'itinerary' => 'nullable|string',
-            'tag' => 'nullable|array',
-            'tag.*' => 'string|max:50',
+            'tag' => 'nullable|string|max:500', // Tetap string
             'note' => 'nullable|string',
         ]);
-
 
         try {
             $destination = Destination::findOrFail($destination_id);
@@ -216,6 +237,12 @@ class DestinationController extends Controller
             $oldPlace = $destination->place;
 
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
+
+            // Proses tag - langsung terima sebagai string
+            $tagString = $request->tag ?: null;
+
+            // DEBUG: Log tag processing
+            Log::info('Processed Update Tag:', ['tagString' => $tagString]);
 
             $updateData = [
                 'name_package' => $request->name_package,
@@ -235,7 +262,7 @@ class DestinationController extends Controller
                 'include' => $request->include,
                 'exclude' => $request->exclude,
                 'itinerary' => $request->itinerary,
-                'tag' => $request->tag ? json_encode($request->tag) : null, // ← PERBAIKAN UTAMA
+                'tag' => $tagString, // Simpan sebagai string
                 'note' => $request->note,
             ];
 
@@ -275,6 +302,9 @@ class DestinationController extends Controller
             }
             if ($request->hasFile('destination_photo')) {
                 $changes[] = "new image uploaded";
+            }
+            if ($destination->tag !== $tagString) {
+                $changes[] = "tags updated";
             }
 
             $changeText = !empty($changes) ? ' (' . implode(', ', $changes) . ')' : '';

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->text('include')->nullable();
             $table->text('exclude')->nullable();
             $table->longText('itinerary')->nullable();
-            $table->json('tag')->nullable();
+            $table->string('tag')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });

@@ -278,6 +278,7 @@
         <div class="bg-white p-8 rounded-xl shadow-lg">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Gallery {{ $destination->name_package }}</h3>
             <div class="columns-2 md:columns-4 gap-4 space-y-6">
+
                 @forelse($relatedGalleries as $gallery)
                     <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
                         <img loading="lazy" 

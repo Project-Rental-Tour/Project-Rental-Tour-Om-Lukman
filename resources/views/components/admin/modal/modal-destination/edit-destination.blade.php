@@ -129,58 +129,37 @@
                             class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
                             value="{{ old('accommodation', $destination->accommodation) }}">
                     </div>
+                    <!-- Di dalam form, pastikan input tag menggunakan name="tag[]" -->
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Tags (Optional)</label>
                         <div class="border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
-                            <div id="tags-container-edit-{{ $destination->destination_id }}" class="flex flex-wrap gap-2 mb-2 min-h-10">
-                                @php
-                                    // Decode tag dari JSON ke array
-                                    $tags = old('tag', $destination->tag ? json_decode($destination->tag, true) : []);
-                                    if (!is_array($tags)) $tags = [];
-                                @endphp
-                                @foreach($tags as $tag)
-                                    @php $tag = trim($tag); @endphp
-                                    @if($tag)
-                                        <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                                            {{ $tag }}
-                                            <button type="button" onclick="this.parentElement.remove(); removeHiddenInput('{{ addslashes($tag) }}', 'edit')" class="ml-1 text-blue-600">×</button>
-                                        </span>
-                                    @endif
-                                @endforeach
-                            </div>
+                            <div id="tags-container-add" class="flex flex-wrap gap-2 mb-2 min-h-10"></div>
                             <input
                                 type="text"
-                                id="tag-input-edit-{{ $destination->destination_id }}"
+                                id="tag-input-add"
                                 placeholder="Type a tag and press Enter..."
                                 class="w-full outline-none"
                                 @keydown.enter.prevent="
                                     const val = $event.target.value.trim();
-                                    if (val && !Array.from($refs.tagHiddenEdit.children).map(el => el.value).includes(val)) {
+                                    if (val && !Array.from($refs.tagHiddenAdd.children).map(el => el.value).includes(val)) {
                                         const input = document.createElement('input');
                                         input.type = 'hidden';
-                                        input.name = 'tag[]';
+                                        input.name = 'tag[]'; // Pastikan name adalah array
                                         input.value = val;
-                                        $refs.tagHiddenEdit.appendChild(input);
+                                        $refs.tagHiddenAdd.appendChild(input);
 
                                         const span = document.createElement('span');
                                         span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
-                                        span.innerHTML = val + '<button type=\'button\' onclick=\'this.parentElement.remove(); removeHiddenInput(\''+val.replace(/'/g, '\\\'')+'\', \'edit\')\' class=\'ml-1 text-blue-600\'>×</button>';
-                                        $refs.tagsContainerEdit.appendChild(span);
+                                        span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600\'>×</button>';
+                                        $refs.tagsContainerAdd.appendChild(span);
 
                                         $event.target.value = '';
                                     }
                                 "
                             >
-                            <div id="tag-hidden-inputs-edit-{{ $destination->destination_id }}" x-ref="tagHiddenEdit">
-                                @foreach($tags as $tag)
-                                    @php $tag = trim($tag); @endphp
-                                    @if($tag)
-                                        <input type="hidden" name="tag[]" value="{{ $tag }}">
-                                    @endif
-                                @endforeach
-                            </div>
+                            <div id="tag-hidden-inputs-add" x-ref="tagHiddenAdd"></div>
                         </div>
-                        <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag.</p>
+                        <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag. E.g.: Bali, Beach, Romantic</p>
                     </div>
                 </div>
 

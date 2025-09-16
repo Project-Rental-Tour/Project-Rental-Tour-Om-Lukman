@@ -86,9 +86,7 @@ class GalleriesController extends Controller
             $tags = collect(explode(',', $request->tag))
                 ->map(fn($tag) => trim($tag))
                 ->filter()
-                ->unique()
-                ->values()
-                ->all();
+                ->implode(', ');
 
             $gallery = Gallery::create([
                 'title' => $validated['title'],
@@ -98,7 +96,8 @@ class GalleriesController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added gallery item: "' . Str::limit($gallery->title, 50) . '" with tags: ' . implode(', ', $tags),
+                'action' => 'Added gallery item: "' . $gallery->title  . '" with tags: ' . ', ',
+                $tags,
             ]);
 
             return redirect()->route('manage-gallery.index')
@@ -131,12 +130,10 @@ class GalleriesController extends Controller
             ];
 
             // Proses tag
-            $tags = collect(explode(',', $request->tag ?? ''))
+            $tags = collect(explode(',', $request->tag))
                 ->map(fn($tag) => trim($tag))
                 ->filter()
-                ->unique()
-                ->values()
-                ->all();
+                ->implode(', ');
 
             $updateData['tag'] = $tags;
 
@@ -156,7 +153,7 @@ class GalleriesController extends Controller
                 $logAction .= " (new image)";
             }
             if (!empty($tags)) {
-                $logAction .= " [tags: " . implode(', ', $tags) . "]";
+                $logAction =   ', ' . $tags;
             }
 
             LogActivity::create([

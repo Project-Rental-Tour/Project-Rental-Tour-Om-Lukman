@@ -105,12 +105,12 @@
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
                         <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Accommodation</label>
                         <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Tags (Optional)</label>
@@ -123,23 +123,22 @@
                                 class="w-full outline-none"
                                 @keydown.enter.prevent="
                                     const val = $event.target.value.trim();
-                                    if (val && !Array.from($refs.tagHiddenAdd.children).map(el => el.value).includes(val)) {
-                                        const input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = 'tag[]';
-                                        input.value = val;
-                                        $refs.tagHiddenAdd.appendChild(input);
-
+                                    if (val) {
+                                        // Tambahkan tag ke container yang terlihat
                                         const span = document.createElement('span');
                                         span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
-                                        span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600\'>×</button>';
-                                        $refs.tagsContainerAdd.appendChild(span);
+                                        span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600 hover:text-blue-800\'>×</button>';
+                                        document.getElementById('tags-container-add').appendChild(span);
+
+                                        // Update input hidden dengan semua tag
+                                        updateTagInput();
 
                                         $event.target.value = '';
                                     }
                                 "
                             >
-                            <div id="tag-hidden-inputs-add" x-ref="tagHiddenAdd"></div>
+                            <!-- Input hidden untuk menyimpan semua tag sebagai string -->
+                            <input type="hidden" name="tag" id="tag-hidden-input" value="">
                         </div>
                         <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag. E.g.: Bali, Beach, Romantic</p>
                     </div>

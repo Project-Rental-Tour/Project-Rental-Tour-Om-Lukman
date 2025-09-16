@@ -61,7 +61,7 @@
                         <li class="flex items-start">
                             <i class="fas fa-phone text-white mt-1 mr-3 text-sm"></i>
                             <a href="https://wa.me/6281220005276" target="_blank" class="text-blue-100 hover:text-white text-sm">
-                                {{ optional($profiles)->phone_number ?? "0812-2000-5276" }}
+                                {{ optional($profiles)->phone_number ?? "+62 812-2000-5276" }}
                             </a>
                         </li>
                         <li class="flex items-start">

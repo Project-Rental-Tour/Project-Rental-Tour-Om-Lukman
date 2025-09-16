@@ -44,7 +44,7 @@
     <section class="max-w-7xl mx-auto px-6 pb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Loop Destinasi -->
-            @foreach ($destinations->take(2) as $destination)
+            @foreach ($destinations as $destination)
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-up h-full flex flex-col">
                     <!-- Gambar -->
                     <div class="relative h-48 overflow-hidden">

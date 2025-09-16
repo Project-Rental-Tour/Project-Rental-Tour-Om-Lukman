@@ -36,36 +36,26 @@ class Destination extends Model
     protected $casts = [
         'pickup_points' => 'array',
         'dropoff_points' => 'array',
-        'tag' => 'array',
+        'tag' => 'string', // Pastikan tag disimpan sebagai string
     ];
 
     public function relatedGalleries()
     {
         $tags = $this->tag;
-
-        // Normalisasi tags menjadi array
-        if (!is_array($tags)) {
-            $decoded = json_decode($tags, true);
-            if (is_array($decoded)) {
-                $tags = $decoded;
-            } else {
-                $tags = $tags ? array_map('trim', explode(',', $tags)) : [];
-            }
-        }
-
-        $tags = array_filter(array_map('trim', (array) $tags));
-        if (empty($tags)) {
+        if (!$tags || !is_string($tags)) {
             return collect();
         }
 
-        return Gallery::where(function ($query) use ($tags) {
-            foreach ($tags as $tag) {
-                if (empty($tag)) continue;
+        $tagArray = array_filter(array_map('trim', explode(',', $tags)));
+        $tagArray = array_map('strtolower', $tagArray);
 
-                // Gunakan JSON_SEARCH untuk mencari nilai di dalam objek
-                $query->orWhereRaw("
-                JSON_SEARCH(tag, 'one', ?) IS NOT NULL
-            ", [$tag]);
+        if (empty($tagArray)) {
+            return collect();
+        }
+
+        return Gallery::where(function ($query) use ($tagArray) {
+            foreach ($tagArray as $tag) {
+                $query->orWhereRaw('LOWER(tag) LIKE ?', ['%' . $tag . '%']);
             }
         })
             ->limit(4)

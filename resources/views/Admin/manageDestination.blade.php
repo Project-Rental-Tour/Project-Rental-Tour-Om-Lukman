@@ -284,4 +284,19 @@
     <script src="{{ asset('assets/js/dropdownTable.js') }}"></script>
     <script src="{{ asset('assets/js/replaceImage.js') }}"></script>
     <script src="{{ asset('assets/js/destinationCurrency.js') }}"></script>
+    <script>
+        function updateTagInput() {
+            const tagElements = document.querySelectorAll('#tags-container-add span');
+            const tags = Array.from(tagElements).map(span => {
+                return span.textContent.replace('×', '').trim();
+            });
+            document.getElementById('tag-hidden-input').value = tags.join(', ');
+        }
+
+        function removeTag(button) {
+            const tagElement = button.parentElement;
+            tagElement.remove();
+            updateTagInput();
+        }
+        </script>
 @endpush

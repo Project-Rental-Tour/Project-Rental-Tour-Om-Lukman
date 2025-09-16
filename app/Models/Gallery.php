@@ -19,7 +19,7 @@ class Gallery extends Model
     public $timestamps = true;
 
     protected $casts = [
-        'tag' => 'array',
+        'tag' => 'string', // Pastikan tag disimpan sebagai string
     ];
 
     /**
@@ -30,12 +30,13 @@ class Gallery extends Model
         return ucfirst($value);
     }
 
-    public function getTagAttribute($value)
+    public function getTagArrayAttribute()
     {
-        $tags = json_decode($value, true);
-        if (!is_array($tags)) {
+        if (empty($this->tag)) {
             return [];
         }
-        return array_values(array_filter(array_map('trim', $tags)));
+
+        // Jika tag disimpan sebagai string dipisahkan koma
+        return array_filter(array_map('trim', explode(',', $this->tag)));
     }
 }
