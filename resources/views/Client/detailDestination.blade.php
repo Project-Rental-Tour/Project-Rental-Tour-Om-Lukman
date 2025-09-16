@@ -171,16 +171,14 @@
                              <p class="text-gray-800">{{ $destination->accommodation }}</p>
                         </div>
                         <!-- Pickup & Dropoff Points -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-                                <h4 class="font-semibold text-emerald-800 text-sm">Pickup Points</h4>
-                                <p class="text-sm text-emerald-700 mt-1">{{ $pickupText }}</p>
-                            </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Pickup Points</h4>
+                            <p class="text-gray-800">{{ $destination->pickup_points }}</p>
+                        </div>
 
-                            <div class="bg-rose-50 border border-rose-200 rounded-lg p-4">
-                                <h4 class="font-semibold text-rose-800 text-sm">Dropoff Points</h4>
-                                <p class="text-sm text-rose-700 mt-1">{{ $dropoffText }}</p>
-                            </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Dropoff Points</h4>
+                            <p class="text-gray-800">{{ $destination->dropoff_points }}</p>
                         </div>
                     </div>
                 </div>
