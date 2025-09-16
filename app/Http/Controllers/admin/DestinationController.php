@@ -239,7 +239,7 @@ class DestinationController extends Controller
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
 
             // Proses tag - langsung terima sebagai string
-            $tagString = $request->tag ?: null;
+            $tagString = !empty(trim($request->tag)) ? trim($request->tag) : null;
 
             // DEBUG: Log tag processing
             Log::info('Processed Update Tag:', ['tagString' => $tagString]);
@@ -303,8 +303,10 @@ class DestinationController extends Controller
             if ($request->hasFile('destination_photo')) {
                 $changes[] = "new image uploaded";
             }
-            if ($destination->tag !== $tagString) {
-                $changes[] = "tags updated";
+            if ($destination->tag != $tagString) {
+                $oldTags = $destination->tag ?? 'none';
+                $newTags = $tagString ?? 'none';
+                $changes[] = "tags: '{$oldTags}' → '{$newTags}'";
             }
 
             $changeText = !empty($changes) ? ' (' . implode(', ', $changes) . ')' : '';
