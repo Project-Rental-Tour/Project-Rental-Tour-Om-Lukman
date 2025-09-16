@@ -71,7 +71,12 @@
                                     </span>
                                 @endif
                             @endforeach
+
+                            @if(count(explode(',', $destination->activities)) > 2)
+                                <span class="text-gray-500 text-xs font-medium">...</span>
+                            @endif
                         </div>
+
 
                         <!-- Tombol Book Now -->
                         <a href="{{ route('destination.show', $destination->slug) }}"
