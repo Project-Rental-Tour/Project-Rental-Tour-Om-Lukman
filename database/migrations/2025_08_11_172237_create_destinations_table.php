@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('time');
             $table->string('category')->nullable();
             $table->string('level')->nullable();
-            $table->json('pickup_points')->nullable();
-            $table->json('dropoff_points')->nullable();
+            $table->string('pickup_points')->nullable();
+            $table->string('dropoff_points')->nullable();
             $table->text('activities')->nullable();
             $table->string('transportation')->nullable();
             $table->string('accommodation')->nullable();

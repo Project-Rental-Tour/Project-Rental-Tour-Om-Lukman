@@ -34,8 +34,8 @@ class Destination extends Model
     ];
 
     protected $casts = [
-        'pickup_points' => 'array',
-        'dropoff_points' => 'array',
+        'pickup_points' => 'string',
+        'dropoff_points' => 'string',
         'tag' => 'string', // Pastikan tag disimpan sebagai string
     ];
 
