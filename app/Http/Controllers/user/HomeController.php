@@ -18,7 +18,7 @@ class HomeController extends Controller
     {
         $testimonials = Testimonial::orderBy('created_at')->get();
         $galleries = Gallery::orderBy('created_at')->get();
-        $destinations = Destination::orderBy('created_at')->get();
+        $destinations = Destination::orderBy('updated_at')->get();
 
         // Gunakan first() sebagai fallback jika find(1) tidak ada
         $profiles = Profile::find(1) ?? Profile::first();
