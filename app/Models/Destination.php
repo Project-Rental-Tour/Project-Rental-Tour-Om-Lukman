@@ -55,7 +55,9 @@ class Destination extends Model
 
         return Gallery::where(function ($query) use ($tagArray) {
             foreach ($tagArray as $tag) {
-                $query->orWhereRaw('LOWER(tag) LIKE ?', ['%' . $tag . '%']);
+                // Cocokkan kata utuh (whole word) dengan REGEXP
+                $pattern = '[[:<:]]' . preg_quote($tag, '/') . '[[:>:]]';
+                $query->orWhereRaw('LOWER(tag) REGEXP ?', [$pattern]);
             }
         })
             ->limit(4)
