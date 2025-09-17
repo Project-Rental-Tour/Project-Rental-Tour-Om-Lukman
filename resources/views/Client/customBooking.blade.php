@@ -89,15 +89,35 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Number of Travelers <span class="text-red-500">*</span>
                     </label>
-                    <select name="travelers" required class="w-full p-3 border border-gray-300 rounded-lg bg-white ">
+
+                    <select name="travelers_select" id="travelers_select" required 
+                            class="w-full p-3 border border-gray-300 rounded-lg bg-white"
+                            onchange="toggleCustomTravelersInput()">
                         <option value="">Select number</option>
                         <option value="1">1 person</option>
                         <option value="2">2 people</option>
                         <option value="3">3 people</option>
                         <option value="4">4 people</option>
                         <option value="5">5 people</option>
-                        <option value="6+">6 or more</option>
+                        <option value="6">6 people</option>
+                        <option value="other">Other (please specify)</option>
                     </select>
+
+                    <div id="custom_travelers_container" class="mt-3 hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Enter number of travelers
+                        </label>
+                        <input type="number" 
+                            name="travelers_custom" 
+                            id="travelers_custom"
+                            min="1"
+                            placeholder="e.g. 15"
+                            class="w-full p-3 border border-gray-300 rounded-lg"
+                            oninput="syncTravelersValue()">
+                    </div>
+
+                    <!-- Hidden input yang akan dikirim ke server -->
+                    <input type="hidden" name="travelers" id="travelers" required>
                 </div>
 
                 <!-- Budget Range -->
@@ -462,5 +482,51 @@
 
     @push('scripts')
         <script src="{{ asset('assets/js/whatsAppIcon.js') }}" ></script>
+        <script>
+            function toggleCustomTravelersInput() {
+                const select = document.getElementById('travelers_select');
+                const container = document.getElementById('custom_travelers_container');
+                const customInput = document.getElementById('travelers_custom');
+                const hiddenInput = document.getElementById('travelers');
+
+                if (select.value === 'other') {
+                    container.classList.remove('hidden');
+                    customInput.focus();
+                    customInput.required = true;
+                    select.required = false; // nonaktifkan required dropdown saat pilih other
+                } else {
+                    container.classList.add('hidden');
+                    customInput.required = false;
+                    select.required = true;
+                    // Set hidden input langsung dari dropdown
+                    hiddenInput.value = select.value;
+                }
+            }
+
+            function syncTravelersValue() {
+                const customInput = document.getElementById('travelers_custom');
+                const hiddenInput = document.getElementById('travelers');
+                hiddenInput.value = customInput.value;
+            }
+
+            // Set nilai awal hidden input saat halaman load
+            document.addEventListener('DOMContentLoaded', function() {
+                const select = document.getElementById('travelers_select');
+                const hiddenInput = document.getElementById('travelers');
+                hiddenInput.value = select.value;
+
+                select.addEventListener('change', function() {
+                    if (this.value !== 'other') {
+                        hiddenInput.value = this.value;
+                    }
+                });
+
+                // Jika ada error validasi dan form reload, pastikan hidden input tetap terisi
+                const customInput = document.getElementById('travelers_custom');
+                if (customInput && customInput.value) {
+                    hiddenInput.value = customInput.value;
+                }
+            });
+            </script>
     @endpush
 @endsection
