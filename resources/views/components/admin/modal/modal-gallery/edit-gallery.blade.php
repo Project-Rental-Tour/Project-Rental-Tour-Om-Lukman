@@ -46,7 +46,7 @@
                             value="{{ $gallery->tag }}"> --}}
                         <input type="text" name="tag" placeholder="e.g. bali, beach, sunset, adventure"
                             class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                            value="{{ old('tag', $destination->tag) }}">
+                            value="{{ old('tag', $gallery->tag) }}">
                         <p class="mt-1 text-sm text-gray-500">Separate tags with commas</p>
                         <p class="mt-1 text-sm text-red-600 hidden" id="edit-tag-error-{{ $gallery->gallery_id }}"></p>
                     </div>

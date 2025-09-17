@@ -33,7 +33,7 @@
                         <label for="tag" class="block mb-1 text-sm font-medium text-gray-700">
                             Tags (Optional)
                         </label>
-                        <input type="text" id="tag" name="tag"
+                        <input type="text" name="tag"
                             class="w-full px-4 py-2.5 text-sm transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="e.g. bali, beach, sunset, adventure"
                             value="{{ old('tag') }}">

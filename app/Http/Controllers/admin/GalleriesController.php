@@ -83,21 +83,18 @@ class GalleriesController extends Controller
             $photoPath = str_replace('public/', 'storage/', $imagePath);
 
             // Proses tag → pecah jadi array, filter kosong, trim
-            $tags = collect(explode(',', $request->tag))
-                ->map(fn($tag) => trim($tag))
-                ->filter()
-                ->implode(', ');
+
 
             $gallery = Gallery::create([
                 'title' => $validated['title'],
                 'gallery_photo' => $photoPath,
-                'tag' => $tags, // simpan sebagai JSON array
+                'tag' => $validated['tag'], // simpan sebagai JSON array
             ]);
 
             LogActivity::create([
                 'username' => $currentUser->username,
                 'action' => 'Added gallery item: "' . $gallery->title  . '" with tags: ' . ', ',
-                $tags,
+                $gallery->tag
             ]);
 
             return redirect()->route('manage-gallery.index')
@@ -127,15 +124,11 @@ class GalleriesController extends Controller
 
             $updateData = [
                 'title' => $validated['title'],
+                'tag' => $validated['tag'] ?? null,
             ];
 
             // Proses tag
-            $tags = collect(explode(',', $request->tag))
-                ->map(fn($tag) => trim($tag))
-                ->filter()
-                ->implode(', ');
 
-            $updateData['tag'] = $tags;
 
             if ($request->hasFile('gallery_photo')) {
                 Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
