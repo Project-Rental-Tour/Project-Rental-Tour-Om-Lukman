@@ -189,8 +189,12 @@
                     </div>
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
-                        <textarea name="note" rows="3" placeholder="Additional notes for travelers, e.g., visa requirements, weather tips, etc."
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">{{ old('note', $destination->note) }}</textarea>
+                        <input id="note" type="hidden" name="note" value="{{ old('note', $destination->note) }}">
+                        <trix-editor 
+                            input="note"
+                            class="border border-gray-300 rounded-lg bg-white"
+                            style="min-height: 200px;"
+                        ></trix-editor>
                         <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
                     </div>
                 </div>
