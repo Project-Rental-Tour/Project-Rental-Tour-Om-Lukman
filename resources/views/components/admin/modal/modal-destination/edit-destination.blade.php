@@ -193,7 +193,7 @@
                         <trix-editor 
                             input="note"
                             class="border border-gray-300 rounded-lg bg-white"
-                            style="max-height: 200px;"
+                            style="max-height: 200px; overflow-y: auto;"
                         ></trix-editor>
                         <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
                     </div>
@@ -207,7 +207,7 @@
                         <trix-editor 
                             input="itinerary"
                             class="border border-gray-300 rounded-lg bg-white"
-                            style="max-height: 200px;"
+                            style="max-height: 200px; overflow-y: auto;"
                         ></trix-editor>
                     </div>
                     <div>
