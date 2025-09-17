@@ -228,10 +228,11 @@
     </section>
 
     <!-- Gallery Section -->
-    <section class="max-w-7xl mx-auto px-6 py-24">
+    <section class="bg-primary-opacity">
+        <div class="max-w-7xl mx-auto px-6 py-24">
         <!-- Header -->
         <div class="text-center mb-16 animate-fade-up">
-            <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-blue-100 px-4 py-2 rounded-full inline-block mb-4">
+            <span class="text-primary text-sm font-semibold tracking-wider uppercase bg-white-100 px-4 py-2 rounded-full inline-block mb-4">
                 Travel Moments
             </span>
             <h3 class="text-4xl font-bold text-gray-900 mb-4">
@@ -270,6 +271,7 @@
             class="inline-flex items-center px-8 py-3 bg-primary text-white font-medium rounded-lg shadow hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/30 transform hover:scale-105 transition-all duration-300">
                 View All Gallery
             </a>
+        </div>
         </div>
     </section>
 
