@@ -268,15 +268,18 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-5">Note</h3>
                     <div class="flex flex-wrap gap-2">
                        <ul class="space-y-2">
-                                @foreach(explode('.', $destination->note) as $item)
-                                    @if(trim($item))
-                                        <li class="text-gray-700 flex items-start gap-2">
-                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
-                                            {{ trim($item) }}
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
+                            @php
+                                $lines = explode("\n", $destination->note);
+                            @endphp
+                            @foreach($lines as $line)
+                                @if(trim($line))
+                                    <div class="flex items-start gap-2 py-1">
+                                        {{-- <span class="font-semibold text-blue-600 min-w-[50px]">{{ trim($line, '. ') }}</span> --}}
+                                        <span class="text-gray-700">{!! trim($line) !!}</span>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
