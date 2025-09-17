@@ -58,7 +58,7 @@
                     <div class="p-5 flex flex-col flex-grow">
                         <h3 class="text-lg font-bold text-gray-800 mb-2">{{ $destination->name_package }}</h3>
                         <div class="flex items-center text-gray-600 mb-3 text-sm">
-                            Rp <span>{{ number_format($destination->price, 0, ',', '.') }},-</span>
+                            <span>Rp. {{ number_format($destination->price, 0, ',', '.') }},-</span>
                         </div>
 
                         <!-- Aktivitas -->
