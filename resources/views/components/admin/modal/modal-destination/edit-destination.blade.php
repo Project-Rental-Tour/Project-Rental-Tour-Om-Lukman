@@ -76,9 +76,12 @@
                     <div class="grid gap-6 md:grid-cols-2">
                         <div>
                             <label class="block mb-2 text-sm font-medium">Price</label>
-                            <input type="text" name="price" placeholder="Rp 1.500.000"
+                            <input type="text" 
+                                name="price" 
+                                placeholder="Rp 1.500.000"
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 price-input"
-                                value="{{ old('price', number_format((float) $destination->price, 0, ',', '.')) }}">
+                                value="{{ old('price', $destination->price) }}"
+                            >
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-medium">Duration</label>

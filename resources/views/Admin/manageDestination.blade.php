@@ -345,4 +345,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const priceInput = document.querySelector('.price-input');
+
+    if (!priceInput) return;
+
+    // Format display
+    if (priceInput.value) {
+        priceInput.value = formatRupiah(priceInput.value);
+    }
+
+    // Reformat on input (optional)
+    priceInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = formatRupiah(value);
+    });
+
+    // Strip formatting before submit
+    const form = priceInput.closest('form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            let rawValue = priceInput.value.replace(/\D/g, '');
+            priceInput.value = rawValue || '';
+        });
+    }
+
+    function formatRupiah(angka) {
+        if (!angka) return '';
+        let number = parseInt(angka, 10);
+        if (isNaN(number)) return '';
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+});
+</script>
 @endpush
