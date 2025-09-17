@@ -244,14 +244,14 @@
         </div>
 
         <!-- Masonry Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 space-y-4 h-[550px]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[280px]">
             @foreach ($galleries->take(4) as $gallery)
-                <div class="relative overflow-hidden rounded-lg break-inside-avoid group aspect-w-3 aspect-h-4">
+                <div class="relative overflow-hidden rounded-lg break-inside-avoid group h-[280px] w-full">
                     <!-- Gambar -->
                     <img loading="lazy"
                         src="{{ asset($gallery->gallery_photo) }}"
                         alt="{{ $gallery->title }}"
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                     />
 
                     <!-- Overlay gelap saat hover -->
