@@ -291,17 +291,17 @@
             <div class="columns-2 md:columns-4 gap-4 space-y-6">
 
                 @forelse($relatedGalleries as $gallery)
-                    <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
-                        <img loading="lazy" 
-                            src="{{ asset($gallery->gallery_photo) }}" 
-                            alt="{{ $gallery->title }}"
-                            class="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <!-- Overlay saat hover -->
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <p class="text-white text-sm font-medium px-3 text-center">{{ $gallery->title }}</p>
-                        </div>
+                <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
+                    <img loading="lazy" 
+                        src="{{ asset($gallery->gallery_photo) }}" 
+                        alt="{{ $gallery->title }}"
+                        class="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <!-- Overlay saat hover -->
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <p class="text-white text-sm font-medium px-3 text-center">{{ $gallery->title }}</p>
                     </div>
+                </div>
                 @endforeach
             </div>
         </div>
