@@ -24,7 +24,7 @@
                         <p class="text-blue-100 text-sm">{{ $destination->place }}</p>
                         <div class="mt-4">
                             <span
-                                class="text-3xl font-extrabold">Rp.{{ number_format((float) $destination->price, 0, ',', '.') }}</span>
+                                class="text-3xl font-extrabold">IDR.{{ number_format((float) $destination->price, 0, ',', '.') }}</span>
                             <span class="text-blue-200 block text-sm mt-1">/ person</span>
                         </div>
                         <div class="mt-3 text-xs bg-white bg-opacity-20 inline-block px-3 py-1 rounded-full">

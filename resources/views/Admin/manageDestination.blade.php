@@ -175,7 +175,7 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-center text-gray-900">Rp.
+                                        <div class="text-sm text-center text-gray-900">IDR.
                                             {{ number_format((float) $destination->price, 0, ',', '.') }}
                                         </div>
                                     </td>
