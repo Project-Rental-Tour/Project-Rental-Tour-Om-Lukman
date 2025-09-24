@@ -158,7 +158,7 @@
                     </div>
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
-                        <input id="note-add" type="hidden" name="note">
+                        <input id="note-add" type="hidden" name="note" class="overflow-auto">
                         <trix-editor input="note-add" class="border border-gray-300 rounded-lg bg-white overflow-auto"
                                      style="max-height: 200px;"></trix-editor>
                         <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
@@ -169,7 +169,7 @@
                 <div x-show="step === 6" class="grid gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Itinerary</label>
-                        <input id="itinerary-add" type="hidden" name="itinerary">
+                        <input id="itinerary-add" type="hidden" name="itinerary" class="overflow-auto">
                         <trix-editor input="itinerary-add" class="border border-gray-300 rounded-lg bg-white overflow-auto"
                                      style="max-height: 200px;"></trix-editor>
                     </div>
