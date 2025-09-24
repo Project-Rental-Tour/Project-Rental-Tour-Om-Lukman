@@ -4,16 +4,18 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Affordable car rental & complete tour packages with Septem Tour. New fleet, competitive prices, and professional service for your East Java adventure.">
-    <meta name="keywords" content="car rental indonesia, rent a car bromo, bromo tour package, cheap bromo tour, malang car rental, surabaya car hire, tumpak sewu waterfall, ijen crater blue fire, east java travel, family vacation indonesia, honeymoon package bromo, budget tour east java, mount bromo jeep tour, ijen volcano tour, malang city tour, beach tourism, mountain tourism, cultural heritage tour, historical sites, culinary tour, septem tour">
+   <meta name="description" content="Sewa mobil, paket wisata Bromo, sewa Hiace, travel Tumpak Sewu, tour Ijen, Malang city tour, dan Surabaya car rental dengan harga terjangkau. Armada baru, supir profesional, dan layanan 24 jam.">
+    <meta name="keywords" content="sewa mobil malang, sewa mobil surabaya, sewa hiace malang, sewa hiace surabaya, bromo tour, sewa mobil bromo, travel tumpak sewu, paket wisata ijen blue fire, mount semeru trekking, malang car rental, east java tour, jeep bromo, family vacation indonesia, sewa alphard malang, city tour surabaya, paket honeymoon bromo, wisata jatim, kuliner malang, pantai malang selatan, mount bromo sunrise, travel, tour, sewa mobil">
     <meta name="author" content="Septem Tour">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="Septem Tour - Trusted Car Rental & Tour Packages in East Java">
-    <meta property="og:description" content="Explore Bromo, Ijen, Tumpak Sewu & more with affordable car rentals and curated tour packages. New vehicles, local guides, 24/7 support. Book your adventure now!">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Septem Tour - Sewa Mobil & Paket Wisata Bromo, Malang, Surabaya, Ijen & Tumpak Sewu">
+    <meta property="og:description" content="Paket wisata lengkap: Bromo sunrise tour, sewa Hiace Malang & Surabaya, travel Tumpak Sewu, Ijen crater tour, city tour Malang. Armada baru, layanan profesional, harga bersahabat.">
     <meta property="og:url" content="https://www.septemtour.com">
     <meta property="og:type" content="website">
-    <meta property="og:image:alt" content="Septem Tour Bromo Jeep Adventure at Sunrise">
+    <meta property="og:image:alt" content="Paket Wisata Bromo Sunrise Jeep Adventure dengan Septem Tour">
+    <meta property="og:locale" content="id_ID">
     <meta property="og:locale" content="en_US">
 
     <title>@yield('title', 'SEPTEM TOUR')</title>
