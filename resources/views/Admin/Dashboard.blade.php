@@ -17,25 +17,12 @@
 
         <!-- Statistik Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Total Users Card -->
-            <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">Total Users</p>
-                    <h3 class="text-3xl font-bold text-gray-800">{{ number_format($totalUsers) }}</h3>
-                    <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 12% from last month</p>
-                </div>
-                <div class="icon-container w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-users text-blue-600 text-xl"></i>
-                </div>
-            </div>
-
             <!-- Total Destination Card -->
             <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500 mb-2">Total Destination</p>
                     <h3 class="text-3xl font-bold text-gray-800">{{ $totalDestinations }}</h3>
-                    <p class="text-xs text-blue-500 mt-2"><i class="fas fa-plus mr-1"></i> {{ $totalDestinations - 22 }} new
-                        this month</p>
+                    <p class="text-xs text-blue-500 mt-2"><i class="fas fa-plus mr-1"></i> {{ $totalDestinations - 22 }} new this month</p>
                 </div>
                 <div class="icon-container w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
                     <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
@@ -54,7 +41,29 @@
                 </div>
             </div>
 
-            
+            <!-- Total Car Card -->
+            <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2">Total Car</p>
+                    <h3 class="text-3xl font-bold text-gray-800">{{ $totalCars }}</h3>
+                    <p class="text-xs text-purple-500 mt-2"><i class="fas fa-car mr-1"></i> Fleet overview</p>
+                </div>
+                <div class="icon-container w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-car text-purple-600 text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Total Booking Car Card -->
+            <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2">Total Booking Car</p>
+                    <h3 class="text-3xl font-bold text-gray-800">{{ $totalCarBookings }}</h3>
+                    <p class="text-xs text-orange-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 5% from last month</p>
+                </div>
+                <div class="icon-container w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-key text-orange-600 text-xl"></i>
+                </div>
+            </div>
 
             <!-- Total Gallery Card -->
             <div class="stat-card bg-white p-6 rounded-xl shadow-lg flex items-center justify-between">

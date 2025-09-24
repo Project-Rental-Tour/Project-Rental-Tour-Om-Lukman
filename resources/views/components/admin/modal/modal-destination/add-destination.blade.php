@@ -167,27 +167,39 @@
 
                 <!-- STEP 6: Itinerary & Photo -->
                 <div x-show="step === 6" class="grid gap-6">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Itinerary</label>
-                        <input id="itinerary-add" type="hidden" name="itinerary" class="overflow-y-auto">
-                        <trix-editor input="itinerary-add" class="border border-gray-300 rounded-lg bg-white overflow-y-auto"
-                                     style="max-height: 200px;"></trix-editor>
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Destination Photo</label>
-                        <input type="file" name="destination_photo" accept="image/*"
-                               data-preview="add-preview-photo"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                        <p class="text-xs text-gray-400 mt-1">Upload a representative image (jpg, png, max 2MB)</p>
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Itinerary</label>
+                    <input id="itinerary-add" type="hidden" name="itinerary" class="overflow-y-auto">
+                    <trix-editor input="itinerary-add" class="border border-gray-300 rounded-lg bg-white overflow-y-auto"
+                                style="max-height: 200px;"></trix-editor>
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium">Destination Photo</label>
+                    <input 
+                    type="file" 
+                    name="destination_photo" 
+                    accept="image/*"
+                    data-preview="add-preview-photo"
+                    class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                    >
+                    <p class="text-xs text-gray-400 mt-1">Upload a representative image (jpg, png, max 2MB)</p>
 
-                        <div class="mt-4 flex flex-col items-center">
-                            <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                                <img id="add-preview-photo" src="" alt="Preview"
-                                     class="w-full h-full object-cover rounded-lg hidden">
-                                <span id="placeholder-add-preview-photo" class="text-gray-400 text-sm">Image Preview</span>
-                            </div>
-                        </div>
+                    <div class="mt-4 flex flex-col items-center">
+                    <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
+                        <img 
+                        id="add-preview-photo" 
+                        src="" 
+                        alt="Preview"
+                        class="w-full h-full object-cover rounded-lg hidden"
+                        >
+                        <!-- ✅ Perbaiki ID placeholder agar sesuai pola: placeholder-{previewId} -->
+                        <span 
+                        id="placeholder-add-preview-photo" 
+                        class="text-gray-400 text-sm"
+                        >Image Preview</span>
                     </div>
+                    </div>
+                </div>
                 </div>
 
                 <!-- Navigation buttons -->

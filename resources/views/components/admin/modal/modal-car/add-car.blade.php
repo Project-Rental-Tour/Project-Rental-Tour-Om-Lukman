@@ -130,54 +130,106 @@
                 </div>
 
                 <!-- STEP 5: Images -->
-                <div x-show="step === 5" class="space-y-6">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Main Image (Required)</label>
-                        <input type="file" name="image_car_1" accept="image/*" required
-                               data-preview="preview-image-1"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                        <p class="text-xs text-gray-400 mt-1">Upload main image (jpg, png, max 2MB)</p>
-
-                        <div class="mt-4 flex justify-center">
-                            <div class="w-48 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                                <img id="preview-image-1" src="" alt="Preview"
-                                     class="w-full h-full object-cover rounded-lg hidden">
-                                <span id="placeholder-preview-1" class="text-gray-400 text-sm">Main Image Preview</span>
+               <div x-show="step === 5" class="space-y-8 max-w-4xl mx-auto px-2">
+                    <!-- Main Image -->
+                    <div class="flex flex-col md:flex-row items-start gap-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                        <!-- Preview (Kiri) -->
+                        <div class="flex-shrink-0">
+                        <div class="w-48 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50 relative">
+                            <img
+                            id="preview-image-1"
+                            src=""
+                            alt="Main image preview"
+                            class="w-full h-full object-cover opacity-0 transition-opacity duration-200"
+                            />
+                            <div id="placeholder-preview-1" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                            <!-- Ganti dengan ikon jika pakai Heroicons, atau gunakan SVG/emoji -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-xs">Main Image</span>
                             </div>
+                        </div>
+                        </div>
+
+                        <!-- Form (Kanan) -->
+                        <div class="flex-1 w-full md:max-w-md space-y-2">
+                        <label class="block text-sm font-medium text-gray-800">Main Image <span class="text-red-500">*</span></label>
+                        <input
+                            type="file"
+                            name="image_car_1"
+                            accept="image/*"
+                            required
+                            data-preview="preview-image-1"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                        />
+                        <p class="text-xs text-gray-500">Format: JPG, PNG • Max 2MB</p>
                         </div>
                     </div>
 
+                    <!-- Optional Images -->
                     <div class="grid gap-6 md:grid-cols-2">
-                        <div>
-                            <label class="block mb-2 text-sm font-medium">Image 2 (Optional)</label>
-                            <input type="file" name="image_car_2" accept="image/*"
-                                   data-preview="preview-image-2"
-                                   class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-
-                            <div class="mt-4 flex justify-center">
-                                <div class="w-32 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                                    <img id="preview-image-2" src="" alt="Preview"
-                                         class="w-full h-full object-cover rounded-lg hidden">
-                                    <span id="placeholder-preview-2" class="text-gray-400 text-sm">Image 2 Preview</span>
-                                </div>
+                        <!-- Image 2 -->
+                        <div class="flex flex-col md:flex-row items-start gap-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex-shrink-0">
+                            <div class="w-40 h-28 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50 relative">
+                            <img
+                                id="preview-image-2"
+                                src=""
+                                alt="Image 2 preview"
+                                class="w-full h-full object-cover opacity-0 transition-opacity duration-200"
+                            />
+                            <div id="placeholder-preview-2" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xs">Image 2</span>
+                            </div>
                             </div>
                         </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium">Image 3 (Optional)</label>
-                            <input type="file" name="image_car_3" accept="image/*"
-                                   data-preview="preview-image-3"
-                                   class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <div class="flex-1 w-full md:max-w-xs space-y-2">
+                            <label class="block text-sm font-medium text-gray-800">Image 2 (Optional)</label>
+                            <input
+                            type="file"
+                            name="image_car_2"
+                            accept="image/*"
+                            data-preview="preview-image-2"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                            />
+                        </div>
+                        </div>
 
-                            <div class="mt-4 flex justify-center">
-                                <div class="w-32 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                                    <img id="preview-image-3" src="" alt="Preview"
-                                         class="w-full h-full object-cover rounded-lg hidden">
-                                    <span id="placeholder-preview-3" class="text-gray-400 text-sm">Image 3 Preview</span>
-                                </div>
+                        <!-- Image 3 -->
+                        <div class="flex flex-col md:flex-row items-start gap-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex-shrink-0">
+                            <div class="w-40 h-28 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50 relative">
+                            <img
+                                id="preview-image-3"
+                                src=""
+                                alt="Image 3 preview"
+                                class="w-full h-full object-cover opacity-0 transition-opacity duration-200"
+                            />
+                            <div id="placeholder-preview-3" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xs">Image 3</span>
                             </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full md:max-w-xs space-y-2">
+                            <label class="block text-sm font-medium text-gray-800">Image 3 (Optional)</label>
+                            <input
+                            type="file"
+                            name="image_car_3"
+                            accept="image/*"
+                            data-preview="preview-image-3"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                            />
+                        </div>
                         </div>
                     </div>
-                </div>
+                    </div>
 
                 <!-- Navigation buttons -->
                 <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
@@ -200,26 +252,27 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Image Preview
-    document.querySelectorAll('input[type="file"]').forEach(input => {
-        input.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                const previewId = this.getAttribute('data-preview');
-                const preview = document.getElementById(previewId);
-                const placeholderId = 'placeholder-' + previewId;
-                const placeholder = document.getElementById(placeholderId);
+document.querySelectorAll('input[type="file"][data-preview]').forEach(input => {
+  input.addEventListener('change', function () {
+    const file = this.files[0];
+    const previewId = this.dataset.preview;
+    const img = document.getElementById(previewId);
+    const placeholder = document.getElementById('placeholder-' + previewId);
 
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    });
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        img.src = e.target.result;
+        // Fade in effect
+        img.classList.remove('opacity-0');
+        img.onload = () => img.classList.add('opacity-100');
+        placeholder.classList.add('hidden');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      img.classList.add('opacity-0');
+      placeholder.classList.remove('hidden');
+    }
+  });
 });
 </script>

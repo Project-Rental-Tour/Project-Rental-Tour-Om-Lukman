@@ -62,7 +62,6 @@
                 <div class="md:col-span-2 flex flex-col items-center justify-center">
                     <div class="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-4">
                         <img id="previewPhoto" src="" alt="Preview" class="w-full h-full object-cover rounded-lg hidden">
-                        <span id="placeholderText" class="text-gray-400 text-sm">Image Preview</span>
                     </div>
                 </div>
 

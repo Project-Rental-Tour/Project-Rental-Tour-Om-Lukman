@@ -12,6 +12,8 @@ use App\Models\Profile;
 use App\Models\User;
 use App\Models\Destination;
 use App\Models\Booking;
+use App\Models\BookingCar;
+use App\Models\Car;
 use App\Models\Gallery;
 use App\Models\Testimonial;
 use App\Models\LogActivity;
@@ -35,6 +37,8 @@ class DashboardController extends Controller
         $totalBookings = Booking::count();
         $totalGalleries = Gallery::count();
         $totalTestimonials = Testimonial::count();
+        $totalCars = Car::count();
+        $totalCarBookings = BookingCar::count();
 
         $recentBookings = Booking::latest()->take(4)->get();
 
@@ -63,7 +67,9 @@ class DashboardController extends Controller
             'recentBookings',
             'recentActivities',
             'notifications',
-            'profiles'
+            'profiles',
+            'totalCars',
+            'totalCarBookings'
         ));
     }
 

@@ -129,65 +129,132 @@
                 </div>
 
                 <!-- STEP 5: Images -->
-                <div x-show="step === 5" class="space-y-6">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Update Main Image (Optional)</label>
-                        <input type="file" name="image_car_1" accept="image/*"
-                               data-preview="preview-image-1-edit"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                        @if($car->image_car_1)
-                        <p class="text-xs text-gray-500 mt-1">
-                            Current: <a href="{{ asset($car->image_car_1) }}" target="_blank" class="text-blue-600 hover:underline">View Image</a>
-                        </p>
-                        @endif
-
-                        <div class="mt-4 flex justify-center">
-                            <div class="w-48 h-32 border rounded-lg overflow-hidden">
-                                <img id="preview-image-1-edit" src="{{ asset($car->image_car_1) }}" alt="Current Image"
-                                     class="w-full h-full object-cover">
+                <div x-show="step === 5" class="space-y-8 max-w-4xl mx-auto px-2">
+                    <!-- Main Image -->
+                    <div class="flex flex-col md:flex-row items-start gap-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <!-- Preview (Kiri) -->
+                        <div class="flex-shrink-0">
+                        <div class="w-48 h-32 border rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center relative">
+                            @if($car->image_car_1)
+                            <img
+                                id="preview-image-1-edit"
+                                src="{{ asset($car->image_car_1) }}"
+                                alt="Current main image"
+                                class="w-full h-full object-cover"
+                            />
+                            @else
+                            <div id="placeholder-preview-1-edit" class="text-center text-gray-400 px-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xs">No image</span>
                             </div>
+                            @endif
+                        </div>
+                        </div>
+
+                        <!-- Form (Kanan) -->
+                        <div class="flex-1 w-full md:max-w-md space-y-2">
+                        <label class="block text-sm font-medium text-gray-800">Update Main Image (Optional)</label>
+                        <input
+                            type="file"
+                            name="image_car_1"
+                            accept="image/*"
+                            data-preview="preview-image-1-edit"
+                            data-placeholder="placeholder-preview-1-edit"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                        />
+
+                        @if($car->image_car_1)
+                            <p class="text-xs text-gray-500 mt-1">
+                            Current: <a href="{{ asset($car->image_car_1) }}" target="_blank" class="text-blue-600 hover:underline font-medium">View Image</a>
+                            </p>
+                        @endif
+                        <p class="text-xs text-gray-400">JPG, PNG • Max 2MB</p>
                         </div>
                     </div>
 
+                    <!-- Optional Images -->
                     <div class="grid gap-6 md:grid-cols-2">
-                        <div>
-                            <label class="block mb-2 text-sm font-medium">Update Image 2 (Optional)</label>
-                            <input type="file" name="image_car_2" accept="image/*"
-                                   data-preview="preview-image-2-edit"
-                                   class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <!-- Image 2 -->
+                        <div class="flex flex-col md:flex-row items-start gap-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex-shrink-0">
+                            <div class="w-40 h-28 border rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center relative">
+                            @if($car->image_car_2)
+                                <img
+                                id="preview-image-2-edit"
+                                src="{{ asset($car->image_car_2) }}"
+                                alt="Current image 2"
+                                class="w-full h-full object-cover"
+                                />
+                            @else
+                                <div id="placeholder-preview-2-edit" class="text-center text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xs">No image</span>
+                                </div>
+                            @endif
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full md:max-w-xs space-y-2">
+                            <label class="block text-sm font-medium text-gray-800">Update Image 2 (Optional)</label>
+                            <input
+                            type="file"
+                            name="image_car_2"
+                            accept="image/*"
+                            data-preview="preview-image-2-edit"
+                            data-placeholder="placeholder-preview-2-edit"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                            />
                             @if($car->image_car_2)
                             <p class="text-xs text-gray-500 mt-1">
-                                Current: <a href="{{ asset($car->image_car_2) }}" target="_blank" class="text-blue-600 hover:underline">View Image</a>
+                                Current: <a href="{{ asset($car->image_car_2) }}" target="_blank" class="text-blue-600 hover:underline font-medium">View Image</a>
                             </p>
                             @endif
+                        </div>
+                        </div>
 
-                            <div class="mt-4 flex justify-center">
-                                <div class="w-32 h-24 border rounded-lg overflow-hidden">
-                                    <img id="preview-image-2-edit" src="{{ asset($car->image_car_2) }}" alt="Current Image"
-                                         class="w-full h-full object-cover">
+                        <!-- Image 3 -->
+                        <div class="flex flex-col md:flex-row items-start gap-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex-shrink-0">
+                            <div class="w-40 h-28 border rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center relative">
+                            @if($car->image_car_3)
+                                <img
+                                id="preview-image-3-edit"
+                                src="{{ asset($car->image_car_3) }}"
+                                alt="Current image 3"
+                                class="w-full h-full object-cover"
+                                />
+                            @else
+                                <div id="placeholder-preview-3-edit" class="text-center text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xs">No image</span>
                                 </div>
+                            @endif
                             </div>
                         </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium">Update Image 3 (Optional)</label>
-                            <input type="file" name="image_car_3" accept="image/*"
-                                   data-preview="preview-image-3-edit"
-                                   class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                        <div class="flex-1 w-full md:max-w-xs space-y-2">
+                            <label class="block text-sm font-medium text-gray-800">Update Image 3 (Optional)</label>
+                            <input
+                            type="file"
+                            name="image_car_3"
+                            accept="image/*"
+                            data-preview="preview-image-3-edit"
+                            data-placeholder="placeholder-preview-3-edit"
+                            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                            />
                             @if($car->image_car_3)
                             <p class="text-xs text-gray-500 mt-1">
-                                Current: <a href="{{ asset($car->image_car_3) }}" target="_blank" class="text-blue-600 hover:underline">View Image</a>
+                                Current: <a href="{{ asset($car->image_car_3) }}" target="_blank" class="text-blue-600 hover:underline font-medium">View Image</a>
                             </p>
                             @endif
-
-                            <div class="mt-4 flex justify-center">
-                                <div class="w-32 h-24 border rounded-lg overflow-hidden">
-                                    <img id="preview-image-3-edit" src="{{ asset($car->image_car_3) }}" alt="Current Image"
-                                         class="w-full h-full object-cover">
-                                </div>
-                            </div>
+                        </div>
                         </div>
                     </div>
-                </div>
+                    </div>
 
                 <!-- Navigation buttons -->
                 <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
