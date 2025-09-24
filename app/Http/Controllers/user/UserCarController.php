@@ -61,7 +61,7 @@ class UserCarController extends Controller
         $cars = $query->paginate(25)->appends($request->except('page'));
 
 
-        return view('client.listCarPage', compact('cars', 'carTypes', 'profiles'));
+        return view('Client.listCarPage', compact('cars', 'carTypes', 'profiles'));
     }
 
     public function detailCar($slug)
