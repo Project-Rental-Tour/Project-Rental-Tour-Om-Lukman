@@ -22,17 +22,20 @@
             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 transition-opacity duration-500">
 
         <div class="container mx-auto px-6 relative z-20 text-center">
-            <h1 class="text-6xl sm:text-2xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
-                {{ optional($profiles)->jumbotron_heading ?? "Let's Journey and Discover a Place" }}
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
+                {{ optional($profiles)->jumbotron_heading ?? "WELCOME TO SEPTEMTOUR" }}
             </h1>
-            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up" style="transition-delay: 0.2s">
-                {{ optional($profiles)->jumbotron_subheading ?? "Discover the world's hidden gems and create unforgettable memories through our meticulously crafted travel experiences, designed for those who seek authentic adventures and cultural immersion beyond the ordinary tourist path." }}
+
+            <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up"
+            style="transition-delay: 0.2s">
+                {{ optional($profiles)->jumbotron_subheading ?? "Let's Journey and Discover hidden gems and create unforgettable memories with authentic travel experiences that go beyond the ordinary tourist path." }}
             </p>
+
             <a href="#destination"
-                class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-full hover-bg-primary transition-transform hover:scale-105 shadow-lg animate-fade-up"
-                style="background-color: #799eff; transition-delay: 0.4s">
+            class="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-white bg-primary rounded-full hover:bg-primary transition-transform hover:scale-105 shadow-lg animate-fade-up"
+            style="background-color: #799eff; transition-delay: 0.4s">
                 Top Destinations
-                <i class="fas fa-arrow-down ml-8 mt-1"></i>
+                <i class="fas fa-arrow-down ml-3 sm:ml-8 mt-0.5 sm:mt-1"></i>
             </a>
         </div>
     </section>
