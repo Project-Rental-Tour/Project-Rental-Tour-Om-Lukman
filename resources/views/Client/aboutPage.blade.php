@@ -262,20 +262,7 @@
         </div>
 
         <!-- Stats Section -->
-        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div class="stat-card animate-fade-up">
-                <h3 class="text-4xl font-bold text-primary">15K+</h3>
-                <p class="text-gray-600 mt-2 font-medium">Happy Travelers</p>
-            </div>
-            <div class="stat-card animate-fade-up">
-                <h3 class="text-4xl font-bold text-primary">50+</h3>
-                <p class="text-gray-600 mt-2 font-medium">Destinations Covered</p>
-            </div>
-            <div class="stat-card animate-fade-up">
-                <h3 class="text-4xl font-bold text-primary">14 Years</h3>
-                <p class="text-gray-600 mt-2 font-medium">Of Trusted Service</p>
-            </div>
-        </div>
+        
     </section>
 
     <!-- WhatsApp Floating Button -->
