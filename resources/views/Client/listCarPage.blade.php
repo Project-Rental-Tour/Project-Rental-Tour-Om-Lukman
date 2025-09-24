@@ -428,7 +428,7 @@
                         </div>
                     @empty
                         <div class="col-span-full">
-                            <div class="empty-state bg-white p-10 text-center rounded-2xl">
+                            <div class="empty-state bg-white text-center rounded-2xl" style="padding: 30px;">
                                 <div class="text-gray-400 mb-4">
                                     <svg class="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <rect x="3" y="10" width="18" height="7" rx="2" ry="2"/>
