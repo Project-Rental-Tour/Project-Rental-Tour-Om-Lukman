@@ -68,6 +68,6 @@ class UserCarController extends Controller
     {
         $profiles = Profile::find(1) ?? Profile::first();
         $car = Car::where('slug', $slug)->firstOrFail();
-        return view('client.detailCarPage', compact('car', 'profiles'));
+        return view('Client.detailCarPage', compact('car', 'profiles'));
     }
 }
