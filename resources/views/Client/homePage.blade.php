@@ -22,7 +22,7 @@
             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 transition-opacity duration-500">
 
         <div class="container mx-auto px-6 relative z-20 text-center">
-            <h1 class="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
+            <h1 class="text-6xl sm:text-2xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
                 {{ optional($profiles)->jumbotron_heading ?? "Let's Journey and Discover a Place" }}
             </h1>
             <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up" style="transition-delay: 0.2s">
