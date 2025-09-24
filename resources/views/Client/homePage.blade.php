@@ -261,7 +261,7 @@
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-opacity duration-300"></div>
 
                     <!-- Title di pojok kanan bawah -->
-                    <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs md:text-sm font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    <div class="absolute bottom-2 left-2 bg-black/80 text-white text-xs md:text-sm font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                         {{ $gallery->title }}
                     </div>
                 </div>
