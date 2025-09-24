@@ -142,13 +142,13 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section id="jumbotron" class="relative bg-gray-900 text-white h-96 overflow-hidden">
+    <section id="jumbotron" class="relative bg-gray-900 text-white h-[400px] sm:h-[500px] md:h-[400px] lg:h-[400px] overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50"></div>
         <div class="absolute inset-0 bg-black opacity-30"></div>
         <img loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" 
             alt="Car Fleet" class="w-full h-full object-cover object-center">
 
-        <div class="absolute inset-0 flex items-center">
+        <div class="absolute inset-0 flex items-center pt-20 pb-20">
             <div class="container mx-auto px-6">
                 <div class="max-w-3xl animate-fade-up">
                     <br>

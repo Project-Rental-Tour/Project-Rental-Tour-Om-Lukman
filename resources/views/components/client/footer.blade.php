@@ -31,6 +31,11 @@
                            aria-label="TikTok">
                             <i class="fab fa-tiktok"></i>
                         </a>
+                        <a href="https://www.facebook.com/share/1FroC8sWtd/?mibextid=wwXIfr" target="_blank"
+                           class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                           aria-label="TikTok">
+                            <i class="fab fa-facebook"></i>
+                        </a>
                     </div>
                 </div>
 
