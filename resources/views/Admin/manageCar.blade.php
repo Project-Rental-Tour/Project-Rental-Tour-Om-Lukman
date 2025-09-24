@@ -127,7 +127,10 @@
                                 <td colspan="8" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center justify-center text-gray-500">
                                         <svg class="w-12 h-12 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                            <rect x="3" y="10" width="18" height="7" rx="2" ry="2"/>
+                                            <path d="M6 10L7 6h10l1 4"/>
+                                            <path d="M7 17v2a2 2 0 0 1-4 0v-2"/>
+                                            <path d="M21 17v2a2 2 0 0 1-4 0v-2"/>
                                         </svg>
                                         <h3 class="text-lg font-medium">No cars found</h3>
                                         <p class="mt-1 text-sm">

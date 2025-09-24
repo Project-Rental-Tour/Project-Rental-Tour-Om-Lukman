@@ -63,8 +63,10 @@
                 <a href="{{ route('manage-car.index') }}"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-car.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-car.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v9a2 2 0 01-2 2H6a2 2 0 01-2-2V10z" />
+                         <rect x="3" y="10" width="18" height="7" rx="2" ry="2"/>
+  <path d="M6 10L7 6h10l1 4"/>
+  <path d="M7 17v2a2 2 0 0 1-4 0v-2"/>
+  <path d="M21 17v2a2 2 0 0 1-4 0v-2"/>
                     </svg>
                     Manage Car
                 </a>

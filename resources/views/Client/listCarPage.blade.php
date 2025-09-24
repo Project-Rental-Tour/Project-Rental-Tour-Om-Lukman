@@ -431,7 +431,10 @@
                             <div class="empty-state bg-white p-12 text-center rounded-2xl">
                                 <div class="text-gray-400 mb-4">
                                     <svg class="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                        <rect x="3" y="10" width="18" height="7" rx="2" ry="2"/>
+                                        <path d="M6 10L7 6h10l1 4"/>
+                                        <path d="M7 17v2a2 2 0 0 1-4 0v-2"/>
+                                        <path d="M21 17v2a2 2 0 0 1-4 0v-2"/>
                                     </svg>
                                 </div>
                                 <h3 class="text-2xl font-semibold text-gray-800 mb-2">No cars available</h3>
@@ -442,13 +445,7 @@
                                         class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
                                         Reset Filters
                                     </a>
-                                    <a href="{{ route('booking.custom') }}"
-                                        class="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors font-medium">
-                                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
-                                        Create Custom Request
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
