@@ -209,7 +209,7 @@ class DestinationController extends Controller
             $request->validate([
                 'name_package' => 'required|string|max:255',
                 'slug' => 'nullable|string|max:255|unique:destinations,slug,' . $destination_id . ',destination_id',
-                'description' => 'nullable|string|max:500',
+                'description' => 'nullable|string',
                 'place' => 'required|string|max:255',
                 'price' => 'nullable|numeric|min:0',
                 'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
