@@ -142,38 +142,48 @@
     @include('components.client.navbar')
 
     <!-- Hero Section -->
-    <section id="jumbotron" class="relative bg-gray-900 text-white h-[500px] sm:h-[600px] md:h-[400px] lg:h-[400px] overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50"></div>
-        <div class="absolute inset-0 bg-black opacity-30"></div>
-        <img loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" 
-            alt="Car Fleet" class="w-full h-full object-cover object-center">
+    <section id="jumbotron" class="relative bg-gray-900 text-white overflow-hidden">
+    <!-- Background Image -->
+        <img 
+            loading="lazy" 
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" 
+            alt="Car Fleet" 
+            class="w-full h-full object-cover object-center absolute inset-0 z-0"
+        />
 
-        <div class="absolute inset-0 flex items-center pt-20 pb-20">
-            <div class="container mx-auto px-6">
-                <div class="max-w-3xl animate-fade-up">
-                    <br>
-                    <br>
-                    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Our Premium Car Fleet</h1>
-                    <p class="text-xl text-blue-200 mb-8">Choose your perfect ride for every adventure — from city commutes to mountain escapes.</p>
-                    
-                    <!-- Quick Stats -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
-                            <div class="text-2xl font-bold">{{ $cars->count() }}</div>
-                            <div class="text-sm">Total Cars</div>
-                        </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
-                            <div class="text-2xl font-bold">4.8</div>
-                            <div class="text-sm">Avg Rating</div>
-                        </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
-                            <div class="text-2xl font-bold">{{ $cars->where('car_status', 'available')->count() }}</div>
-                            <div class="text-sm">Available</div>
-                        </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
-                            <div class="text-2xl font-bold">24/7</div>
-                            <div class="text-sm">Support</div>
-                        </div>
+        <!-- Overlay Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-purple-900/60 z-10"></div>
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
+
+        <!-- Content -->
+        <div class="relative z-20 container mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20">
+            <div class="max-w-3xl mx-auto text-center animate-fade-up">
+                <br>
+                <br>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+                    Our Premium Car Fleet
+                </h1>
+                <p class="text-lg sm:text-xl text-blue-200 mb-8 px-2">
+                    Choose your perfect ride for every adventure — from city commutes to mountain escapes.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
+                        <div class="text-xl sm:text-2xl font-bold">{{ $cars->count() }}</div>
+                        <div class="text-xs sm:text-sm">Total Cars</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
+                        <div class="text-xl sm:text-2xl font-bold">4.8</div>
+                        <div class="text-xs sm:text-sm">Avg Rating</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
+                        <div class="text-xl sm:text-2xl font-bold">{{ $cars->where('car_status', 'available')->count() }}</div>
+                        <div class="text-xs sm:text-sm">Available</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
+                        <div class="text-xl sm:text-2xl font-bold">24/7</div>
+                        <div class="text-xs sm:text-sm">Support</div>
                     </div>
                 </div>
             </div>
