@@ -148,12 +148,12 @@
                 <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Include</label>
-                        <textarea name="include" rows="4" placeholder="Accommodation, Meals, Transport..."
+                        <textarea name="include" rows="4" placeholder="Accommodation. Meals. Transport..."
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Exclude</label>
-                        <textarea name="exclude" rows="4" placeholder="Personal expenses, Tips, Insurance..."
+                        <textarea name="exclude" rows="4" placeholder="Personal expenses. Tips. Insurance..."
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div class="md:col-span-2">
