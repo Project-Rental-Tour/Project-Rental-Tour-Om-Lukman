@@ -78,14 +78,14 @@ class BookingCarController extends Controller
         ]);
 
         $bookings = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageBookingCar', compact('bookings', 'notifications', 'profiles'));
+        return view('Admin.manageBookingCar', compact('bookings', 'notifications', 'profiles'));
     }
 
     public function booking($slug)
     {
         $profiles = Profile::find(1) ?? Profile::first();
         $car = Car::where('slug', $slug)->firstOrFail();
-        return view('client.bookingCar', compact('profiles', 'car'));
+        return view('Client.bookingCar', compact('profiles', 'car'));
     }
 
     public function bookingStore(Request $request)

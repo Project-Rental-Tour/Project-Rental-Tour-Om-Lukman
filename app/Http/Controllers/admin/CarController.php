@@ -69,7 +69,7 @@ class CarController extends Controller
         ]);
 
         $cars = $query->paginate(25)->appends($request->except('page'));
-        return view('admin.manageCar', compact('cars', 'notifications', 'profiles'));
+        return view('Admin.manageCar', compact('cars', 'notifications', 'profiles'));
     }
 
     public function store(Request $request)
