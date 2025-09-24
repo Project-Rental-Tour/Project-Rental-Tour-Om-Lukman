@@ -47,17 +47,6 @@
                     Manage User
                 </a>
 
-                <a href="{{ route('manage-booking.index') }}"
-                    class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-booking.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-booking.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    Manage Booking
-                </a>
-
                 <a href="{{ route('manage-destination.index') }}"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-destination.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-destination.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"
@@ -69,6 +58,37 @@
                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                     Manage Destination
+                </a>
+                
+                <a href="{{ route('manage-car.index') }}"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-car.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                    <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-car.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v9a2 2 0 01-2 2H6a2 2 0 01-2-2V10z" />
+                    </svg>
+                    Manage Car
+                </a>
+
+                <a href="{{ route('manage-booking.index') }}"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-booking.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                    <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-booking.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Manage Booking
+                </a>
+
+                <a href="{{ route('manage-booking-car.index') }}"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-booking-car.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                    <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-booking-car.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 12h.01M12 16h.01M12 8h.01" />
+                </svg>
+                    Manage Booking Car
                 </a>
 
                 <a href="{{ route('manage-gallery.index') }}"

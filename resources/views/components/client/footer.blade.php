@@ -42,6 +42,7 @@
                     <ul class="space-y-3">
                         <li><a href="{{ route('index') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i> Home</a></li>
                         <li><a href="{{ route('destination.index') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> Destination</a></li>
+                        <li><a href="{{ route('usercar.index') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> List Car</a></li>
                         <li><a href="{{ route('gallery.index') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> Gallery</a></li>
                         <li><a href="{{ route('about') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> About Us</a></li>
                         <li><a href="{{ route('faq') }}" class="text-blue-100 hover:text-white flex items-center group"><i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> FAQs</a></li>

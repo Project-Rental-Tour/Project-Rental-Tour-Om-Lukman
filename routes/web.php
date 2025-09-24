@@ -6,8 +6,11 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\admin\BookingController;
+use App\Http\Controllers\admin\CarController;
 use App\Http\Controllers\admin\GalleriesController;
 use App\Http\Controllers\admin\DestinationController;
+use App\Http\Controllers\admin\BookingCarController;
+use App\Http\Controllers\user\UserCarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserGalleryController;
 use App\Http\Controllers\user\UserDestinationController;
@@ -18,7 +21,12 @@ Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/gallery', [UserGalleryController::class, 'index'])->name('gallery.index');
+Route::get('/list-car', [UserCarController::class, 'index'])->name('usercar.index');
 Route::get('/destination', [UserDestinationController::class, 'index'])->name('destination.index');
+
+Route::get('/car/{slug}', [UserCarController::class, 'detailCar'])->name('car.detail');
+Route::get('/car-booking/{slug}', [BookingCarController::class, 'booking'])->name('booking-car.form');
+Route::post('/car-booking', [BookingCarController::class, 'bookingStore'])->name('bookingStore');
 
 Route::get('/destinations/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
 Route::get('/destinations/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
@@ -47,9 +55,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manage-user', UserController::class);
 
     // Manage Bookings
-    Route::get('/manage-booking/bulk-destroy', [BookingController::class, 'bulkDestroy'])->name('manage-booking.bulk-destroy');
-    Route::get('/manage-booking', [BookingController::class, 'index'])->name('manage-booking.index');
+    Route::delete('/manage-booking/bulk-destroy', [BookingController::class, 'bulkDestroy'])->name('manage-booking.bulk-destroy');
+    Route::resource('/manage-booking', BookingController::class);
 
+    // manage car
+    Route::delete('/manage-car/bulk-destroy', [CarController::class, 'bulkDestroy'])->name('manage-car.bulk-destroy');
+    Route::resource('/manage-car', CarController::class);
+
+    // manage booking car
+    Route::delete('manage-booking-car/bulk-destroy', [BookingCarController::class, 'bulkDestroy'])->name('manage-booking-car.bulk-destroy');
+    Route::resource('/manage-booking-car', BookingCarController::class);
     // Manage Gallery
     Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
     Route::resource('/manage-gallery', GalleriesController::class);

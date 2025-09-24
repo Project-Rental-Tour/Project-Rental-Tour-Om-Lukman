@@ -28,16 +28,27 @@
     @include('components.client.navbar')
 
     <!-- Header Section -->
-    <br>
-    <br>
-    <section class="max-w-7xl mx-auto px-6 py-16 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 animate-fade-up">
-            Explore Our Travel Destinations
-        </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-up">
-            Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments.
-            From serene beaches to mountain treks, we’ve got your next journey covered.
-        </p>
+    
+    <section id="jumbotron" class="relative bg-gray-900 text-white h-96 overflow-hidden mb-8">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50"></div>
+        <div class="absolute inset-0 bg-black opacity-30"></div>
+        <img loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" 
+            alt="Car Fleet" class="w-full h-full object-cover object-center">
+
+        <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl animate-fade-up">
+                    <br>
+                    <br>
+                    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Explore Our Travel Destinations</h1>
+                    <p class="text-xl text-blue-200 mb-8">Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments.
+            From serene beaches to mountain treks, we’ve got your next journey covered.</p>
+                    
+                    <!-- Quick Stats -->
+                    
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Destinations Grid -->

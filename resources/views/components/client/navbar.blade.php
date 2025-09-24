@@ -33,7 +33,9 @@
         <div class="hidden w-full md:block md:w-auto md:ml-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-6 md:mt-0">
                 <li><a href="{{ route('index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Home</a></li>
+                
                 <li><a href="{{ route('destination.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
+                <li><a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">List Car</a></li>
                 <li><a href="{{ route('gallery.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Gallery</a></li>
                 <li><a href="{{ route('about') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About Us</a></li>
             </ul>

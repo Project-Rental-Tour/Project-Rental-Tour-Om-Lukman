@@ -109,7 +109,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @if($bookings->isEmpty())
                             <tr>
-                                <td colspan="4" class="px-6 py-12 text-center">
+                                <td colspan="8" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center justify-center text-gray-500">
                                         <i class="fa-regular fa-face-frown text-3xl mb-2"></i>
                                         <h3 class="text-lg font-medium">Tidak ada data ditemukan</h3>
