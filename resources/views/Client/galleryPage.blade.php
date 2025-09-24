@@ -54,7 +54,7 @@
     
 
     <!-- Masonry Gallery -->
-    <section class="max-w-7xl mx-auto px-6 pb-24">
+    <section class="max-w-7xl mx-auto px-6 pb-24 mt-10">
         <div class="columns-2 md:columns-4 gap-4 space-y-6">
             @foreach ($galleries as $gallery)
                 <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
