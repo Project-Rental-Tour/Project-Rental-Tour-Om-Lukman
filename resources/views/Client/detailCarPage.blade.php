@@ -296,7 +296,7 @@
                                 Included Features
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode('.', $car->include) as $item)
+                                @foreach(explode(',', $car->include) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-start gap-2">
                                             <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
@@ -316,7 +316,7 @@
                                 Additional Features
                             </h4>
                             <ul class="space-y-2">
-                                @foreach(explode('.', $car->include) as $item)
+                                @foreach(explode(',', $car->include) as $item)
                                     @if(trim($item))
                                         <li class="text-gray-700 flex items-start gap-2">
                                             <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
