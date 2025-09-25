@@ -53,14 +53,19 @@ class Destination extends Model
             return collect();
         }
 
-        return Gallery::where(function ($query) use ($tagArray) {
-            foreach ($tagArray as $tag) {
-                $pattern = '\\b' . preg_quote($tag, '/') . '\\b';
-                $query->orWhereRaw('LOWER(tag) REGEXP ?', [$pattern]);
-            }
-        })
-            ->limit(8)
-            ->get();
+        $related = collect();
+
+        foreach ($tagArray as $tag) {
+            $pattern = '\\b' . preg_quote($tag, '/') . '\\b';
+
+            $galleries = Gallery::whereRaw('LOWER(tag) REGEXP ?', [$pattern])
+                ->limit(3) // ambil maksimal 3 per tag
+                ->get();
+
+            $related = $related->merge($galleries);
+        }
+
+        return $related;
     }
 
     public $timestamps = true;
