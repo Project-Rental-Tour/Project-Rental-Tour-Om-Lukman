@@ -59,14 +59,15 @@ class Destination extends Model
             $pattern = '\\b' . preg_quote($tag, '/') . '\\b';
 
             $galleries = Gallery::whereRaw('LOWER(tag) REGEXP ?', [$pattern])
-                ->limit(3) // ambil maksimal 3 per tag
+                ->limit(3)
                 ->get();
 
             $related = $related->merge($galleries);
         }
 
-        return $related;
+        return $related->unique('gallery_id')->values();
     }
+
 
     public $timestamps = true;
 }
