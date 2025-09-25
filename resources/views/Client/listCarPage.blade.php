@@ -146,7 +146,7 @@
     <!-- Background Image -->
         <img 
             loading="lazy" 
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" 
+            src="{{ asset('assets/images/bg_header_listcar.jpg') }}" 
             alt="Car Fleet" 
             class="w-full h-full object-cover object-center absolute inset-0 z-0"
         />
