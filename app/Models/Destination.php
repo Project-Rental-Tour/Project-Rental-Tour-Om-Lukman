@@ -63,7 +63,13 @@ class Destination extends Model
                 ->get();
 
             $related = $related->merge($galleries);
+
+            // kalau sudah 9, berhenti biar tidak kebanyakan
+            if ($related->count() >= 9) {
+                break;
+            }
         }
+
 
         return $related->unique('gallery_id')->values();
     }
