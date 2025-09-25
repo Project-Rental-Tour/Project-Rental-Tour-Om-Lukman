@@ -59,6 +59,7 @@ class Destination extends Model
                 $query->orWhereRaw('LOWER(tag) REGEXP ?', [$pattern]);
             }
         })
+            ->limit(8)
             ->get();
     }
 
