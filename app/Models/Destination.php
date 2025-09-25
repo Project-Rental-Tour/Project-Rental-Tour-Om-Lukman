@@ -71,7 +71,7 @@ class Destination extends Model
         }
 
 
-        return $related->unique('gallery_id')->values();
+        return $related->unique('gallery_id')->take(9)->values();
     }
 
 
