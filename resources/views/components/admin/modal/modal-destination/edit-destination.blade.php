@@ -192,9 +192,15 @@
                     </div>
                     <div class="md:col-span-2">
                         <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
-                        <input id="note" type="hidden" name="note" value="{{ old('note', $destination->note) }}">
+                        <!-- Ganti ID jadi unik -->
+                        <input 
+                            id="note-{{ $destination->destination_id }}" 
+                            type="hidden" 
+                            name="note" 
+                            value="{{ old('note', $destination->note) }}"
+                        >
                         <trix-editor 
-                            input="note"
+                            input="note-{{ $destination->destination_id }}"
                             class="border border-gray-300 rounded-lg bg-white"
                             style="max-height: 200px; overflow-y: auto;"
                         ></trix-editor>
@@ -206,9 +212,15 @@
                 <div x-show="step === 6" class="grid gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Itinerary</label>
-                        <input id="itinerary" type="hidden" name="itinerary" value="{{ old('itinerary', $destination->itinerary) }}">
+                        <!-- Ganti ID jadi unik -->
+                        <input 
+                            id="itinerary-{{ $destination->destination_id }}" 
+                            type="hidden" 
+                            name="itinerary" 
+                            value="{{ old('itinerary', $destination->itinerary) }}"
+                        >
                         <trix-editor 
-                            input="itinerary"
+                            input="itinerary-{{ $destination->destination_id }}"
                             class="border border-gray-300 rounded-lg bg-white"
                             style="max-height: 200px; overflow-y: auto;"
                         ></trix-editor>

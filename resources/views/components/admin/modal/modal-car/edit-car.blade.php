@@ -121,9 +121,17 @@
                 <div x-show="step === 4" class="space-y-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Note (Optional)</label>
-                        <input id="note-edit-{{ $car->car_id }}" type="hidden" name="notes" value="{{ $car->notes }}">
-                        <trix-editor input="note-edit-{{ $car->car_id }}" class="border border-gray-300 rounded-lg bg-white"
-                                     style="max-height: 200px;">{!! $car->notes !!}</trix-editor>
+                        <input 
+                            id="note-edit-{{ $car->car_id }}" 
+                            type="hidden" 
+                            name="notes" 
+                            value="{{ $car->notes }}"
+                        >
+                        <trix-editor 
+                            input="note-edit-{{ $car->car_id }}" 
+                            class="border border-gray-300 rounded-lg bg-white"
+                            style="max-height: 200px; overflow-y: auto;"
+                        ></trix-editor>
                         <p class="text-xs text-gray-400 mt-1">Use this to provide extra information for customers.</p>
                     </div>
                 </div>
