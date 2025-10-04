@@ -23,7 +23,7 @@
 
         <div class="container mx-auto px-6 relative z-20 text-center">
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
-                {{ optional($profiles)->jumbotron_heading ?? "test WELCOME TO GOINGTOTHEJAVA.COM" }}
+                {{ optional($profiles)->jumbotron_heading ?? "WELCOME TO GOINGTOTHEJAVA.COM" }}
             </h1>
 
             <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up"
