@@ -6,7 +6,7 @@
             <div class="h-10 w-auto max-w-[180px] flex items-center">
                 <img 
                     src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-dark.png') }}" 
-                    alt="Septem Tour Logo" 
+                    alt="GOING TO THE JAVA Logo" 
                     class="h-full w-full object-contain"
                 >
             </div>

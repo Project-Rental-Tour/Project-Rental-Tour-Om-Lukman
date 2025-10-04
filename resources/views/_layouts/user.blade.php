@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <meta name="description" content="Sewa mobil, paket wisata Bromo, sewa Hiace, travel Tumpak Sewu, tour Ijen, Malang city tour, dan Surabaya car rental dengan harga terjangkau. Armada baru, supir profesional, dan layanan 24 jam.">
     <meta name="keywords" content="sewa mobil malang, sewa mobil surabaya, sewa hiace malang, sewa hiace surabaya, bromo tour, sewa mobil bromo, travel tumpak sewu, paket wisata ijen blue fire, mount semeru trekking, malang car rental, east java tour, jeep bromo, family vacation indonesia, sewa alphard malang, city tour surabaya, paket honeymoon bromo, wisata jatim, kuliner malang, pantai malang selatan, mount bromo sunrise, travel, tour, sewa mobil">
-    <meta name="author" content="Septem Tour">
+    <meta name="author" content="GOING TO THE JAVA">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Septem Tour - Sewa Mobil & Paket Wisata Bromo, Malang, Surabaya, Ijen & Tumpak Sewu">
+    <meta property="og:title" content="GOING TO THE JAVA - Sewa Mobil & Paket Wisata Bromo, Malang, Surabaya, Ijen & Tumpak Sewu">
     <meta property="og:description" content="Paket wisata lengkap: Bromo sunrise tour, sewa Hiace Malang & Surabaya, travel Tumpak Sewu, Ijen crater tour, city tour Malang. Armada baru, layanan profesional, harga bersahabat.">
     <meta property="og:url" content="https://www.goingtothejava.com">
     <meta property="og:type" content="website">
-    <meta property="og:image:alt" content="Paket Wisata Bromo Sunrise Jeep Adventure dengan Septem Tour">
+    <meta property="og:image:alt" content="Paket Wisata Bromo Sunrise Jeep Adventure dengan GOING TO THE JAVA">
     <meta property="og:locale" content="id_ID">
     <meta property="og:locale" content="en_US">
 
@@ -93,7 +93,7 @@
     {
         "@context": "https://schema.org",
         "@type": ["TravelAgency", "TouristAttraction"],
-        "name": "Septem Tour",
+        "name": "GOING TO THE JAVA",
         "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Gunung Semeru, dan Air Terjun Tumpak Sewu.",
         "url": "https://www.goingtothejava.com",,
         "address": {

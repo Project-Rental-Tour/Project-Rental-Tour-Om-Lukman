@@ -9,14 +9,14 @@
                     <div class="logo-container mb-4">
                         <img 
                             src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" 
-                            alt="Septem Tour Logo"
+                            alt="GOING TO THE JAVA Logo"
                             class="h-10 object-contain max-w-[160px]"
                         >
                         <p class="text-blue-100 text-sm mt-2">Travel & Tour Agency</p>
                     </div>
 
                     <p class="text-blue-100 mb-6 leading-relaxed">
-                        Welcome to {{ optional($profiles)->website_name ?? "Septem Tour" }}! We provide the best travel and tour services to make your journey unforgettable. From local trips to international adventures, we’re here for you — fast, secure, and friendly.
+                        Welcome to {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}! We provide the best travel and tour services to make your journey unforgettable. From local trips to international adventures, we’re here for you — fast, secure, and friendly.
                     </p>
 
                     <!-- Social Media -->
@@ -91,7 +91,7 @@
             <!-- Bottom Footer -->
             <div class="flex flex-col md:flex-row justify-between items-center text-sm">
                 <p class="text-blue-100 mb-4 md:mb-0">
-                    © 2025 {{ optional($profiles)->website_name ?? "Septem Tour" }}. All rights reserved.
+                    © 2025 {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}. All rights reserved.
                 </p>
                 <div class="flex space-x-6">
                     <a href="#" class="text-blue-100 hover:text-white transition-colors">Privacy Policy</a>
