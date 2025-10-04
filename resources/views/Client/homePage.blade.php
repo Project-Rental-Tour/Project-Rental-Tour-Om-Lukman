@@ -34,7 +34,7 @@
             <a href="#destination"
             class="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-white bg-primary rounded-full hover:bg-primary transition-transform hover:scale-105 shadow-lg animate-fade-up"
             style="background-color: #799eff; transition-delay: 0.4s">
-                Top Destinations
+                Top Destination
                 <i class="fas fa-arrow-down ml-3 sm:ml-8 mt-0.5 sm:mt-1"></i>
             </a>
         </div>
