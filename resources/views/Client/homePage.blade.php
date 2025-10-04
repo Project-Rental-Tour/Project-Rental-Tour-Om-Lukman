@@ -46,7 +46,7 @@
             <div class="text-center mb-20 animate-fade-up">
                 <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "goingtothejava"}}</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    Discoverthe exceptional travel experiences we offer with our premium services tailored to your needs.
+                    Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
                 </p>
             </div>
 
