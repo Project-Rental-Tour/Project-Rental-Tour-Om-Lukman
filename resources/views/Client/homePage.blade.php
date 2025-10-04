@@ -44,7 +44,7 @@
     <section class="w-full py-24 bg-gradient-to-br from-gray-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20 animate-fade-up">
-                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">EP Choose {{ optional($profiles)->website_name ?? "goingtothejava"}}</h3>
+                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "goingtothejava"}}</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto">
                     Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
                 </p>
