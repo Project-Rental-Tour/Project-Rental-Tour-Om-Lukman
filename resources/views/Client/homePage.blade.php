@@ -13,6 +13,7 @@
 
 @section('content')
     @include('components.client.navbar')
+
     <!-- Hero Section -->
     <section id="jumbotron" class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
         <img loading="lazy" 

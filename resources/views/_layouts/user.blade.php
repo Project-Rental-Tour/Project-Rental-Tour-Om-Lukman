@@ -18,7 +18,7 @@
     <meta property="og:locale" content="id_ID">
     <meta property="og:locale" content="en_US">
 
-    <title>@yield('title', 'SEPTEM TOUR')</title>
+    <title>@yield('title', 'GOING TO THE JAVA')</title>
     
     <!-- Load Vite resources -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
