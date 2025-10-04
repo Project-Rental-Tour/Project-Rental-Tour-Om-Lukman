@@ -247,7 +247,7 @@
                 </h2>
                 <div id="accordion-open-body-12" class="hidden" aria-labelledby="accordion-open-heading-12">
                     <div class="p-6 text-gray-600 border-t border-gray-200">
-                        Yes. Additional charges apply. Please contact us at <strong>septemtour@gmail.com</strong> or WhatsApp/Telegram: <strong>081220005276</strong>.
+                        Yes. Additional charges apply. Please contact us at <strong>goingtothejava@gmail.com</strong> or WhatsApp/Telegram: <strong>081220005276</strong>.
                     </div>
                 </div>
             </div>

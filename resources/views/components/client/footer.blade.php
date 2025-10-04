@@ -72,8 +72,8 @@
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-envelope text-white mt-1 mr-3 text-sm"></i>
-                            <a href="mailto:{{ optional($profiles)->contact_email ?? 'support@septemtour.com' }}" class="text-blue-100 hover:text-white text-sm">
-                                {{ optional($profiles)->contact_email ?? "support@septemtour.com" }}
+                            <a href="mailto:{{ optional($profiles)->contact_email ?? 'support@goingtothejava.com' }}" class="text-blue-100 hover:text-white text-sm">
+                                {{ optional($profiles)->contact_email ?? "support@goingtothejava.com" }}
                             </a>
                         </li>
                         <li class="flex items-start">

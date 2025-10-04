@@ -12,7 +12,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Septem Tour - Sewa Mobil & Paket Wisata Bromo, Malang, Surabaya, Ijen & Tumpak Sewu">
     <meta property="og:description" content="Paket wisata lengkap: Bromo sunrise tour, sewa Hiace Malang & Surabaya, travel Tumpak Sewu, Ijen crater tour, city tour Malang. Armada baru, layanan profesional, harga bersahabat.">
-    <meta property="og:url" content="https://www.septemtour.com">
+    <meta property="og:url" content="https://www.goingtothejava.com">
     <meta property="og:type" content="website">
     <meta property="og:image:alt" content="Paket Wisata Bromo Sunrise Jeep Adventure dengan Septem Tour">
     <meta property="og:locale" content="id_ID">
@@ -95,7 +95,7 @@
         "@type": ["TravelAgency", "TouristAttraction"],
         "name": "Septem Tour",
         "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Gunung Semeru, dan Air Terjun Tumpak Sewu.",
-        "url": "https://www.septemtour.com",,
+        "url": "https://www.goingtothejava.com",,
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Malang",
@@ -111,8 +111,8 @@
         "openingHours": "Mo-Su 08:00-22:00",
         "priceRange": "IDR 3650000 - IDR 10000000"
         "sameAs": [
-            "https://www.instagram.com/septemtour",
-            "https://www.facebook.com/septemtour"
+            "https://www.instagram.com/goingtothejava",
+            "https://www.facebook.com/goingtothejava"
         ]
     }
     </script>

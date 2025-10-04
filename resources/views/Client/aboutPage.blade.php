@@ -177,7 +177,7 @@
                             </div>
                             <div class="contact-info">
                                 <h4>Email</h4>
-                                <p>septemtour@gmail.com</p>
+                                <p>goingtothejava@gmail.com</p>
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@
                             </div>
                             <div class="contact-info">
                                 <h4>Website</h4>
-                                <p>www.septemtour.com</p>
+                                <p>www.goingtothejava.com</p>
                             </div>
                         </div>
 

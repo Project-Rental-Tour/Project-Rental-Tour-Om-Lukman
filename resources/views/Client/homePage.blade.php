@@ -23,7 +23,7 @@
 
         <div class="container mx-auto px-6 relative z-20 text-center">
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-up">
-                {{ optional($profiles)->jumbotron_heading ?? "WELCOME TO SEPTEMTOUR" }}
+                {{ optional($profiles)->jumbotron_heading ?? "test WELCOME TO GOINGTOTHEJAVA.COM" }}
             </h1>
 
             <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto animate-fade-up"
@@ -44,7 +44,7 @@
     <section class="w-full py-24 bg-gradient-to-br from-gray-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20 animate-fade-up">
-                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "SEPTEMTOUR"}}</h3>
+                <h3 class="text-4xl font-bold text-gray-900 mb-6 uppercase">Why Choose {{ optional($profiles)->website_name ?? "goingtothejava"}}</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto">
                     Discover the exceptional travel experiences we offer with our premium services tailored to your needs.
                 </p>

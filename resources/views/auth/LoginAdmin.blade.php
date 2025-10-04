@@ -69,7 +69,7 @@
 
                 <!-- Footer -->
                 <div class="px-8 py-4 text-center text-xs text-gray-500 border-t border-gray-100">
-                    &copy; {{ date('Y') }} SEPTEMTOUR. All rights reserved.
+                    &copy; {{ date('Y') }} goingtothejava.com All rights reserved.
                 </div>
             </div>
         </div>
