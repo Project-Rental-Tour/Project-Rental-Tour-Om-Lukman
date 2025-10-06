@@ -6,38 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>@yield('title', 'GOING TO THE JAVA – Sewa Mobil & Paket Wisata Bromo, Ijen, Tumpak Sewu | Malang & Surabaya')</title>
-    <meta name="description" content="GOING TO THE JAVA menawarkan sewa mobil, paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, Malang city tour, dan Surabaya car rental. Armada baru, supir profesional, layanan 24/7, dan harga terjangkau.">
-    <meta name="keywords" content="sewa mobil Malang, sewa mobil Surabaya, paket wisata Bromo, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Malang, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, wisata Jawa Timur">
+    <title>@yield('title', 'GOING TO THE JAVA – Paket Wisata & Sewa Mobil di Jawa Timur, Indonesia')</title>
+    <meta name="description" content="GOING TO THE JAVA adalah agen travel lokal di Malang, Jawa Timur, Indonesia. Kami menyediakan paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, sewa mobil Malang & Surabaya, dengan supir profesional dan harga transparan.">
+    <meta name="keywords" content="wisata Jawa Timur, paket Bromo Indonesia, sewa mobil Malang, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Surabaya, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, going to the java indonesia">
     <meta name="author" content="GOING TO THE JAVA">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.goingtothejava.com " />
+    <link rel="canonical" href="https://www.goingtothejava.com" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="GOING TO THE JAVA – Sewa Mobil & Paket Wisata Bromo, Ijen, Tumpak Sewu" />
-    <meta property="og:description" content="Paket wisata lengkap ke destinasi ikonik Jawa Timur: Gunung Bromo, Kawah Ijen, Tumpak Sewu, dan kota Malang-Surabaya. Armada baru, pemandu lokal berpengalaman, dan layanan 24 jam." />
-    <meta property="og:url" content="https://www.goingtothejava.com " />
+    <meta property="og:title" content="GOING TO THE JAVA – Travel & Sewa Mobil di Jawa Timur, Indonesia" />
+    <meta property="og:description" content="Jelajahi Gunung Bromo, Kawah Ijen, Tumpak Sewu & kota Malang-Surabaya bersama agen travel lokal terpercaya di Jawa Timur, Indonesia." />
+    <meta property="og:url" content="https://www.goingtothejava.com" />
     <meta property="og:site_name" content="GOING TO THE JAVA" />
-    <meta property="og:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg " />
+    <meta property="og:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content="Jeep Bromo Sunrise Adventure bersama GOING TO THE JAVA" />
+    <meta property="og:image:alt" content="Jeep Bromo Sunrise di Gunung Bromo, Jawa Timur, Indonesia – oleh GOING TO THE JAVA" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="GOING TO THE JAVA – Paket Wisata & Sewa Mobil Jawa Timur" />
-    <meta name="twitter:description" content="Jelajahi Bromo, Ijen, Tumpak Sewu & Malang dengan layanan terpercaya, harga transparan, dan pengalaman otentik." />
-    <meta name="twitter:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg " />
+    <meta name="twitter:title" content="GOING TO THE JAVA – Wisata Bromo, Ijen & Tumpak Sewu | Jawa Timur" />
+    <meta name="twitter:description" content="Paket wisata otentik ke destinasi ikonik Jawa Timur, Indonesia. Armada baru, pemandu lokal, harga terjangkau." />
+    <meta name="twitter:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg" />
 
     <!-- Load Vite resources -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css " rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
 
     <!-- Additional Head Content -->
     @yield('head')
@@ -101,16 +101,16 @@
         }
     </style>
 
-    <!-- Structured Data (Schema.org) -->
+    <!-- Structured Data (Schema.org) - DIPERBAIKI -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org ",
+        "@context": "https://schema.org",
         "@type": "TravelAgency",
         "name": "GOING TO THE JAVA",
-        "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Kawah Ijen, Air Terjun Tumpak Sewu, dan Gunung Semeru.",
-        "url": "https://www.goingtothejava.com ",
-        "logo": "https://www.goingtothejava.com/assets/images/logo.png ",
-        "image": "https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg ",
+        "description": "Agen travel lokal di Malang, Jawa Timur, Indonesia yang menyediakan paket wisata Gunung Bromo, Kawah Ijen, Air Terjun Tumpak Sewu, dan sewa mobil di Malang & Surabaya.",
+        "url": "https://www.goingtothejava.com",
+        "logo": "https://www.goingtothejava.com/assets/images/logo.png",
+        "image": "https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Malang",
@@ -123,6 +123,8 @@
             "longitude": 112.6326
         },
         "telephone": "+628123456789",
+        "areaServed": "ID",
+        "serviceType": "Tourism and Travel Services in East Java, Indonesia",
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": [
@@ -137,14 +139,14 @@
             "opens": "08:00",
             "closes": "22:00"
         },
-        "priceRange": "Rp1.100.000 – Rp3.650.000",
+        "priceRange": "Rp1.100.000 – Rp10.000.000",
         "sameAs": [
-            "https://www.instagram.com/goingtothejava ",
-            "https://www.facebook.com/goingtothejava "
+            "https://www.instagram.com/goingtothejava",
+            "https://www.facebook.com/goingtothejava"
         ],
         "offers": {
             "@type": "AggregateOffer",
-            "lowPrice": 3650000,
+            "lowPrice": 1100000,
             "highPrice": 10000000,
             "priceCurrency": "IDR"
         }
@@ -172,11 +174,8 @@
     <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
     
     <script>
-        // Initialize animations
         document.addEventListener('DOMContentLoaded', function() {
-            // Animate elements on scroll
             const animatedElements = document.querySelectorAll('.animate-fade-up');
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -184,12 +183,10 @@
                     }
                 });
             }, { threshold: 0.1 });
-            
             animatedElements.forEach(el => observer.observe(el));
-            
-            // Initialize Swiper if exists
+
             if (typeof Swiper !== 'undefined') {
-                const testimonialSwiper = new Swiper('.testimonial-swiper', {
+                new Swiper('.testimonial-swiper', {
                     loop: true,
                     spaceBetween: 30,
                     pagination: {
@@ -197,27 +194,19 @@
                         clickable: true,
                     },
                     breakpoints: {
-                        640: {
-                            slidesPerView: 1,
-                        },
-                        768: {
-                            slidesPerView: 2,
-                        },
-                        1024: {
-                            slidesPerView: 3,
-                        },
-                    },
+                        640: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 }
+                    }
                 });
             }
-            
-            // Initialize smooth scroll
+
             const scroll = new SmoothScroll('a[href*="#"]', {
                 speed: 800,
                 speedAsDuration: true
             });
         });
     </script>
-    
     
     @stack('scripts')
 </body>
