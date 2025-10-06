@@ -4,32 +4,44 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <meta name="description" content="Sewa mobil, paket wisata Bromo, sewa Hiace, travel Tumpak Sewu, tour Ijen, Malang city tour, dan Surabaya car rental dengan harga terjangkau. Armada baru, supir profesional, dan layanan 24 jam.">
-    <meta name="keywords" content="sewa mobil malang, sewa mobil surabaya, sewa hiace malang, sewa hiace surabaya, bromo tour, sewa mobil bromo, travel tumpak sewu, paket wisata ijen blue fire, mount semeru trekking, malang car rental, east java tour, jeep bromo, family vacation indonesia, sewa alphard malang, city tour surabaya, paket honeymoon bromo, wisata jatim, kuliner malang, pantai malang selatan, mount bromo sunrise, travel, tour, sewa mobil">
+
+    <!-- Primary Meta Tags -->
+    <title>@yield('title', 'GOING TO THE JAVA – Sewa Mobil & Paket Wisata Bromo, Ijen, Tumpak Sewu | Malang & Surabaya')</title>
+    <meta name="description" content="GOING TO THE JAVA menawarkan sewa mobil, paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, Malang city tour, dan Surabaya car rental. Armada baru, supir profesional, layanan 24/7, dan harga terjangkau.">
+    <meta name="keywords" content="sewa mobil Malang, sewa mobil Surabaya, paket wisata Bromo, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Malang, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, wisata Jawa Timur">
     <meta name="author" content="GOING TO THE JAVA">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.goingtothejava.com " />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="GOING TO THE JAVA - Sewa Mobil & Paket Wisata Bromo, Malang, Surabaya, Ijen & Tumpak Sewu">
-    <meta property="og:description" content="Paket wisata lengkap: Bromo sunrise tour, sewa Hiace Malang & Surabaya, travel Tumpak Sewu, Ijen crater tour, city tour Malang. Armada baru, layanan profesional, harga bersahabat.">
-    <meta property="og:url" content="https://www.goingtothejava.com">
-    <meta property="og:type" content="website">
-    <meta property="og:image:alt" content="Paket Wisata Bromo Sunrise Jeep Adventure dengan GOING TO THE JAVA">
-    <meta property="og:locale" content="id_ID">
-    <meta property="og:locale" content="en_US">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GOING TO THE JAVA – Sewa Mobil & Paket Wisata Bromo, Ijen, Tumpak Sewu" />
+    <meta property="og:description" content="Paket wisata lengkap ke destinasi ikonik Jawa Timur: Gunung Bromo, Kawah Ijen, Tumpak Sewu, dan kota Malang-Surabaya. Armada baru, pemandu lokal berpengalaman, dan layanan 24 jam." />
+    <meta property="og:url" content="https://www.goingtothejava.com " />
+    <meta property="og:site_name" content="GOING TO THE JAVA" />
+    <meta property="og:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg " />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="Jeep Bromo Sunrise Adventure bersama GOING TO THE JAVA" />
 
-    <title>@yield('title', 'GOING TO THE JAVA')</title>
-    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GOING TO THE JAVA – Paket Wisata & Sewa Mobil Jawa Timur" />
+    <meta name="twitter:description" content="Jelajahi Bromo, Ijen, Tumpak Sewu & Malang dengan layanan terpercaya, harga transparan, dan pengalaman otentik." />
+    <meta name="twitter:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg " />
+
     <!-- Load Vite resources -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css " rel="stylesheet" />
+
     <!-- Additional Head Content -->
     @yield('head')
-    
+
     <style>
         .animate-fade-up {
             opacity: 0;
@@ -70,8 +82,7 @@
             border-radius: 9999px;
             color: white;
         }
-        
-        /* Additional styles for your content */
+
         .bg-primary { background-color: #799eff; }
         .text-primary { color: #799eff; }
         .text-white { color: #ffffff; }
@@ -89,13 +100,17 @@
             overflow: hidden;
         }
     </style>
+
+    <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": ["TravelAgency", "TouristAttraction"],
+        "@context": "https://schema.org ",
+        "@type": "TravelAgency",
         "name": "GOING TO THE JAVA",
-        "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Gunung Semeru, dan Air Terjun Tumpak Sewu.",
-        "url": "https://www.goingtothejava.com",,
+        "description": "Penyedia layanan sewa mobil dan paket wisata ke destinasi populer di Jawa Timur seperti Gunung Bromo, Kawah Ijen, Air Terjun Tumpak Sewu, dan Gunung Semeru.",
+        "url": "https://www.goingtothejava.com ",
+        "logo": "https://www.goingtothejava.com/assets/images/logo.png ",
+        "image": "https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg ",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Malang",
@@ -108,15 +123,34 @@
             "longitude": 112.6326
         },
         "telephone": "+628123456789",
-        "openingHours": "Mo-Su 08:00-22:00",
-        "priceRange": "IDR 3650000 - IDR 10000000"
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "opens": "08:00",
+            "closes": "22:00"
+        },
+        "priceRange": "Rp1.100.000 – Rp3.650.000",
         "sameAs": [
-            "https://www.instagram.com/goingtothejava",
-            "https://www.facebook.com/goingtothejava"
-        ]
+            "https://www.instagram.com/goingtothejava ",
+            "https://www.facebook.com/goingtothejava "
+        ],
+        "offers": {
+            "@type": "AggregateOffer",
+            "lowPrice": 3650000,
+            "highPrice": 10000000,
+            "priceCurrency": "IDR"
+        }
     }
     </script>
-    
+
     @stack('styles')
 </head>
 
