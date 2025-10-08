@@ -3,19 +3,13 @@
         <!-- Logo -->
         <a href="/" class="flex items-center space-x-3 sm:ml-5">
             <!-- Logo Putih (untuk background gelap) -->
-            <img 
-                id="logo-white" 
-                src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" 
-                alt="Logo White"
-                class="h-8 md:h-10 w-auto object-contain max-w-[160px] block"
-            >
+            <img id="logo-white"
+                src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}"
+                alt="Logo White" class="h-8 md:h-10 w-auto object-contain max-w-[160px] block">
             <!-- Logo Biru (untuk background terang) -->
-            <img 
-                id="logo-dark" 
-                src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-blue.png') }}" 
-                alt="Logo Dark"
-                class="h-8 md:h-10 w-auto object-contain max-w-[160px] hidden"
-            >
+            <img id="logo-dark"
+                src="{{ optional($profiles)->website_logo_dark ? asset('storage/' . optional($profiles)->website_logo_dark) : asset('assets/images/logo/logo-blue.png') }}"
+                alt="Logo Dark" class="h-8 md:h-10 w-auto object-contain max-w-[160px] hidden">
         </a>
 
         <!-- Mobile Menu Button -->
@@ -32,12 +26,16 @@
         <!-- Navigation Links -->
         <div class="hidden w-full md:block md:w-auto md:ml-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-6 md:mt-0">
-                <li><a href="{{ route('index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Home</a></li>
-                
-                <li><a href="{{ route('destination.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
-                <li><a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">List Car</a></li>
-                <li><a href="{{ route('gallery.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Gallery</a></li>
-                <li><a href="{{ route('about') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About Us</a></li>
+                <li><a href="{{ route('index') }}"
+                        class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Home</a></li>
+
+                <li><a href="{{ route('destination.index') }}"
+                        class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
+                {{-- <li><a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">List Car</a></li> --}}
+                <li><a href="{{ route('gallery.index') }}"
+                        class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Gallery</a></li>
+                <li><a href="{{ route('about') }}"
+                        class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">About Us</a></li>
             </ul>
         </div>
     </div>
