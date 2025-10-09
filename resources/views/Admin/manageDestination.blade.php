@@ -218,6 +218,14 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a
+                                                            data-modal-target="duplicate-modal-{{ $destination->destination_id }}"
+                                                            data-modal-toggle="duplicate-modal-{{ $destination->destination_id }}"
+                                                            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center">
+                                                            <i class="fa-solid fa-copy mr-2 text-green-500"></i> Duplicate
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a data-modal-target="delete-modal-{{ $destination->destination_id }}"
                                                             data-modal-toggle="delete-modal-{{ $destination->destination_id }}"
                                                             class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
@@ -250,17 +258,24 @@
     @foreach ($destinations as $destination)
         <div id="edit-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-destination.edit-destination', ['gallery' => $destination])
+            @include('components.admin.modal.modal-destination.edit-destination', ['destination' => $destination])
         </div>
     @endforeach
 
+    {{-- Duplicate Modal --}}
+    @foreach ($destinations as $destination)
+        <div id="duplicate-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            @include('components.admin.modal.modal-destination.duplicate-destination', ['destination' => $destination])
+        </div>
+    @endforeach
 
     {{-- Delete Modal --}}
     @foreach ($destinations as $destination)
         <!-- Delete Modal (unique ID for each user) -->
         <div id="delete-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-destination.delete-destination', ['gallery' => $destination])
+            @include('components.admin.modal.modal-destination.delete-destination', ['destination' => $destination])
         </div>
     @endforeach
 
@@ -268,7 +283,7 @@
     @foreach ($destinations as $destination)
         <div id="view-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
-            @include('components.admin.modal.modal-destination.view-destination', ['gallery' => $destination])
+            @include('components.admin.modal.modal-destination.view-destination', ['destination' => $destination])
         </div>
     @endforeach
 @endsection

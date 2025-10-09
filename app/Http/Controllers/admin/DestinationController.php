@@ -386,6 +386,75 @@ class DestinationController extends Controller
         }
     }
 
+    public function duplicate(Request $request, $destination_id)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'toast' => ['type' => 'error', 'message' => 'Unauthorized.']
+                ], 401);
+            }
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to perform this action.']);
+        }
+
+        try {
+            $original = Destination::findOrFail($destination_id);
+
+            // Generate new name with "Copy of ..."
+            $newName = 'Copy of ' . $original->name_package;
+
+            // Generate unique slug
+            $baseSlug = Str::slug($newName);
+            $slug = $baseSlug;
+            $counter = 1;
+            while (Destination::where('slug', $slug)->exists()) {
+                $slug = $baseSlug . '-' . $counter++;
+            }
+
+            // Duplicate the record (except primary key and timestamps)
+            $duplicate = $original->replicate();
+            $duplicate->name_package = $newName;
+            $duplicate->slug = $slug;
+
+            // Opsional: reset photo? atau salin photo yang sama?
+            // Di sini kita **gunakan foto yang sama** (tidak upload ulang)
+            // Jika ingin salin file fisik, butuh proses tambahan. Tapi biasanya cukup pakai path yang sama.
+
+            $duplicate->save();
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Duplicated destination: "' . $original->name_package . '" → "' . $newName . '"',
+            ]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'toast' => ['type' => 'success', 'message' => 'Destination duplicated successfully!']
+                ]);
+            }
+
+            return redirect()->route('manage-destination.index')
+                ->with('toast', ['type' => 'success', 'message' => 'Destination duplicated successfully!']);
+        } catch (\Exception $e) {
+            Log::error('Error duplicating destination:', ['error' => $e->getMessage()]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'toast' => ['type' => 'error', 'message' => 'Failed to duplicate destination: ' . $e->getMessage()]
+                ], 500);
+            }
+
+            return back()->with('toast', [
+                'type' => 'error',
+                'message' => 'Failed to duplicate destination.'
+            ]);
+        }
+    }
+
     /**
      * Bulk delete destinations.
      */

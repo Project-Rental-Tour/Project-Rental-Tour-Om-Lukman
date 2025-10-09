@@ -2,7 +2,7 @@
     <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
-                <h3 class="text-xl font-semibold text-gray-800">Delete Gallery Item</h3>
+                <h3 class="text-xl font-semibold text-gray-800">Delete Destination </h3>
                 <p class="text-sm text-gray-500 mt-1">Are you sure you want to delete this item?</p>
             </div>
             <button type="button" class="text-gray-400 hover:text-gray-500 transition-colors"

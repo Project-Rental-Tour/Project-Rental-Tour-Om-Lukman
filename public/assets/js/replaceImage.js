@@ -66,8 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         img.dataset.errorHandler = 'true';
 
         img.addEventListener('error', function () {
-            if (this.src && this.src.includes('/placeholder.jpg')) return;
-            this.src = '/placeholder.jpg';
             this.alt = 'Image not found';
         });
     });
