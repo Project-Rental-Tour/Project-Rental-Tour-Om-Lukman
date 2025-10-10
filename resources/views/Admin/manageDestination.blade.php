@@ -162,8 +162,12 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <img src="{{ asset($destination->destination_photo) }}"
-                                            alt="{{ $destination->name_package }}" class="w-1/2 h-1/2 object-cover rounded mx-auto">
+                                        <img 
+                                            src="{{ $destination->destination_photo ? asset($destination->destination_photo) : 'https://via.placeholder.com/150?text=No+Image' }}"
+                                            alt="{{ $destination->name_package }}" 
+                                            class="w-1/2 h-1/2 object-cover rounded mx-auto"
+                                            onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Error';"
+                                        >
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
