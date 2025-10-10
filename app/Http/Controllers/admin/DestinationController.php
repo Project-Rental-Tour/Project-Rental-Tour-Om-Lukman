@@ -402,10 +402,8 @@ class DestinationController extends Controller
         try {
             $original = Destination::findOrFail($destination_id);
 
-            // Generate new name with "Copy of ..."
             $newName = 'Copy of ' . $original->name_package;
 
-            // Generate unique slug
             $baseSlug = Str::slug($newName);
             $slug = $baseSlug;
             $counter = 1;
@@ -413,14 +411,11 @@ class DestinationController extends Controller
                 $slug = $baseSlug . '-' . $counter++;
             }
 
-            // Duplicate the record (except primary key and timestamps)
             $duplicate = $original->replicate();
             $duplicate->name_package = $newName;
             $duplicate->slug = $slug;
 
-            // Opsional: reset photo? atau salin photo yang sama?
-            // Di sini kita **gunakan foto yang sama** (tidak upload ulang)
-            // Jika ingin salin file fisik, butuh proses tambahan. Tapi biasanya cukup pakai path yang sama.
+            $duplicate->destination_photo = null;
 
             $duplicate->save();
 
