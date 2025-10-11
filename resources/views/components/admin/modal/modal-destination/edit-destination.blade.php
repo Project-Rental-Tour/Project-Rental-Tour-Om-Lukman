@@ -244,7 +244,7 @@
                                     id="edit-preview-photo-{{ $destination->destination_id }}" 
                                     src="{{ asset($destination->destination_photo) }}" 
                                     alt="Preview" 
-                                    class="w-full h-full object-cover rounded-lg"
+                                    class=" object-cover rounded-lg h-48"
                                     onerror="this.src=''; this.alt='Image not found';"
                                 >
                             </div>

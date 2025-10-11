@@ -190,7 +190,7 @@
                         id="add-preview-photo" 
                         src="" 
                         alt="Preview"
-                        class="w-full h-full object-cover rounded-lg hidden"
+                        class="w-full h-24 object-cover rounded-lg hidden"
                         >
                         <!-- ✅ Perbaiki ID placeholder agar sesuai pola: placeholder-{previewId} -->
                         <span 

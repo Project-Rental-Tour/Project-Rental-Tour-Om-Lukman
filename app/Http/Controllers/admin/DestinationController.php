@@ -415,7 +415,30 @@ class DestinationController extends Controller
             $duplicate->name_package = $newName;
             $duplicate->slug = $slug;
 
-            $duplicate->destination_photo = null;
+            // ✅ SALIN FILE GAMBAR FISIK (jika ada)
+            if ($original->destination_photo) {
+                // Ubah path dari 'storage/...' ke 'public/...'
+                $sourcePath = str_replace('storage/', 'public/', $original->destination_photo);
+
+                if (Storage::exists($sourcePath)) {
+                    // Ambil ekstensi & nama asli
+                    $originalFileName = basename($original->destination_photo);
+                    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+                    $nameWithoutExt = pathinfo($originalFileName, PATHINFO_FILENAME);
+
+                    // Buat nama file baru: copy_nama_1234567890.jpg
+                    $newFileName = 'copy_' . Str::slug($nameWithoutExt) . '_' . time() . '.' . $extension;
+                    $newStoragePath = 'public/destinations/' . $newFileName;
+
+                    // Salin file
+                    Storage::copy($sourcePath, $newStoragePath);
+
+                    // Simpan path baru (format storage/...)
+                    $duplicate->destination_photo = str_replace('public/', 'storage/', $newStoragePath);
+                }
+                // Jika file tidak ada, biarkan null (opsional)
+            }
+            // Jika original tidak punya foto, duplicate juga tidak punya
 
             $duplicate->save();
 
@@ -449,10 +472,6 @@ class DestinationController extends Controller
             ]);
         }
     }
-
-    /**
-     * Bulk delete destinations.
-     */
     public function bulkDestroy(Request $request)
     {
         $currentUser = Auth::user();
