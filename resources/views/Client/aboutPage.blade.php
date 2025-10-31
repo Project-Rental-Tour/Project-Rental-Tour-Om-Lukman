@@ -162,59 +162,74 @@
                 </div>
 
                 <!-- Contact Info Card -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 mt-8 rounded-2xl shadow-lg border border-blue-200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Contact Us</h3>
-                    <p class="text-gray-600 mb-8 leading-relaxed">
-                        Whether you have questions about our services, need support, or want to share your feedback, 
-                        our dedicated team is here to assist you every step of the way — fast, secure, and friendly.
-                    </p>
+<!-- Contact Info Card -->
+<div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Contact Us</h3>
+    <p class="text-gray-600 mb-6 leading-relaxed">
+        Whether you have questions about our services, need support, or want to share your feedback, 
+        our dedicated team is here to assist you every step of the way — fast, secure, and friendly.
+    </p>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- Email -->
-                        <div class="contact-item">
-                            <div class="contact-icon icon-email text-white">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-info">
-                                <h4>Email</h4>
-                                <p>goingtothejava@gmail.com</p>
-                            </div>
-                        </div>
+    <!-- Contact Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Email -->
+        <div class="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition">
+            <div class="bg-orange-500 text-white px-2 py-1 rounded-lg">
+                <i class="fas fa-envelope text-sm"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-gray-800 text-sm">Email</h4>
+                <a href="mailto:goingtothejava@gmail.com" class="text-gray-600 text-sm hover:text-blue-700">
+                    goingtothejava@gmail.com
+                </a>
+            </div>
+        </div>
 
-                        <!-- Website -->
-                        <div class="contact-item">
-                            <div class="contact-icon icon-website text-white">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <div class="contact-info">
-                                <h4>Website</h4>
-                                <p>www.goingtothejava.com</p>
-                            </div>
-                        </div>
+        <!-- Website -->
+        <div class="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition">
+            <div class="bg-orange-500 text-white px-2 py-1 rounded-lg">
+                <i class="fas fa-globe text-sm"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-gray-800 text-sm">Website</h4>
+                <a href="https://www.goingtothejava.com" target="_blank" class="text-gray-600 text-sm hover:text-blue-700">
+                    www.goingtothejava.com
+                </a>
+            </div>
+        </div>
 
-                        <!-- WhatsApp -->
-                        <div class="contact-item">
-                            <div class="contact-icon icon-whatsapp text-white">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div class="contact-info">
-                                <h4>WhatsApp</h4>
-                                <p>+62 812 2000 5276</p>
-                            </div>
-                        </div>
-
-                        <!-- Location -->
-                        <div class="contact-item">
-                            <div class="contact-icon icon-location text-white">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-info">
-                                <h4>Location</h4>
-                                <p>Malang, East Java, Indonesia</p>
-                            </div>
-                        </div>
-                    </div>
+        <!-- WhatsApp (Dua Nomor) -->
+        <div class="flex items-start gap-3 p-4 bg-green-50 rounded-xl border border-green-100 hover:bg-green-100 transition">
+            <div class="bg-green-600 text-white px-2 py-1 rounded-lg">
+                <i class="fab fa-whatsapp text-sm"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-gray-800 text-sm">WhatsApp</h4>
+                <div class="space-y-1 mt-1">
+                    <a href="https://wa.me/6281220005276" target="_blank" class="block text-gray-600 text-sm hover:text-green-700">
+                        +62 812 2000 5276
+                    </a>
+                    <a href="https://wa.me/6281217006076" target="_blank" class="block text-gray-600 text-sm hover:text-green-700">
+                        +62 812 1700 6076
+                    </a>
                 </div>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition">
+            <div class="bg-orange-500 text-white px-2 py-1 rounded-lg">
+                <i class="fas fa-map-marker-alt text-sm"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-gray-800 text-sm">Location</h4>
+                <p class="text-gray-600 text-sm">
+                    Malang, East Java, Indonesia
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
 
             <!-- Right Column: Story & Mission -->
@@ -246,18 +261,7 @@
                 </div>
 
                 <!-- Secure Support Section using WhatsApp values -->
-                <div class="mt-8 bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-up">
-                    <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
-                        <i class="fas fa-shield-alt text-primary mr-2"></i> Why Choose WhatsApp?
-                    </h3>
-                    <ul class="space-y-3 text-sm text-gray-700">
-                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> <strong>End-to-end encryption:</strong> Your messages stay private.</li>
-                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> <strong>Free worldwide messaging & calls:</strong> No extra charges.</li>
-                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> <strong>Fast response:</strong> Voice notes, stickers, files, and more.</li>
-                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> <strong>Status updates:</strong> Share photos, videos, and moments securely.</li>
-                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> <strong>Group chats:</strong> Easy coordination for group tours.</li>
-                    </ul>
-                </div>
+                
             </div>
         </div>
 
@@ -270,7 +274,7 @@
         href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
         target="_blank"
         id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 pyx-2 py-1 rounded-lg shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
