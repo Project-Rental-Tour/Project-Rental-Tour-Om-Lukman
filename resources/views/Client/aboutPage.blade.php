@@ -163,7 +163,7 @@
 
                 <!-- Contact Info Card -->
 <!-- Contact Info Card -->
-<div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+<div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mt-6">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Contact Us</h3>
     <p class="text-gray-600 mb-6 leading-relaxed">
         Whether you have questions about our services, need support, or want to share your feedback, 
