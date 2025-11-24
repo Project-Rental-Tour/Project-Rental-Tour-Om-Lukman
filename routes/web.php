@@ -16,6 +16,10 @@ use App\Http\Controllers\user\UserGalleryController;
 use App\Http\Controllers\user\UserDestinationController;
 
 // User-Route
+Route::get('/test', function () {
+    return 'OK';
+});
+
 Route::resource('/', HomeController::class);
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -38,8 +42,8 @@ Route::post('/booking/custom', [BookingController::class, 'bookingCustom'])->nam
 
 // Auth-Admin
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::get('/zundap', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/zundap', [AuthController::class, 'login'])->name('login.post');
 });
 
 // Admin Routes - Protected by auth middleware
