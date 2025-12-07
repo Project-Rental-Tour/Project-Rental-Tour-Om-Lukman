@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('website_name')->nullable();
             $table->string('website_logo_light')->nullable();
             $table->string('website_logo_dark')->nullable(); // simpan path logo
+            $table->string('promotion_banner_1')->nullable();
+            $table->string('promotion_banner_2')->nullable();
             $table->string('jumbotron_heading')->nullable();
             $table->text('jumbotron_subheading')->nullable();
             $table->string('jumbotron_image')->nullable(); // path gambar jumbotron
