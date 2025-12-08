@@ -328,6 +328,70 @@
                     </div>
 
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Promotion Banner 1</label>
+                        <input 
+                            id="promotion_banner_1_input" 
+                            type="file" 
+                            name="promotion_banner_1" 
+                            accept="image/*"
+                            data-preview="previewBanner1"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                        >
+                        @if(!empty($profile->promotion_banner_1))
+                            <div class="mt-2">
+                                <img 
+                                    src="{{ asset('storage/' . $profile->promotion_banner_1) }}"
+                                    id="previewBanner1"
+                                    class="h-20 rounded-md"
+                                    data-original-src="{{ asset('storage/' . $profile->promotion_banner_1) }}"
+                                >
+                            </div>
+                        @else
+                            <div class="w-full mt-2 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                                <img 
+                                    id="previewBanner1" 
+                                    src="" 
+                                    alt="Preview" 
+                                    class="h-20 rounded-md hidden"
+                                >
+                            </div>
+                            <span id="placeholder-preview-banner1" class="text-gray-400 text-sm">No image</span>
+                        @endif
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Promotion Banner 2</label>
+                        <input 
+                            id="promotion_banner_2_input" 
+                            type="file" 
+                            name="promotion_banner_2" 
+                            accept="image/*"
+                            data-preview="previewBanner2"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                        >
+                        @if(!empty($profile->promotion_banner_2))
+                            <div class="mt-2">
+                                <img 
+                                    src="{{ asset('storage/' . $profile->promotion_banner_2) }}"
+                                    id="previewBanner2"
+                                    class="h-20 rounded-md"
+                                    data-original-src="{{ asset('storage/' . $profile->promotion_banner_2) }}"
+                                >
+                            </div>
+                        @else
+                            <div class="w-full mt-2 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                                <img 
+                                    id="previewBanner2" 
+                                    src="" 
+                                    alt="Preview" 
+                                    class="h-20 rounded-md hidden"
+                                >
+                            </div>
+                            <span id="placeholder-preview-banner2" class="text-gray-400 text-sm">No image</span>
+                        @endif
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">About Heading</label>
                         <input type="text" name="about_heading"
                             value="{{ old('about_heading', $profile->about_heading ?? '') }}"

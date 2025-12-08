@@ -93,6 +93,8 @@ class DashboardController extends Controller
             'website_logo_dark' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'jumbotron_heading' => 'nullable|string|max:255',
             'jumbotron_subheading' => 'nullable|string',
+            'promotion_banner_1' => 'nullable|string',
+            'promotion_banner_2' => 'nullable|string',
             'jumbotron_image' => 'nullable|image|mimes:png,jpg,jpeg|max:4096',
             'about_heading' => 'nullable|string|max:255',
             'about_description' => 'nullable|string',

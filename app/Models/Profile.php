@@ -15,6 +15,8 @@ class Profile extends Model
         'website_name',
         'website_logo_light',
         'website_logo_dark',
+        'promotion_banner_1',
+        'promotion_banner_2',
         'jumbotron_heading',
         'jumbotron_subheading',
         'jumbotron_image',
