@@ -14,6 +14,8 @@ use App\Http\Controllers\user\UserCarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserGalleryController;
 use App\Http\Controllers\user\UserDestinationController;
+use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\user\UserBlogController;
 
 // User-Route
 Route::get('/test', function () {
@@ -27,6 +29,9 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/gallery', [UserGalleryController::class, 'index'])->name('gallery.index');
 Route::get('/list-car', [UserCarController::class, 'index'])->name('usercar.index');
 Route::get('/destination', [UserDestinationController::class, 'index'])->name('destination.index');
+
+Route::get('/blog', [UserBlogController::class, 'index'])->name('blogs.index');
+Route::get('/blog/{slug}', [UserBlogController::class, 'detailBlog'])->name('blogs.detail');
 
 Route::get('/car/{slug}', [UserCarController::class, 'detailCar'])->name('car.detail');
 Route::get('/car-booking/{slug}', [BookingCarController::class, 'booking'])->name('booking-car.form');
@@ -72,6 +77,9 @@ Route::middleware('auth')->group(function () {
     // Manage Gallery
     Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
     Route::resource('/manage-gallery', GalleriesController::class);
+
+    Route::delete('/manage-blog/bulk-destroy', [BlogController::class, 'bulkDestroy'])->name('manage-blog.bulk-destroy');
+    Route::resource('/manage-blog', BlogController::class);
 
     // Manage Testimoni
     Route::delete('/manage-testimonials/bulk-destroy', [TestimoniController::class, 'bulkDestroy'])->name('manage-testimonials.bulk-destroy');

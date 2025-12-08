@@ -93,6 +93,19 @@
                     Manage Booking Car
                 </a>
 
+                <a href="{{ route('manage-blog.index') }}"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-blog.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                    <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-blog.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8h2M9 12h6m-6 4h4">
+                        </path>
+                    </svg>
+                    Manage Blog
+
                 <a href="{{ route('manage-gallery.index') }}"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-md group transition-colors duration-200 {{ request()->routeIs('manage-gallery.*') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3 {{ request()->routeIs('manage-gallery.*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-500' }}"

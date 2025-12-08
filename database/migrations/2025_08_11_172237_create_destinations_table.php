@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('name_package');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('type_destination')->nullable();
             $table->string('place');
             $table->decimal('price', 10, 2)->default('0.00')->nullable();
+            $table->decimal('discount_price', 10, 2)->default('0.00')->nullable();
             $table->string('destination_photo')->nullable();
             $table->string('time');
             $table->string('category')->nullable();
