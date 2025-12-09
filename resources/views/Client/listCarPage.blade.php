@@ -1,139 +1,94 @@
 @extends('_layouts.user')
 
 @section('head')
+    {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
     <style>
-        .bg-primary { background-color: #799eff; }
-        .text-primary { color: #799eff; }
-        .bg-primary-opacity { background-color: rgba(121, 158, 255, 0.05); }
-        .text-white { color: #ffffff; }
-        .text-green { color: #10b981; }
+        /* --- Premium Green Theme Configuration --- */
+        :root {
+            --color-primary: #0a3d26;   /* Deep Forest Green */
+            --color-primary-light: #145a3a;
+            --color-secondary: #cfa372; /* Luxury Gold */
+            --color-secondary-light: #e0c09a;
+            --color-surface: #fdfbf8;   /* Off-White/Paper */
+            --color-text: #3d3d3d;
+            --color-text-light: #7a7a7a;
+        }
 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.01em;
+        }
+
+        /* Utilities */
+        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
+        .text-primary { color: var(--color-primary) !important; }
+        .text-secondary { color: var(--color-secondary) !important; }
+        .bg-surface { background-color: var(--color-surface) !important; }
+
+        /* Animation */
         .animate-fade-up {
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeUp 0.6s ease-out forwards;
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-up:nth-child(1) { animation-delay: 0.1s; }
-        .animate-fade-up:nth-child(2) { animation-delay: 0.2s; }
-        .animate-fade-up:nth-child(3) { animation-delay: 0.3s; }
-        .animate-fade-up:nth-child(4) { animation-delay: 0.4s; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* Hero Section */
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(121, 158, 255, 0.9) 0%, rgba(79, 70, 229, 0.9) 100%);
-        }
-
-        /* Card Hover Effect */
+        /* Components */
         .car-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .car-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        .car-image { transition: transform 0.7s ease; }
+        .car-card:hover .car-image { transform: scale(1.08); }
 
-        /* Image Hover Zoom */
-        .car-image {
-            transition: transform 0.5s ease-in-out;
-        }
-        .car-card:hover .car-image {
-            transform: scale(1.05);
-        }
-
-        /* Status Badge */
         .status-badge {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.25rem 0.75rem;
+            top: 1rem; right: 1rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
         /* Filter Sidebar */
         .filter-sidebar {
-            transition: all 0.3s ease;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: sticky; top: 100px;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .filter-sidebar:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Filter Accordion */
-        .filter-section {
-            transition: all 0.3s ease;
-        }
-        .filter-section.active {
-            background-color: rgba(121, 158, 255, 0.05);
-        }
-
-        /* Filter Item */
         .filter-item {
             transition: all 0.2s ease;
-            border-radius: 0.5rem;
-        }
-        .filter-item:hover {
-            background-color: rgba(121, 158, 255, 0.1);
-            transform: translateX(4px);
-        }
-        .filter-item.active {
-            background-color: rgba(121, 158, 255, 0.2);
-            color: #799eff;
-            font-weight: 600;
-        }
-
-        /* Quick Stats */
-        .stat-card {
-            transition: all 0.3s ease;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Empty State */
-        .empty-state {
-            transition: all 0.3s ease;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        /* WhatsApp Button */
-        .whatsapp-float {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .whatsapp-float:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .animate-bounce-slow {
-            animation: bounce 2s ease-in-out infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Sorting Dropdown */
-        .sort-dropdown {
-            transition: all 0.3s ease;
             border-radius: 0.75rem;
         }
-        .sort-dropdown:focus-within {
-            box-shadow: 0 0 0 3px rgba(121, 158, 255, 0.3);
+        .filter-item:hover {
+            background-color: rgba(10, 61, 38, 0.05);
+            color: var(--color-primary);
+        }
+        .filter-item.active {
+            background-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(10, 61, 38, 0.2);
         }
     </style>
 @endsection
@@ -141,330 +96,188 @@
 @section('content')
     @include('components.client.navbar')
 
-    <!-- Hero Section -->
-    <section id="jumbotron" class="relative bg-gray-900 text-white overflow-hidden">
-    <!-- Background Image -->
-        <img 
-            loading="lazy" 
-            src="{{ asset('assets/images/bg_header_listcar.jpg') }}" 
-            alt="Car Fleet" 
-            class="w-full h-full object-cover object-center absolute inset-0 z-0"
-        />
+    <section id="jumbotron" class="relative bg-primary min-h-[40vh] flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="{{ asset('assets/images/bg_header_listcar.jpg') }}" 
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=1920';"
+                 alt="Car Fleet Header" 
+                 class="w-full h-full object-cover object-center opacity-40 animate-pulse">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
 
-        <!-- Overlay Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-purple-900/60 z-10"></div>
-        <div class="absolute inset-0 bg-black/40 z-10"></div>
-
-        <!-- Content -->
-        <div class="relative z-20 container mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20">
-            <div class="max-w-3xl mx-auto text-center animate-fade-up">
-                <br>
-                <br>
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-                    Our Premium Car Fleet
-                </h1>
-                <p class="text-lg sm:text-xl text-blue-200 mb-8 px-2">
+        <div class="container mx-auto px-6 relative z-10 pt-20 text-center">
+            <div class="max-w-3xl mx-auto animate-fade-up">
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Premium Fleet</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 font-serif">Choose Your <span class="italic text-secondary">Ride</span></h1>
+                <p class="text-lg text-white/80 leading-relaxed font-light mb-8">
                     Choose your perfect ride for every adventure — from city commutes to mountain escapes.
                 </p>
                 
-                <!-- Quick Stats -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
-                        <div class="text-xl sm:text-2xl font-bold">{{ $cars->count() }}</div>
-                        <div class="text-xs sm:text-sm">Total Cars</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                    @foreach([
+                        [$cars->count(), 'Total Cars'],
+                        ['4.8', 'Avg Rating'],
+                        [$cars->where('car_status', 'available')->count(), 'Available'],
+                        ['24/7', 'Support']
+                    ] as $stat)
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+                        <div class="text-xl font-bold text-white mb-1">{{ $stat[0] }}</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider">{{ $stat[1] }}</div>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
-                        <div class="text-xl sm:text-2xl font-bold">4.8</div>
-                        <div class="text-xs sm:text-sm">Avg Rating</div>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
-                        <div class="text-xl sm:text-2xl font-bold">{{ $cars->where('car_status', 'available')->count() }}</div>
-                        <div class="text-xs sm:text-sm">Available</div>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
-                        <div class="text-xl sm:text-2xl font-bold">24/7</div>
-                        <div class="text-xs sm:text-sm">Support</div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Filter and Content Section -->
-    <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Filter Sidebar -->
-            <div class="lg:w-80">
-                <div class="bg-white rounded-2xl shadow-xl p-6 filter-sidebar sticky top-6">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-                        </svg>
-                        Filter & Sort
-                    </h3>
-
-                    <!-- Sorting -->
-                    <div class="mb-8">
-                        <label class="block text-sm font-semibold text-gray-700 mb-3">Sort By</label>
-                        <select onchange="window.location.href = this.value"
-                            class="w-full p-3 border border-gray-300 rounded-xl sort-dropdown focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="{{ route('usercar.index') }}?sort=newest" {{ request('sort') == 'newest' || !request('sort') ? 'selected' : '' }}>
-                                Newest First
-                            </option>
-                            <option value="{{ route('usercar.index') }}?sort=oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>
-                                Oldest First
-                            </option>
-                            <option value="{{ route('usercar.index') }}?sort=price-asc" {{ request('sort') == 'price-asc' ? 'selected' : '' }}>
-                                Price: Low to High
-                            </option>
-                            <option value="{{ route('usercar.index') }}?sort=price-desc" {{ request('sort') == 'price-desc' ? 'selected' : '' }}>
-                                Price: High to Low
-                            </option>
-                            <option value="{{ route('usercar.index') }}?sort=name-asc" {{ request('sort') == 'name-asc' ? 'selected' : '' }}>
-                                Name: A-Z
-                            </option>
-                            <option value="{{ route('usercar.index') }}?sort=name-desc" {{ request('sort') == 'name-desc' ? 'selected' : '' }}>
-                                Name: Z-A
-                            </option>
-                        </select>
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <div class="lg:w-80 flex-shrink-0">
+                <div class="bg-white shadow-xl p-6 filter-sidebar">
+                    <div class="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+                        <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary font-serif">Filter & Sort</h3>
                     </div>
 
-                    <!-- Filters -->
-                    <div class="space-y-6">
-                        <!-- Car Type Filter -->
-                        <div class="filter-section">
-                            <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                Car Type
+                    <div class="mb-8">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Sort By</label>
+                        <div class="relative">
+                            <select onchange="window.location.href = this.value"
+                                class="w-full p-3 pl-4 pr-10 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-primary/20 outline-none appearance-none cursor-pointer text-sm font-medium text-gray-700">
+                                <option value="{{ route('usercar.index') }}?sort=newest" {{ request('sort') == 'newest' || !request('sort') ? 'selected' : '' }}>Newest First</option>
+                                <option value="{{ route('usercar.index') }}?sort=oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
+                                <option value="{{ route('usercar.index') }}?sort=price-asc" {{ request('sort') == 'price-asc' ? 'selected' : '' }}>Price: Low to High</option>
+                                <option value="{{ route('usercar.index') }}?sort=price-desc" {{ request('sort') == 'price-desc' ? 'selected' : '' }}>Price: High to Low</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2 text-sm">
+                                <i class="fas fa-car-side text-secondary"></i> Car Type
                             </h4>
                             <div class="space-y-2">
                                 <a href="{{ route('usercar.index') }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ !request('type') ? 'active' : '' }}">
+                                    class="block px-4 py-2.5 text-sm font-medium filter-item {{ !request('type') ? 'active' : 'text-gray-600' }}">
                                     All Types
                                 </a>
                                 @foreach($carTypes as $type)
                                     <a href="{{ route('usercar.index') }}?type={{ urlencode($type) }}" 
-                                        class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('type') == $type ? 'active' : '' }}">
+                                        class="block px-4 py-2.5 text-sm font-medium filter-item {{ request('type') == $type ? 'active' : 'text-gray-600' }}">
                                         {{ $type }}
                                     </a>
                                 @endforeach
                             </div>
                         </div>
 
-                        <!-- Transmission Filter -->
-                        <div class="filter-section">
-                            <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                Transmission
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2 text-sm">
+                                <i class="fas fa-cogs text-secondary"></i> Transmission
                             </h4>
-                            <div class="space-y-2">
-                                <a href="{{ request()->fullUrlWithQuery(['transmission' => '']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ !request('transmission') ? 'active' : '' }}">
-                                    All Transmissions
-                                </a>
+                            <div class="grid grid-cols-2 gap-2">
                                 <a href="{{ request()->fullUrlWithQuery(['transmission' => 'manual']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('transmission') == 'manual' ? 'active' : '' }}">
+                                    class="text-center px-2 py-2.5 text-xs font-bold rounded-lg border {{ request('transmission') == 'manual' ? 'bg-primary text-white border-primary' : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100' }}">
                                     Manual
                                 </a>
                                 <a href="{{ request()->fullUrlWithQuery(['transmission' => 'automatic']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('transmission') == 'automatic' ? 'active' : '' }}">
+                                    class="text-center px-2 py-2.5 text-xs font-bold rounded-lg border {{ request('transmission') == 'automatic' ? 'bg-primary text-white border-primary' : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100' }}">
                                     Automatic
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Capacity Filter -->
-                        <div class="filter-section">
-                            <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                Capacity
-                            </h4>
-                            <div class="space-y-2">
-                                <a href="{{ request()->fullUrlWithQuery(['capacity' => '']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ !request('capacity') ? 'active' : '' }}">
-                                    Any Capacity
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['capacity' => '4']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('capacity') == '4' ? 'active' : '' }}">
-                                    4 Seats
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['capacity' => '6']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('capacity') == '6' ? 'active' : '' }}">
-                                    6 Seats
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['capacity' => '8']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('capacity') == '8' ? 'active' : '' }}">
-                                    8+ Seats
+                        @if(request()->query())
+                            <div class="pt-4 border-t border-gray-100">
+                                <a href="{{ route('usercar.index') }}" 
+                                    class="block w-full text-center px-4 py-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors font-bold text-sm">
+                                    <i class="fas fa-times mr-2"></i> Reset Filters
                                 </a>
                             </div>
-                        </div>
-
-                        <!-- Price Range Filter -->
-                        <div class="filter-section">
-                            <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Price Range
-                            </h4>
-                            <div class="space-y-2">
-                                <a href="{{ request()->fullUrlWithQuery(['price_range' => '']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ !request('price_range') ? 'active' : '' }}">
-                                    All Prices
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['price_range' => 'low']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('price_range') == 'low' ? 'active' : '' }}">
-                                    Under Rp 500K/day
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['price_range' => 'medium']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('price_range') == 'medium' ? 'active' : '' }}">
-                                    Rp 500K - Rp 1M/day
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['price_range' => 'high']) }}" 
-                                    class="block px-4 py-2 rounded-lg text-sm filter-item {{ request('price_range') == 'high' ? 'active' : '' }}">
-                                    Above Rp 1M/day
-                                </a>
-                            </div>
-                        </div>
+                        @endif
                     </div>
-
-                    <!-- Reset Filters Button -->
-                    @if(request()->query())
-                        <div class="pt-6 border-t border-gray-200">
-                            <a href="{{ route('usercar.index') }}" 
-                                class="block w-full text-center px-4 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                                Reset All Filters
-                            </a>
-                        </div>
-                    @endif
                 </div>
             </div>
 
-            <!-- Main Content - Cars Grid -->
             <div class="flex-1">
-                <!-- Results Count -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold text-gray-800">
-                        {{ $cars->total() }} {{ Str::plural('car', $cars->total()) }} found
-                        @if(request()->query())
-                            <span class="text-sm text-gray-500">• Filtered by: 
-                                @foreach(request()->query() as $key => $value)
-                                    {{ ucfirst($key) }}: {{ $value }}@if(!$loop->last), @endif
-                                @endforeach
-                            </span>
-                        @endif
+                <div class="mb-8 flex justify-between items-center">
+                    <h2 class="text-2xl font-serif font-bold text-primary">
+                        {{ $cars->total() }} Vehicles Available
                     </h2>
                 </div>
 
-                <!-- Cars Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @forelse ($cars as $car)
-                        <div class="car-card bg-white overflow-hidden">
-                            <!-- Image -->
-                            <div class="relative h-48 overflow-hidden">
+                    @forelse ($cars as $index => $car)
+                        <div class="car-card bg-white overflow-hidden shadow-lg animate-fade-up" style="animation-delay: {{ $index * 0.1 }}s">
+                            <div class="relative h-52 overflow-hidden bg-gray-100">
                                 <img loading="lazy" 
                                     src="{{ asset($car->image_car_1) }}" 
                                     alt="{{ $car->name_car }}"
+                                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=800';"
                                     class="w-full h-full object-cover car-image">
                                 
-                                <!-- Status Badge -->
-                                <span class="status-badge bg-{{ $car->car_status == 'available' ? 'green' : ($car->car_status == 'booked' ? 'yellow' : 'red') }}-500 text-white">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+
+                                <span class="status-badge {{ $car->car_status == 'available' ? 'bg-green-500/90 text-white' : 'bg-red-500/90 text-white' }}">
                                     {{ ucfirst($car->car_status) }}
                                 </span>
                             </div>
 
-                            <!-- Content -->
                             <div class="p-6">
-                                <div class="flex justify-between items-start mb-3">
-                                    <h3 class="text-lg font-bold text-gray-800 line-clamp-1">{{ $car->name_car }}</h3>
-                                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                        {{ $car->car_type ?? 'General' }}
-                                    </span>
-                                </div>
-
-                                <div class="mb-3">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-2xl font-bold text-blue-600">Rp{{ number_format($car->price, 0, ',', '.') }}</span>
-                                        <span class="text-sm text-gray-500">/day</span>
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="text-[10px] font-bold text-secondary uppercase tracking-wider block mb-1">
+                                            {{ $car->car_type ?? 'Sedan' }}
+                                        </span>
+                                        <h3 class="text-xl font-bold text-primary font-serif line-clamp-1">{{ $car->name_car }}</h3>
                                     </div>
                                 </div>
 
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-4">
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                        {{ $car->capacity }} seats
-                                    </span>
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                        </svg>
-                                        {{ ucfirst($car->transmission) }}
-                                    </span>
+                                <div class="flex items-center gap-4 text-xs text-gray-500 mb-6 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <span class="flex items-center gap-1.5"><i class="fas fa-users text-secondary"></i> {{ $car->capacity }} Seats</span>
+                                    <span class="w-px h-3 bg-gray-300"></span>
+                                    <span class="flex items-center gap-1.5"><i class="fas fa-cog text-secondary"></i> {{ ucfirst($car->transmission) }}</span>
+                                    <span class="w-px h-3 bg-gray-300"></span>
+                                    <span class="flex items-center gap-1.5"><i class="fas fa-gas-pump text-secondary"></i> Petrol</span>
                                 </div>
 
-                                <!-- Rental Type Badge -->
-                                <div class="mb-4">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
-                                        {{ $car->rental_type ? 'bg-orange-100 text-orange-800' : 'bg-blue-100 text-blue-800' }}">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                d="{{ $car->rental_type ? 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' : 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' }}" />
-                                        </svg>
-                                        {{ $car->rental_type ? 'With Driver' : 'Self Drive' }}
-                                    </span>
+                                <div class="flex items-end justify-between border-t border-gray-100 pt-4">
+                                    <div>
+                                        <span class="text-xs text-gray-400 block mb-0.5">Daily Rate</span>
+                                        <span class="text-xl font-bold text-primary">Rp{{ number_format($car->price, 0, ',', '.') }}</span>
+                                    </div>
+                                    <a href="{{ route('car.detail', $car->slug) }}"
+                                        class="px-5 py-2.5 bg-primary text-white rounded-lg font-bold text-sm hover:bg-[#145a3a] transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                                        Book <i class="fas fa-arrow-right"></i>
+                                    </a>
                                 </div>
-
-                                <!-- Book Now Button -->
-                                <a href="{{ route('car.detail', $car->slug) }}"
-                                    class="w-full text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center bg-primary hover:bg-blue-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                    </svg>
-                                    <span>Book Now</span>
-                                </a>
                             </div>
                         </div>
                     @empty
                         <div class="col-span-full">
-                            <div class="empty-state bg-white text-center rounded-2xl" style="padding: 30px;">
-                                <div class="text-gray-400 mb-4">
-                                    <svg class="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <rect x="3" y="10" width="18" height="7" rx="2" ry="2"/>
-                                        <path d="M6 10L7 6h10l1 4"/>
-                                        <path d="M7 17v2a2 2 0 0 1-4 0v-2"/>
-                                        <path d="M21 17v2a2 2 0 0 1-4 0v-2"/>
-                                    </svg>
+                            <div class="bg-white text-center rounded-[2rem] p-12 border border-gray-100 shadow-sm">
+                                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
+                                    <i class="fas fa-car-crash text-4xl"></i>
                                 </div>
-                                <h3 class="text-2xl font-semibold text-gray-800 mb-2">No cars available</h3>
-                                <p class="text-gray-600 mb-6">We're sorry, but there are no cars matching your criteria at the moment.</p>
-                                
-                                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                    <a href="{{ route('usercar.index') }}"
-                                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                                        Reset Filters
-                                    </a>
-                                    
-                                </div>
+                                <h3 class="text-2xl font-serif font-bold text-gray-800 mb-2">No cars found</h3>
+                                <p class="text-gray-500 mb-8 max-w-md mx-auto">We couldn't find any vehicles matching your current filters. Try adjusting your search criteria.</p>
+                                <a href="{{ route('usercar.index') }}"
+                                    class="inline-block px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-[#145a3a] transition-all shadow-lg">
+                                    Clear Filters
+                                </a>
                             </div>
                         </div>
                     @endforelse
                 </div>
 
-                <!-- Pagination -->
                 @if($cars->hasPages())
-                    <div class="mt-8">
+                    <div class="mt-12">
                         {{ $cars->links('vendor.pagination.tailwind') }}
                     </div>
                 @endif
@@ -472,43 +285,16 @@
         </div>
     </section>
 
-    <!-- WhatsApp Floating Button -->
-    <a 
-        href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
-        target="_blank"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://wa.me/6281220005276" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat Support</span>
     </a>
 
     @include('components.client.footer')
 
     @push('scripts')
         <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
-        <script src="{{ asset('assets/js/swiper.js') }}"></script>
         <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
-        
-        <script>
-            // Filter accordion toggle
-            document.querySelectorAll('.filter-section h4').forEach(header => {
-                header.addEventListener('click', function() {
-                    const section = this.parentElement;
-                    section.classList.toggle('active');
-                });
-            });
-
-            // Smooth scroll to top when changing filters
-            document.querySelectorAll('.filter-item, .sort-dropdown').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    if (e.target.tagName === 'A') {
-                        e.preventDefault();
-                        window.location.href = this.href;
-                    }
-                });
-            });
-        </script>
     @endpush
 @endsection

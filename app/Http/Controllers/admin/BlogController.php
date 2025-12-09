@@ -93,15 +93,15 @@ class BlogController extends Controller
             'category'  => 'required|string|max:100',
             'time_read' => 'required|integer|min:1',
             'content'   => 'required|string',
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_path'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $validated['slug'] = $slug;
 
         try {
             // Handle image upload
-            $imagePath = $request->file('image')->store('public/blogs');
-            $validated['image'] = str_replace('public/', 'storage/', $imagePath);
+            $imagePath = $request->file('image_path')->store('public/blogs');
+            $validated['image_path'] = str_replace('public/', 'storage/', $imagePath);
 
             $blog = Blogs::create($validated);
 
@@ -147,20 +147,20 @@ class BlogController extends Controller
             'category'  => 'required|string|max:100',
             'time_read' => 'required|integer|min:1',
             'content'   => 'required|string',
-            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_path'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $validated['slug'] = $slug;
 
         try {
             // Handle image update
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('image_path')) {
                 // Hapus gambar lama
                 if ($blog->image) {
                     Storage::delete(str_replace('storage/', 'public/', $blog->image));
                 }
-                $imagePath = $request->file('image')->store('public/blogs');
-                $validated['image'] = str_replace('public/', 'storage/', $imagePath);
+                $imagePath = $request->file('image_path')->store('public/blogs');
+                $validated['image_path'] = str_replace('public/', 'storage/', $imagePath);
             }
 
             $oldTitle = $blog->title;

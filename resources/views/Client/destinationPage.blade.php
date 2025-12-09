@@ -1,156 +1,169 @@
 @extends('_layouts.user')
 
 @section('head')
+    {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <style>
-        .bg-primary { background-color: #799eff; }
-        .text-primary { color: #799eff; }
-        .bg-primary-opacity { background-color: rgba(121, 158, 255, 0.05); }
-        .text-white { color: #ffffff; }
-        .text-green { color: #10b981; }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
+    <style>
+        /* --- Premium Green Theme Configuration (Same as Master) --- */
+        :root {
+            --color-primary: #0a3d26;   /* Deep Forest Green */
+            --color-primary-light: #145a3a;
+            --color-secondary: #cfa372; /* Luxury Gold */
+            --color-secondary-light: #e0c09a;
+            --color-surface: #fdfbf8;   /* Off-White/Paper */
+            --color-text: #3d3d3d;
+            --color-text-light: #7a7a7a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.01em;
+        }
+        
+        /* --- Custom Utilities --- */
+        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
+        .text-primary { color: var(--color-primary) !important; }
+        .text-secondary { color: var(--color-secondary) !important; }
+        .bg-surface { background-color: var(--color-surface) !important; }
+
+        /* --- Animations --- */
         .animate-fade-up {
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeUp 0.6s ease-out forwards;
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        .animate-fade-up:nth-child(1) { animation-delay: 0.1s; }
-        .animate-fade-up:nth-child(2) { animation-delay: 0.2s; }
-        .animate-fade-up:nth-child(3) { animation-delay: 0.3s; }
-        .animate-fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 4px; }
+        
+        .leaf-pattern {
+            background-image: radial-gradient(#ffffff 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
     </style>
 @endsection
 
 @section('content')
     @include('components.client.navbar')
 
-    <!-- Header Section -->
-    
-    <section id="jumbotron" class="relative bg-gray-900 text-white h-96 overflow-hidden mb-8">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50"></div>
-        <div class="absolute inset-0 bg-black opacity-30"></div>
-        <img loading="lazy" src="{{ asset('assets/images/bg_header_destination.png') }}" 
-            alt="Car Fleet" class="w-full h-full object-cover object-center">
+    {{-- HERO SECTION --}}
+    <section id="jumbotron" class="relative min-h-[50vh] flex items-center overflow-hidden bg-primary">
+        <div class="absolute inset-0 z-0">
+            <img src="{{ asset('assets/images/bg_header_destination.png') }}" 
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596401057633-565652b8ddbe?auto=format&fit=crop&w=1920&q=80';"
+                 alt="Destinations Background" 
+                 class="w-full h-full object-cover object-center opacity-40 animate-float-slow">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        </div>
 
-        <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-6">
-                <div class="max-w-3xl animate-fade-up">
-                    <br>
-                    <br>
-                    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Explore Our Travel Destinations</h1>
-                    <p class="text-xl text-blue-200 mb-8">Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments.
-            From serene beaches to mountain treks, we’ve got your next journey covered.</p>
-                    
-                    <!-- Quick Stats -->
-                    
-                </div>
+        <div class="container mx-auto px-6 relative z-10 pt-20">
+            <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Where to Next?</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif">Explore Our <br><span class="italic text-secondary">Destinations</span></h1>
+                <p class="text-lg text-white/80 leading-relaxed font-light">
+                    Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments. 
+                    From serene beaches to mountain treks, we’ve got your next journey covered.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Destinations Grid -->
-    <section class="max-w-7xl mx-auto px-6 pb-24">
+    <section class="max-w-7xl mx-auto px-6 py-20 bg-surface -mt-10 relative z-20 rounded-t-[3rem]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Loop Destinasi -->
+            
             @foreach ($destinations as $destination)
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-up h-full flex flex-col">
-                    <!-- Gambar -->
-                    <div class="relative h-48 overflow-hidden">
+                <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up h-full flex flex-col group border border-gray-100">
+                    <div class="relative h-56 overflow-hidden">
                         <img loading="lazy" src="{{ asset($destination->destination_photo) }}"
                             alt="{{ $destination->name_package }}"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000';"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                        
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm">
+                            IDR {{ number_format($destination->price, 0, ',', '.') }}
+                        </div>
                     </div>
 
-                    <!-- Konten -->
-                    <div class="p-5 flex flex-col flex-grow">
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">{{ $destination->name_package }}</h3>
-                        <div class="flex items-center text-gray-600 mb-3 text-sm">
-                            <span>IDR. {{ number_format($destination->price, 0, ',', '.') }},-</span>
-                        </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">{{ $destination->name_package }}</h3>
 
-                        <!-- Aktivitas -->
-                        <div class="flex flex-wrap gap-1 mb-4">
+                        <div class="flex flex-wrap gap-2 mb-6">
                             @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
                                 @if(trim($activity))
-                                    <span class="bg-light/70 text-primary px-2 py-0.5 rounded-full text-xs font-medium border border-primary/30">
+                                    <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200">
                                         {{ trim($activity) }}
                                     </span>
                                 @endif
                             @endforeach
 
                             @if(count(explode(',', $destination->activities)) > 2)
-                                <span class="text-gray-500 text-xs font-medium">...</span>
+                                <span class="text-gray-400 text-xs flex items-center">+More</span>
                             @endif
                         </div>
 
-
-                        <!-- Tombol Book Now -->
                         <a href="{{ route('destination.show', $destination->slug) }}"
-                            class="w-full mt-auto text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center bg-primary hover:bg-blue-600">
-                            <span>Book Now</span>
-                            <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
+                            View Details <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
             @endforeach
 
-            <!-- Custom Trip Card -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-up cursor-pointer group"
+            <div class="bg-primary rounded-[2rem] shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up cursor-pointer group relative flex flex-col justify-center items-center text-center p-8 border border-white/10"
                  onclick="window.location='{{ route('booking.custom') }}'">
-                <!-- Gambar dengan overlay -->
-                <div class="relative h-48 overflow-hidden">
-                    <img loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
-                         alt="Customize Your Trip"
-                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <i class="fas fa-magic text-3xl mb-1"></i>
-                            <h3 class="text-lg font-bold">Design Your Trip</h3>
-                        </div>
-                    </div>
-                </div>
+                
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-secondary/20 transition-colors"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -ml-16 -mb-16 group-hover:bg-secondary/20 transition-colors"></div>
 
-                <!-- Konten -->
-                <div class="p-5 flex flex-col flex-grow">
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Create Your Own Adventure</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-magic text-3xl text-secondary"></i>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">Design Your <br> Trip</h3>
+                    <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
                         No package fits? Tell us your dream destination and we'll create a custom experience.
                     </p>
 
-                    <!-- Fitur Custom -->
-                    <div class="flex flex-wrap gap-1 mb-4 text-xs">
-                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full flex items-center">
-                            <i class="fas fa-pen mr-1"></i> Fully Custom
-                        </span>
-                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full flex items-center">
-                            <i class="fas fa-calendar mr-1"></i> Any Date
-                        </span>
-                    </div>
-
-                    <!-- Tombol Customize Now -->
-                    <button class="w-full text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center"
-                            style="background-color: #ffbc4c;">
-                        <span>Customize Now</span>
-                        <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
+                        Customize Now <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- WhatsApp Floating Button -->
-    <a 
-        href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
-        target="_blank"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%20have%20a%20question..." 
+       target="_blank"
+       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Need Help?</span>
     </a>
 
     @include('components.client.footer')
@@ -159,6 +172,5 @@
         <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
         <script src="{{ asset('assets/js/swiper.js') }}"></script>
         <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
     @endpush
 @endsection

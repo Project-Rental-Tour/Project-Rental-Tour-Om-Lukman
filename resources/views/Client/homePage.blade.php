@@ -595,18 +595,21 @@
     </section>
 
     {{-- Floating WhatsApp --}}
-    <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour..." 
-       target="_blank"
-       class="fixed bottom-6 right-6 lg:bottom-10 lg:right-10 w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300 z-50 group animate-bounce-slow"
-       aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp text-3xl md:text-4xl"></i>
+    <a 
+        href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
+        target="_blank"
+        id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+    >
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
     </a>
 
     @include('components.client.footer')
 
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        
+        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"
         <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
         <script>

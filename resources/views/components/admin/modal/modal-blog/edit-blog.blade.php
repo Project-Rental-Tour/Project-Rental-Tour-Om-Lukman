@@ -71,10 +71,10 @@
                             <div class="flex-shrink-0">
                                 <div class="w-64 h-40 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center overflow-hidden bg-white relative">
                                     <img id="preview-blog-edit-{{ $blog->blog_id }}" 
-                                        src="{{ $blog->image ? asset($blog->image) : '' }}" 
-                                        class="w-full h-full object-cover {{ $blog->image ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-300 absolute inset-0 z-10" />
+                                        src="{{ $blog->image_path ? asset($blog->image_path) : '' }}" 
+                                        class="w-full h-full object-cover {{ $blog->image_path ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-300 absolute inset-0 z-10" />
                                     
-                                    <div id="placeholder-blog-edit-{{ $blog->blog_id }}" class="flex flex-col items-center justify-center text-gray-400 {{ $blog->image ? 'hidden' : '' }}">
+                                    <div id="placeholder-blog-edit-{{ $blog->blog_id }}" class="flex flex-col items-center justify-center text-gray-400 {{ $blog->image_path ? 'hidden' : '' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
@@ -84,7 +84,7 @@
                             </div>
                             <div class="flex-1 w-full space-y-4 text-center md:text-left">
                                 <label class="block text-sm font-medium text-gray-700">Change Cover Image</label>
-                                <input type="file" name="image" accept="image/*"
+                                <input type="file" name="image_path" accept="image/*"
                                     data-preview="preview-blog-edit-{{ $blog->blog_id }}"
                                     class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-white hover:file:bg-yellow-600 cursor-pointer" />
                                 <p class="text-xs text-gray-400">Leave empty to keep current image.</p>

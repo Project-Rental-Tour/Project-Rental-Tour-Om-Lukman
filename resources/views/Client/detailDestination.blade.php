@@ -1,562 +1,380 @@
+
 @extends('_layouts.user')
 
 @section('head')
-<style>
-.text-muted {
-    color: #64748b;
-}
+    {{-- Libraries --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
- .header-gap {
-        margin-top: 3rem; /* ~48px */
-    }
-</style>
+    <style>
+        /* --- Premium Green Theme Configuration --- */
+        :root {
+            --color-primary: #0a3d26;   /* Deep Forest Green */
+            --color-primary-light: #145a3a;
+            --color-secondary: #cfa372; /* Luxury Gold */
+            --color-secondary-light: #e0c09a;
+            --color-surface: #fdfbf8;   /* Off-White/Paper */
+            --color-text: #3d3d3d;
+            --color-text-light: #7a7a7a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Noise Texture Overlay --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.01em;
+        }
+
+        /* Utilities */
+        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
+        .text-primary { color: var(--color-primary) !important; }
+        .text-secondary { color: var(--color-secondary) !important; }
+        .bg-surface { background-color: var(--color-surface) !important; }
+
+        /* Components */
+        .btn-premium {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+        }
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-premium:hover::after { left: 100%; }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+
+        /* Animations */
+        .animate-fade-up {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Tabs Styling */
+        .tab-btn[aria-selected="true"] {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        .tab-btn[aria-selected="false"] {
+            background-color: transparent;
+            color: var(--color-text);
+            border-color: #e2e8f0;
+        }
+        .tab-btn[aria-selected="false"]:hover {
+            background-color: #f1f5f9;
+            color: var(--color-primary);
+        }
+    </style>
 @endsection
 
 @section('content')
     @include('components.client.navbar')
 
-    <!-- Hero Section -->
-    <section class="relative bg-gray-900 text-white h-96" id="jumbotron">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img loading="lazy" src="{{ asset($destination->destination_photo) }}" alt="{{ $destination->name_package }}"
-            class="w-full h-full object-cover object-center">
+    <section class="relative bg-primary h-[500px] flex items-center" id="jumbotron">
+        <div class="absolute inset-0 z-0">
+            <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                 alt="{{ $destination->name_package }}"
+                 class="w-full h-full object-cover object-center opacity-50">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        </div>
 
-        <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-6">
-                <div class="max-w-3xl">
-                    <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mb-4 inline-block">
+        <div class="container mx-auto px-6 relative z-10 pt-20">
+            <div class="max-w-4xl animate-fade-up">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="bg-secondary text-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
                         {{ ucfirst($destination->category) }} Trip
                     </span>
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name_package }}</h1>
-                    <p class="text-xl text-blue-200 mb-6">{{ $destination->place }} • {{ $destination->time }}</p>
-                    <div class="flex flex-wrap items-center gap-6 text-lg">
-                        <span class="font-bold text-yellow-300 text-2xl">
-                            IDR.{{ number_format($destination->price, 0, ',', '.') }} <span
-                                class="text-sm font-normal">/person</span>
-                        </span>
-                        <span class="bg-green-600 px-3 py-1 rounded-md text-sm">{{ ucfirst($destination->level) }}
-                            Level</span>
-                    </div>
+                    <span class="bg-white/20 backdrop-blur-md text-white border border-white/30 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+                        {{ ucfirst($destination->level) }} Level
+                    </span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg">
+                    {{ $destination->name_package }}
+                </h1>
+                
+                <div class="flex flex-wrap items-center gap-6 text-white/90 text-lg font-light">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-secondary"></i> {{ $destination->place }}
+                    </span>
+                    <span class="hidden md:inline">•</span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-clock text-secondary"></i> {{ $destination->time }}
+                    </span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Breadcrumb -->
-    <nav class="bg-white py-4 shadow-sm sticky top-16 z-30">
+    <nav class="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div class="container mx-auto px-6">
-            <ol class="flex space-x-2 text-sm text-gray-600">
-                <li class="font-medium text-gray-900"><a href="{{route('index')}}">Home</a></li>
-                <li class="text-gray-400">/</li>
-                <li class="font-medium text-gray-900"><a href="{{route('destination.index')}}">Destinations</a></li>
-                <li class="text-gray-400">/</li>
-                <li class="font-medium text-gray-900">{{ $destination->name_package }}</li>
+            <ol class="flex space-x-2 text-sm text-gray-500">
+                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">Home</a></li>
+                <li>/</li>
+                <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors font-medium">Destinations</a></li>
+                <li>/</li>
+                <li class="font-bold text-primary">{{ $destination->name_package }}</li>
             </ol>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <section class="container mx-auto px-6 py-12 space-y-12">
-        <!-- Gallery + Info -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="md:col-span-2">
-                <img loading="lazy" src="{{ asset($destination->destination_photo) }}" alt="Main View"
-                    class="w-full h-80 object-cover rounded-xl shadow-lg">
-            </div>
-            <div class="bg-blue-50 p-6 rounded-xl space-y-4">
-                <h4 class="font-semibold text-lg text-gray-800">Description</h4>
-                <div class="text-sm">{{$destination->description}}</div>
-                <div class="pt-2">
-                    <span class="text-xs text-gray-500">Based on {{ $destination->name_package }}</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <!-- Tabs -->
-        <div class="rounded-xl shadow-lg overflow-hidden bg-white">
-            <!-- Tabs Header -->
-            <div class="px-2 py-2 border-gray-200">
-                <ul class="flex flex-wrap text-sm font-medium text-center -mb-px" role="tablist">
-                    <!-- Tab 1: Details -->
-                    <li class="me-1" role="presentation">
-                        <button
-                            id="details-tab"
-                            data-tabs-target="#details"
-                            type="button"
-                            role="tab"
-                            aria-controls="details"
-                            aria-selected="true"
-                            class="inline-block px-6 py-3 rounded-xl text-blue-700 bg-blue-100 transition-all duration-300 hover:bg-blue-200 focus:outline-none focus:ring-blue-100 font-semibold">
-                            Details
-                        </button>
-                    </li>
-
-                    <li class="me-1" role="presentation">
-                        <button
-                            id="tour-tab"
-                            data-tabs-target="#tour"
-                            type="button"
-                            role="tab"
-                            aria-controls="tour"
-                            aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
-                            Tour Highlights
-                        </button>
-                    </li>
-
-                    <!-- Tab 2: Facility -->
-                    <li class="me-1" role="presentation">
-                        <button
-                            id="inclusion-tab"
-                            data-tabs-target="#inclusion"
-                            type="button"
-                            role="tab"
-                            aria-controls="inclusion"
-                            aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700 transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
-                            Facility
-                        </button>
-                    </li>
-
-                    <!-- Tab 3: Itinerary -->
-                    <li class="me-1" role="presentation">
-                        <button
-                            id="itinerary-tab"
-                            data-tabs-target="#itinerary"
-                            type="button"
-                            role="tab"
-                            aria-controls="itinerary"
-                            aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
-                            Itinerary
-                        </button>
-                    </li>
-
-                    <li class="me-1" role="presentation">
-                        <button
-                            id="note-tab"
-                            data-tabs-target="#note"
-                            type="button"
-                            role="tab"
-                            aria-controls="note"
-                            aria-selected="false"
-                            class="inline-block px-6 py-3 rounded-xl text-gray-700  transition-all duration-300 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-blue-100 font-semibold">
-                            Note
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Tabs Content -->
-            <div id="myTabContent" class="p-6">
-                <!-- Details Tab -->
-                <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    <h3 class="text-xl font-bold text-gray-800 mb-5">Trip Overview</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Location</h4>
-                            <p class="text-gray-800 text-base">{{ $destination->place }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Duration</h4>
-                            <p class="text-gray-800">{{ $destination->time }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-1">Transportation</h4>
-                            <p class="text-gray-800">{{ $destination->transportation }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Accommodation</h4>
-                             <p class="text-gray-800">{{ $destination->accommodation }}</p>
-                        </div>
-                        <!-- Pickup & Dropoff Points -->
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Pickup Points</h4>
-                            <p class="text-gray-800">{{ $destination->pickup_points }}</p>
-                        </div>
-
-                        <div>
-                            <h4 class="font-semibold text-gray-700 text-sm uppercase tracking-wide mb-3">Dropoff Points</h4>
-                            <p class="text-gray-800">{{ $destination->dropoff_points }}</p>
-                        </div>
-                    </div>
+    <section class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="lg:col-span-2 space-y-12">
+                
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] group animate-fade-up">
+                    <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                         alt="Main View"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                 </div>
 
-                <!-- Tour Highlights Tab -->
-                <div class="hidden animate-fade-in" id="tour" role="tabpanel" aria-labelledby="tour-tab">
-                    <h3 class="text-xl font-bold text-gray-800 mb-5">Tour Highlights</h3>
-                    <div class="flex flex-wrap gap-2">
-                       <ul class="space-y-2">
-                                @foreach(explode(',', $destination->activities) as $item)
-                                    @if(trim($item))
-                                        <li class="text-gray-700 flex items-start gap-2">
-                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
-                                            {{ trim($item) }}
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                    </div>
-                </div>
-
-                <!-- Facility Tab -->
-                <div class="hidden animate-fade-in" id="inclusion" role="tabpanel" aria-labelledby="inclusion-tab">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6">Inclusions & Exclusions</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Include -->
-                        <div>
-                            <h4 class="font-bold text-green-700 mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                                What's Included
-                            </h4>
-                            <ul class="space-y-2">
-                                @foreach(explode('.', $destination->include) as $item)
-                                    @if(trim($item))
-                                        <li class="text-gray-700 flex items-start gap-2">
-                                            <span class="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></span>
-                                            {{ trim($item) }}
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        </div>
-
-                        <!-- Exclude -->
-                        <div>
-                            <h4 class="font-bold text-red-700 mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                Not Included
-                            </h4>
-                            <ul class="space-y-2">
-                                @foreach(explode('.', $destination->exclude) as $item)
-                                    @if(trim($item))
-                                        <li class="text-gray-700 flex items-start gap-2">
-                                            <span class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></span>
-                                            {{ trim($item) }}
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Itinerary Tab -->
-                <div class="hidden animate-fade-in" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6">Day-by-Day Itinerary</h3>
-                    <div class="prose prose-gray max-w-none leading-relaxed space-y-3">
-                        @php
-                            $lines = explode("\n", $destination->itinerary);
-                        @endphp
-                        @foreach($lines as $line)
-                            @if(trim($line))
-                                <div class="flex items-start gap-2 py-1">
-                                    {{-- <span class="font-semibold text-blue-600 min-w-[50px]">{{ trim($line, '. ') }}</span> --}}
-                                    <span class="text-gray-700">{!! trim($line) !!}</span>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="hidden animate-fade-in" id="note" role="tabpanel" aria-labelledby="note-tab">
-                    <h3 class="text-xl font-bold text-gray-800 mb-5">Note</h3>
-                    <div class="flex flex-wrap gap-2">
-                       <ul class="space-y-2">
-                            @php
-                                $lines = explode("\n", $destination->note);
-                            @endphp
-                            @foreach($lines as $line)
-                                @if(trim($line))
-                                    <div class="flex items-start gap-2 py-1">
-                                        {{-- <span class="font-semibold text-blue-600 min-w-[50px]">{{ trim($line, '. ') }}</span> --}}
-                                        <span class="text-gray-700">{!! trim($line) !!}</span>
-                                    </div>
-                                @endif
+                <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
+                    <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
+                        <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
+                            @foreach(['details' => 'Overview', 'tour' => 'Highlights', 'inclusion' => 'Facilities', 'itinerary' => 'Itinerary', 'note' => 'Notes'] as $key => $label)
+                            <li class="flex-shrink-0" role="presentation">
+                                <button
+                                    id="{{ $key }}-tab"
+                                    data-tabs-target="#{{ $key }}"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="{{ $key }}"
+                                    aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                    class="tab-btn px-6 py-3 rounded-xl border text-sm font-bold transition-all duration-300">
+                                    {{ $label }}
+                                </button>
+                            </li>
                             @endforeach
                         </ul>
                     </div>
+
+                    <div id="myTabContent" class="p-8">
+                        <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-4">Trip Overview</h3>
+                            <p class="text-gray-600 leading-relaxed mb-8">{{$destination->description}}</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                @foreach([
+                                    ['Location', $destination->place, 'map-pin'],
+                                    ['Duration', $destination->time, 'hourglass-half'],
+                                    ['Transport', $destination->transportation, 'shuttle-van'],
+                                    ['Stay', $destination->accommodation, 'bed'],
+                                    ['Pickup', $destination->pickup_points, 'map-marker-alt'],
+                                    ['Dropoff', $destination->dropoff_points, 'flag-checkered']
+                                ] as $detail)
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center shrink-0">
+                                        <i class="fas fa-{{ $detail[2] }}"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ $detail[0] }}</h4>
+                                        <p class="font-semibold text-gray-800">{{ $detail[1] }}</p>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="hidden animate-fade-in" id="tour" role="tabpanel" aria-labelledby="tour-tab">
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Tour Highlights</h3>
+                            <ul class="space-y-3">
+                                @foreach(explode(',', $destination->activities) as $item)
+                                    @if(trim($item))
+                                        <li class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                                            <i class="fas fa-check-circle text-secondary text-lg"></i>
+                                            <span class="text-gray-700 font-medium">{{ trim($item) }}</span>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="hidden animate-fade-in" id="inclusion" role="tabpanel" aria-labelledby="inclusion-tab">
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Inclusions & Exclusions</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-primary mb-4 flex items-center gap-2 bg-green-50 p-3 rounded-lg border border-green-100">
+                                        <i class="fas fa-check text-green-600"></i> What's Included
+                                    </h4>
+                                    <ul class="space-y-2 pl-2">
+                                        @foreach(explode('.', $destination->include) as $item)
+                                            @if(trim($item))
+                                                <li class="text-gray-600 flex items-start gap-2 text-sm">
+                                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 shrink-0"></span>
+                                                    {{ trim($item) }}
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-red-700 mb-4 flex items-center gap-2 bg-red-50 p-3 rounded-lg border border-red-100">
+                                        <i class="fas fa-times text-red-600"></i> Not Included
+                                    </h4>
+                                    <ul class="space-y-2 pl-2">
+                                        @foreach(explode('.', $destination->exclude) as $item)
+                                            @if(trim($item))
+                                                <li class="text-gray-600 flex items-start gap-2 text-sm">
+                                                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 shrink-0"></span>
+                                                    {{ trim($item) }}
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hidden animate-fade-in" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Itinerary</h3>
+                            <div class="space-y-6 relative border-l-2 border-primary/20 ml-3 pl-8">
+                                @php $lines = explode("\n", $destination->itinerary); @endphp
+                                @foreach($lines as $line)
+                                    @if(trim($line))
+                                        <div class="relative">
+                                            <span class="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-secondary border-4 border-white flex items-center justify-center text-white text-[10px] shadow-sm">
+                                                <i class="fas fa-circle text-[8px]"></i>
+                                            </span>
+                                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                                <p class="text-gray-700 leading-relaxed text-sm">{!! trim($line) !!}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="hidden animate-fade-in" id="note" role="tabpanel" aria-labelledby="note-tab">
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Important Notes</h3>
+                            <div class="bg-yellow-50 border border-yellow-100 p-6 rounded-2xl">
+                                <ul class="space-y-3">
+                                    @foreach(explode("\n", $destination->note) as $line)
+                                        @if(trim($line))
+                                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                                <i class="fas fa-info-circle text-secondary mt-0.5"></i>
+                                                <span>{!! trim($line) !!}</span>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-gray-100 animate-fade-up" style="animation-delay: 0.3s">
+                    <h3 class="text-2xl font-serif font-bold text-primary mb-6">More Photos</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        @forelse($relatedGalleries as $gallery)
+                        <div class="group relative overflow-hidden rounded-xl h-32 md:h-40 cursor-pointer">
+                            <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}" 
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                 alt="{{ $gallery->title }}"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <i class="fas fa-search-plus text-white text-xl"></i>
+                            </div>
+                        </div>
+                        @empty
+                        <p class="text-gray-400 col-span-4 text-center py-4">No additional photos available.</p>
+                        @endforelse
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Activities -->
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Gallery {{ $destination->name_package }}</h3>
-            <div class="columns-2 md:columns-4 gap-4 space-y-6">
-
-                @forelse($relatedGalleries as $gallery)
-                <div class="relative break-inside-avoid group rounded-lg overflow-hidden animate-fade-up">
-                    <img loading="lazy" 
-                        src="{{ asset($gallery->gallery_photo) }}" 
-                        alt="{{ $gallery->title }}"
-                        class="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <!-- Overlay saat hover -->
-                    <div class="absolute top-1/2 left-1/2 
-                                bg-black/80 text-white text-xs md:text-sm font-medium 
-                                px-2 py-1 rounded-md 
-                                opacity-0 group-hover:opacity-100 
-                                transition-opacity duration-300 
-                                whitespace-nowrap uppercase
-                                transform -translate-x-1/2 -translate-y-1/2">
-                        {{ $gallery->title }}
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-        {{-- Faq --}}
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Frequently Asked Questions</h3>
-            <div class="space-y-6" id="accordion-open" data-accordion="open">
-                <!-- FAQ 1 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-1">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-1" aria-expanded="false" aria-controls="accordion-open-body-1">
-                            <span>Is it possible to pick up at the airport or train station?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-1" class="hidden" aria-labelledby="accordion-open-heading-1">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Yes. Please make sure the flight arrival is before 4:00 AM. If by train, 1 hour before pick up time is fine.
+            <div class="lg:col-span-1">
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100 sticky top-28 animate-fade-up" style="animation-delay: 0.4s">
+                    <div class="text-center mb-8">
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Best Price Offer</p>
+                        <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
+                            IDR {{ number_format($destination->price, 0, ',', '.') }}
                         </div>
+                        <p class="text-sm text-gray-500 mt-1">per person</p>
                     </div>
-                </div>
 
-                <!-- FAQ 2 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-2">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-2" aria-expanded="false" aria-controls="accordion-open-body-2">
-                            <span>Is it possible to be dropped off at the airport or train station?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-2" class="hidden" aria-labelledby="accordion-open-heading-2">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Yes, either Surabaya or Denpasar airport are possible. Please make sure the flight/train departure is 2 hours later than 5:00 PM (17:00) — a flight leaving around 19:00 should be fine. If taking a train to the west (e.g., Yogyakarta), we suggest Ketapang train station.
+                    <div class="space-y-4">
+                        <a href="{{ route('booking.regular.form', $destination->slug) }}"
+                            class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2">
+                            Book Now <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                        <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour,%20I'm%20interested%20in%20{{ $destination->name_package }}" 
+                           target="_blank"
+                           class="w-full py-4 bg-gray-50 text-gray-700 rounded-xl font-bold border border-gray-200 flex items-center justify-center gap-2 hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all">
+                            <i class="fab fa-whatsapp text-xl"></i> Chat for Info
+                        </a>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-gray-100 space-y-3">
+                        <div class="flex items-center gap-3 text-sm text-gray-600">
+                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span>Instant Confirmation</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 3 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-3">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-3" aria-expanded="false" aria-controls="accordion-open-body-3">
-                            <span>Do I have to carry my luggage during the tour?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-3" class="hidden" aria-labelledby="accordion-open-heading-3">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Yes. But you will leave it in the car while you’re doing the activity.
+                        <div class="flex items-center gap-3 text-sm text-gray-600">
+                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span>Professional Local Guide</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 4 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-4">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-4" aria-expanded="false" aria-controls="accordion-open-body-4">
-                            <span>Is it allowed to fly a drone?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-4" class="hidden" aria-labelledby="accordion-open-heading-4">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Currently, Bromo National Park policy does not allow drones to be flown at any point or spot. However, flying drones is permitted at Tumpak Sewu and Ijen.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 5 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-5">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-5" aria-expanded="false" aria-controls="accordion-open-body-5">
-                            <span>How about tour availability?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-5" class="hidden" aria-labelledby="accordion-open-heading-5">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Tours are available daily, unless there is a closure by local authorities due to local events or routine agendas, which will be announced with prior notice.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 6 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-6">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-6" aria-expanded="false" aria-controls="accordion-open-body-6">
-                            <span>When are tours not available?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-6" class="hidden" aria-labelledby="accordion-open-heading-6">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Tours are not available on the following dates due to Mt. Ijen cleaning routine and Nyepi (Hindu Silence Day) in Bromo:<br><br>
-                            February 5th, March 5th, March 28th & 29th (Silence Day), April 2nd, April 30th, June 4th, July 2nd, July 30th, September 3rd, October 3rd, November 5th, December 3rd.<br><br>
-                            There might be additional closure dates due to local events — we will inform you after receiving an official announcement.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 7 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-7">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-7" aria-expanded="false" aria-controls="accordion-open-body-7">
-                            <span>What type of accommodations are provided?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-7" class="hidden" aria-labelledby="accordion-open-heading-7">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Accommodation is in a guesthouse or small hotel, with a private room and en-suite bathroom.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 8 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-8">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-8" aria-expanded="false" aria-controls="accordion-open-body-8">
-                            <span>Why do we overnight in Bondowoso instead of near Ijen?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-8" class="hidden" aria-labelledby="accordion-open-heading-8">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            The driving duration from Bromo to Bondowoso is 4 hours, versus 6 hours if driving directly to Ijen. Staying in Bondowoso splits the long drive for greater comfort. However, if Bondowoso accommodations are unavailable, we may alter the overnight location to Ijen.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 9 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-9">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-9" aria-expanded="false" aria-controls="accordion-open-body-9">
-                            <span>How do I book a tour?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-9" class="hidden" aria-labelledby="accordion-open-heading-9">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            <ol class="list-decimal pl-5 space-y-2">
-                                <li>Click the checkout button to access the deposit payment link.</li>
-                                <li>A deposit of IDR 500K is required to secure/reserve your space (2% card charge applies).</li>
-                                <li>Complete the Booking Form with your specific details.</li>
-                                <li>You will receive a Booking Confirmation via email and WhatsApp.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 10 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-10">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-10" aria-expanded="false" aria-controls="accordion-open-body-10">
-                            <span>How do I pay the remaining balance?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-10" class="hidden" aria-labelledby="accordion-open-heading-10">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            The remaining payment can be made in cash during the tour. Payment by card is also possible if arranged at least 5 days prior to the tour start date. A separate card payment link is subject to a 2% admin charge.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 11 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-11">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-11" aria-expanded="false" aria-controls="accordion-open-body-11">
-                            <span>Can I finish/drop off in Surabaya or Malang?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-11" class="hidden" aria-labelledby="accordion-open-heading-11">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Yes. An additional cost of IDR 100K per person will be applied.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAQ 12 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-up" data-accordion-item>
-                    <h2 id="accordion-open-heading-12">
-                        <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-800 hover:bg-gray-50 focus:ring-0 focus:outline-none" data-accordion-target="#accordion-open-body-12" aria-expanded="false" aria-controls="accordion-open-body-12">
-                            <span>Is it possible to upgrade to a private group?</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="accordion-open-body-12" class="hidden" aria-labelledby="accordion-open-heading-12">
-                        <div class="p-6 text-gray-600 border-t border-gray-200">
-                            Yes. Additional charges apply. Please contact us at <strong>goingtothejava@gmail.com</strong> or WhatsApp/Telegram: <strong>081220005276</strong>.
+                        <div class="flex items-center gap-3 text-sm text-gray-600">
+                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span>No Hidden Fees</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CTA Booking -->
-        <div class="bg-yellow-400 text-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="px-8 py-10 md:flex md:items-center md:justify-between">
-                <div>
-                    <h3 class="text-2xl font-bold">Ready to Book This Trip?</h3>
-                    <p class="text-gray-100 mt-2">Secure your spot now and start your adventure.</p>
-                </div>
-                <div class="mt-6 md:mt-0">
-                    <a href="{{ route('booking.regular.form', $destination->slug) }}"
-                        class="inline-flex items-center px-6 py-3 text-sm font-medium bg-white text-blue-700 rounded-lg hover:bg-gray-100 transition">
-                        Book Now
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
+        <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <div class="relative z-10 mb-6 md:mb-0">
+                <h3 class="text-3xl font-bold text-white font-serif mb-2">Ready for Adventure?</h3>
+                <p class="text-white/80">Don't let this experience slip away. Secure your spot today!</p>
+            </div>
+            <div class="relative z-10">
+                <a href="{{ route('booking.regular.form', $destination->slug) }}"
+                    class="inline-flex items-center px-8 py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg">
+                    Book This Trip <i class="fas fa-paper-plane ml-2"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <a 
-        href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
-        target="_blank"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://wa.me/6281220005276" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat Support</span>
     </a>
 
     @include('components.client.footer')
@@ -569,10 +387,11 @@
             function deactivateAll() {
                 tabs.forEach(tab => {
                     tab.setAttribute('aria-selected', 'false');
-                    tab.classList.remove('text-blue-700', 'bg-blue-100');
-                    tab.classList.add('text-gray-700');
                 });
-                contents.forEach(content => content.classList.add('hidden'));
+                contents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('animate-fade-in');
+                });
             }
 
             tabs.forEach(tab => {
@@ -581,18 +400,18 @@
 
                     deactivateAll();
 
-                    // Aktifkan tab terpilih
+                    // Activate clicked tab
                     tab.setAttribute('aria-selected', 'true');
-                    tab.classList.remove('text-gray-700');
-                    tab.classList.add('text-blue-700', 'bg-blue-100');
 
-                    // Tampilkan konten
+                    // Show content
                     const target = document.querySelector(tab.dataset.tabsTarget);
                     target.classList.remove('hidden');
-                    target.classList.add('animate-fade-in');
+                    // Add small delay to trigger animation reset
+                    setTimeout(() => {
+                        target.classList.add('animate-fade-in');
+                    }, 10);
                 });
             });
         });
     </script>
-   
 @endsection

@@ -21,8 +21,8 @@
 
         <div class="overflow-y-auto p-0">
             <div class="relative h-64 w-full bg-gray-200">
-                @if($blog->image)
-                    <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}" class="w-full h-full object-cover">
+                @if($blog->image_path)
+                    <img src="{{ asset($blog->image_path) }}" alt="{{ $blog->title }}" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 @else
                     <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">

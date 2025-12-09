@@ -102,7 +102,7 @@
                                 
                                 <label class="inline-block">
                                     <span class="sr-only">Choose file</span>
-                                    <input type="file" name="image" accept="image/*" required
+                                    <input type="file" name="image_path" accept="image/*" required
                                         data-preview="preview-blog-add"
                                         class="block w-full text-sm text-gray-500
                                         file:mr-4 file:py-2.5 file:px-6
