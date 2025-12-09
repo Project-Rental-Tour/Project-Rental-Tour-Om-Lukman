@@ -382,7 +382,7 @@
 
                 <div class="relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden bg-primary p-8 md:p-12 flex flex-col justify-center text-center animate-fade-up border border-white/10 group cursor-pointer hover:shadow-2xl transition-all duration-300" onclick="window.location='{{ route('booking.custom') }}'">
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/10 rounded-full blur-3xl group-hover:bg-secondary/20 transition-colors"></div>
-                    <i class="fas fa-magic text-6xl text-secondary/30 mb-6 group-hover:scale-110 group-hover:text-secondary transition-all duration-500"></i>
+                    <i class="fas fa-magic text-6xl text-white text-secondary/30 mb-6 group-hover:scale-110 group-hover:text-secondary transition-all duration-500"></i>
                     
                     <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 font-serif">Tailor-Made <br> Trip</h3>
                     <p class="text-white/70 mb-8 text-sm md:text-base leading-relaxed">
