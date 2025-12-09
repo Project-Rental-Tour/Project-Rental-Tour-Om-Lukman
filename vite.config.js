@@ -16,7 +16,7 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    vendor: ['flowbite']
+                    vendor: ['swiper', 'flowbite']
                 }
             }
         }
