@@ -44,7 +44,17 @@
         }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* Blog Content Styling */
+        /* Components */
+        .btn-premium {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+        }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+
+        /* --- Blog Content Styling (Typography for Dynamic Content) --- */
         .blog-content {
             font-size: 1.125rem;
             line-height: 1.8;
@@ -69,9 +79,10 @@
         }
         .blog-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
         .blog-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .blog-content li { margin-bottom: 0.5rem; }
         .blog-content blockquote {
             border-left: 4px solid var(--color-secondary);
-            padding-left: 1.5rem;
+            padding-left: 1rem;
             font-style: italic;
             color: #4b5563;
             background: #f9fafb;
@@ -85,6 +96,8 @@
             width: 100%;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
+        .blog-content a { color: var(--color-primary); text-decoration: underline; }
+        .blog-content strong { color: #111827; font-weight: 700; }
     </style>
 @endsection
 
@@ -93,9 +106,10 @@
 
     <section class="relative h-[60vh] min-h-[500px] flex items-end pb-20 overflow-hidden bg-gray-900">
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset($blog->image_path) }}" 
+            {{-- Menggunakan $blogs --}}
+            <img src="{{ asset($blogs->image_path) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
-                 alt="{{ $blog->title }}"
+                 alt="{{ $blogs->title }}"
                  class="w-full h-full object-cover object-center opacity-60 scale-105 animate-[pulse_20s_ease-in-out_infinite]">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
@@ -104,18 +118,18 @@
             <div class="max-w-4xl animate-fade-up">
                 <div class="flex flex-wrap items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
                     <span class="bg-secondary text-primary px-3 py-1 rounded-full font-bold">
-                        {{ $blog->category ?? 'Travel' }}
+                        {{ $blogs->category ?? 'Travel' }}
                     </span>
                     <span class="flex items-center gap-2">
-                        <i class="far fa-calendar"></i> {{ $blog->created_at->format('d M Y') }}
+                        <i class="far fa-calendar"></i> {{ $blogs->created_at->format('d M Y') }}
                     </span>
                     <span class="flex items-center gap-2">
-                        <i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} min read
+                        <i class="far fa-clock"></i> {{ $blogs->time_read ?? '5' }} min read
                     </span>
                 </div>
 
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-tight mb-6 text-shadow-lg">
-                    {{ $blog->title }}
+                    {{ $blogs->title }}
                 </h1>
 
                 <nav class="flex text-white/70 text-sm">
@@ -124,7 +138,7 @@
                         <li>/</li>
                         <li><a href="{{ route('blog.index') }}" class="hover:text-white transition">Blog</a></li>
                         <li>/</li>
-                        <li class="text-white font-semibold truncate max-w-[200px]">{{ $blog->title }}</li>
+                        <li class="text-white font-semibold truncate max-w-[200px]">{{ $blogs->title }}</li>
                     </ol>
                 </nav>
             </div>
@@ -137,7 +151,8 @@
             <div class="lg:col-span-8">
                 <article class="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl border border-gray-100 animate-fade-up">
                     <div class="blog-content">
-                        {!! $blog->content !!}
+                        {{-- Menggunakan $blogs --}}
+                        {!! $blogs->content !!}
                     </div>
 
                     <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -168,6 +183,33 @@
                     </p>
                 </div>
 
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-gray-100 animate-fade-up" style="animation-delay: 0.3s">
+                    <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">Recent Posts</h3>
+                    <div class="space-y-6">
+                        @if(isset($relatedPosts) && $relatedPosts->count() > 0)
+                            @foreach($relatedPosts as $recent)
+                            {{-- Pastikan ini menggunakan $recent->id jika tidak menggunakan slug, sesuaikan route Anda --}}
+                            <a href="{{ route('blog.detail', $recent->blog_id) }}" class="flex gap-4 group">
+                                <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+                                    <img src="{{ asset($recent->image_path) }}" 
+                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
+                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-1 block">{{ $recent->category }}</span>
+                                    <h4 class="font-bold text-gray-800 text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                        {{ $recent->title }}
+                                    </h4>
+                                    <span class="text-xs text-gray-400 mt-2 block">{{ $recent->created_at->format('M d, Y') }}</span>
+                                </div>
+                            </a>
+                            @endforeach
+                        @else
+                            <p class="text-gray-400 text-sm">No recent posts.</p>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="bg-primary rounded-[2rem] p-8 text-center text-white relative overflow-hidden animate-fade-up shadow-2xl" style="animation-delay: 0.4s">
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
                     <div class="relative z-10">
@@ -184,7 +226,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour!%20I'm%20reading%20about%20{{ $blog->title }}" 
+    <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour!%20I'm%20reading%20about%20{{ $blogs->title }}" 
        target="_blank"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
