@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
-use App\Models\Blogs; // Pastikan model ini ada
+use App\Models\Blogs;
 use App\Models\LogActivity;
 use App\Models\Profile;
 
@@ -57,7 +56,6 @@ class BlogController extends Controller
             ->take(10)
             ->get();
 
-        // 4. Log View Action
         LogActivity::create([
             'username' => $currentUser->username,
             'action' => 'Viewed Blog list (filtered: ' . ($request->filled('search') ? 'yes' : 'no') . ')'
@@ -73,35 +71,28 @@ class BlogController extends Controller
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission.']);
         }
 
-        // Generate slug otomatis dari title
-        $title = $request->input('title');
-        $baseSlug = Str::slug($title, '-');
-        $slug = $baseSlug;
-        $counter = 1;
-
-        // Pastikan slug unik
-        while (Blogs::where('slug', $slug)->exists()) {
-            $slug = $baseSlug . '-' . $counter;
-            $counter++;
-        }
-
+        // Validasi (Tanpa Slug)
         $validated = $request->validate([
-            'title'     => 'required|string|max:255',
-            'category'  => 'required|string|max:100',
-            'time_read' => 'required|integer|min:1',
-            'content'   => 'required|string',
-            'image_path'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title'      => 'required|string|max:255',
+            'category'   => 'required|string|max:100',
+            'time_read'  => 'required|integer|min:1',
+            'content'    => 'required|string',
+            // Pastikan input name di form adalah 'image_path' atau sesuaikan di sini
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
 
-        $validated['slug'] = $slug;
-
         try {
-            // Handle image upload
-            $imagePath = $request->file('image_path')->store('public/blogs');
-            $validated['image_path'] = str_replace('public/', 'storage/', $imagePath);
+            // Handle Image Upload
+            if ($request->hasFile('image_path')) {
+                $file = $request->file('image_path');
+                // Simpan ke storage/app/public/blogs
+                $path = $file->store('public/blogs');
+                // Ubah path agar bisa diakses via asset() -> storage/blogs/filename.jpg
+                $validated['image_path'] = str_replace('public/', 'storage/', $path);
+            }
 
             $blog = Blogs::create($validated);
 
@@ -126,45 +117,31 @@ class BlogController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission.']);
         }
 
-        // Cari blog berdasarkan blog_id (sesuai migrasi Anda)
-        $blog = Blogs::where('blog_id', $blog_id)->firstOrFail();
-
-        // Generate Slug jika title berubah
-        $slug = $blog->slug;
-        if ($request->input('title') != $blog->title) {
-            $title = $request->input('title');
-            $baseSlug = Str::slug($title, '-');
-            $slug = $baseSlug;
-            $counter = 1;
-            while (Blogs::where('slug', $slug)->where('blog_id', '!=', $blog_id)->exists()) {
-                $slug = $baseSlug . '-' . $counter;
-                $counter++;
-            }
-        }
+        // Cari blog berdasarkan blog_id
+        $blog = Blogs::findOrFail($blog_id);
 
         $validated = $request->validate([
-            'title'     => 'required|string|max:255',
-            'category'  => 'required|string|max:100',
-            'time_read' => 'required|integer|min:1',
-            'content'   => 'required|string',
-            'image_path'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title'      => 'required|string|max:255',
+            'category'   => 'required|string|max:100',
+            'time_read'  => 'required|integer|min:1',
+            'content'    => 'required|string',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $validated['slug'] = $slug;
-
         try {
-            // Handle image update
+            // Handle Image Update
             if ($request->hasFile('image_path')) {
-                // Hapus gambar lama
-                if ($blog->image) {
-                    Storage::delete(str_replace('storage/', 'public/', $blog->image));
+                // Hapus gambar lama jika ada
+                if ($blog->image_path && Storage::exists(str_replace('storage/', 'public/', $blog->image_path))) {
+                    Storage::delete(str_replace('storage/', 'public/', $blog->image_path));
                 }
-                $imagePath = $request->file('image_path')->store('public/blogs');
-                $validated['image_path'] = str_replace('public/', 'storage/', $imagePath);
+                
+                $path = $request->file('image_path')->store('public/blogs');
+                $validated['image_path'] = str_replace('public/', 'storage/', $path);
             }
 
             $oldTitle = $blog->title;
-            $blog->update($validated); // Pastikan Model Blogs fillable-nya sudah diatur
+            $blog->update($validated);
 
             LogActivity::create([
                 'username' => $currentUser->username,
@@ -188,12 +165,16 @@ class BlogController extends Controller
         }
 
         try {
-            $blog = Blogs::where('blog_id', $blog_id)->firstOrFail();
+            $blog = Blogs::findOrFail($blog_id);
             $deletedTitle = $blog->title;
 
             // Delete image
-            if ($blog->image) {
-                Storage::delete(str_replace('storage/', 'public/', $blog->image));
+            if ($blog->image_path) {
+                // Konversi path storage/ ke public/ untuk Storage facade
+                $storagePath = str_replace('storage/', 'public/', $blog->image_path);
+                if(Storage::exists($storagePath)) {
+                    Storage::delete($storagePath);
+                }
             }
 
             $blog->delete();
@@ -220,7 +201,7 @@ class BlogController extends Controller
 
         $validated = $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:blogs,blog_id', // Pastikan nama tabel dan primary key benar
+            'ids.*' => 'exists:blogs,blog_id',
         ]);
 
         try {
@@ -235,8 +216,11 @@ class BlogController extends Controller
 
             foreach ($blogs as $blog) {
                 // Delete image
-                if ($blog->image) {
-                    Storage::delete(str_replace('storage/', 'public/', $blog->image));
+                if ($blog->image_path) {
+                    $storagePath = str_replace('storage/', 'public/', $blog->image_path);
+                    if(Storage::exists($storagePath)) {
+                        Storage::delete($storagePath);
+                    }
                 }
                 $blog->delete();
             }
