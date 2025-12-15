@@ -320,7 +320,7 @@
                             Book Now <i class="fas fa-arrow-right"></i>
                         </a>
 
-                        <a href="https://wa.me/6281217006076?text=Hi%20Septem%20Tour,%20I'm%20interested%20in%20renting%20{{ $car->name_car }}" 
+                        <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA,%20I'm%20interested%20in%20renting%20{{ $car->name_car }}" 
                            target="_blank"
                            class="w-full py-4 bg-gray-50 text-gray-700 rounded-xl font-bold border border-gray-200 flex items-center justify-center gap-2 hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all">
                             <i class="fab fa-whatsapp text-xl"></i> Chat for Info

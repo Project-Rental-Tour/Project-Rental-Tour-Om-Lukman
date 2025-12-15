@@ -254,7 +254,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281217006076?text=Hi%20Septem%20Tour!%20I'm%20reading%20your%20blogs..." 
+    <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA!%20I'm%20reading%20your%20blogs..." 
        target="_blank"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
