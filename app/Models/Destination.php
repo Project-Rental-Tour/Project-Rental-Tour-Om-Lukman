@@ -61,7 +61,7 @@ class Destination extends Model
             $pattern = '\\b' . preg_quote($tag, '/') . '\\b';
 
             $galleries = Gallery::whereRaw('LOWER(tag) REGEXP ?', [$pattern])
-                ->limit(3)
+                ->limit(4)
                 ->get();
 
             $related = $related->merge($galleries);
