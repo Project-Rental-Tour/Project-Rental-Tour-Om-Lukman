@@ -162,7 +162,7 @@
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm">WhatsApp Support</h4>
                                 <div class="flex gap-4 text-sm mt-1">
-                                    <a href="https://wa.me/6281220005276" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
+                                    <a href="https://wa.me/6281217006076" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
                                     <span class="text-gray-300">|</span>
                                     <a href="https://wa.me/6281217006076" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 1700 6076</a>
                                 </div>
@@ -232,7 +232,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281220005276?text=Hello%20Septem%20Tour!%20I%20have%20a%20question..." 
+    <a href="https://wa.me/6281217006076?text=Hello%20Septem%20Tour!%20I%20have%20a%20question..." 
        target="_blank"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>

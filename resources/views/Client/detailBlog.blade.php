@@ -2,7 +2,6 @@
 
 @section('head')
     {{-- Libraries --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -163,19 +162,6 @@
                         </div>
                     </div>
                 </article>
-
-                {{-- 
-                <div class="grid grid-cols-2 gap-6 mt-10">
-                    <a href="#" class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all group">
-                        <span class="text-xs text-gray-400 uppercase tracking-wider">Previous Post</span>
-                        <h4 class="font-serif font-bold text-gray-800 mt-1 group-hover:text-primary truncate">Exploring Bromo...</h4>
-                    </a>
-                    <a href="#" class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all group text-right">
-                        <span class="text-xs text-gray-400 uppercase tracking-wider">Next Post</span>
-                        <h4 class="font-serif font-bold text-gray-800 mt-1 group-hover:text-primary truncate">Hidden Gems in...</h4>
-                    </a>
-                </div> 
-                --}}
             </div>
 
             <div class="lg:col-span-4 space-y-8">
@@ -187,7 +173,7 @@
                         </div>
                         <div>
                             <span class="text-xs text-gray-400 uppercase tracking-widest">Written By</span>
-                            <h4 class="font-serif font-bold text-lg text-gray-900">Admin Septem Tour</h4>
+                            <h4 class="font-serif font-bold text-lg text-gray-900">Admin Going To The Java</h4>
                         </div>
                     </div>
                     <p class="text-gray-500 text-sm leading-relaxed">
@@ -198,22 +184,27 @@
                 <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-gray-100 animate-fade-up" style="animation-delay: 0.3s">
                     <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">Recent Posts</h3>
                     <div class="space-y-6">
-                        @foreach($relatedPosts as $recent)
-                        <a href="{{ route('blogs.detail', $recent->slug) }}" class="flex gap-4 group">
-                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
-                                <img src="{{ asset($recent->image) }}" 
-                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
-                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-1 block">{{ $recent->category }}</span>
-                                <h4 class="font-bold text-gray-800 text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                                    {{ $recent->title }}
-                                </h4>
-                                <span class="text-xs text-gray-400 mt-2 block">{{ $recent->created_at->format('M d, Y') }}</span>
-                            </div>
-                        </a>
-                        @endforeach
+                        @if(isset($relatedPosts) && $relatedPosts->count() > 0)
+                            @foreach($relatedPosts as $recent)
+                            {{-- Ganti parameter route ke title karena Anda menggunakan title di URL --}}
+                            <a href="{{ route('blog.detail', $recent->title) }}" class="flex gap-4 group">
+                                <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+                                    <img src="{{ asset($recent->image_path) }}" 
+                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
+                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-1 block">{{ $recent->category }}</span>
+                                    <h4 class="font-bold text-gray-800 text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                        {{ $recent->title }}
+                                    </h4>
+                                    <span class="text-xs text-gray-400 mt-2 block">{{ $recent->created_at->format('M d, Y') }}</span>
+                                </div>
+                            </a>
+                            @endforeach
+                        @else
+                            <p class="text-gray-400 text-sm">No recent posts.</p>
+                        @endif
                     </div>
                 </div>
 
@@ -233,7 +224,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour!%20I'm%20reading%20about%20{{ $blog->title }}" 
+    <a href="https://wa.me/6281217006076?text=Hi%20Septem%20Tour!%20I'm%20reading%20about%20{{ $blog->title }}" 
        target="_blank"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">

@@ -68,7 +68,7 @@
             Frequently Asked Questions
         </h1>
         <p class="text-lg text-gray-500 max-w-2xl mx-auto animate-fade-up font-light leading-relaxed" style="animation-delay: 0.2s">
-            Find answers to the most common questions about our travel packages, booking process, and what to expect on your journey with Septem Tour.
+            Find answers to the most common questions about our travel packages, booking process, and what to expect on your journey with Going To The Java.
         </p>
     </section>
 
@@ -159,7 +159,7 @@
         
         <div class="text-center mt-16 animate-fade-up" style="animation-delay: 0.8s">
             <p class="text-gray-500 mb-6">Still have questions?</p>
-            <a href="https://wa.me/6281220005276" target="_blank" 
+            <a href="https://wa.me/6281217006076" target="_blank" 
                class="inline-flex items-center px-8 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
                 <i class="fab fa-whatsapp text-xl mr-2"></i> Chat Support
             </a>

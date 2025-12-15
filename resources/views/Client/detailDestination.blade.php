@@ -332,7 +332,7 @@
                             Book Now <i class="fas fa-arrow-right"></i>
                         </a>
 
-                        <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour,%20I'm%20interested%20in%20{{ $destination->name_package }}" 
+                        <a href="https://wa.me/6281217006076?text=Hi%20Septem%20Tour,%20I'm%20interested%20in%20{{ $destination->name_package }}" 
                            target="_blank"
                            class="w-full py-4 bg-gray-50 text-gray-700 rounded-xl font-bold border border-gray-200 flex items-center justify-center gap-2 hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all">
                             <i class="fab fa-whatsapp text-xl"></i> Chat for Info
@@ -372,7 +372,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281220005276" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
+    <a href="https://wa.me/6281217006076" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat Support</span>
     </a>

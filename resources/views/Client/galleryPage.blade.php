@@ -117,12 +117,12 @@
         <div class="text-center mt-16 animate-fade-up">
             <p class="text-gray-500 text-sm mb-4">Follow us on Instagram for more visual stories</p>
             <a href="#" class="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
-                <i class="fab fa-instagram"></i> @septemtour
+                <i class="fab fa-instagram"></i> @goingtothejava
             </a>
         </div>
     </section>
 
-    <a href="https://wa.me/6281220005276?text=Hi%20Septem%20Tour..." 
+    <a href="https://wa.me/6281217006076?text=Hi%20Septem%20Tour..." 
        target="_blank"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
