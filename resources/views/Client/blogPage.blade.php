@@ -268,7 +268,7 @@
                         <p class="text-white/80 mb-8 font-light">
                             Start planning your dream trip with us today. We create custom itineraries tailored to your preferences.
                         </p>
-                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg transform hover:-translate-y-1">
+                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-4 bg-white text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg transform hover:-translate-y-1">
                             Plan My Trip
                         </a>
                     </div>

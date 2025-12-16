@@ -41,20 +41,20 @@ class UserBlogController extends Controller
         return view('Client.blogPage', compact('blogs', 'profiles', 'recentPosts'));
     }
 
-    public function detail($title)
+    public function detailBlog($title)
     {
         $profiles = Profile::find(1) ?? Profile::first();
 
         // Cari berdasarkan kolom 'title'
         // firstOrFail() akan otomatis return 404 jika judul tidak ditemukan
-        $blogs = Blogs::where('title', $title)->firstOrFail(); 
+        $blog = Blogs::where('title', $title)->firstOrFail(); 
 
         // Artikel Terkait (Kecuali artikel yang sedang dibuka)
-        $relatedPosts = Blogs::where('blog_id', '!=', $blogs->blog_id)
+        $relatedPosts = Blogs::where('blog_id', '!=', $blog->blog_id)
                              ->inRandomOrder()
                              ->take(3)
                              ->get();
 
-        return view('Client.detailBlog', compact('blogs', 'profiles', 'relatedPosts'));
+        return view('Client.detailBlog', compact('blog', 'profiles', 'relatedPosts'));
     }
 }

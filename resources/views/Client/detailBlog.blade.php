@@ -197,7 +197,7 @@
                         </div>
                         <div>
                             <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">Written By</span>
-                            <h4 class="font-serif font-bold text-lg text-primary">Admin Team</h4>
+                            <h4 class="font-serif font-bold text-lg text-primary">Going To The Java Team</h4>
                         </div>
                     </div>
                     <p class="text-gray-500 text-sm leading-relaxed">
@@ -241,7 +241,7 @@
                         </div>
                         <h3 class="font-serif font-bold text-2xl mb-2">Inspired to Travel?</h3>
                         <p class="text-white/80 text-sm mb-6">Let us help you plan your perfect trip to these amazing destinations.</p>
-                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-3 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg">
+                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-3 bg-white text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg">
                             Plan My Trip
                         </a>
                     </div>
@@ -252,12 +252,14 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA!%20I'm%20reading%20about%20{{ $blog->title }}" 
-       target="_blank"
-       id="whatsapp-float"
-       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
+    <a 
+        href="https://wa.me/6281217006076?text=Hello%20GOING%20TO%20THE%20JAVA!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
+        target="_blank"
+        id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+    >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat With Us</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
     </a>
 
     @include('components.client.footer')

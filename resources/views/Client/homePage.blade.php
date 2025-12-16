@@ -491,32 +491,40 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @forelse($blogs ?? [] as $blog)
+                {{-- Mengambil hanya 3 artikel terbaru --}}
+                @forelse($blogs->take(3) as $blog)
                 <div class="group cursor-pointer animate-fade-up">
                     <div class="overflow-hidden rounded-[2rem] h-64 mb-6 relative shadow-md">
-                        <img src="{{ asset($blog->image) }}" 
-                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800';"
-                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-primary tracking-wide shadow-sm">
+                        {{-- Pastikan nama kolom gambar sesuai database (image_path atau image) --}}
+                        <img src="{{ asset($blog->image_path ?? $blog->image) }}" 
+                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800';"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-primary tracking-wide shadow-sm uppercase">
                             {{ $blog->category ?? 'Travel' }}
                         </div>
                     </div>
+                    
                     <div class="flex items-center text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 gap-3">
                         <span>{{ $blog->created_at->format('M d, Y') }}</span>
                         <span class="w-1 h-1 bg-secondary rounded-full"></span>
-                        <span>{{ $blog->read_time ?? '5' }} MIN READ</span>
+                        <span>{{ $blog->time_read ?? '5' }} MIN READ</span>
                     </div>
+                    
                     <h4 class="text-xl font-serif font-bold text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
-                        {{ $blog->title }}
+                        <a href="{{ route('blogs.detail', $blog->title) }}">{{ $blog->title }}</a>
                     </h4>
+                    
                     <p class="text-gray-500 text-sm line-clamp-3 leading-relaxed mb-4">
-                        {{ Str::limit($blog->excerpt, 100) }}
+                        {{ Str::limit(strip_tags($blog->content), 100) }}
                     </p>
-                    <a href="{{ route('blog.detail', $blog->slug) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-1 transition-transform border-b-2 border-primary/20 pb-1">
+                    
+                    <a href="{{ route('blogs.detail', $blog->title) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-1 transition-transform border-b-2 border-primary/20 pb-1 group-hover:border-secondary group-hover:text-secondary">
                         Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i>
                     </a>
                 </div>
                 @empty
+                {{-- Dummy Data jika tidak ada blog (Tetap ditampilkan agar layout tidak kosong saat development) --}}
                 <div class="group cursor-pointer animate-fade-up">
                     <div class="overflow-hidden rounded-[2rem] h-64 mb-6 relative shadow-md">
                         <img src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
