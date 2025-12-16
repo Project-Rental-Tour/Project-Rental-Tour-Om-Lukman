@@ -323,7 +323,7 @@
                         <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
                             IDR {{ number_format($destination->price, 0, ',', '.') }}
                         </div>
-                        <p class="text-sm text-gray-500 mt-1">per person</p>
+                        {{-- <p class="text-sm text-gray-500 mt-1">per person</p> --}}
                     </div>
 
                     <div class="space-y-4">
