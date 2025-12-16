@@ -1,4 +1,4 @@
-<div class="relative w-full max-w-4xl px-4 slide-down" x-data="{ step: 1 }">
+<div class="relative w-full max-w-4xl px-4 slide-down overflow-y-auto" x-data="{ step: 1 }">
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
