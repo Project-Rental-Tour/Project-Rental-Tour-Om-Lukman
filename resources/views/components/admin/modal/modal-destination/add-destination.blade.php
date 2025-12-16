@@ -191,8 +191,8 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         @php
                             $photoFields = [
-                                'destination_photo' => 'Photo 1 (Main)',
-                                'destination_photo_2' => 'Photo 2',
+                                'destination_photo' => 'Photo 1 (Main) Landscape',
+                                'destination_photo_2' => 'Photo 2 Potrait',
                                 'destination_photo_3' => 'Photo 3',
                                 'destination_photo_4' => 'Photo 4',
                             ];
