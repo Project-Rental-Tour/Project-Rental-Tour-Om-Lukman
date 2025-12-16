@@ -20,6 +20,7 @@ class Testimonial extends Model
         'location',
         'content',
         'rating',
+        'image', // Kolom baru ditambahkan
     ];
 
     public $timestamps = true;

@@ -5,7 +5,7 @@
                 <h3 class="text-xl font-semibold text-gray-800">Testimonial Details</h3>
                 <p class="text-sm text-gray-500 mt-1">Complete testimonial information</p>
             </div>
-            <button type="button" class="text-gray-400 hover:text-gray-500">
+            <button type="button" class="text-gray-400 hover:text-gray-500 close-detail-modal-btn">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -13,17 +13,15 @@
         </div>
 
         <div class="p-6 space-y-6">
-            <!-- Name -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Full Name</label>
                 </div>
                 <div class="md:col-span-2">
-                    <p class="text-gray-900 font-medium">{{ $testimoni->name }}</p>
+                    <p class="text-gray-900 font-medium">{{ $testimoni->name ?? 'N/A' }}</p>
                 </div>
             </div>
 
-            <!-- Role -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Role / Profession</label>
@@ -33,17 +31,15 @@
                 </div>
             </div>
 
-            <!-- Location -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Location</label>
                 </div>
                 <div class="md:col-span-2">
-                    <p class="text-gray-900">{{ $testimoni->location }}</p>
+                    <p class="text-gray-900">{{ $testimoni->location ?? 'N/A' }}</p>
                 </div>
             </div>
 
-            <!-- Rating -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Rating</label>
@@ -59,24 +55,37 @@
                                 @endif
                             @endfor
                         </div>
-                        <span class="text-sm text-gray-600">({{ $testimoni->rating }}/5)</span>
+                        <span class="text-sm text-gray-600">({{ $testimoni->rating ?? 0 }}/5)</span>
                     </div>
                 </div>
             </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-medium text-gray-700">Image</label>
+                </div>
+                <div class="md:col-span-2">
+                    @if ($testimoni->image)
+                        <img src="{{ Storage::url($testimoni->image) }}" 
+                             alt="Testimonial Image" 
+                             class="w-32 h-32 object-cover rounded-lg border border-gray-200 shadow-sm">
+                    @else
+                        <p class="text-sm text-gray-500">No image uploaded.</p>
+                    @endif
+                </div>
+            </div>
 
-            <!-- Content -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Testimonial Content</label>
                 </div>
                 <div class="md:col-span-2">
                     <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $testimoni->content }}</p>
+                        <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $testimoni->content ?? 'No content provided.' }}</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Additional Info -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Additional Information</label>
@@ -93,7 +102,7 @@
 
         <div class="flex justify-end pt-4 space-x-3 border-t border-gray-100 p-6">
             <button type="button"
-                class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition close-detail-modal-btn"
                 >
                 Close
             </button>

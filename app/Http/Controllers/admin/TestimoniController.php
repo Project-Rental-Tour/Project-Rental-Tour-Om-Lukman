@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use App\Models\Testimonial;
@@ -28,17 +29,16 @@ class TestimoniController extends Controller
 
         $query = Testimonial::query();
 
-        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where('name', 'like', "%{$search}%")
                 ->orWhere('role', 'like', "%{$search}%")
                 ->orWhere('location', 'like', "%{$search}%")
                 ->orWhere('content', 'like', "%{$search}%")
-                ->orWhere('rating', 'like', "%{$search}%");
+                ->orWhere('rating', 'like', "%{$search}%")
+                ->orWhere('image', 'like', "%{$search}%");
         }
 
-        // Sort
         $sort = $request->get('sort', 'newest');
         switch ($sort) {
             case 'oldest':
@@ -88,25 +88,32 @@ class TestimoniController extends Controller
         }
 
         $validatedData = Validator::make($request->all(), [
-            'name'      => 'required|string|max:255',
-            'role'      => 'required|string|max:255',
-            'location'  => 'required|string|max:255',
-            'content'   => 'required|string',
-            'rating'    => 'required|integer|between:1,5',
+            'name'      => 'nullable|string|max:255',
+            'role'      => 'nullable|string|max:255',
+            'location'  => 'nullable|string|max:255',
+            'content'   => 'nullable|string',
+            'rating'    => 'nullable|integer|between:1,5',
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ])->validate();
 
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('testimonial-images', 'public');
+        }
+
         $testimonial = Testimonial::create([
-            'name'       => $validatedData['name'],
-            'role'       => $validatedData['role'],
-            'location'   => $validatedData['location'],
-            'content'    => $validatedData['content'],
-            'rating'     => $validatedData['rating'],
+            'name'       => $validatedData['name'] ?? null,
+            'role'       => $validatedData['role'] ?? null,
+            'location'   => $validatedData['location'] ?? null,
+            'content'    => $validatedData['content'] ?? null,
+            'rating'     => $validatedData['rating'] ?? 5,
+            'image'      => $imagePath,
             'user_id'    => Auth::id(),
         ]);
 
         LogActivity::create([
             'username' => $currentUser->username,
-            'action' => 'Added testimonial: "' . $testimonial->content . '" by ' . $testimonial->name,
+            'action' => 'Added testimonial: "' . ($testimonial->content ? Str::limit($testimonial->content, 30) : 'No content') . '" by ' . ($testimonial->name ?? 'Anonim'),
         ]);
 
         return redirect()->route('manage-testimonials.index')->with('toast', [
@@ -128,23 +135,37 @@ class TestimoniController extends Controller
         $testimonial = Testimonial::findOrFail($testimonial_id);
 
         $validatedData = Validator::make($request->all(), [
-            'name'      => 'required|string|max:255',
-            'role'      => 'required|string|max:255',
-            'location'  => 'required|string|max:255',
-            'content'   => 'required|string',
-            'rating'    => 'required|integer|between:1,5',
+            'name'      => 'nullable|string|max:255',
+            'role'      => 'nullable|string|max:255',
+            'location'  => 'nullable|string|max:255',
+            'content'   => 'nullable|string',
+            'rating'    => 'nullable|integer|between:1,5',
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'remove_image' => 'nullable|boolean',
         ])->validate();
 
-        // Simpan nama lama untuk log
         $oldName = $testimonial->name;
-        $oldContent = Str::limit($testimonial->content, 50);
+        $oldContent = Str::limit($testimonial->content ?? 'No content', 50);
+        $imagePath = $testimonial->image;
 
-        // Update data
-        $testimonial->name       = $validatedData['name'];
-        $testimonial->role       = $validatedData['role'];
-        $testimonial->location   = $validatedData['location'];
-        $testimonial->content    = $validatedData['content'];
-        $testimonial->rating     = $validatedData['rating'];
+        if ($request->has('remove_image') && $request->remove_image && $testimonial->image) {
+            Storage::disk('public')->delete($testimonial->image);
+            $imagePath = null;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($testimonial->image) {
+                Storage::disk('public')->delete($testimonial->image);
+            }
+            $imagePath = $request->file('image')->store('testimonial-images', 'public');
+        }
+
+        $testimonial->name       = $validatedData['name'] ?? null;
+        $testimonial->role       = $validatedData['role'] ?? null;
+        $testimonial->location   = $validatedData['location'] ?? null;
+        $testimonial->content    = $validatedData['content'] ?? null;
+        $testimonial->rating     = $validatedData['rating'] ?? 5;
+        $testimonial->image      = $imagePath;
         $testimonial->save();
 
         LogActivity::create([
@@ -170,7 +191,11 @@ class TestimoniController extends Controller
 
         $testimonial = Testimonial::findOrFail($testimonial_id);
         $deletedName = $testimonial->name;
-        $deletedContent = Str::limit($testimonial->content, 30);
+        $deletedContent = Str::limit($testimonial->content ?? 'No content', 30);
+
+        if ($testimonial->image) {
+            Storage::disk('public')->delete($testimonial->image);
+        }
 
         $testimonial->delete();
 
@@ -216,6 +241,12 @@ class TestimoniController extends Controller
 
             $names = $testimonials->pluck('name')->join(', ');
 
+            foreach ($testimonials as $testimonial) {
+                if ($testimonial->image) {
+                    Storage::disk('public')->delete($testimonial->image);
+                }
+            }
+            
             Testimonial::whereIn('testimonial_id', $request->ids)->delete();
 
             LogActivity::create([

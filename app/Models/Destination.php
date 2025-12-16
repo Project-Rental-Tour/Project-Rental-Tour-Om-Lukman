@@ -18,7 +18,11 @@ class Destination extends Model
         'place',
         'price',
         'discount_price',
+        'price_2', // Kolom harga baru
         'destination_photo',
+        'destination_photo_2', // Foto baru
+        'destination_photo_3',
+        'destination_photo_4',
         'time',
         'category',
         'level',
@@ -30,6 +34,7 @@ class Destination extends Model
         'consumption',
         'include',
         'exclude',
+        'wna_wni_policy', // Kolom kebijakan WNA/WNI
         'itinerary',
         'tag',
         'note',
@@ -38,12 +43,16 @@ class Destination extends Model
     protected $casts = [
         'pickup_points' => 'string',
         'dropoff_points' => 'string',
-        'tag' => 'string', // Pastikan tag disimpan sebagai string
+        'tag' => 'string',
     ];
 
     public function relatedGalleries()
     {
         $tags = $this->tag;
+        
+        // Asumsi: Model Gallery sudah di-import atau berada di namespace yang sama
+        // Pastikan Anda mengimport Model Gallery jika berada di namespace yang berbeda: use App\Models\Gallery; 
+
         if (!$tags || !is_string($tags)) {
             return collect();
         }
@@ -66,16 +75,13 @@ class Destination extends Model
 
             $related = $related->merge($galleries);
 
-            // kalau sudah 9, berhenti biar tidak kebanyakan
             if ($related->count() >= 9) {
                 break;
             }
         }
 
-
         return $related->unique('gallery_id')->take(9)->values();
     }
-
 
     public $timestamps = true;
 }

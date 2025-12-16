@@ -1,6 +1,5 @@
 <div class="relative w-full max-w-4xl px-4 slide-down" x-data="{ step: 1 }">
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- Header -->
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
                 <h3 class="text-xl font-semibold text-gray-800">Add Destination</h3>
@@ -19,7 +18,6 @@
                   method="POST" class="space-y-8">
                 @csrf
 
-                <!-- Progress indicator -->
                 <div class="flex justify-center mb-8">
                     <div class="flex items-center space-x-4">
                         <template x-for="i in 6" :key="i">
@@ -36,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- STEP 1: Basic Info -->
                 <div x-show="step === 1" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Name Package</label>
@@ -61,13 +58,19 @@
                     </div>
                 </div>
 
-                <!-- STEP 2: Pricing & Time -->
                 <div x-show="step === 2" class="space-y-6">
-                    <div class="grid gap-6 md:grid-cols-2">
+                    <div class="grid gap-6 md:grid-cols-3">
                         <div>
-                            <label class="block mb-2 text-sm font-medium">Price</label>
+                            <label class="block mb-2 text-sm font-medium">Price (WNI/Normal)</label>
                             <input type="text" name="price" placeholder="Rp 1.500.000"
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            <p class="text-xs text-gray-400 mt-1">Price for Indonesian citizens/standard price.</p>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Price 2 (WNA/Optional)</label>
+                            <input type="text" name="price_2" placeholder="Rp 2.000.000"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            <p class="text-xs text-gray-400 mt-1">Price for Foreigners (if applicable).</p>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-medium">Duration</label>
@@ -76,12 +79,22 @@
                         </div>
                     </div>
                     <div>
+                        <label class="block mb-2 text-sm font-medium">WNA/WNI Policy</label>
+                        <select name="wna_wni_policy"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Select Policy --</option>
+                            <option value="WNI">WNI (Warga Negara Indonesia)</option>
+                            <option value="WNA">WNA (Warga Negara Asing)</option>
+                            <option value="All">All (WNI & WNA)</option>
+                        </select>
+                        <p class="text-xs text-gray-400 mt-1">Determines which pricing applies or if both are accepted.</p>
+                    </div>
+                    <div>
                         <label class="block mb-2 text-sm font-medium">Description</label>
                         <textarea name="description" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                 </div>
 
-                <!-- STEP 3: Location & Transport -->
                 <div x-show="step === 3" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Pickup Points</label>
@@ -98,18 +111,22 @@
                         <input type="text" name="transportation" placeholder="Bus / Car / Boat"
                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Accommodation</label>
+                        <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Consumption (Meals)</label>
+                        <input type="text" name="consumption" placeholder="Breakfast, Lunch, Dinner"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                    </div>
                 </div>
 
-                <!-- STEP 4: Facilities & Tags -->
                 <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
                         <input type="text" name="activities" placeholder="Snorkeling, Trekking, Diving"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Accommodation</label>
-                        <input type="text" name="accommodation" placeholder="4-Star Hotel / Villa"
                             class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div class="md:col-span-2">
@@ -137,14 +154,12 @@
                                     }
                                 "
                             >
-                            <!-- Input hidden untuk menyimpan semua tag sebagai string -->
                             <input type="hidden" name="tag" id="tag-hidden-input" value="">
                         </div>
                         <p class="text-xs text-gray-400 mt-1">Press Enter to add a tag. E.g.: Bali, Beach, Romantic</p>
                     </div>
                 </div>
 
-                <!-- STEP 5: Include, Exclude & Note -->
                 <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Include</label>
@@ -165,44 +180,59 @@
                     </div>
                 </div>
 
-                <!-- STEP 6: Itinerary & Photo -->
                 <div x-show="step === 6" class="grid gap-6">
-                <div>
-                    <label class="block mb-2 text-sm font-medium">Itinerary</label>
-                    <input id="itinerary-add" type="hidden" name="itinerary" class="overflow-y-auto">
-                    <trix-editor input="itinerary-add" class="border border-gray-300 rounded-lg bg-white overflow-y-auto"
-                                style="max-height: 200px;"></trix-editor>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-medium">Destination Photo</label>
-                    <input 
-                    type="file" 
-                    name="destination_photo" 
-                    accept="image/*"
-                    data-preview="add-preview-photo"
-                    class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                    >
-                    <p class="text-xs text-gray-400 mt-1">Upload a representative image (jpg, png, max 2MB)</p>
-
-                    <div class="mt-4 flex flex-col items-center">
-                    <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
-                        <img 
-                        id="add-preview-photo" 
-                        src="" 
-                        alt="Preview"
-                        class="w-full h-24 object-cover rounded-lg hidden"
-                        >
-                        <!-- ✅ Perbaiki ID placeholder agar sesuai pola: placeholder-{previewId} -->
-                        <span 
-                        id="placeholder-add-preview-photo" 
-                        class="text-gray-400 text-sm"
-                        >Image Preview</span>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Itinerary</label>
+                        <input id="itinerary-add" type="hidden" name="itinerary" class="overflow-y-auto">
+                        <trix-editor input="itinerary-add" class="border border-gray-300 rounded-lg bg-white overflow-y-auto"
+                                    style="max-height: 200px;"></trix-editor>
                     </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        @php
+                            $photoFields = [
+                                'destination_photo' => 'Photo 1 (Main)',
+                                'destination_photo_2' => 'Photo 2',
+                                'destination_photo_3' => 'Photo 3',
+                                'destination_photo_4' => 'Photo 4',
+                            ];
+                        @endphp
+                        
+                        @foreach ($photoFields as $field => $label)
+                            <div>
+                                <label class="block mb-2 text-sm font-medium">{{ $label }}</label>
+                                <input 
+                                    type="file" 
+                                    name="{{ $field }}" 
+                                    accept="image/*"
+                                    data-preview="add-preview-{{ $field }}"
+                                    class="w-full border rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+                                    onchange="handleImageChange(event, 'add-preview-{{ $field }}')"
+                                    {{ $field == 'destination_photo' ? 'required' : '' }}>
+                                
+                                <p class="text-xs text-gray-400 mt-1">Upload image (jpg, png, max 2MB). Main photo is required.</p>
+
+                                <div class="mt-4 flex flex-col items-center">
+                                    <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
+                                        <img 
+                                            id="add-preview-{{ $field }}" 
+                                            src="" 
+                                            alt="Preview"
+                                            class="w-full h-24 object-cover rounded-lg hidden"
+                                        >
+                                        <span 
+                                            id="placeholder-add-preview-{{ $field }}" 
+                                            class="text-gray-400 text-sm"
+                                        >
+                                            Image Preview
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-                </div>
 
-                <!-- Navigation buttons -->
                 <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
                     <button type="button" @click="step = Math.max(step - 1, 1)" x-show="step > 1"
                             class="px-6 py-3 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Previous</button>
@@ -221,3 +251,55 @@
         </div>
     </div>
 </div>
+
+<script>
+    // --- Tag Management Functions (Sesuai dengan modal Add) ---
+
+    // Fungsi untuk mendapatkan semua tag dari container dan mengupdate hidden input
+    window.updateTagInput = function() {
+        const container = document.getElementById('tags-container-add');
+        const tags = Array.from(container.children)
+            .map(span => span.textContent.trim().replace('×', '').trim())
+            .filter(tag => tag !== "");
+
+        const hiddenInput = document.getElementById('tag-hidden-input');
+        if (hiddenInput) {
+            hiddenInput.value = tags.join(', ');
+        }
+    }
+
+    // Fungsi untuk menghapus tag
+    window.removeTag = function(button) {
+        const span = button.parentNode;
+        const container = span.parentNode;
+        container.removeChild(span);
+
+        // Update hidden input setelah penghapusan
+        updateTagInput();
+    }
+
+
+    // --- Image Preview Functions ---
+    
+    // Menggunakan fungsi yang dimodifikasi agar kompatibel dengan Add (tanpa remove checkbox)
+    window.handleImageChange = function(event, previewId) {
+        const file = event.target.files[0];
+        const preview = document.getElementById(previewId);
+        const placeholder = document.getElementById('placeholder-' + previewId);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Jika input dikosongkan (cancel selection), sembunyikan preview dan tampilkan placeholder
+            preview.src = '';
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+        }
+    }
+</script>

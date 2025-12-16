@@ -102,7 +102,7 @@
 
     <section class="relative bg-primary h-[500px] flex items-center" id="jumbotron">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+            <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                  alt="{{ $destination->name_package }}"
                  class="w-full h-full object-cover object-center opacity-50">
@@ -155,7 +155,7 @@
             <div class="lg:col-span-2 space-y-12">
                 
                 <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] group animate-fade-up">
-                    <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+                    <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
                          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                          alt="Main View"
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
