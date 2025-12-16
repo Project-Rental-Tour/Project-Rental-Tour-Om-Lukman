@@ -5,25 +5,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Green Theme Configuration --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #0a3d26;   /* Deep Forest Green */
-            --color-primary-light: #145a3a;
-            --color-secondary: #cfa372; /* Luxury Gold */
-            --color-secondary-light: #e0c09a;
-            --color-surface: #fdfbf8;   /* Off-White/Paper */
-            --color-text: #3d3d3d;
-            --color-text-light: #7a7a7a;
+            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary-light: #004080;
+            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary-light: #90e0ef;
+            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
-
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
             overflow-x: hidden;
@@ -43,8 +42,8 @@
 
         /* Typography */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.01em;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
 
         /* Utilities */
@@ -65,11 +64,11 @@
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
             transition: 0.5s;
         }
         .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
         /* Animations */
         .animate-fade-up {
@@ -83,15 +82,25 @@
             background-color: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
+            box-shadow: 0 4px 6px -1px rgba(0, 51, 102, 0.2);
         }
         .tab-btn[aria-selected="false"] {
             background-color: transparent;
-            color: var(--color-text);
+            color: var(--color-text-light);
             border-color: #e2e8f0;
         }
         .tab-btn[aria-selected="false"]:hover {
             background-color: #f1f5f9;
             color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
     </style>
 @endsection
@@ -99,22 +108,25 @@
 @section('content')
     @include('components.client.navbar')
 
+    {{-- HERO SECTION --}}
     <section class="relative bg-primary h-[500px] flex items-center" id="jumbotron">
         <div class="absolute inset-0 z-0">
             <img loading="lazy" src="{{ asset($car->image_car_1) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=1920';"
                  alt="{{ $car->name_car }}"
-                 class="w-full h-full object-cover object-center opacity-50">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                 class="w-full h-full object-cover object-center animate-float-slow"
+                 style="opacity: 0.6;">
+            {{-- Blue Gradient Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/30 to-transparent"></div>
         </div>
 
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-4xl animate-fade-up">
-                <span class="bg-secondary text-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block">
+                <span class="bg-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block shadow-lg shadow-secondary/30">
                     {{ ucfirst($car->car_type ?? 'General') }} Car
                 </span>
                 
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg drop-shadow-md">
                     {{ $car->name_car }}
                 </h1>
                 
@@ -129,7 +141,7 @@
                 </div>
 
                 <div class="mt-8 flex items-center gap-4">
-                    <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20">
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
                         <p class="text-xs text-white/70 uppercase font-bold tracking-wider mb-1">Daily Rate</p>
                         <p class="text-2xl font-bold text-white">Rp{{ number_format($car->price, 0, ',', '.') }}</p>
                     </div>
@@ -142,7 +154,8 @@
         </div>
     </section>
 
-    <nav class="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
+    {{-- BREADCRUMBS --}}
+    <nav class="bg-white/80 backdrop-blur-md border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-500">
                 <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">Home</a></li>
@@ -154,16 +167,20 @@
         </div>
     </nav>
 
-    <section class="container mx-auto px-6 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    {{-- MAIN CONTENT --}}
+    <section class="container mx-auto px-6 py-12 relative">
+        {{-- Background Blobs --}}
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
             
+            {{-- LEFT COLUMN --}}
             <div class="lg:col-span-2 space-y-12">
                 
-                <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 animate-fade-up">
-                    <h3 class="text-2xl font-serif font-bold text-primary mb-6">Gallery</h3>
-                    
-                    <div id="default-carousel" class="relative w-full h-[400px] rounded-2xl overflow-hidden group" data-carousel="static">
-                        <div class="relative h-full overflow-hidden rounded-2xl">
+                {{-- Carousel Gallery --}}
+                <div class="bg-white p-2 rounded-[2.5rem] shadow-xl border border-gray-100 animate-fade-up">
+                    <div id="default-carousel" class="relative w-full h-[400px] rounded-[2rem] overflow-hidden group" data-carousel="static">
+                        <div class="relative h-full overflow-hidden rounded-[2rem]">
                             @if($car->image_car_1)
                                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                                     <img src="{{ asset($car->image_car_1) }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
@@ -181,17 +198,18 @@
                             @endif
                         </div>
 
+                        {{-- Carousel Arrows --}}
                         <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all">
+                                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                                 </svg>
                                 <span class="sr-only">Previous</span>
                             </span>
                         </button>
                         <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all">
+                                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                 </svg>
                                 <span class="sr-only">Next</span>
@@ -200,7 +218,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
+                {{-- Information Tabs --}}
+                <div class="glass-card rounded-[2rem] shadow-xl shadow-blue-900/5 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
                             @foreach(['details' => 'Overview', 'specifications' => 'Specs', 'features' => 'Features', 'notes' => 'Important Notes'] as $key => $label)
@@ -221,22 +240,24 @@
                     </div>
 
                     <div id="myTabContent" class="p-8">
+                        {{-- Overview --}}
                         <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-4">Car Overview</h3>
                             <p class="text-gray-600 leading-relaxed mb-8">{{ $car->description }}</p>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
                                     <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Rental Type</h4>
                                     <p class="font-semibold text-gray-800">{{ $car->rental_type ? 'With Driver' : 'Self Drive' }}</p>
                                 </div>
-                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
                                     <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Capacity</h4>
                                     <p class="font-semibold text-gray-800">{{ $car->capacity }} Passengers</p>
                                 </div>
                             </div>
                         </div>
 
+                        {{-- Specs --}}
                         <div class="hidden animate-fade-in" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-6">Technical Specifications</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -259,6 +280,7 @@
                             </div>
                         </div>
 
+                        {{-- Features --}}
                         <div class="hidden animate-fade-in" id="features" role="tabpanel" aria-labelledby="features-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-6">Features & Amenities</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -281,14 +303,15 @@
                                     <h4 class="font-bold text-blue-700 mb-4 flex items-center gap-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
                                         <i class="fas fa-plus text-blue-600"></i> Additional Info
                                     </h4>
-                                    <p class="text-gray-500 text-sm">Contact us for specific feature requests.</p>
+                                    <p class="text-gray-500 text-sm">Contact us for specific feature requests like child seats or roof racks.</p>
                                 </div>
                             </div>
                         </div>
 
+                        {{-- Notes --}}
                         <div class="hidden animate-fade-in" id="notes" role="tabpanel" aria-labelledby="notes-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-6">Important Notes</h3>
-                            <div class="bg-yellow-50 border border-yellow-100 p-6 rounded-2xl">
+                            <div class="bg-blue-50 border border-blue-100 p-6 rounded-2xl">
                                 <ul class="space-y-3">
                                     @foreach(explode("\n", $car->notes) as $line)
                                         @if(trim($line))
@@ -305,8 +328,9 @@
                 </div>
             </div>
 
+            {{-- RIGHT COLUMN (Sticky Booking Card) --}}
             <div class="lg:col-span-1">
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100 sticky top-28 animate-fade-up" style="animation-delay: 0.3s">
+                <div class="glass-card p-8 rounded-[2.5rem] shadow-2xl sticky top-28 animate-fade-up border border-white/60" style="animation-delay: 0.3s">
                     <div class="text-center mb-8">
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Daily Rate</p>
                         <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
@@ -316,28 +340,28 @@
 
                     <div class="space-y-4">
                         <a href="{{ route('booking-car.form', $car->slug) }}"
-                            class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2">
-                            Book Now <i class="fas fa-arrow-right"></i>
+                            class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 group">
+                            Book Now <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
 
                         <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA,%20I'm%20interested%20in%20renting%20{{ $car->name_car }}" 
                            target="_blank"
-                           class="w-full py-4 bg-gray-50 text-gray-700 rounded-xl font-bold border border-gray-200 flex items-center justify-center gap-2 hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all">
+                           class="w-full py-4 bg-white text-primary rounded-xl font-bold border border-primary/20 flex items-center justify-center gap-2 hover:bg-primary/5 transition-all">
                             <i class="fab fa-whatsapp text-xl"></i> Chat for Info
                         </a>
                     </div>
 
                     <div class="mt-8 pt-8 border-t border-gray-100 space-y-3">
                         <div class="flex items-center gap-3 text-sm text-gray-600">
-                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
                             <span>Instant Confirmation</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
-                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
                             <span>Well Maintained</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
-                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
                             <span>24/7 Roadside Assist</span>
                         </div>
                     </div>
@@ -345,7 +369,8 @@
             </div>
         </div>
 
-        <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-gray-100 mt-12 animate-fade-up" style="animation-delay: 0.4s">
+        {{-- FAQ Section --}}
+        <div class="glass-card p-8 rounded-[2rem] shadow-lg border border-white/60 mt-12 animate-fade-up relative z-10" style="animation-delay: 0.4s">
             <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">Rental FAQ</h3>
             <div class="space-y-4 max-w-3xl mx-auto" id="accordion-open" data-accordion="open">
                 @foreach([
@@ -354,9 +379,9 @@
                     'Cancellation Policy?' => 'Free cancellation up to 48 hours before pickup.',
                     'Emergency Contact?' => 'Contact our 24/7 hotline provided in your booking confirmation.'
                 ] as $q => $a)
-                <div class="border border-gray-200 rounded-xl overflow-hidden" data-accordion-item>
+                <div class="border border-white/50 bg-white/50 rounded-xl overflow-hidden" data-accordion-item>
                     <h2 id="accordion-heading-{{ $loop->index }}">
-                        <button type="button" class="flex items-center justify-between w-full p-5 text-left font-bold text-gray-800 bg-gray-50 hover:bg-gray-100 transition-colors focus:outline-none" data-accordion-target="#accordion-body-{{ $loop->index }}" aria-expanded="false" aria-controls="accordion-body-{{ $loop->index }}">
+                        <button type="button" class="flex items-center justify-between w-full p-5 text-left font-bold text-gray-800 bg-white/50 hover:bg-primary/5 transition-colors focus:outline-none" data-accordion-target="#accordion-body-{{ $loop->index }}" aria-expanded="false" aria-controls="accordion-body-{{ $loop->index }}">
                             <span>{{ $q }}</span>
                             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-gray-500 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
@@ -373,7 +398,8 @@
             </div>
         </div>
 
-        <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up">
+        {{-- CTA Banner --}}
+        <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up z-10">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="relative z-10 mb-6 md:mb-0">
                 <h3 class="text-3xl font-bold text-white font-serif mb-2">Ready to hit the road?</h3>
@@ -388,6 +414,7 @@
         </div>
     </section>
 
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a href="https://wa.me/6281217006076" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat Support</span>

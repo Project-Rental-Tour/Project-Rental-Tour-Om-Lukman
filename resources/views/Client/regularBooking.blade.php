@@ -5,25 +5,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Green Theme Configuration --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #0a3d26;   /* Deep Forest Green */
-            --color-primary-light: #145a3a;
-            --color-secondary: #cfa372; /* Luxury Gold */
-            --color-secondary-light: #e0c09a;
-            --color-surface: #fdfbf8;   /* Off-White/Paper */
-            --color-text: #3d3d3d;
-            --color-text-light: #7a7a7a;
+            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary-light: #004080;
+            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary-light: #90e0ef;
+            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
             overflow-x: hidden;
@@ -43,8 +44,8 @@
 
         /* --- Typography --- */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.01em;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
         
         .text-balance { text-wrap: balance; }
@@ -57,10 +58,10 @@
 
         /* --- Components --- */
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
 
         .btn-premium {
@@ -74,11 +75,11 @@
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
             transition: 0.5s;
         }
         .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
         /* --- Animations --- */
         .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
@@ -96,8 +97,8 @@
         /* Form Styling */
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(10, 61, 38, 0.1);
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
         }
     </style>
 @endsection
@@ -105,21 +106,24 @@
 @section('content')
     @include('components.client.navbar')
 
+    {{-- JUMBOTRON --}}
     <section class="relative bg-primary text-white h-80 overflow-hidden" id="jumbotron">
         <div class="absolute inset-0 z-0">
             <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                  alt="{{ $destination->name_package }}"
-                 class="w-full h-full object-cover object-center opacity-40 animate-float-slow">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                 class="w-full h-full object-cover object-center animate-float-slow"
+                 style="opacity: 0.5;">
+            {{-- Blue Gradient --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
         <div class="absolute inset-0 flex items-center justify-center pt-10">
             <div class="container mx-auto px-6 text-center animate-fade-up">
-                <span class="bg-secondary text-primary text-xs px-3 py-1 rounded-full mb-4 inline-block font-bold uppercase tracking-wider">
+                <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full mb-4 inline-block font-bold uppercase tracking-wider shadow-lg shadow-secondary/30">
                     {{ ucfirst($destination->category) }} Trip
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif text-shadow-lg">{{ $destination->name_package }}</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif text-shadow-lg drop-shadow-md">{{ $destination->name_package }}</h1>
                 <p class="text-lg text-white/90 font-light flex items-center justify-center gap-2">
                     <i class="fas fa-map-marker-alt text-secondary"></i> {{ $destination->place }} 
                     <span class="mx-2">•</span> 
@@ -129,7 +133,8 @@
         </div>
     </section>
 
-    <nav class="bg-white py-4 border-b border-gray-100 shadow-sm sticky top-16 z-30">
+    {{-- BREADCRUMBS --}}
+    <nav class="bg-white/80 backdrop-blur-md py-4 border-b border-gray-100 shadow-sm sticky top-16 z-30">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-500 font-medium">
                 <li><a href="{{route('index')}}" class="hover:text-primary transition-colors">Home</a></li>
@@ -141,10 +146,15 @@
         </div>
     </nav>
 
-    <section class="container mx-auto px-6 py-16">
-        <div class="max-w-4xl mx-auto bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden animate-fade-up">
+    {{-- BOOKING FORM --}}
+    <section class="container mx-auto px-6 py-16 relative">
+        {{-- Background Blobs --}}
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto glass-card rounded-[2rem] shadow-2xl overflow-hidden animate-fade-up relative z-10">
             
-            <div class="bg-gray-50/80 px-8 py-8 border-b border-gray-100 text-center">
+            <div class="bg-gray-50/50 px-8 py-8 border-b border-gray-100 text-center">
                 <h2 class="text-3xl font-bold text-primary font-serif">Complete Your Booking</h2>
                 <p class="text-gray-500 mt-2 font-light">Please fill in your details to secure your spot.</p>
             </div>
@@ -154,6 +164,7 @@
 
                 <input type="hidden" name="destination_id" value="{{ $destination->destination_id }}">
 
+                {{-- Product Summary Card --}}
                 <div class="bg-primary/5 p-6 rounded-2xl border border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 rounded-xl overflow-hidden shadow-md">
@@ -176,7 +187,7 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">First Name</label>
                         <input type="text" name="first_name" required
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50 transition-colors"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="John" autocomplete="given-name">
                         @error('first_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -186,7 +197,7 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Last Name</label>
                         <input type="text" name="last_name" required
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50 transition-colors"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="Doe" autocomplete="family-name">
                         @error('last_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -197,7 +208,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Email Address</label>
                     <input type="email" name="email" required
-                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50 transition-colors"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                         placeholder="john.doe@example.com" autocomplete="email">
                     @error('email')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -212,7 +223,7 @@
                     <div class="flex gap-3">
                         <div class="relative w-1/3 md:w-1/4">
                             <select name="country_code" id="country_code"
-                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50 transition-colors appearance-none cursor-pointer"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all appearance-none cursor-pointer"
                                 required>
                                 <option value="" disabled selected>Code</option>
                                 <option value="+62">🇮🇩 +62</option>
@@ -229,15 +240,15 @@
                         </div>
 
                         <input type="tel" name="phone_number" placeholder="81234567890"
-                            class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50 transition-colors"
+                            class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             required>
                     </div>
                     <p class="mt-2 text-xs text-gray-400 font-light">We will contact you via WhatsApp for confirmation.</p>
                 </div>
 
                 <div class="pt-6 border-t border-gray-100">
-                    <button type="submit" class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3">
-                        Confirm Booking <i class="fas fa-check-circle"></i>
+                    <button type="submit" class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
+                        Confirm Booking <i class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
                     </button>
                     <p class="text-center text-xs text-gray-400 mt-4">By booking, you agree to our Terms & Conditions.</p>
                 </div>
@@ -246,6 +257,7 @@
         </div>
     </section>
 
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA!%20I%20have%20a%20question..." 
        target="_blank"
        id="whatsapp-float"

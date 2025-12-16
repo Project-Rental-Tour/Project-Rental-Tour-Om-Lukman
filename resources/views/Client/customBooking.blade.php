@@ -5,25 +5,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Green Theme Configuration --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #0a3d26;   /* Deep Forest Green */
-            --color-primary-light: #145a3a;
-            --color-secondary: #cfa372; /* Luxury Gold */
-            --color-secondary-light: #e0c09a;
-            --color-surface: #fdfbf8;   /* Off-White/Paper */
-            --color-text: #3d3d3d;
-            --color-text-light: #7a7a7a;
+            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary-light: #004080;
+            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary-light: #90e0ef;
+            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
             overflow-x: hidden;
@@ -41,10 +42,10 @@
             mix-blend-mode: multiply;
         }
 
-        /* --- Typography --- */
+        /* Typography */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.01em;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
         
         .text-balance { text-wrap: balance; }
@@ -57,10 +58,10 @@
 
         /* --- Components --- */
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
 
         .btn-premium {
@@ -74,11 +75,11 @@
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
             transition: 0.5s;
         }
         .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
         /* --- Animations --- */
         .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
@@ -96,13 +97,14 @@
         /* Form Styling */
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(10, 61, 38, 0.1);
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
         }
         
         /* Checkbox Custom */
-        input[type="checkbox"]:checked {
+        input[type="checkbox"]:checked ~ div {
             background-color: var(--color-primary);
+            color: white;
             border-color: var(--color-primary);
         }
     </style>
@@ -118,12 +120,13 @@
                 src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
                 alt="Dream Travel Experience"
                 class="w-full h-full object-cover object-center opacity-60 animate-float-slow">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/60"></div>
+            {{-- Blue Gradient Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-b from-[#003366]/70 via-[#003366]/30 to-[#003366]/60"></div>
         </div>
 
         <div class="container mx-auto px-6 relative z-10 text-center pt-20">
-            <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up">Personalized Journey</span>
-            <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-serif animate-fade-up shadow-sm">
+            <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up shadow-secondary/20">Personalized Journey</span>
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-serif animate-fade-up shadow-sm drop-shadow-md">
                 Design Your <span class="italic text-secondary">Dream Trip</span>
             </h1>
             <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed animate-fade-up font-light" style="animation-delay: 0.2s">
@@ -134,7 +137,11 @@
     </section>
 
     <section class="container mx-auto px-6 py-20 -mt-20 relative z-20">
-        <div class="max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden animate-fade-up" style="animation-delay: 0.4s">
+        {{-- Background Blobs --}}
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto glass-card rounded-[2.5rem] shadow-2xl shadow-blue-900/10 overflow-hidden animate-fade-up relative z-10" style="animation-delay: 0.4s">
             
             <div class="bg-gray-50/50 px-8 md:px-12 py-8 border-b border-gray-100 text-center">
                 <h2 class="text-3xl font-bold text-primary font-serif">Your Travel Preferences</h2>
@@ -154,7 +161,7 @@
                             Destinations You Want to Visit <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="custom_destinations" placeholder="e.g. Bali, Komodo, Lombok, Yogyakarta"
-                            class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors" required>
+                            class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         <p class="text-xs text-gray-400 mt-2 font-light">Separate multiple destinations with commas.</p>
                     </div>
 
@@ -164,7 +171,7 @@
                                 Preferred Travel Date <span class="text-red-500">*</span>
                             </label>
                             <input type="date" name="travel_date" required
-                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors text-gray-600">
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-gray-600">
                         </div>
 
                         <div>
@@ -173,7 +180,7 @@
                             </label>
                             <input type="text" name="duration_nights" placeholder="e.g. 3d 2n"
                                 pattern="(\d+\s*d)?\s*(\d+\s*n)?"
-                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors"
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
                                 required>
                             <p class="text-xs text-gray-400 mt-2 font-light">
                                 Format: <code class="text-primary font-bold">d</code> for days, <code class="text-primary font-bold">n</code> for nights. Ex: 3d 2n
@@ -188,7 +195,7 @@
                             </label>
 
                             <select name="travelers_select" id="travelers_select" required 
-                                    class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors cursor-pointer"
+                                    class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors cursor-pointer"
                                     onchange="toggleCustomTravelersInput()">
                                 <option value="">Select number</option>
                                 <option value="1">1 person</option>
@@ -206,7 +213,7 @@
                                     id="travelers_custom"
                                     min="1"
                                     placeholder="Enter specific number"
-                                    class="w-full p-4 border border-gray-200 rounded-xl bg-white border-primary ring-1 ring-primary"
+                                    class="w-full p-4 border border-gray-200 rounded-xl bg-white border-secondary ring-1 ring-secondary"
                                     oninput="syncTravelersValue()">
                             </div>
                             <input type="hidden" name="travelers" id="travelers" required>
@@ -215,7 +222,7 @@
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Budget Range (per person)</label>
                             <div class="relative">
-                                <select name="budget_range" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors appearance-none cursor-pointer">
+                                <select name="budget_range" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors appearance-none cursor-pointer">
                                     <option value="">No preference</option>
                                     <option value="Below Rp 3 juta">Below Rp 3.000.000</option>
                                     <option value="Rp 3 - 5 juta">Rp 3.000.000 - 5.000.000</option>
@@ -261,20 +268,20 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">First Name <span class="text-red-500">*</span></label>
-                            <input type="text" name="first_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors" required>
+                            <input type="text" name="first_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Last Name <span class="text-red-500">*</span></label>
-                            <input type="text" name="last_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors" required>
+                            <input type="text" name="last_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Email Address <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors" required>
+                            <input type="email" name="email" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Phone Number <span class="text-red-500">*</span></label>
                             <div class="flex gap-3">
-                                <select name="country_code" id="country_code" class="w-1/3 md:w-1/4 p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors text-sm" required>
+                                <select name="country_code" id="country_code" class="w-1/3 md:w-1/4 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-sm" required>
                                     <option value="">Code</option>
                                     <option value="+62">🇮🇩 +62</option>
                                     <option value="+1">🇺🇸 +1</option>
@@ -284,18 +291,18 @@
                                     <option value="+44">🇬🇧 +44</option>
                                     <option value="+81">🇯🇵 +81</option>
                                     </select>
-                                <input type="number" name="phone_number" placeholder="812345678" class="flex-1 p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors" required>
+                                <input type="number" name="phone_number" placeholder="812345678" class="flex-1 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                             </div>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Special Request / Notes</label>
-                            <textarea name="message" rows="4" placeholder="Tell us more about your dream trip..." class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white transition-colors resize-none"></textarea>
+                            <textarea name="message" rows="4" placeholder="Tell us more about your dream trip..." class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors resize-none"></textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-6">
-                    <button type="submit" class="btn-premium w-full py-5 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 hover:shadow-primary/40 flex items-center justify-center gap-3">
+                    <button type="submit" class="btn-premium w-full py-5 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20 hover:shadow-blue-900/40 flex items-center justify-center gap-3">
                         Submit Request <i class="fas fa-paper-plane"></i>
                     </button>
                     <p class="text-xs text-gray-400 text-center mt-4">By submitting this form, you agree to our terms & conditions.</p>
@@ -304,7 +311,7 @@
         </div>
     </section>
 
-    {{-- Floating WhatsApp --}}
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA!%20I%20have%20a%20question..." 
        target="_blank"
        id="whatsapp-float"

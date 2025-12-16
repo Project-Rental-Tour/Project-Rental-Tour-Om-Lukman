@@ -5,25 +5,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Green Theme Configuration --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #0a3d26;   /* Deep Forest Green */
-            --color-primary-light: #145a3a;
-            --color-secondary: #cfa372; /* Luxury Gold */
-            --color-secondary-light: #e0c09a;
-            --color-surface: #fdfbf8;   /* Off-White/Paper */
-            --color-text: #3d3d3d;
-            --color-text-light: #7a7a7a;
+            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary-light: #004080;
+            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary-light: #90e0ef;
+            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
             overflow-x: hidden;
@@ -43,8 +44,8 @@
 
         /* Typography */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.01em;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
 
         /* Utilities */
@@ -74,13 +75,21 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
         }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: 0.5s;
+        }
+        .btn-premium:hover::after { left: 100%; }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
     </style>
 @endsection
@@ -88,18 +97,21 @@
 @section('content')
     @include('components.client.navbar')
 
+    {{-- HERO SECTION --}}
     <section id="jumbotron" class="relative bg-primary min-h-[45vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('assets/images/bg_header_blogs.jpg') }}" 
+            <img src="{{ asset('assets/images/bg_header_blogs.jpeg') }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920';"
                  alt="Blog Header" 
-                 class="w-full h-full object-cover object-center opacity-40 animate-float-slow">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                 class="w-full h-full object-cover object-center animate-float-slow"
+                 style="opacity: 0.5;">
+            {{-- Blue Gradient Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
         <div class="container mx-auto px-6 relative z-10 pt-20 text-center">
             <div class="max-w-3xl mx-auto animate-fade-up">
-                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Travel Journal</span>
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">Travel Journal</span>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 font-serif">Stories & <span class="italic text-secondary">Inspiration</span></h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light mb-8">
                     Discover hidden gems, travel tips, and cultural insights from our adventures across Java and beyond.
@@ -108,6 +120,7 @@
         </div>
     </section>
 
+    {{-- SEARCH BAR SECTION --}}
     <section class="relative z-20 -mt-10 px-6">
         <div class="max-w-5xl mx-auto">
             <div class="glass-card rounded-[2rem] p-6 shadow-xl animate-fade-up" style="animation-delay: 0.2s">
@@ -115,12 +128,12 @@
                     <div class="flex-grow relative">
                         <input type="text" name="search" value="{{ request('search') }}"
                             placeholder="Search articles, guides..." 
-                            class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder-gray-400">
+                            class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all placeholder-gray-400">
                     </div>
 
                     <div class="w-full md:w-64 relative">
                         <select name="category" onchange="this.form.submit()"
-                            class="w-full pl-12 pr-10 py-4 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none cursor-pointer text-gray-600">
+                            class="w-full pl-12 pr-10 py-4 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all appearance-none cursor-pointer text-gray-600">
                             <option value="">All Categories</option>
                             <option value="Tips" {{ request('category') == 'Tips' ? 'selected' : '' }}>Tips & Tricks</option>
                             <option value="Destinations" {{ request('category') == 'Destinations' ? 'selected' : '' }}>Destinations</option>
@@ -129,17 +142,21 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn-premium px-8 py-4 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2">
-                        Search
+                    <button type="submit" class="btn-premium px-8 py-4 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 group">
+                        Search <i class="fas fa-search group-hover:scale-110 transition-transform"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 py-20">
+    {{-- BLOG LIST SECTION --}}
+    <section class="max-w-7xl mx-auto px-6 py-20 relative">
+        {{-- Background Blobs --}}
+
+
         @if(request('search') || request('category'))
-            <div class="mb-8 animate-fade-up text-center">
+            <div class="mb-8 animate-fade-up text-center relative z-10">
                 <p class="text-gray-500">
                     Found <span class="font-bold text-primary">{{ $blogs->total() }}</span> articles 
                     @if(request('search')) for "<span class="text-primary">{{ request('search') }}</span>" @endif
@@ -149,9 +166,9 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
             @forelse ($blogs as $blog)
-                <article class="bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden group hover:shadow-xl transition-all duration-300 animate-fade-up h-full flex flex-col">
+                <article class="bg-white rounded-[2rem] shadow-lg shadow-blue-900/5 border border-white/60 overflow-hidden group hover:shadow-xl hover:border-secondary/30 transition-all duration-300 animate-fade-up h-full flex flex-col">
                     
                     <div class="relative h-64 overflow-hidden">
                         <img loading="lazy" src="{{ asset($blog->image_path) }}" 
@@ -159,7 +176,7 @@
                              alt="{{ $blog->title }}"
                              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
                         
                         <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-primary tracking-wide shadow-sm uppercase">
                             {{ $blog->category ?? 'Travel' }}
@@ -174,7 +191,6 @@
                         </div>
 
                         <h3 class="text-2xl font-serif font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors line-clamp-2">
-                            {{-- Gunakan parameter Title untuk link detail --}}
                             <a href="{{ route('blogs.detail', $blog->title) }}">{{ $blog->title }}</a>
                         </h3>
                         
@@ -183,7 +199,7 @@
                         </p>
 
                         <div class="pt-6 border-t border-gray-100 mt-auto">
-                            <a href="{{ route('blogs.detail', $blog->title) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-2 transition-transform">
+                            <a href="{{ route('blogs.detail', $blog->title) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-2 transition-transform hover:text-secondary">
                                 Read Full Story <i class="fas fa-arrow-right ml-2 text-xs text-secondary"></i>
                             </a>
                         </div>
@@ -210,15 +226,16 @@
         @endif
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 pb-24">
+    {{-- BOTTOM SECTION (Recent & CTA) --}}
+    <section class="max-w-7xl mx-auto px-6 pb-24 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div class="lg:col-span-2">
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-gray-100 animate-fade-up">
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg shadow-blue-900/5 border border-white/60 animate-fade-up">
                     <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">Latest Updates</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         @foreach($recentPosts as $recent)
-                        <a href="{{ route('blogs.detail', $recent->title) }}" class="flex gap-4 group p-4 rounded-xl hover:bg-gray-50 transition-colors">
-                            <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+                        <a href="{{ route('blogs.detail', $recent->title) }}" class="flex gap-4 group p-4 rounded-xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
+                            <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
                                 <img src="{{ asset($recent->image_path) }}" 
                                      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
                                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -239,13 +256,19 @@
             <div class="lg:col-span-1">
                 <div class="bg-primary rounded-[2rem] p-10 text-center text-white relative overflow-hidden animate-fade-up shadow-2xl h-full flex flex-col justify-center">
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    
+                    {{-- Glow Effect --}}
+                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+
                     <div class="relative z-10">
-                        <i class="fas fa-plane-departure text-5xl text-secondary mb-6"></i>
+                        <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-md border border-white/20">
+                            <i class="fas fa-plane-departure text-3xl text-secondary"></i>
+                        </div>
                         <h2 class="text-3xl font-serif font-bold mb-4">Inspired to Travel?</h2>
                         <p class="text-white/80 mb-8 font-light">
                             Start planning your dream trip with us today. We create custom itineraries tailored to your preferences.
                         </p>
-                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg transform hover:-translate-y-1">
+                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg transform hover:-translate-y-1">
                             Plan My Trip
                         </a>
                     </div>
@@ -254,12 +277,15 @@
         </div>
     </section>
 
-    <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA!%20I'm%20reading%20your%20blogs..." 
-       target="_blank"
-       id="whatsapp-float"
-       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
+    <a 
+        href="https://wa.me/6281217006076?text=Hello%20GOING%20TO%20THE%20JAVA!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
+        target="_blank"
+        id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+    >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">Chat With Us</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
     </a>
 
     @include('components.client.footer')

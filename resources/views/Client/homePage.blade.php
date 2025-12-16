@@ -5,32 +5,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Green Theme Configuration --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #0a3d26;   /* Deep Forest Green */
-            --color-primary-light: #145a3a;
-            --color-secondary: #cfa372; /* Luxury Gold */
-            --color-secondary-light: #e0c09a;
-            --color-surface: #fdfbf8;   /* Off-White/Paper */
-            --color-text: #3d3d3d;
-            --color-text-light: #7a7a7a;
+            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary-light: #004080;
+            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary-light: #90e0ef;
+            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Noise Texture Overlay --- */
+        /* --- Noise Texture Overlay (KEPT: Subtle premium feel, not crowded) --- */
         body::before {
             content: "";
             position: fixed;
@@ -40,11 +41,13 @@
             z-index: 9999;
             mix-blend-mode: multiply;
         }
+        
+        /* REMOVED: .bg-pattern-wave class to simplify background */
 
         /* --- Typography --- */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.01em;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
         
         .text-balance { text-wrap: balance; }
@@ -53,10 +56,11 @@
         .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
         .text-primary { color: var(--color-primary) !important; }
         .text-secondary { color: var(--color-secondary) !important; }
-        .bg-surface { background-color: var(--color-surface) !important; }
+         { background-color: var(--color-surface) !important; }
 
+        /* Blue Sapphire Gradient Text */
         .text-gradient-gold {
-            background: linear-gradient(to right, var(--color-secondary), #f3e5ab, var(--color-secondary));
+            background: linear-gradient(to right, var(--color-secondary), #caf0f8, var(--color-secondary));
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -66,16 +70,16 @@
 
         /* --- Glassmorphism Components --- */
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
 
         .glass-dark {
-            background: rgba(10, 61, 38, 0.75);
+            background: rgba(0, 51, 102, 0.8);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
         }
 
@@ -89,11 +93,11 @@
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
             transition: 0.5s;
         }
         .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(10, 61, 38, 0.4); transform: translateY(-2px); }
+        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
         /* --- Animations --- */
         .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
@@ -123,11 +127,6 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--color-surface); }
         ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 4px; }
-        
-        .leaf-pattern {
-            background-image: radial-gradient(#ffffff 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
     </style>
 @endsection
 
@@ -144,15 +143,15 @@
                 class="w-full h-full object-cover object-center transform scale-105 animate-float-slow" 
                 style="animation-duration: 20s;">
             
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#003366]/40 via-black/10 to-transparent mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#001122]/80 via-[#003366]/30 to-transparent"></div>
             <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[var(--color-surface)] to-transparent"></div>
         </div>
 
         <div class="container mx-auto px-6 relative z-20 pt-20">
             <div class="flex flex-col lg:flex-row items-center">
                 <div class="lg:w-9/12 text-left mb-12 lg:mb-0">
-                    <div class="inline-flex items-center gap-3 py-2 px-5 rounded-full glass-card text-white/90 text-xs md:text-sm font-semibold mb-6 animate-fade-up tracking-wider uppercase backdrop-blur-md">
+                    <div class="inline-flex items-center gap-3 py-2 px-5 rounded-full glass-card text-primary font-bold text-xs md:text-sm mb-6 animate-fade-up tracking-wider uppercase backdrop-blur-md">
                         <i class="fas fa-compass text-secondary"></i>
                         Premium Java Exploration
                     </div>
@@ -161,19 +160,19 @@
                         Discover <br> the <span class="italic text-gradient-gold">Untamed.</span>
                     </h1>
 
-                    <p class="text-base sm:text-lg md:text-xl text-white/80 mb-8 max-w-xl animate-fade-up font-light leading-relaxed glass-dark p-6 rounded-3xl border border-white/10"
+                    <p class="text-base sm:text-lg md:text-xl text-white/90 mb-8 max-w-xl animate-fade-up font-light leading-relaxed glass-dark p-6 rounded-3xl border border-white/10"
                     style="animation-delay: 0.2s">
                         {{ optional($profiles)->jumbotron_subheading ?? "Curating exclusive journeys to Java's hidden gems. Reconnect with nature in luxury and style." }}
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.4s">
                         <a href="#destination"
-                        class="btn-premium px-10 py-4 text-center text-white rounded-full font-bold flex items-center justify-center gap-3 group shadow-lg shadow-primary/30">
+                        class="btn-premium px-10 py-4 text-center text-white rounded-full font-bold flex items-center justify-center gap-3 group shadow-lg shadow-blue-900/30">
                             Begin Journey 
                             <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
                         <a href="{{ route('booking.custom') }}"
-                        class="px-10 py-4 text-center text-white glass-card rounded-full hover:bg-white hover:text-primary transition-all duration-300 font-bold border-white/20">
+                        class="px-10 py-4 text-center text-white glass-card rounded-full transition-all duration-300 font-bold border-white/20">
                             Design My Trip
                         </a>
                     </div>
@@ -190,10 +189,8 @@
     </section>
 
     {{-- 2. WHY CHOOSE US --}}
-    <section id="why-choose-us" class="w-full py-20 md:py-32 relative overflow-hidden bg-surface">
-        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#cfa372]/10 rounded-full mix-blend-multiply filter blur-[100px] opacity-60 animate-float-slow"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0a3d26]/10 rounded-full mix-blend-multiply filter blur-[100px] opacity-60 animate-float-slow" style="animation-delay: -4s"></div>
-
+    <section id="why-choose-us" class="w-full py-20 md:py-32 relative overflow-hidden">
+        
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16 animate-fade-up">
                 <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-4 block">Our Promise</span>
@@ -204,29 +201,32 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach([
-                    ['Expert Guidance', 'Curated by insiders who know every hidden path.', 'fas fa-map-marked-alt', 'green'],
-                    ['Best Value', 'Luxury experiences at fair pricing with no hidden costs.', 'fas fa-tag', 'yellow'],
-                    ['24/7 Concierge', 'Round-the-clock assistance for peace of mind.', 'fas fa-headset', 'blue'],
-                    ['Eco-Conscious', 'We prioritize responsible tourism and sustainability.', 'fas fa-leaf', 'emerald'],
-                    ['Flexible Plans', 'Change of plans? We adapt instantly to your needs.', 'fas fa-calendar-check', 'indigo'],
-                    ['Tailored for You', 'Customizable to your personal rhythm and style.', 'fas fa-sliders-h', 'purple']
-                ] as $index => $feature)
-                    <div class="glass-card p-8 rounded-[2rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60 hover:border-secondary/30 animate-fade-up" style="animation-delay: {{ $index * 0.1 }}s">
-                        <div class="w-14 h-14 bg-{{ $feature[3] }}-50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 text-{{ $feature[3] }}-600 shadow-sm">
-                            <i class="{{ $feature[2] }} text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-serif text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors">{{ $feature[0] }}</h4>
-                            <p class="text-text-light text-sm leading-relaxed font-light">{{ $feature[1] }}</p>
-                        </div>
-                    </div>
-                @endforeach
+    @foreach([
+        ['Expert Guidance', 'Curated by insiders who know every hidden path.', 'fas fa-map-marked-alt', 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white'],
+        ['Best Value', 'Luxury experiences at fair pricing with no hidden costs.', 'fas fa-tag', 'bg-cyan-50 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white'],
+        ['24/7 Concierge', 'Round-the-clock assistance for peace of mind.', 'fas fa-headset', 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white'],
+        ['Eco-Conscious', 'We prioritize responsible tourism and sustainability.', 'fas fa-leaf', 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white'],
+        ['Flexible Plans', 'Change of plans? We adapt instantly to your needs.', 'fas fa-calendar-check', 'bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white'],
+        ['Tailored for You', 'Customizable to your personal rhythm and style.', 'fas fa-sliders-h', 'bg-violet-50 text-violet-600 group-hover:bg-violet-600 group-hover:text-white']
+    ] as $feature)
+        <div class="glass-card p-8 rounded-[2rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60 hover:border-secondary/30 animate-fade-up">
+            
+            {{-- Bagian Icon --}}
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 {{ $feature[3] }}">
+                <i class="{{ $feature[2] }} text-xl"></i>
             </div>
+
+            <div>
+                <h4 class="font-serif text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors">{{ $feature[0] }}</h4>
+                <p class="text-text-light text-sm leading-relaxed font-light">{{ $feature[1] }}</p>
+            </div>
+        </div>
+    @endforeach
+</div>
         </div>
     </section>
 
-    {{-- 3. PROMOTION BANNER 1 (IF ELSE) --}}
+    {{-- 3. PROMOTION BANNER 1 --}}
     @if(optional($profiles)->promotion_banner_1)
     <section class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-6">
@@ -238,7 +238,7 @@
                          alt="Special Promotion">
                     <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent group-hover:from-black/40 transition-colors"></div>
                     <div class="absolute bottom-0 left-0 p-8 md:p-12">
-                        <span class="bg-secondary text-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3 inline-block">Limited Offer</span>
+                        <span class="bg-secondary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3 inline-block">Limited Offer</span>
                         <h3 class="text-3xl md:text-5xl font-serif font-bold text-white mb-2">Explore Java's Hidden Gems</h3>
                         <p class="text-white/90 hidden md:block">Don't miss out on our exclusive seasonal packages.</p>
                     </div>
@@ -248,10 +248,8 @@
     </section>
     @endif
 
-    {{-- 4. BOOKING PROCESS (Green & White Theme) --}}
-    <section id="booking-process" class="py-24 bg-surface relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#cfa372]/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#0a3d26]/5 rounded-full blur-3xl -ml-20 -mb-20"></div>
+    {{-- 4. BOOKING PROCESS --}}
+    <section id="booking-process" class="py-24 relative overflow-hidden">
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16 animate-fade-up">
@@ -317,9 +315,9 @@
         </div>
     </section>
 
-    {{-- 5. PROMOTION BANNER 2 (IF ELSE) --}}
+    {{-- 5. PROMOTION BANNER 2 --}}
     @if(optional($profiles)->promotion_banner_2)
-    <section class="py-12 bg-surface">
+    <section class="py-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="rounded-[2.5rem] overflow-hidden shadow-2xl relative group animate-fade-up">
                 <a href="#destination">
@@ -339,7 +337,8 @@
     @endif
 
     {{-- 6. DESTINATIONS --}}
-    <section id="destination" class="py-20 md:py-32 bg-surface relative overflow-hidden">
+    {{-- Reverted to simple --}}
+    <section id="destination" class="py-20 md:py-32 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
                 <div class="md:w-1/2 animate-fade-up">
@@ -414,7 +413,8 @@
     </section>
 
     {{-- 8. GALLERY --}}
-    <section class="bg-surface py-20 md:py-32 overflow-hidden">
+    {{-- Reverted to simple --}}
+    <section class= py-20 md:py-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 animate-fade-up">
                 <div>
@@ -481,8 +481,9 @@
         </div>
     </section>
 
-    {{-- 10. LATEST BLOGS (Added Section) --}}
-    <section class="py-24 bg-white relative">
+    {{-- 10. LATEST BLOGS --}}
+    {{-- Reverted to simple --}}
+    <section class="py-24 relative">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16 animate-fade-up">
                 <span class="text-secondary font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Travel Journal</span>
@@ -549,7 +550,7 @@
     </section>
 
     {{-- 11. CONTACT / ABOUT --}}
-    <section class="w-full bg-surface relative py-20 md:py-32" id="about">
+    <section class="w-full relative py-20 md:py-32" id="about">
         <div class="max-w-7xl mx-auto px-6">
             <div class="bg-primary rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row relative">
                 
@@ -594,7 +595,7 @@
         </div>
     </section>
 
-    {{-- Floating WhatsApp --}}
+    {{-- Floating WhatsApp (KEPT GREEN AS REQUESTED) --}}
     <a 
         href="https://wa.me/6281217006076?text=Hello%20GOING%20TO%20THE%20JAVA!%20I%27d%20like%20to%20get%20some%20information%3A%0A-%20Destination%3A%20%5BEnter%20your%20preferred%20destination%5D%0A-%20Number%20of%20Travelers%3A%20%5BEnter%20number%5D%0A-%20Travel%20Date%3A%20%5BEnter%20date%5D%0A-%20Email%3A%20%5BEnter%20your%20email%5D%0A-%20Additional%20Requests%3A%20%5BType%20here%5D%0A%0AThank%20you!" 
         target="_blank"

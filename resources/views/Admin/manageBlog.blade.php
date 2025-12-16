@@ -146,8 +146,8 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        @if($blog->image)
-                                            <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}"
+                                        @if($blog->image_path)
+                                            <img src="{{ asset($blog->image_path) }}" alt="{{ $blog->title }}"
                                                 class="w-16 h-12 object-cover rounded mx-auto border">
                                         @else
                                             <span class="text-gray-400 text-xs">No image</span>
