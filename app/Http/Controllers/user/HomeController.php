@@ -11,6 +11,7 @@ use App\Models\Destination;
 use App\Models\Testimonial;
 use App\Models\Gallery;
 use App\Models\Profile;
+use App\Models\Blogs;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,10 @@ class HomeController extends Controller
 
         $latestGalleries = Gallery::orderBy('created_at', 'desc')->take(3)->get();
 
+        $blogs = Blogs::orderBy('created_at', 'desc')->take(3)->get();
 
-        return view('Client.homePage', compact('testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries'));
+
+        return view('Client.homePage', compact('testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries', 'blogs'));
     }
 
     public function about()
