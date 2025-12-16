@@ -355,7 +355,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach ($destinations->take(2) as $destination)
                 <a href="{{ route('destination.show', $destination->slug) }}" class="group relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-up block">
-                    <img loading="lazy" src="{{ asset($destination->destination_photo) }}"
+                    <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}"
                          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000';"
                          alt="{{ $destination->name_package }}"
                          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
