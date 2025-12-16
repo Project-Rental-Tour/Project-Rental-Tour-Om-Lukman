@@ -567,7 +567,7 @@
                      @if($latestGalleries && $latestGalleries->count() > 0)
                         <img src="{{ asset($latestGalleries->first()->gallery_photo) }}" 
                              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596401057633-565652b8ddbe?auto=format&fit=crop&w=800&q=80';"
-                             class="absolute inset-0 w-full h-full object-cover">
+                             class="absolute z-10 inset-0 w-full h-full object-cover">
                     @else
                         <img src="https://images.unsplash.com/photo-1596401057633-565652b8ddbe?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover">
                     @endif
