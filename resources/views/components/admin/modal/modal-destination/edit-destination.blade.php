@@ -79,7 +79,7 @@
                             >
                             <p class="text-xs text-gray-400 mt-1">Price for Indonesian citizens/standard price.</p>
                         </div>
-                        <div>
+                        {{-- <div>
                             <label class="block mb-2 text-sm font-medium">Price 2 (WNA/Optional)</label>
                             <input type="text" 
                                 name="price_2" 
@@ -88,7 +88,7 @@
                                 value="{{ old('price_2', $destination->price_2) }}"
                             >
                             <p class="text-xs text-gray-400 mt-1">Price for Foreigners (if applicable).</p>
-                        </div>
+                        </div> --}}
                         <div>
                             <label class="block mb-2 text-sm font-medium">Duration</label>
                             <input type="text" name="time" placeholder="3 Days 2 Nights"
