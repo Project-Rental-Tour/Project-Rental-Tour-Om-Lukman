@@ -94,6 +94,23 @@
             color: var(--color-primary);
             border-color: var(--color-primary);
         }
+
+        /* Swiper Customization */
+        .swiper-button-next, .swiper-button-prev {
+            color: white !important;
+            background: rgba(0, 51, 102, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 18px !important;
+            font-weight: bold;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: var(--color-secondary) !important;
+        }
     </style>
 @endsection
 
@@ -103,7 +120,7 @@
     {{-- HERO SECTION --}}
     <section class="relative bg-primary h-[500px] flex items-center" id="jumbotron">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
+            <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                  alt="{{ $destination->name_package }}"
                  class="w-full h-full object-cover object-center"
@@ -160,12 +177,50 @@
             {{-- LEFT COLUMN (Details) --}}
             <div class="lg:col-span-2 space-y-12">
                 
-                {{-- Main Image --}}
-                <div class="rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 h-[400px] group animate-fade-up">
-                    <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
-                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                         alt="Main View"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                {{-- Main Image Slider (SWIPER) --}}
+                <div class="rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 h-[400px] group animate-fade-up relative">
+                    <div class="swiper mainImageSwiper h-full w-full">
+                        <div class="swiper-wrapper">
+                            {{-- Slide 1: Main Photo --}}
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+
+                            {{-- Slide 2 onwards: Gallery Photos --}}
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_3) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_4) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        {{-- Slider Controls --}}
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    
+                    {{-- Optional Tag --}}
+                    <div class="absolute top-4 left-4 z-20">
+                         <span class="bg-primary/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/20">
+                            <i class="fas fa-images mr-1"></i> Gallery
+                        </span>
+                    </div>
                 </div>
 
                 {{-- Tabs Container --}}
@@ -309,26 +364,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- Related Photos --}}
-                <div class="bg-white/80 backdrop-blur p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.3s">
-                    <h3 class="text-2xl font-serif font-bold text-primary mb-6">More Photos</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        @forelse($relatedGalleries as $gallery)
-                        <div class="group relative overflow-hidden rounded-xl h-32 md:h-40 cursor-pointer shadow-sm">
-                            <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}" 
-                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                                 alt="{{ $gallery->title }}"
-                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <i class="fas fa-search-plus text-white text-xl"></i>
-                            </div>
-                        </div>
-                        @empty
-                        <p class="text-gray-400 col-span-4 text-center py-4 italic">No additional photos available.</p>
-                        @endforelse
-                    </div>
-                </div>
             </div>
 
             {{-- RIGHT COLUMN (Sticky Booking Card) --}}
@@ -403,9 +438,32 @@
     </a>
 
     @include('components.client.footer')
+    
+    {{-- Scripts --}}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // 1. Initialize Swiper for Main Image
+            var mainSwiper = new Swiper('.mainImageSwiper', {
+                loop: true,
+                effect: 'fade',
+                fadeEffect: { crossFade: true },
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+
+            // 2. Tab Logic
             const tabs = document.querySelectorAll('[role="tab"]');
             const contents = document.querySelectorAll('[role="tabpanel"]');
 
