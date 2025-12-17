@@ -462,13 +462,11 @@
                             <div class="glass-card rounded-[2rem] shadow-sm border-white/60 h-full flex flex-col items-center text-center relative mx-2 bg-white/80">
 
                                 {{-- Gambar Testimonial --}}
-                                <div class="mb-5">
                                     <img 
                                         src="{{ asset('storage/' . $testimoni->image) }}" 
                                         alt="{{ $testimoni->name }}"
                                         class="w-full h-56 object-cover rounded-2xl mb-6"
                                     >
-                                </div>
 
                                 {{-- <div class="text-secondary mb-4 text-sm">
                                     @for ($i = 1; $i <= 5; $i++)
