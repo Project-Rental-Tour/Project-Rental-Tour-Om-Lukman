@@ -120,7 +120,7 @@
     {{-- HERO SECTION --}}
     <section class="relative bg-primary h-[500px] flex items-center" id="jumbotron">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+            <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                  alt="{{ $destination->name_package }}"
                  class="w-full h-full object-cover object-center"
@@ -177,37 +177,29 @@
             {{-- LEFT COLUMN (Details) --}}
             <div class="lg:col-span-2 space-y-12">
                 
-                {{-- Main Image Slider (SWIPER) --}}
+                {{-- 1. Main Image Slider (SWIPER) --}}
                 <div class="rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 h-[400px] group animate-fade-up relative">
                     <div class="swiper mainImageSwiper h-full w-full">
                         <div class="swiper-wrapper">
                             {{-- Slide 1: Main Photo --}}
                             <div class="swiper-slide">
-                                <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
                                      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                                      alt="Main View"
                                      class="w-full h-full object-cover">
                             </div>
 
                             {{-- Slide 2 onwards: Gallery Photos --}}
-                            <div class="swiper-slide">
-                                <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}" 
-                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                                     alt="Main View"
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <div class="swiper-slide">
-                                <img loading="lazy" src="{{ asset($destination->destination_photo_3) }}" 
-                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                                     alt="Main View"
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <div class="swiper-slide">
-                                <img loading="lazy" src="{{ asset($destination->destination_photo_4) }}" 
-                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                                     alt="Main View"
-                                     class="w-full h-full object-cover">
-                            </div>
+                            @if(isset($relatedGalleries))
+                                @foreach($relatedGalleries as $gallery)
+                                <div class="swiper-slide">
+                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}" 
+                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80';"
+                                         alt="Gallery View"
+                                         class="w-full h-full object-cover">
+                                </div>
+                                @endforeach
+                            @endif
                         </div>
                         {{-- Slider Controls --}}
                         <div class="swiper-button-next"></div>
@@ -223,7 +215,7 @@
                     </div>
                 </div>
 
-                {{-- Tabs Container --}}
+                {{-- 2. Tabs Container (Overview, Highlights, etc) --}}
                 <div class="bg-white/80 backdrop-blur rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
@@ -364,6 +356,27 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- 3. Related Photos / Gallery Grid (Dikembalikan) --}}
+                <div class="bg-white/80 backdrop-blur p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.3s">
+                    <h3 class="text-2xl font-serif font-bold text-primary mb-6">More Photos</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        @forelse($relatedGalleries as $gallery)
+                        <div class="group relative overflow-hidden rounded-xl h-32 md:h-40 cursor-pointer shadow-sm">
+                            <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}" 
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                 alt="{{ $gallery->title }}"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <i class="fas fa-search-plus text-white text-xl"></i>
+                            </div>
+                        </div>
+                        @empty
+                        <p class="text-gray-400 col-span-4 text-center py-4 italic">No additional photos available.</p>
+                        @endforelse
+                    </div>
+                </div>
+
             </div>
 
             {{-- RIGHT COLUMN (Sticky Booking Card) --}}
