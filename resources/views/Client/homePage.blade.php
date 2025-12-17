@@ -462,11 +462,13 @@
                             <div class="glass-card rounded-[2rem] shadow-sm border-white/60 h-full flex flex-col items-center text-center relative mx-2 bg-white/80">
 
                                 {{-- Gambar Testimonial --}}
+                                <div class="overflow-hidden rounded-lg aspect-[3/4] relative mb-3">
                                     <img 
                                         src="{{ asset('storage/' . $testimoni->image) }}" 
                                         alt="{{ $testimoni->name }}"
-                                        class="w-full h-fit object-cover rounded-2xl"
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     >
+                                </div>
 
                                 {{-- <div class="text-secondary mb-4 text-sm">
                                     @for ($i = 1; $i <= 5; $i++)
