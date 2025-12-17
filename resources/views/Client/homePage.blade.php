@@ -466,7 +466,7 @@
                                     <img 
                                         src="{{ asset('storage/' . $testimoni->image) }}" 
                                         alt="{{ $testimoni->name }}"
-                                        class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                                        class="w-full h-56 object-cover rounded-2xl mb-6"
                                     >
                                 </div>
 
