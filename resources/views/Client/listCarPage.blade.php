@@ -1,14 +1,16 @@
 @extends('_layouts.user')
 
 @section('head')
-    {{-- Fonts --}}
+    {{-- Libraries --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- UNIFIED FONT TO POPPINS ONLY --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
-        /* --- Premium Blue Ocean Theme Configuration (Sama dengan Home) --- */
+        /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
             --color-primary: #003366;   /* Deep Ocean Navy */
             --color-primary-light: #004080;
@@ -17,15 +19,19 @@
             --color-surface: #f4f8fb;   /* Very Light Blue/White */
             --color-text: #1e293b;
             --color-text-light: #64748b;
+            font-family: 'Poppins', sans-serif;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--color-surface);
             color: var(--color-text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Noise Texture --- */
+        /* --- Noise Texture Overlay --- */
         body::before {
             content: "";
             position: fixed;
@@ -36,253 +42,185 @@
             mix-blend-mode: multiply;
         }
 
+        /* Typography */
         h1, h2, h3, h4, h5, h6, .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* --- Components --- */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: var(--color-secondary);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px -10px rgba(0, 51, 102, 0.15);
-        }
-
-        .btn-premium {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-premium:hover {
-            box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-premium {
-            border: 1px solid var(--color-primary);
-            color: var(--color-primary);
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-        .btn-outline-premium:hover {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        /* Form Elements Customization */
-        .form-checkbox:checked {
-            background-color: var(--color-primary);
-            border-color: var(--color-primary);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
         }
         
-        .filter-group {
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding-bottom: 1.5rem;
-            margin-bottom: 1.5rem;
+        /* Utilities */
+        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
+        .text-primary { color: var(--color-primary) !important; }
+        .text-secondary { color: var(--color-secondary) !important; }
+        .bg-surface { background-color: var(--color-surface) !important; }
+
+        /* Animation */
+        .animate-fade-up {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        .filter-group:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 4px; }
     </style>
 @endsection
 
 @section('content')
     @include('components.client.navbar')
 
-    {{-- 1. HERO HEADER --}}
-    <header class="relative pt-32 pb-20 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#003366]/10 to-transparent pointer-events-none"></div>
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00b4d8]/10 rounded-full mix-blend-multiply filter blur-[100px] opacity-60"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <span class="text-[#00b4d8] font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up">Our Fleet</span>
-            <h1 class="text-4xl md:text-6xl font-bold text-[#003366] mb-6 font-serif animate-fade-up">
-                Choose Your <span class="italic text-[#00b4d8]">Journey</span>
-            </h1>
-            <p class="text-[#64748b] max-w-2xl mx-auto text-lg font-light leading-relaxed animate-fade-up">
-                From compact city cruisers to spacious family vans, find the perfect vehicle for your Javanese adventure.
-            </p>
+    {{-- HERO SECTION --}}
+    <section id="jumbotron" class="relative min-h-[50vh] flex items-center overflow-hidden bg-primary">
+        <div class="absolute inset-0 z-0">
+            {{-- Menggunakan background image profile atau default --}}
+            <img src="{{ optional($profiles)->background_image ? asset($profiles->background_image) : asset('assets/images/bg_header_destination.png') }}" 
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80';"
+                 alt="Car Fleet Background" 
+                 class="w-full h-full object-cover object-center opacity-40 animate-float-slow">
+            {{-- Blue Gradient Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
-    </header>
 
-    {{-- 2. MAIN CONTENT (Sidebar + Grid) --}}
-    <section class="pb-24 px-6">
-        <div class="container mx-auto">
-            <div class="flex flex-col lg:flex-row gap-10">
-                
-                {{-- SIDEBAR FILTER --}}
-                <aside class="w-full lg:w-1/4 animate-fade-up">
-                    <div class="glass-card p-6 rounded-3xl sticky top-24">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-serif text-xl font-bold text-[#003366]">Filters</h3>
-                            <a href="{{ url()->current() }}" class="text-xs text-[#00b4d8] font-bold hover:underline">Reset All</a>
-                        </div>
-
-                        <form action="{{ url()->current() }}" method="GET">
-                            
-                            {{-- Filter: Type --}}
-                            <div class="filter-group">
-                                <label class="block text-sm font-bold text-[#003366] mb-3 uppercase tracking-wider">Car Type</label>
-                                <div class="space-y-2">
-                                    @foreach($carTypes as $type)
-                                    <label class="flex items-center space-x-3 cursor-pointer group">
-                                        <input type="radio" name="type" value="{{ $type }}" 
-                                            {{ request('type') == $type ? 'checked' : '' }}
-                                            class="form-radio text-[#003366] focus:ring-[#00b4d8] h-4 w-4 border-gray-300">
-                                        <span class="text-gray-600 group-hover:text-[#003366] transition-colors text-sm">{{ ucfirst($type) }}</span>
-                                    </label>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            {{-- Filter: Transmission --}}
-                            <div class="filter-group">
-                                <label class="block text-sm font-bold text-[#003366] mb-3 uppercase tracking-wider">Transmission</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center space-x-3 cursor-pointer group">
-                                        <input type="radio" name="transmission" value="Automatic" 
-                                            {{ request('transmission') == 'Automatic' ? 'checked' : '' }}
-                                            class="form-radio text-[#003366] focus:ring-[#00b4d8] h-4 w-4 border-gray-300">
-                                        <span class="text-gray-600 group-hover:text-[#003366] transition-colors text-sm">Automatic</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer group">
-                                        <input type="radio" name="transmission" value="Manual" 
-                                            {{ request('transmission') == 'Manual' ? 'checked' : '' }}
-                                            class="form-radio text-[#003366] focus:ring-[#00b4d8] h-4 w-4 border-gray-300">
-                                        <span class="text-gray-600 group-hover:text-[#003366] transition-colors text-sm">Manual</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            {{-- Filter: Capacity --}}
-                            <div class="filter-group">
-                                <label class="block text-sm font-bold text-[#003366] mb-3 uppercase tracking-wider">Capacity</label>
-                                <select name="capacity" class="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-sm text-gray-700 focus:outline-none focus:border-[#00b4d8] focus:ring-1 focus:ring-[#00b4d8]">
-                                    <option value="">Any Capacity</option>
-                                    <option value="4" {{ request('capacity') == '4' ? 'selected' : '' }}>4 Seats</option>
-                                    <option value="6" {{ request('capacity') == '6' ? 'selected' : '' }}>6 Seats</option>
-                                    <option value="8" {{ request('capacity') == '8' ? 'selected' : '' }}>8+ Seats (Large Group)</option>
-                                </select>
-                            </div>
-
-                            {{-- Filter: Price --}}
-                            <div class="filter-group">
-                                <label class="block text-sm font-bold text-[#003366] mb-3 uppercase tracking-wider">Price Range</label>
-                                <select name="price_range" class="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-sm text-gray-700 focus:outline-none focus:border-[#00b4d8] focus:ring-1 focus:ring-[#00b4d8]">
-                                    <option value="">All Prices</option>
-                                    <option value="low" {{ request('price_range') == 'low' ? 'selected' : '' }}>Budget (< IDR 500k)</option>
-                                    <option value="medium" {{ request('price_range') == 'medium' ? 'selected' : '' }}>Standard (500k - 1M)</option>
-                                    <option value="high" {{ request('price_range') == 'high' ? 'selected' : '' }}>Luxury (> IDR 1M)</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="w-full btn-premium py-3 rounded-xl font-bold mt-4 shadow-lg text-sm uppercase tracking-wide">
-                                Apply Filters
-                            </button>
-                        </form>
-                    </div>
-                </aside>
-
-                {{-- CAR GRID --}}
-                <div class="w-full lg:w-3/4">
-                    @if($cars->count() > 0)
-                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            @foreach($cars as $car)
-                            <div class="glass-card rounded-[2rem] overflow-hidden flex flex-col h-full group animate-fade-up">
-                                {{-- Image Container --}}
-                                <div class="relative h-48 overflow-hidden">
-                                    <img src="{{ asset($car->image_car_1) }}" 
-                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=600';"
-                                         alt="{{ $car->name_car }}" 
-                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                    
-                                    {{-- Badges --}}
-                                    <div class="absolute top-4 left-4 flex gap-2">
-                                        <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-[#003366] shadow-sm uppercase tracking-wide">
-                                            {{ $car->car_type }}
-                                        </span>
-                                    </div>
-
-                                    @if($car->rental_type)
-                                    <div class="absolute bottom-4 right-4">
-                                        <span class="px-3 py-1 bg-[#00b4d8] text-white rounded-full text-[10px] font-bold shadow-md">
-                                            With Driver
-                                        </span>
-                                    </div>
-                                    @endif
-                                </div>
-
-                                {{-- Content --}}
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="font-serif text-xl font-bold text-[#003366] mb-4 group-hover:text-[#00b4d8] transition-colors">
-                                        {{ $car->name_car }}
-                                    </h3>
-
-                                    {{-- Specs Grid --}}
-                                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-sm text-[#64748b] mb-6">
-                                        <div class="flex items-center gap-2">
-                                            <i class="fas fa-users text-[#00b4d8] w-4"></i>
-                                            <span>{{ $car->capacity }} Seats</span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <i class="fas fa-cogs text-[#00b4d8] w-4"></i>
-                                            <span>{{ $car->transmission }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 col-span-2">
-                                            <i class="fas fa-gas-pump text-[#00b4d8] w-4"></i>
-                                            <span>Include Fuel: {{ $car->include_fuel ? 'Yes' : 'No' }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-auto border-t border-gray-100 pt-4 flex items-end justify-between">
-                                        <div>
-                                            <p class="text-xs text-gray-400 mb-0.5">Starting from</p>
-                                            <p class="text-lg font-bold text-[#003366]">
-                                                IDR {{ number_format($car->price, 0, ',', '.') }}
-                                                <span class="text-xs font-normal text-gray-400">/day</span>
-                                            </p>
-                                        </div>
-                                        {{-- Note: Pastikan route detailCar ada di web.php Anda --}}
-                                        <a href="{{ route('car.detail', $car->slug) }}" class="w-10 h-10 rounded-full bg-[#003366] text-white flex items-center justify-center hover:bg-[#00b4d8] transition-colors shadow-lg">
-                                            <i class="fas fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        {{-- Pagination --}}
-                        <div class="mt-12">
-                            {{ $cars->links() }}
-                        </div>
-                    @else
-                        {{-- Empty State --}}
-                        <div class="text-center py-20 glass-card rounded-[3rem]">
-                            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
-                                <i class="fas fa-car-crash text-3xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-serif font-bold text-[#003366] mb-2">No Cars Found</h3>
-                            <p class="text-gray-500 mb-6">We couldn't find any vehicles matching your filters.</p>
-                            <a href="{{ url()->current() }}" class="btn-premium px-8 py-3 rounded-full text-white font-bold inline-block">
-                                Clear Filters
-                            </a>
-                        </div>
-                    @endif
-                </div>
+        <div class="container mx-auto px-6 relative z-10 pt-20">
+            <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">Premium Transport</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">Choose Your <br><span class="italic text-secondary">Perfect Ride</span></h1>
+                <p class="text-lg text-white/80 leading-relaxed font-light">
+                    From city cruisers to spacious family vans. Explore our well-maintained fleet designed for comfort, safety, and style across Java.
+                </p>
             </div>
         </div>
     </section>
 
+    {{-- CAR GRID --}}
+    <section class="max-w-7xl mx-auto px-6 py-20 bg-surface -mt-10 relative z-20 rounded-t-[3rem] shadow-[0_-20px_40px_rgba(0,0,0,0.05)]">
+        
+        {{-- Optional: Filter Categories (Simple Pills) --}}
+        @if(isset($carTypes) && count($carTypes) > 0)
+        <div class="flex flex-wrap gap-3 mb-12 justify-center md:justify-start relative z-10 animate-fade-up">
+            <a href="{{ route('usercar.index') }}" 
+               class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ !request('type') ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
+                All Cars
+            </a>
+            @foreach($carTypes as $type)
+            <a href="{{ route('usercar.index', ['type' => $type]) }}" 
+               class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ request('type') == $type ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
+                {{ ucfirst($type) }}
+            </a>
+            @endforeach
+        </div>
+        @endif
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+            
+            {{-- Loop Cars (Menggantikan Loop Destinations) --}}
+            @forelse ($cars as $car)
+                <div class="bg-white rounded-[2rem] shadow-lg shadow-blue-900/5 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up h-full flex flex-col group border border-white/60">
+                    <div class="relative h-56 overflow-hidden">
+                        {{-- Image Logic --}}
+                        <img loading="lazy" src="{{ asset($car->image_car_1) }}"
+                            alt="{{ $car->name_car }}"
+                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1000';"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
+                        
+                        {{-- Price Tag --}}
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
+                            IDR {{ number_format($car->price, 0, ',', '.') }} /day
+                        </div>
+
+                        {{-- Category Tag --}}
+                        <div class="absolute top-4 left-4">
+                             <span class="px-2 py-1 bg-[#003366]/80 backdrop-blur-md rounded-md text-[10px] font-bold text-white uppercase tracking-wider">
+                                {{ $car->car_type }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">{{ $car->name_car }}</h3>
+
+                        {{-- Features / Activities Replacement --}}
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            {{-- Feature 1: Capacity --}}
+                            <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
+                                <i class="fas fa-users mr-1 text-secondary"></i> {{ $car->capacity }} Seats
+                            </span>
+                            
+                            {{-- Feature 2: Transmission --}}
+                            <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
+                                <i class="fas fa-cogs mr-1 text-secondary"></i> {{ $car->transmission }}
+                            </span>
+                        </div>
+
+                        <a href="{{ route('car.detail', $car->slug) }}"
+                            class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
+                            View Details <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-full text-center py-10">
+                    <p class="text-gray-500">No cars found matching your criteria.</p>
+                    <a href="{{ route('usercar.index') }}" class="text-primary font-bold hover:underline">Clear Filters</a>
+                </div>
+            @endforelse
+
+            {{-- Custom/Contact Card --}}
+            <div class="bg-primary rounded-[2rem] shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up cursor-pointer group relative flex flex-col justify-center items-center text-center p-8 border border-white/10"
+                 onclick="window.location='https://wa.me/6281217006076'">
+                
+                {{-- Decorative circles --}}
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-secondary/20 transition-colors"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -ml-16 -mb-16 group-hover:bg-secondary/20 transition-colors"></div>
+
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform border border-white/20 backdrop-blur-sm">
+                        <i class="fas fa-headset text-3xl text-secondary"></i>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">Need Help?</h3>
+                    <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
+                        Not sure which car fits your trip? Contact us for a personal recommendation.
+                    </p>
+
+                    <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
+                        Chat with Us <i class="fab fa-whatsapp ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-12">
+            {{ $cars->links() }}
+        </div>
+    </section>
+
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
+    <a 
+        href="https://wa.me/6281217006076?text=Hello%20GOING%20TO%20THE%20JAVA!%20I%20am%20interested%20in%20renting%20a%20car." 
+        target="_blank"
+        id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+    >
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span class="whatsapp-text font-medium whitespace-nowrap">Rent Now</span>
+    </a>
+
     @include('components.client.footer')
 
+    @push('scripts')
+        <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
+        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
+    @endpush
 @endsection

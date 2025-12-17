@@ -33,9 +33,9 @@ Route::get('/destination', [UserDestinationController::class, 'index'])->name('d
 Route::get('/blog', [UserBlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/{title}', [UserBlogController::class, 'detailBlog'])->name('blogs.detail');
 
-Route::get('/car/{slug}', [UserCarController::class, 'detailCar'])->name('car.detail');
-Route::get('/car-booking/{slug}', [BookingCarController::class, 'booking'])->name('booking-car.form');
-Route::post('/car-booking', [BookingCarController::class, 'bookingStore'])->name('bookingStore');
+Route::get('/rent-car/{slug}', [UserCarController::class, 'detailCar'])->name('car.detail');
+Route::get('/rent-car-booking/{slug}', [BookingCarController::class, 'booking'])->name('booking-car.form');
+Route::post('/rent-car-booking', [BookingCarController::class, 'bookingStore'])->name('bookingStore');
 
 Route::get('/destinations/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
 Route::get('/destinations/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
