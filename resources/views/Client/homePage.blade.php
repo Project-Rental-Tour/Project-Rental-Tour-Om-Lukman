@@ -460,7 +460,17 @@
                     @foreach($testimonials as $testimoni)
                         <div class="swiper-slide h-auto">
                             <div class="glass-card p-8 rounded-[2rem] shadow-sm border-white/60 h-full flex flex-col items-center text-center relative mx-2 bg-white/80">
-                                <div class="text-secondary mb-6 text-sm">
+
+                                {{-- Gambar Testimonial --}}
+                                <div class="mb-5">
+                                    <img 
+                                        src="{{ asset('storage/' . $testimoni->image) }}" 
+                                        alt="{{ $testimoni->name }}"
+                                        class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                                    >
+                                </div>
+
+                                {{-- <div class="text-secondary mb-4 text-sm">
                                     @for ($i = 1; $i <= 5; $i++)
                                         <i class="{{ $i <= $testimoni->rating ? 'fas' : 'far' }} fa-star"></i>
                                     @endfor
@@ -470,8 +480,11 @@
                                 </p>
                                 <div class="mt-auto">
                                     <h4 class="font-bold text-primary">{{ $testimoni->name }}</h4>
-                                    <span class="text-xs text-text-light uppercase tracking-wider">{{ $testimoni->location }}</span>
-                                </div>
+                                    <span class="text-xs text-text-light uppercase tracking-wider">
+                                        {{ $testimoni->location }}
+                                    </span>
+                                </div> --}}
+
                             </div>
                         </div>
                     @endforeach

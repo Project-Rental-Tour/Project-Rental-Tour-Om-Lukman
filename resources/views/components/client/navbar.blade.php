@@ -33,7 +33,7 @@
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Destination</a></li>
                 <li><a href="{{ route('blogs.index') }}"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Blog</a></li>
-                {{-- <li><a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">List Car</a></li> --}}
+                <li><a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">List Car</a></li>
                 <li><a href="{{ route('gallery.index') }}"
                         class="block py-2 px-3 text-white rounded md:p-0 hover:text-gray-300">Gallery</a></li>
                 <li><a href="{{ route('about') }}"
