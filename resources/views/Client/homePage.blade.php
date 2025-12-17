@@ -459,7 +459,7 @@
                 <div class="swiper-wrapper">
                     @foreach($testimonials as $testimoni)
                         <div class="swiper-slide h-auto">
-                            <div class="glass-card p-8 rounded-[2rem] shadow-sm border-white/60 h-full flex flex-col items-center text-center relative mx-2 bg-white/80">
+                            <div class="glass-card rounded-[2rem] shadow-sm border-white/60 h-full flex flex-col items-center text-center relative mx-2 bg-white/80">
 
                                 {{-- Gambar Testimonial --}}
                                 <div class="mb-5">
