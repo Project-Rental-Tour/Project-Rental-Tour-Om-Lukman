@@ -183,23 +183,31 @@
                         <div class="swiper-wrapper">
                             {{-- Slide 1: Main Photo --}}
                             <div class="swiper-slide">
-                                <img loading="lazy" src="{{ asset($destination->destination_photo_1) }}" 
+                                <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
                                      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                                      alt="Main View"
                                      class="w-full h-full object-cover">
                             </div>
 
                             {{-- Slide 2 onwards: Gallery Photos --}}
-                            @if(isset($relatedGalleries))
-                                @foreach($relatedGalleries as $gallery)
-                                <div class="swiper-slide">
-                                    <img loading="lazy" src="{{ asset($gallery->gallery_photo) }}" 
-                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80';"
-                                         alt="Gallery View"
-                                         class="w-full h-full object-cover">
-                                </div>
-                                @endforeach
-                            @endif
+                           <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_3) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="swiper-slide">
+                                <img loading="lazy" src="{{ asset($destination->destination_photo_4) }}" 
+                                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                                     alt="Main View"
+                                     class="w-full h-full object-cover">
+                            </div>
                         </div>
                         {{-- Slider Controls --}}
                         <div class="swiper-button-next"></div>
