@@ -177,30 +177,51 @@
             {{-- LEFT COLUMN --}}
             <div class="lg:col-span-2 space-y-12">
                 
+                {{-- Carousel Gallery FIXED --}}
                 {{-- Carousel Gallery --}}
-                <div class="bg-white p-2 rounded-[2.5rem] shadow-xl border border-gray-100 animate-fade-up">
-                    <div id="default-carousel" class="relative w-full h-[400px] rounded-[2rem] overflow-hidden group" data-carousel="static">
-                        <div class="relative h-full overflow-hidden rounded-[2rem]">
-                            @if($car->image_car_1)
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="{{ asset($car->image_car_1) }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                                </div>
-                            @endif
-                            @if($car->image_car_2)
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="{{ asset($car->image_car_2) }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                                </div>
-                            @endif
-                            @if($car->image_car_3)
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="{{ asset($car->image_car_3) }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 animate-fade-up">
+                    <div id="gallery-carousel" class="relative w-full h-[400px] rounded-[2rem] overflow-hidden group" data-carousel="slide">
+                        
+                        {{-- Carousel Wrapper --}}
+                        <div class="relative h-full w-full overflow-hidden rounded-[2rem]">
+                            @php
+                                $galleryImages = [];
+                                if($car->image_car_1) $galleryImages[] = $car->image_car_1;
+                                if($car->image_car_2) $galleryImages[] = $car->image_car_2;
+                                if($car->image_car_3) $galleryImages[] = $car->image_car_3;
+                            @endphp
+
+                            @if(count($galleryImages) > 0)
+                                @foreach($galleryImages as $index => $image)
+                                    {{-- 
+                                    PERBAIKAN DISINI: 
+                                    1. Menambahkan 'absolute inset-0 w-full h-full' agar item menempel penuh di container.
+                                    2. Struktur gambar 'object-cover' agar tidak gepeng.
+                                    --}}
+                                    <div class="{{ $index === 0 ? 'block' : 'hidden' }} duration-700 absolute inset-0 w-full h-full" data-carousel-item="{{ $index === 0 ? 'active' : '' }}">
+                                        <img src="{{ asset($image) }}" class="absolute block w-full h-full object-cover object-center" alt="Car Image {{ $index + 1 }}">
+                                    </div>
+                                @endforeach
+                            @else
+                                {{-- Fallback Image --}}
+                                <div class="duration-700 absolute inset-0 w-full h-full" data-carousel-item="active">
+                                    <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=1920" class="absolute block w-full h-full object-cover object-center" alt="Placeholder">
                                 </div>
                             @endif
                         </div>
 
+                        {{-- Carousel Indicators --}}
+                        @if(count($galleryImages) > 1)
+                        <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                            @foreach($galleryImages as $index => $image)
+                                <button type="button" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white focus:outline-none transition-colors" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}" data-carousel-slide-to="{{ $index }}"></button>
+                            @endforeach
+                        </div>
+                        @endif
+
                         {{-- Carousel Arrows --}}
                         <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all">
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all shadow-lg">
                                 <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                                 </svg>
@@ -208,7 +229,7 @@
                             </span>
                         </button>
                         <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all">
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all shadow-lg">
                                 <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                 </svg>
@@ -432,20 +453,25 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Script manual untuk Tabs (memastikan animasi jalan)
             const tabs = document.querySelectorAll('[role="tab"]');
             const contents = document.querySelectorAll('[role="tabpanel"]');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
+                    // Reset semua tab
                     tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
                     contents.forEach(c => {
                         c.classList.add('hidden');
                         c.classList.remove('animate-fade-in');
                     });
 
+                    // Aktifkan tab yang diklik
                     tab.setAttribute('aria-selected', 'true');
                     const target = document.querySelector(tab.dataset.tabsTarget);
                     target.classList.remove('hidden');
+                    
+                    // Trigger animasi dengan sedikit delay
                     setTimeout(() => target.classList.add('animate-fade-in'), 10);
                 });
             });
