@@ -102,6 +102,21 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
         }
+        
+        /* Swiper Custom Pagination */
+        .swiper-pagination-bullet {
+            background: white;
+            opacity: 0.5;
+            width: 10px;
+            height: 10px;
+        }
+        .swiper-pagination-bullet-active {
+            background: var(--color-secondary);
+            opacity: 1;
+            width: 24px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
     </style>
 @endsection
 
@@ -177,13 +192,10 @@
             {{-- LEFT COLUMN --}}
             <div class="lg:col-span-2 space-y-12">
                 
-                {{-- Carousel Gallery FIXED --}}
-                {{-- Carousel Gallery --}}
+                {{-- Carousel Gallery (UPDATED TO SWIPER) --}}
                 <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 animate-fade-up">
-                    <div id="gallery-carousel" class="relative w-full h-[400px] rounded-[2rem] overflow-hidden group" data-carousel="slide">
-                        
-                        {{-- Carousel Wrapper --}}
-                        <div class="relative h-full w-full overflow-hidden rounded-[2rem]">
+                    <div class="swiper main-car-swiper w-full h-[400px] rounded-[2rem] overflow-hidden relative group">
+                        <div class="swiper-wrapper">
                             @php
                                 $galleryImages = [];
                                 if($car->image_car_1) $galleryImages[] = $car->image_car_1;
@@ -192,50 +204,26 @@
                             @endphp
 
                             @if(count($galleryImages) > 0)
-                                @foreach($galleryImages as $index => $image)
-                                    {{-- 
-                                    PERBAIKAN DISINI: 
-                                    1. Menambahkan 'absolute inset-0 w-full h-full' agar item menempel penuh di container.
-                                    2. Struktur gambar 'object-cover' agar tidak gepeng.
-                                    --}}
-                                    <div class="{{ $index === 0 ? 'block' : 'hidden' }} duration-700 absolute inset-0 w-full h-full" data-carousel-item="{{ $index === 0 ? 'active' : '' }}">
-                                        <img src="{{ asset($image) }}" class="absolute block w-full h-full object-cover object-center" alt="Car Image {{ $index + 1 }}">
+                                @foreach($galleryImages as $image)
+                                    <div class="swiper-slide w-full h-full">
+                                        <img src="{{ asset($image) }}" 
+                                             class="w-full h-full object-cover object-center transform transition-transform duration-500 hover:scale-105" 
+                                             alt="Car Image">
                                     </div>
                                 @endforeach
                             @else
-                                {{-- Fallback Image --}}
-                                <div class="duration-700 absolute inset-0 w-full h-full" data-carousel-item="active">
-                                    <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=1920" class="absolute block w-full h-full object-cover object-center" alt="Placeholder">
+                                <div class="swiper-slide w-full h-full">
+                                    <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=1920" 
+                                         class="w-full h-full object-cover object-center" 
+                                         alt="Placeholder">
                                 </div>
                             @endif
                         </div>
 
-                        {{-- Carousel Indicators --}}
-                        @if(count($galleryImages) > 1)
-                        <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                            @foreach($galleryImages as $index => $image)
-                                <button type="button" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white focus:outline-none transition-colors" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}" data-carousel-slide-to="{{ $index }}"></button>
-                            @endforeach
-                        </div>
-                        @endif
+                        <div class="swiper-button-next !text-white !w-12 !h-12 !bg-white/20 !backdrop-blur-md !rounded-full !shadow-lg hover:!bg-white/40 transition-all after:!text-lg after:!font-bold opacity-0 group-hover:opacity-100"></div>
+                        <div class="swiper-button-prev !text-white !w-12 !h-12 !bg-white/20 !backdrop-blur-md !rounded-full !shadow-lg hover:!bg-white/40 transition-all after:!text-lg after:!font-bold opacity-0 group-hover:opacity-100"></div>
 
-                        {{-- Carousel Arrows --}}
-                        <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all shadow-lg">
-                                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                                </svg>
-                                <span class="sr-only">Previous</span>
-                            </span>
-                        </button>
-                        <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none transition-all shadow-lg">
-                                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                                </svg>
-                                <span class="sr-only">Next</span>
-                            </span>
-                        </button>
+                        <div class="swiper-pagination !bottom-6"></div>
                     </div>
                 </div>
 
@@ -451,27 +439,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
     
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Script manual untuk Tabs (memastikan animasi jalan)
+        // Initialize Swiper
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper(".main-car-swiper", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                effect: "slide",
+                speed: 600,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+
+            // Manual Tab Logic (To prevent Flowbite/Tailwind conflict on animation)
             const tabs = document.querySelectorAll('[role="tab"]');
             const contents = document.querySelectorAll('[role="tabpanel"]');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Reset semua tab
                     tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
                     contents.forEach(c => {
                         c.classList.add('hidden');
                         c.classList.remove('animate-fade-in');
                     });
 
-                    // Aktifkan tab yang diklik
                     tab.setAttribute('aria-selected', 'true');
                     const target = document.querySelector(tab.dataset.tabsTarget);
                     target.classList.remove('hidden');
                     
-                    // Trigger animasi dengan sedikit delay
                     setTimeout(() => target.classList.add('animate-fade-in'), 10);
                 });
             });
