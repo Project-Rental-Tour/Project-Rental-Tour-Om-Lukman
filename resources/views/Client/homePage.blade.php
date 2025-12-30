@@ -204,7 +204,9 @@
     
                 {{-- CARD 1: Expert Guidance (BLUE) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Biru Muda (#eff6ff) & Teks Biru Tua (#2563eb) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #eff6ff; color: #2563eb;">
                         <i class="fas fa-map-marked-alt text-lg md:text-2xl"></i>
                     </div>
                     <div>
@@ -215,7 +217,9 @@
 
                 {{-- CARD 2: Best Value (CYAN) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Cyan Muda (#ecfeff) & Teks Cyan Tua (#0891b2) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #ecfeff; color: #0891b2;">
                         <i class="fas fa-tag text-lg md:text-2xl"></i>
                     </div>
                     <div>
@@ -226,7 +230,9 @@
 
                 {{-- CARD 3: 24/7 Concierge (INDIGO) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Indigo Muda (#eef2ff) & Teks Indigo Tua (#4f46e5) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #eef2ff; color: #4f46e5;">
                         <i class="fas fa-headset text-lg md:text-2xl"></i>
                     </div>
                     <div>
@@ -235,9 +241,11 @@
                     </div>
                 </div>
 
-                {{-- CARD 4: Eco-Conscious (GREEN/EMERALD) --}}
+                {{-- CARD 4: Eco-Conscious (EMERALD/GREEN) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Emerald Muda (#ecfdf5) & Teks Emerald Tua (#059669) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #ecfdf5; color: #059669;">
                         <i class="fas fa-leaf text-lg md:text-2xl"></i>
                     </div>
                     <div>
@@ -246,9 +254,11 @@
                     </div>
                 </div>
 
-                {{-- CARD 5: Flexible Plans (SKY) --}}
+                {{-- CARD 5: Flexible Plans (SKY BLUE) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-sky-100 text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Sky Muda (#f0f9ff) & Teks Sky Tua (#0284c7) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #f0f9ff; color: #0284c7;">
                         <i class="fas fa-calendar-check text-lg md:text-2xl"></i>
                     </div>
                     <div>
@@ -257,9 +267,11 @@
                     </div>
                 </div>
 
-                {{-- CARD 6: Tailored for You (VIOLET) --}}
+                {{-- CARD 6: Tailored for You (VIOLET/PURPLE) --}}
                 <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-violet-100 text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
+                    {{-- Inline Style: Background Violet Muda (#f5f3ff) & Teks Violet Tua (#7c3aed) --}}
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style="background-color: #f5f3ff; color: #7c3aed;">
                         <i class="fas fa-sliders-h text-lg md:text-2xl"></i>
                     </div>
                     <div>
