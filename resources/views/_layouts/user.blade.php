@@ -1,76 +1,71 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
+
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'GOING TO THE JAVA – Paket Wisata & Sewa Mobil di Jawa Timur, Indonesia')</title>
-    <meta name="description" content="GOING TO THE JAVA adalah agen travel lokal di Malang, Jawa Timur, Indonesia. Kami menyediakan paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, sewa mobil Malang & Surabaya, dengan supir profesional dan harga transparan.">
+    <meta name="description" content="@yield('meta-description', 'GOING TO THE JAVA adalah agen travel lokal di Malang, Jawa Timur, Indonesia. Kami menyediakan paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, sewa mobil Malang & Surabaya, dengan supir profesional dan harga transparan.')">
     <meta name="keywords" content="wisata Jawa Timur, paket Bromo Indonesia, sewa mobil Malang, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Surabaya, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, going to the java indonesia">
     <meta name="author" content="GOING TO THE JAVA">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.goingtothejava.com" />
+    <link rel="canonical" href="@yield('canonical', 'https://www.goingtothejava.com')" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="GOING TO THE JAVA – Travel & Sewa Mobil di Jawa Timur, Indonesia" />
-    <meta property="og:description" content="Jelajahi Gunung Bromo, Kawah Ijen, Tumpak Sewu & kota Malang-Surabaya bersama agen travel lokal terpercaya di Jawa Timur, Indonesia." />
-    <meta property="og:url" content="https://www.goingtothejava.com" />
+    <meta property="og:title" content="@yield('og-title', 'GOING TO THE JAVA – Travel & Sewa Mobil di Jawa Timur, Indonesia')" />
+    <meta property="og:description" content="@yield('og-description', 'Jelajahi Gunung Bromo, Kawah Ijen, Tumpak Sewu & kota Malang-Surabaya bersama agen travel lokal terpercaya di Jawa Timur, Indonesia.')" />
+    <meta property="og:url" content="@yield('og-url', 'https://www.goingtothejava.com')" />
     <meta property="og:site_name" content="GOING TO THE JAVA" />
-    <meta property="og:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg" />
+    <meta property="og:image" content="@yield('og-image', asset('assets/images/og-bromo-jeep.jpg'))" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content="Jeep Bromo Sunrise di Gunung Bromo, Jawa Timur, Indonesia – oleh GOING TO THE JAVA" />
+    <meta property="og:image:alt" content="@yield('og-image-alt', 'Jeep Bromo Sunrise di Gunung Bromo, Jawa Timur, Indonesia – oleh GOING TO THE JAVA')" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="GOING TO THE JAVA – Wisata Bromo, Ijen & Tumpak Sewu | Jawa Timur" />
-    <meta name="twitter:description" content="Paket wisata otentik ke destinasi ikonik Jawa Timur, Indonesia. Armada baru, pemandu lokal, harga terjangkau." />
-    <meta name="twitter:image" content="https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg" />
+    <meta name="twitter:title" content="@yield('twitter-title', 'GOING TO THE JAVA – Wisata Bromo, Ijen & Tumpak Sewu | Jawa Timur')" />
+    <meta name="twitter:description" content="@yield('twitter-description', 'Paket wisata otentik ke destinasi ikonik Jawa Timur, Indonesia. Armada baru, pemandu lokal, harga terjangkau.')" />
+    <meta name="twitter:image" content="@yield('twitter-image', asset('assets/images/og-bromo-jeep.jpg'))" />
 
-    <!-- Load Vite resources -->
+    <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- External Stylesheets -->
-    <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
-
+    <!-- Font Awesome (local) -->
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+
+    <!-- Flowbite CSS -->
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
 
-    <!-- Additional Head Content -->
-    @yield('head')
-
+    <!-- Custom Styles -->
     <style>
         .animate-fade-up {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-
         .animate-fade-up.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
-
         .stats-number {
             font-size: 2.5rem;
             font-weight: bold;
             color: #2563eb;
         }
-
         .testimonial-card {
             transition: all 0.3s ease;
         }
-
         .testimonial-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
         .quote-icon {
             position: absolute;
             top: -1rem;
@@ -84,7 +79,6 @@
             border-radius: 9999px;
             color: white;
         }
-
         .bg-primary { background-color: #799eff; }
         .text-primary { color: #799eff; }
         .text-white { color: #ffffff; }
@@ -103,7 +97,7 @@
         }
     </style>
 
-    <!-- Structured Data (Schema.org) - DIPERBAIKI -->
+    <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -111,8 +105,8 @@
         "name": "GOING TO THE JAVA",
         "description": "Agen travel lokal di Malang, Jawa Timur, Indonesia yang menyediakan paket wisata Gunung Bromo, Kawah Ijen, Air Terjun Tumpak Sewu, dan sewa mobil di Malang & Surabaya.",
         "url": "https://www.goingtothejava.com",
-        "logo": "https://www.goingtothejava.com/assets/images/logo.png",
-        "image": "https://www.goingtothejava.com/assets/images/og-bromo-jeep.jpg",
+        "logo": "{{ asset('assets/images/logo.png') }}",
+        "image": "{{ asset('assets/images/og-bromo-jeep.jpg') }}",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Malang",
@@ -129,15 +123,7 @@
         "serviceType": "Tourism and Travel Services in East Java, Indonesia",
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
-            ],
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
             "opens": "08:00",
             "closes": "22:00"
         },
@@ -155,28 +141,36 @@
     }
     </script>
 
+    @yield('head')
     @stack('styles')
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 font-sans antialiased">
     <!-- Toast Notifications -->
     @include('components.admin.toast')
-    
+
     <!-- Main Content -->
     @yield('content')
-    
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
-    
-    <!-- Custom Scripts -->
-    <script src="{{ asset('assets/js/navbar.js') }}"></script>
-    <script src="{{ asset('assets/js/stats.js') }}"></script>
-    <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
-    
+
+    <!-- Custom JS -->
+    @if (file_exists(public_path('assets/js/navbar.js')))
+        <script src="{{ asset('assets/js/navbar.js') }}"></script>
+    @endif
+    @if (file_exists(public_path('assets/js/stats.js')))
+        <script src="{{ asset('assets/js/stats.js') }}"></script>
+    @endif
+    @if (file_exists(public_path('assets/js/whatsAppIcon.js')))
+        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Fade-in animation on scroll
             const animatedElements = document.querySelectorAll('.animate-fade-up');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -187,7 +181,8 @@
             }, { threshold: 0.1 });
             animatedElements.forEach(el => observer.observe(el));
 
-            if (typeof Swiper !== 'undefined') {
+            // Swiper (Testimonials)
+            if (typeof Swiper !== 'undefined' && document.querySelector('.testimonial-swiper')) {
                 new Swiper('.testimonial-swiper', {
                     loop: true,
                     spaceBetween: 30,
@@ -203,13 +198,17 @@
                 });
             }
 
-            const scroll = new SmoothScroll('a[href*="#"]', {
-                speed: 800,
-                speedAsDuration: true
-            });
+            // Smooth scroll
+            if (typeof SmoothScroll !== 'undefined') {
+                new SmoothScroll('a[href*="#"]', {
+                    speed: 800,
+                    speedAsDuration: true
+                });
+            }
         });
     </script>
-    
+
     @stack('scripts')
 </body>
+
 </html>
