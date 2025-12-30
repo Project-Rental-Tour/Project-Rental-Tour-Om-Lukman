@@ -99,7 +99,7 @@
         - flex items-center: Konten di tengah secara vertikal.
         - pt-20: Memberi jarak agar teks tidak tertutup Navbar Fixed.
     --}}
-    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary">
+    <section id="jumbotron" class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary">
         {{-- Background Image (Absolute Inset-0: Memenuhi satu section) --}}
         <div class="absolute inset-0 z-0">
             <img src="{{ asset($blog->image_path) }}" 
