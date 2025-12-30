@@ -113,7 +113,7 @@
         </div>
 
         {{-- Content Container (Relative Z-10 agar di atas gambar) --}}
-        <div class="container mx-auto px-6 relative z-10 pt-24 text-center">
+        <div class="container px-6 relative z-10 pt-24 text-center">
             <div class="max-w-4xl mx-auto animate-fade-up">
                 
                 {{-- Meta Tags (Category & Date) --}}
