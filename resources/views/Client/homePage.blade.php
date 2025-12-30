@@ -206,58 +206,54 @@
                         'title' => 'Expert Guidance', 
                         'desc' => 'Curated by insiders who know every hidden path.', 
                         'icon' => 'fas fa-map-marked-alt', 
-                        'color' => 'blue' // Base color name
+                        // Definisikan class warna secara lengkap disini
+                        'style' => 'from-blue-50 to-blue-100 text-blue-600 shadow-blue-500/10 group-hover:shadow-blue-500/30'
                     ],
                     [
                         'title' => 'Best Value', 
                         'desc' => 'Luxury experiences at fair pricing with no hidden costs.', 
                         'icon' => 'fas fa-tag', 
-                        'color' => 'cyan'
+                        'style' => 'from-cyan-50 to-cyan-100 text-cyan-600 shadow-cyan-500/10 group-hover:shadow-cyan-500/30'
                     ],
                     [
                         'title' => '24/7 Concierge', 
                         'desc' => 'Round-the-clock assistance for peace of mind.', 
                         'icon' => 'fas fa-headset', 
-                        'color' => 'indigo'
+                        'style' => 'from-indigo-50 to-indigo-100 text-indigo-600 shadow-indigo-500/10 group-hover:shadow-indigo-500/30'
                     ],
                     [
                         'title' => 'Eco-Conscious', 
                         'desc' => 'We prioritize responsible tourism and sustainability.', 
                         'icon' => 'fas fa-leaf', 
-                        'color' => 'emerald'
+                        'style' => 'from-emerald-50 to-emerald-100 text-emerald-600 shadow-emerald-500/10 group-hover:shadow-emerald-500/30'
                     ],
                     [
                         'title' => 'Flexible Plans', 
                         'desc' => 'Change of plans? We adapt instantly to your needs.', 
                         'icon' => 'fas fa-calendar-check', 
-                        'color' => 'sky'
+                        'style' => 'from-sky-50 to-sky-100 text-sky-600 shadow-sky-500/10 group-hover:shadow-sky-500/30'
                     ],
                     [
                         'title' => 'Tailored for You', 
                         'desc' => 'Customizable to your personal rhythm and style.', 
                         'icon' => 'fas fa-sliders-h', 
-                        'color' => 'violet'
+                        'style' => 'from-violet-50 to-violet-100 text-violet-600 shadow-violet-500/10 group-hover:shadow-violet-500/30'
                     ]
                 ] as $feature)
                     <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60 hover:border-secondary/30 animate-fade-up h-full">
                         
                         {{-- Bagian Icon Premium --}}
-                        {{-- Menggunakan Dynamic Color Classes untuk Gradient & Shadow --}}
+                        {{-- Variable $feature['style'] sekarang berisi class lengkap yang terbaca Tailwind --}}
                         <div class="w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-300 
-                                    bg-gradient-to-br from-{{ $feature['color'] }}-50 to-{{ $feature['color'] }}-100 
-                                    text-{{ $feature['color'] }}-600 
-                                    shadow-lg shadow-{{ $feature['color'] }}-500/10 
-                                    group-hover:shadow-{{ $feature['color'] }}-500/30 
-                                    group-hover:scale-110">
+                                    bg-gradient-to-br shadow-lg group-hover:scale-110 
+                                    {{ $feature['style'] }}">
                             <i class="{{ $feature['icon'] }} text-lg md:text-2xl"></i>
                         </div>
 
                         <div class="flex-grow">
-                            {{-- Judul --}}
                             <h4 class="font-serif text-base md:text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors leading-tight">
                                 @translate($feature['title'])
                             </h4>
-                            {{-- Deskripsi (Ukuran font dikecilkan sedikit di mobile agar muat 2 kolom) --}}
                             <p class="text-text-light text-xs md:text-sm leading-relaxed font-light">
                                 @translate($feature['desc'])
                             </p>
