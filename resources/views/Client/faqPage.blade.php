@@ -193,7 +193,9 @@
         <div class="text-center mt-16 animate-fade-up relative z-10" style="animation-delay: 0.8s">
             <p class="text-gray-500 mb-6">Still have questions?</p>
             {{-- WhatsApp Button (Kept Green) --}}
-            <a href="https://wa.me/6281217006076" target="_blank" 
+            <a href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+   target="_blank"
+   rel="noopener noreferrer" 
                class="inline-flex items-center px-8 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
                 <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i> Chat Support
             </a>
