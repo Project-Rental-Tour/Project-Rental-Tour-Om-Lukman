@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -91,11 +90,15 @@
 
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
-                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">Where to Next?</span>
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">Explore Our <br><span class="italic text-secondary">Destinations</span></h1>
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
+                    @translate('Where to Next?')
+                </span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
+                    @translate('Explore Our') <br>
+                    <span class="italic text-secondary">@translate('Destinations')</span>
+                </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments. 
-                    From serene beaches to mountain treks, we’ve got your next journey covered.
+                    @translate('Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments. From serene beaches to mountain treks, we’ve got your next journey covered.')
                 </p>
             </div>
         </div>
@@ -103,9 +106,7 @@
 
     {{-- DESTINATION GRID --}}
     <section class="max-w-7xl mx-auto px-6 py-20 bg-surface -mt-10 relative z-20 rounded-t-[3rem] shadow-[0_-20px_40px_rgba(0,0,0,0.05)]">
-        {{-- Background Blobs --}}
-
-
+        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             
             @foreach ($destinations as $destination)
@@ -118,30 +119,34 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
                         
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
-                            IDR {{ number_format($destination->price, 0, ',', '.') }}
+                            {{-- Ganti format hardcode IDR dengan helper currency --}}
+                            @currency($destination->price)
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">{{ $destination->name_package }}</h3>
+                        <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">
+                            @translate($destination->name_package)
+                        </h3>
 
                         <div class="flex flex-wrap gap-2 mb-6">
+                            {{-- Loop Activities, translate per item --}}
                             @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
                                 @if(trim($activity))
                                     <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
-                                        {{ trim($activity) }}
+                                        @translate(trim($activity))
                                     </span>
                                 @endif
                             @endforeach
 
                             @if(count(explode(',', $destination->activities)) > 2)
-                                <span class="text-gray-400 text-xs flex items-center">+More</span>
+                                <span class="text-gray-400 text-xs flex items-center">@translate('+More')</span>
                             @endif
                         </div>
 
                         <a href="{{ route('destination.show', $destination->slug) }}"
                             class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
-                            View Details <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            @translate('View Details') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -160,13 +165,15 @@
                         <i class="fas fa-magic text-3xl text-secondary"></i>
                     </div>
                     
-                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">Design Your <br> Trip</h3>
+                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">
+                        @translate('Design Your') <br> @translate('Trip')
+                    </h3>
                     <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
-                        No package fits? Tell us your dream destination and we'll create a custom experience.
+                        @translate('No package fits? Tell us your dream destination and we\'ll create a custom experience.')
                     </p>
 
                     <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
-                        Customize Now <i class="fas fa-arrow-right ml-2"></i>
+                        @translate('Customize Now') <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -175,7 +182,7 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-        <a 
+    <a 
         href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
@@ -183,7 +190,7 @@
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
     </a>
 
     @include('components.client.footer')

@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -139,7 +138,7 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-4xl animate-fade-up">
                 <span class="bg-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block shadow-lg shadow-secondary/30">
-                    {{ ucfirst($car->car_type ?? 'General') }} Car
+                    @translate(ucfirst($car->car_type ?? 'General')) @translate('Car')
                 </span>
                 
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg drop-shadow-md">
@@ -148,22 +147,24 @@
                 
                 <div class="flex flex-wrap items-center gap-6 text-white/90 text-lg font-light">
                     <span class="flex items-center gap-2">
-                        <i class="fas fa-users text-secondary"></i> {{ $car->capacity }} Seats
+                        <i class="fas fa-users text-secondary"></i> {{ $car->capacity }} @translate('Seats')
                     </span>
                     <span class="hidden md:inline">•</span>
                     <span class="flex items-center gap-2">
-                        <i class="fas fa-cog text-secondary"></i> {{ ucfirst($car->transmission) }}
+                        <i class="fas fa-cog text-secondary"></i> @translate(ucfirst($car->transmission))
                     </span>
                 </div>
 
                 <div class="mt-8 flex items-center gap-4">
                     <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
-                        <p class="text-xs text-white/70 uppercase font-bold tracking-wider mb-1">Daily Rate</p>
-                        <p class="text-2xl font-bold text-white">Rp{{ number_format($car->price, 0, ',', '.') }}</p>
+                        <p class="text-xs text-white/70 uppercase font-bold tracking-wider mb-1">@translate('Daily Rate')</p>
+                        <p class="text-2xl font-bold text-white">
+                            @currency($car->price)
+                        </p>
                     </div>
                     <span class="px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider
                         {{ $car->car_status == 'available' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30' }}">
-                        {{ ucfirst($car->car_status) }}
+                        @translate(ucfirst($car->car_status))
                     </span>
                 </div>
             </div>
@@ -174,9 +175,9 @@
     <nav class="bg-white/80 backdrop-blur-md border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-500">
-                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">Home</a></li>
+                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">@translate('Home')</a></li>
                 <li>/</li>
-                <li><a href="{{route('usercar.index')}}" class="hover:text-primary transition-colors font-medium">Cars</a></li>
+                <li><a href="{{route('usercar.index')}}" class="hover:text-primary transition-colors font-medium">@translate('Cars')</a></li>
                 <li>/</li>
                 <li class="font-bold text-primary">{{ $car->name_car }}</li>
             </ol>
@@ -242,7 +243,7 @@
                                     aria-controls="{{ $key }}"
                                     aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                                     class="tab-btn px-6 py-3 rounded-xl border text-sm font-bold transition-all duration-300">
-                                    {{ $label }}
+                                    @translate($label)
                                 </button>
                             </li>
                             @endforeach
@@ -252,39 +253,45 @@
                     <div id="myTabContent" class="p-8">
                         {{-- Overview --}}
                         <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-4">Car Overview</h3>
-                            <p class="text-gray-600 leading-relaxed mb-8">{{ $car->description }}</p>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-4">@translate('Car Overview')</h3>
+                            <p class="text-gray-600 leading-relaxed mb-8">
+                                @translate($car->description)
+                            </p>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
-                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Rental Type</h4>
-                                    <p class="font-semibold text-gray-800">{{ $car->rental_type ? 'With Driver' : 'Self Drive' }}</p>
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Rental Type')</h4>
+                                    <p class="font-semibold text-gray-800">
+                                        @translate($car->rental_type ? 'With Driver' : 'Self Drive')
+                                    </p>
                                 </div>
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
-                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Capacity</h4>
-                                    <p class="font-semibold text-gray-800">{{ $car->capacity }} Passengers</p>
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Capacity')</h4>
+                                    <p class="font-semibold text-gray-800">{{ $car->capacity }} @translate('Passengers')</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Specs --}}
                         <div class="hidden animate-fade-in" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Technical Specifications</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Technical Specifications')</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-4">
                                     <div class="flex justify-between p-3 bg-gray-50 rounded-lg">
-                                        <span class="text-gray-600">Transmission</span>
-                                        <span class="font-bold text-primary">{{ ucfirst($car->transmission) }}</span>
+                                        <span class="text-gray-600">@translate('Transmission')</span>
+                                        <span class="font-bold text-primary">@translate(ucfirst($car->transmission))</span>
                                     </div>
                                     <div class="flex justify-between p-3 bg-gray-50 rounded-lg">
-                                        <span class="text-gray-600">Car Type</span>
-                                        <span class="font-bold text-primary">{{ $car->car_type ?? 'N/A' }}</span>
+                                        <span class="text-gray-600">@translate('Car Type')</span>
+                                        <span class="font-bold text-primary">@translate($car->car_type ?? 'N/A')</span>
                                     </div>
                                 </div>
                                 <div class="space-y-4">
                                     <div class="flex justify-between p-3 bg-gray-50 rounded-lg">
-                                        <span class="text-gray-600">Status</span>
-                                        <span class="font-bold {{ $car->car_status == 'available' ? 'text-green-600' : 'text-red-600' }}">{{ ucfirst($car->car_status) }}</span>
+                                        <span class="text-gray-600">@translate('Status')</span>
+                                        <span class="font-bold {{ $car->car_status == 'available' ? 'text-green-600' : 'text-red-600' }}">
+                                            @translate(ucfirst($car->car_status))
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -292,18 +299,18 @@
 
                         {{-- Features --}}
                         <div class="hidden animate-fade-in" id="features" role="tabpanel" aria-labelledby="features-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Features & Amenities</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Features & Amenities')</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h4 class="font-bold text-primary mb-4 flex items-center gap-2 bg-green-50 p-3 rounded-lg border border-green-100">
-                                        <i class="fas fa-check text-green-600"></i> Included Features
+                                        <i class="fas fa-check text-green-600"></i> @translate('Included Features')
                                     </h4>
                                     <ul class="space-y-2">
                                         @foreach(explode(',', $car->include) as $item)
                                             @if(trim($item))
                                                 <li class="text-gray-600 flex items-start gap-2 text-sm">
                                                     <span class="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 shrink-0"></span>
-                                                    {{ trim($item) }}
+                                                    @translate(trim($item))
                                                 </li>
                                             @endif
                                         @endforeach
@@ -311,23 +318,24 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-blue-700 mb-4 flex items-center gap-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                        <i class="fas fa-plus text-blue-600"></i> Additional Info
+                                        <i class="fas fa-plus text-blue-600"></i> @translate('Additional Info')
                                     </h4>
-                                    <p class="text-gray-500 text-sm">Contact us for specific feature requests like child seats or roof racks.</p>
+                                    <p class="text-gray-500 text-sm">@translate('Contact us for specific feature requests like child seats or roof racks.')</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Notes --}}
                         <div class="hidden animate-fade-in" id="notes" role="tabpanel" aria-labelledby="notes-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">Important Notes</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Important Notes')</h3>
                             <div class="bg-blue-50 border border-blue-100 p-6 rounded-2xl">
                                 <ul class="space-y-3">
                                     @foreach(explode("\n", $car->notes) as $line)
                                         @if(trim($line))
                                             <li class="flex items-start gap-3 text-gray-700 text-sm">
                                                 <i class="fas fa-info-circle text-secondary mt-0.5"></i>
-                                                <span>{!! trim($line) !!}</span>
+                                                {{-- Menggunakan !! !! agar jika ada bold dari translate tetap aman --}}
+                                                <span>{!! \App\Helpers\TranslationHelper::translate(trim($line)) !!}</span>
                                             </li>
                                         @endif
                                     @endforeach
@@ -342,37 +350,37 @@
             <div class="lg:col-span-1">
                 <div class="glass-card p-8 rounded-[2.5rem] shadow-2xl sticky top-28 animate-fade-up border border-white/60" style="animation-delay: 0.3s">
                     <div class="text-center mb-8">
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Daily Rate</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">@translate('Daily Rate')</p>
                         <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
-                            Rp{{ number_format($car->price, 0, ',', '.') }}
+                            @currency($car->price)
                         </div>
                     </div>
 
                     <div class="space-y-4">
                         <a href="{{ route('booking-car.form', $car->slug) }}"
                             class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 group">
-                            Book Now <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                            @translate('Book Now') <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
 
                         <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA,%20I'm%20interested%20in%20renting%20{{ $car->name_car }}" 
                            target="_blank"
                            class="w-full py-4 bg-white text-primary rounded-xl font-bold border border-primary/20 flex items-center justify-center gap-2 hover:bg-primary/5 transition-all">
-                            <i class="fab fa-whatsapp text-xl"></i> Chat for Info
+                            <i class="fab fa-whatsapp text-xl"></i> @translate('Chat for Info')
                         </a>
                     </div>
 
                     <div class="mt-8 pt-8 border-t border-gray-100 space-y-3">
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>Instant Confirmation</span>
+                            <span>@translate('Instant Confirmation')</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>Well Maintained</span>
+                            <span>@translate('Well Maintained')</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>24/7 Roadside Assist</span>
+                            <span>@translate('24/7 Roadside Assist')</span>
                         </div>
                     </div>
                 </div>
@@ -381,7 +389,7 @@
 
         {{-- FAQ Section --}}
         <div class="glass-card p-8 rounded-[2rem] shadow-lg border border-white/60 mt-12 animate-fade-up relative z-10" style="animation-delay: 0.4s">
-            <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">Rental FAQ</h3>
+            <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">@translate('Rental FAQ')</h3>
             <div class="space-y-4 max-w-3xl mx-auto" id="accordion-open" data-accordion="open">
                 @foreach([
                     'What documents are required?' => 'For self-drive: Driver license, ID/Passport, Credit Card deposit. With driver: Only ID/Passport.',
@@ -392,7 +400,7 @@
                 <div class="border border-white/50 bg-white/50 rounded-xl overflow-hidden" data-accordion-item>
                     <h2 id="accordion-heading-{{ $loop->index }}">
                         <button type="button" class="flex items-center justify-between w-full p-5 text-left font-bold text-gray-800 bg-white/50 hover:bg-primary/5 transition-colors focus:outline-none" data-accordion-target="#accordion-body-{{ $loop->index }}" aria-expanded="false" aria-controls="accordion-body-{{ $loop->index }}">
-                            <span>{{ $q }}</span>
+                            <span>@translate($q)</span>
                             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-gray-500 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                             </svg>
@@ -400,7 +408,7 @@
                     </h2>
                     <div id="accordion-body-{{ $loop->index }}" class="hidden" aria-labelledby="accordion-heading-{{ $loop->index }}">
                         <div class="p-5 bg-white text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                            {{ $a }}
+                            @translate($a)
                         </div>
                     </div>
                 </div>
@@ -412,13 +420,13 @@
         <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up z-10">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="relative z-10 mb-6 md:mb-0">
-                <h3 class="text-3xl font-bold text-white font-serif mb-2">Ready to hit the road?</h3>
-                <p class="text-white/80">Book your perfect car now and enjoy a seamless journey.</p>
+                <h3 class="text-3xl font-bold text-white font-serif mb-2">@translate('Ready to hit the road?')</h3>
+                <p class="text-white/80">@translate('Book your perfect car now and enjoy a seamless journey.')</p>
             </div>
             <div class="relative z-10">
                 <a href="{{ route('booking-car.form', $car->slug) }}"
                     class="inline-flex items-center px-8 py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg">
-                    Rent This Car <i class="fas fa-key ml-2"></i>
+                    @translate('Rent This Car') <i class="fas fa-key ml-2"></i>
                 </a>
             </div>
         </div>
@@ -433,7 +441,7 @@
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
     </a>
 
     @include('components.client.footer')

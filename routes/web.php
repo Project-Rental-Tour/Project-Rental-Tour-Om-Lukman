@@ -11,16 +11,25 @@ use App\Http\Controllers\admin\GalleriesController;
 use App\Http\Controllers\admin\DestinationController;
 use App\Http\Controllers\admin\BookingCarController;
 use App\Http\Controllers\user\UserCarController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserGalleryController;
 use App\Http\Controllers\user\UserDestinationController;
 use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\user\UserBlogController;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
 // User-Route
 Route::get('/test', function () {
     return 'OK';
 });
+
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        Session::put('app_locale', $locale);
+    }
+    return redirect()->back();
+})->name('switch.language');
 
 Route::resource('/', HomeController::class);
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');

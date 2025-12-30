@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -126,13 +125,14 @@
         </div>
 
         <div class="container mx-auto px-6 relative z-10 text-center pt-20">
-            <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up shadow-secondary/20">Personalized Journey</span>
+            <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up shadow-secondary/20">
+                @translate('Personalized Journey')
+            </span>
             <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-serif animate-fade-up shadow-sm drop-shadow-md">
-                Design Your <span class="italic text-secondary">Dream Trip</span>
+                @translate('Design Your') <span class="italic text-secondary">@translate('Dream Trip')</span>
             </h1>
             <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed animate-fade-up font-light" style="animation-delay: 0.2s">
-                No package fits your dream? Tell us your ideal destination, dates, and preferences —
-                we’ll create a personalized travel experience just for you.
+                @translate('No package fits your dream? Tell us your ideal destination, dates, and preferences — we’ll create a personalized travel experience just for you.')
             </p>
         </div>
     </section>
@@ -145,8 +145,10 @@
         <div class="max-w-5xl mx-auto glass-card rounded-[2.5rem] shadow-2xl shadow-blue-900/10 overflow-hidden animate-fade-up relative z-10" style="animation-delay: 0.4s">
             
             <div class="bg-gray-50/50 px-8 md:px-12 py-8 border-b border-gray-100 text-center">
-                <h2 class="text-3xl font-bold text-primary font-serif">Your Travel Preferences</h2>
-                <p class="text-gray-500 mt-2 font-light">Fill in the details below. We’ll get back within 24 hours with a curated quote.</p>
+                <h2 class="text-3xl font-bold text-primary font-serif">@translate('Your Travel Preferences')</h2>
+                <p class="text-gray-500 mt-2 font-light">
+                    @translate('Fill in the details below. We’ll get back within 24 hours with a curated quote.')
+                </p>
             </div>
 
             <form action="{{ route('booking.custom.store') }}" method="POST" class="p-8 md:p-12 space-y-10">
@@ -154,22 +156,23 @@
 
                 <div class="space-y-6">
                     <h3 class="text-lg font-bold text-primary border-b border-gray-100 pb-2 flex items-center gap-2">
-                        <i class="fas fa-map-marked-alt text-secondary"></i> Trip Details
+                        <i class="fas fa-map-marked-alt text-secondary"></i> @translate('Trip Details')
                     </h3>
                     
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                            Destinations You Want to Visit <span class="text-red-500">*</span>
+                            @translate('Destinations You Want to Visit') <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="custom_destinations" placeholder="e.g. Bali, Komodo, Lombok, Yogyakarta"
+                        <input type="text" name="custom_destinations" 
+                            placeholder="<?php echo \App\Helpers\TranslationHelper::translate('e.g. Bali, Komodo, Lombok, Yogyakarta'); ?>"
                             class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
-                        <p class="text-xs text-gray-400 mt-2 font-light">Separate multiple destinations with commas.</p>
+                        <p class="text-xs text-gray-400 mt-2 font-light">@translate('Separate multiple destinations with commas.')</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                                Preferred Travel Date <span class="text-red-500">*</span>
+                                @translate('Preferred Travel Date') <span class="text-red-500">*</span>
                             </label>
                             <input type="date" name="travel_date" required
                                 class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-gray-600">
@@ -177,14 +180,15 @@
 
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                                Trip Duration <span class="text-red-500">*</span>
+                                @translate('Trip Duration') <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="duration_nights" placeholder="e.g. 3d 2n"
+                            <input type="text" name="duration_nights" 
+                                placeholder="<?php echo \App\Helpers\TranslationHelper::translate('e.g. 3d 2n'); ?>"
                                 pattern="(\d+\s*d)?\s*(\d+\s*n)?"
                                 class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
                                 required>
                             <p class="text-xs text-gray-400 mt-2 font-light">
-                                Format: <code class="text-primary font-bold">d</code> for days, <code class="text-primary font-bold">n</code> for nights. Ex: 3d 2n
+                                @translate('Format:') <code class="text-primary font-bold">d</code> @translate('for days'), <code class="text-primary font-bold">n</code> @translate('for nights. Ex: 3d 2n')
                             </p>
                         </div>
                     </div>
@@ -192,20 +196,20 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                                Number of Travelers <span class="text-red-500">*</span>
+                                @translate('Number of Travelers') <span class="text-red-500">*</span>
                             </label>
 
                             <select name="travelers_select" id="travelers_select" required 
                                     class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors cursor-pointer"
                                     onchange="toggleCustomTravelersInput()">
-                                <option value="">Select number</option>
-                                <option value="1">1 person</option>
-                                <option value="2">2 people</option>
-                                <option value="3">3 people</option>
-                                <option value="4">4 people</option>
-                                <option value="5">5 people</option>
-                                <option value="6">6 people</option>
-                                <option value="other">Other (please specify)</option>
+                                <option value="">@translate('Select number')</option>
+                                <option value="1">@translate('1 person')</option>
+                                <option value="2">@translate('2 people')</option>
+                                <option value="3">@translate('3 people')</option>
+                                <option value="4">@translate('4 people')</option>
+                                <option value="5">@translate('5 people')</option>
+                                <option value="6">@translate('6 people')</option>
+                                <option value="other">@translate('Other (please specify)')</option>
                             </select>
 
                             <div id="custom_travelers_container" class="mt-4 hidden animate-fade-up">
@@ -213,7 +217,7 @@
                                     name="travelers_custom" 
                                     id="travelers_custom"
                                     min="1"
-                                    placeholder="Enter specific number"
+                                    placeholder="<?php echo \App\Helpers\TranslationHelper::translate('Enter specific number'); ?>"
                                     class="w-full p-4 border border-gray-200 rounded-xl bg-white border-secondary ring-1 ring-secondary"
                                     oninput="syncTravelersValue()">
                             </div>
@@ -221,15 +225,15 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Budget Range (per person)</label>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Budget Range (per person)')</label>
                             <div class="relative">
                                 <select name="budget_range" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors appearance-none cursor-pointer">
-                                    <option value="">No preference</option>
-                                    <option value="Below Rp 3 juta">Below Rp 3.000.000</option>
-                                    <option value="Rp 3 - 5 juta">Rp 3.000.000 - 5.000.000</option>
-                                    <option value="Rp 5 - 8 juta">Rp 5.000.000 - 8.000.000</option>
-                                    <option value="Rp 8 - 12 juta">Rp 8.000.000 - 12.000.000</option>
-                                    <option value="Above Rp 12 juta">Above Rp 12.000.000</option>
+                                    <option value="">@translate('No preference')</option>
+                                    <option value="Below Rp 3 juta">@translate('Below Rp 3.000.000')</option>
+                                    <option value="Rp 3 - 5 juta">@translate('Rp 3.000.000 - 5.000.000')</option>
+                                    <option value="Rp 5 - 8 juta">@translate('Rp 5.000.000 - 8.000.000')</option>
+                                    <option value="Rp 8 - 12 juta">@translate('Rp 8.000.000 - 12.000.000')</option>
+                                    <option value="Above Rp 12 juta">@translate('Above Rp 12.000.000')</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
                                     <i class="fas fa-chevron-down text-xs"></i>
@@ -241,19 +245,19 @@
 
                 <div class="space-y-6">
                     <h3 class="text-lg font-bold text-primary border-b border-gray-100 pb-2 flex items-center gap-2">
-                        <i class="fas fa-heart text-secondary"></i> Interests & Activities
+                        <i class="fas fa-heart text-secondary"></i> @translate('Interests & Activities')
                     </h3>
                     
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">
-                            What Interests You?
+                            @translate('What Interests You?')
                         </label>
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             @foreach(['Adventure', 'Relaxation', 'Cultural', 'Honeymoon', 'Family', 'Photography', 'Food & Culinary', 'Trekking', 'Beach'] as $interest)
                                 <label class="cursor-pointer relative group">
                                     <input type="checkbox" name="interests[]" value="{{ $interest }}" class="peer sr-only">
                                     <div class="p-3 border border-gray-200 rounded-xl text-center text-sm text-gray-600 transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary group-hover:border-secondary">
-                                        {{ $interest }}
+                                        @translate($interest)
                                     </div>
                                 </label>
                             @endforeach
@@ -263,27 +267,27 @@
 
                 <div class="space-y-6">
                     <h3 class="text-lg font-bold text-primary border-b border-gray-100 pb-2 flex items-center gap-2">
-                        <i class="fas fa-user text-secondary"></i> Contact Information
+                        <i class="fas fa-user text-secondary"></i> @translate('Contact Information')
                     </h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">First Name <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('First Name') <span class="text-red-500">*</span></label>
                             <input type="text" name="first_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Last Name <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Last Name') <span class="text-red-500">*</span></label>
                             <input type="text" name="last_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Email Address <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Email Address') <span class="text-red-500">*</span></label>
                             <input type="email" name="email" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Phone Number <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Phone Number') <span class="text-red-500">*</span></label>
                             <div class="flex gap-3">
                                 <select name="country_code" id="country_code" class="w-1/3 md:w-1/4 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-sm" required>
-                                    <option value="">Code</option>
+                                    <option value="">@translate('Code')</option>
                                     <option value="+62">🇮🇩 +62</option>
                                     <option value="+1">🇺🇸 +1</option>
                                     <option value="+60">🇲🇾 +60</option>
@@ -296,17 +300,21 @@
                             </div>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Special Request / Notes</label>
-                            <textarea name="message" rows="4" placeholder="Tell us more about your dream trip..." class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors resize-none"></textarea>
+                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Special Request / Notes')</label>
+                            <textarea name="message" rows="4" 
+                                placeholder="<?php echo \App\Helpers\TranslationHelper::translate('Tell us more about your dream trip...'); ?>" 
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors resize-none"></textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-6">
                     <button type="submit" class="btn-premium w-full py-5 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20 hover:shadow-blue-900/40 flex items-center justify-center gap-3">
-                        Submit Request <i class="fas fa-paper-plane"></i>
+                        @translate('Submit Request') <i class="fas fa-paper-plane"></i>
                     </button>
-                    <p class="text-xs text-gray-400 text-center mt-4">By submitting this form, you agree to our terms & conditions.</p>
+                    <p class="text-xs text-gray-400 text-center mt-4">
+                        @translate('By submitting this form, you agree to our terms & conditions.')
+                    </p>
                 </div>
             </form>
         </div>
@@ -321,7 +329,7 @@
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
     </a>
 
     @include('components.client.footer')

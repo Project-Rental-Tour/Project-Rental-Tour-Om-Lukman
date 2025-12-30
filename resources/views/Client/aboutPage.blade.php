@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -112,10 +111,16 @@
 
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
-                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">Who We Are</span>
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">Crafting <span class="italic text-secondary">Unforgettable</span> <br> Journeys</h1>
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
+                    @translate('Who We Are')
+                </span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
+                    @translate('Crafting') 
+                    <span class="italic text-secondary">@translate('Unforgettable')</span> <br> 
+                    @translate('Journeys')
+                </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    We are passionate about connecting travelers with the authentic beauty, culture, and adventure of Indonesia and beyond.
+                    @translate('We are passionate about connecting travelers with the authentic beauty, culture, and adventure of Indonesia and beyond.')
                 </p>
             </div>
         </div>
@@ -123,9 +128,7 @@
 
     {{-- MAIN CONTENT --}}
     <section class="max-w-7xl mx-auto px-6 py-20 bg-surface -mt-10 relative z-20 rounded-t-[3rem] shadow-[0_-20px_40px_rgba(0,0,0,0.05)]">
-        {{-- Background Blobs --}}
-
-
+        
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start relative z-10">
 
             {{-- Left Column --}}
@@ -137,14 +140,16 @@
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/80 to-transparent opacity-80"></div>
                     <div class="absolute bottom-8 left-8 right-8 text-white">
-                        <p class="font-serif text-xl italic text-balance">"Our team is ready to make your dream trip come true — anytime, anywhere."</p>
+                        <p class="font-serif text-xl italic text-balance">
+                            "@translate('Our team is ready to make your dream trip come true — anytime, anywhere.')"
+                        </p>
                     </div>
                 </div>
 
                 <div class="glass-card bg-white p-8 rounded-[2rem] shadow-xl border border-white/60 animate-fade-up" style="animation-delay: 0.2s">
-                    <h3 class="text-2xl font-bold text-primary font-serif mb-2">Get in Touch</h3>
+                    <h3 class="text-2xl font-bold text-primary font-serif mb-2">@translate('Get in Touch')</h3>
                     <p class="text-text-light mb-8 text-sm">
-                        Have questions? Our dedicated team is here to assist you every step of the way.
+                        @translate('Have questions? Our dedicated team is here to assist you every step of the way.')
                     </p>
 
                     <div class="space-y-4">
@@ -153,7 +158,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">Email Us</h4>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('Email Us')</h4>
                                 <a href="mailto:goingtothejava@gmail.com" class="text-text-light text-sm hover:text-primary transition-colors">
                                     goingtothejava@gmail.com
                                 </a>
@@ -166,7 +171,7 @@
                                 <i class="fab fa-whatsapp text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">WhatsApp Support</h4>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('WhatsApp Support')</h4>
                                 <div class="flex gap-4 text-sm mt-1">
                                     <a href="https://wa.me/6281217006076" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
                                     <span class="text-gray-300">|</span>
@@ -180,8 +185,8 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">Our Office</h4>
-                                <p class="text-text-light text-sm">Malang, East Java, Indonesia</p>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('Our Office')</h4>
+                                <p class="text-text-light text-sm">@translate('Malang, East Java, Indonesia')</p>
                             </div>
                         </div>
                     </div>
@@ -191,14 +196,17 @@
             {{-- Right Column --}}
             <div class="space-y-10 lg:mt-10">
                 <div class="animate-fade-up">
-                    <span class="text-secondary font-bold tracking-widest uppercase text-xs mb-3 block">Our Philosophy</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-primary font-serif mb-6">More Than Just A Trip</h2>
+                    <span class="text-secondary font-bold tracking-widest uppercase text-xs mb-3 block">
+                        @translate('Our Philosophy')
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary font-serif mb-6">
+                        @translate('More Than Just A Trip')
+                    </h2>
                     <p class="text-text-light leading-relaxed mb-6 text-lg font-light">
-                        Founded in 2010, our journey began with a simple dream: to make meaningful travel accessible to everyone. 
-                        Today, we've helped over 15,000 travelers explore hidden gems, experience local cultures, and create memories that last a lifetime.
+                        @translate("Founded in 2010, our journey began with a simple dream: to make meaningful travel accessible to everyone. Today, we've helped over 15,000 travelers explore hidden gems, experience local cultures, and create memories that last a lifetime.")
                     </p>
                     <p class="text-text-light leading-relaxed text-lg font-light">
-                        We believe travel is about connection, discovery, and transformation. That’s why every trip we design is crafted with care, sustainability, and authenticity in mind.
+                        @translate('We believe travel is about connection, discovery, and transformation. That’s why every trip we design is crafted with care, sustainability, and authenticity in mind.')
                     </p>
                 </div>
 
@@ -207,32 +215,40 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                             <i class="fas fa-mountain text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">Adventure</h3>
-                        <p class="text-sm text-text-light">We seek the extraordinary in every journey, going beyond the beaten path.</p>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Adventure')</h3>
+                        <p class="text-sm text-text-light">
+                            @translate('We seek the extraordinary in every journey, going beyond the beaten path.')
+                        </p>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group animate-fade-up" style="animation-delay: 0.3s">
                         <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
                             <i class="fas fa-leaf text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">Sustainability</h3>
-                        <p class="text-sm text-text-light">We travel responsibly, minimizing impact and supporting local communities.</p>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Sustainability')</h3>
+                        <p class="text-sm text-text-light">
+                            @translate('We travel responsibly, minimizing impact and supporting local communities.')
+                        </p>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group animate-fade-up" style="animation-delay: 0.4s">
                         <div class="w-12 h-12 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
                             <i class="fas fa-heart text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">Passion</h3>
-                        <p class="text-sm text-text-light">We pour our hearts into crafting every itinerary for the best experience.</p>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Passion')</h3>
+                        <p class="text-sm text-text-light">
+                            @translate('We pour our hearts into crafting every itinerary for the best experience.')
+                        </p>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group animate-fade-up" style="animation-delay: 0.5s">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                             <i class="fas fa-shield-alt text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">Trust</h3>
-                        <p class="text-sm text-text-light">Your safety and satisfaction are our top priorities, always.</p>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Trust')</h3>
+                        <p class="text-sm text-text-light">
+                            @translate('Your safety and satisfaction are our top priorities, always.')
+                        </p>
                     </div>
                 </div>
             </div>
@@ -242,13 +258,13 @@
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
         href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
     </a>
 
     @include('components.client.footer')

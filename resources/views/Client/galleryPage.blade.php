@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -91,11 +90,14 @@
 
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
-                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20 drop-shadow-sm">Visual Diary</span>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 font-serif leading-tight">Our Travel <span class="italic text-secondary">Gallery</span></h1>
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20 drop-shadow-sm">
+                    @translate('Visual Diary')
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 font-serif leading-tight">
+                    @translate('Our Travel') <span class="italic text-secondary">@translate('Gallery')</span>
+                </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    Every photo tells a story. Explore breathtaking moments from our journeys around the world — 
-                    from hidden villages to majestic landscapes and joyful traveler experiences.
+                    @translate('Every photo tells a story. Explore breathtaking moments from our journeys around the world — from hidden villages to majestic landscapes and joyful traveler experiences.')
                 </p>
             </div>
         </div>
@@ -119,8 +121,12 @@
                     
                     {{-- Overlay Gradient on Hover --}}
                     <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <span class="text-secondary text-xs font-bold uppercase tracking-wider mb-1">Moment</span>
-                        <h3 class="text-white font-serif text-lg md:text-xl font-bold leading-tight">{{ $gallery->title }}</h3>
+                        <span class="text-secondary text-xs font-bold uppercase tracking-wider mb-1">
+                            @translate('Moment')
+                        </span>
+                        <h3 class="text-white font-serif text-lg md:text-xl font-bold leading-tight">
+                            @translate($gallery->title)
+                        </h3>
                     </div>
                 </div>
             @empty
@@ -128,13 +134,13 @@
                     <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="far fa-images text-gray-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-400 text-lg font-serif">No gallery items available at the moment.</p>
+                    <p class="text-gray-400 text-lg font-serif">@translate('No gallery items available at the moment.')</p>
                 </div>
             @endforelse
         </div>
 
         <div class="text-center mt-16 animate-fade-up">
-            <p class="text-gray-500 text-sm mb-4">Follow us on Instagram for more visual stories</p>
+            <p class="text-gray-500 text-sm mb-4">@translate('Follow us on Instagram for more visual stories')</p>
             <a href="#" class="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-secondary/20 hover:border-secondary hover:text-secondary pb-1 transition-all">
                 <i class="fab fa-instagram"></i> @goingtothejava
             </a>
@@ -142,15 +148,15 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-        <a 
+    <a 
         href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Need Help?</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
     </a>
 
     @include('components.client.footer')

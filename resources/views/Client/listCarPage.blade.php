@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script> -->
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
@@ -92,10 +91,14 @@
 
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
-                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">Premium Transport</span>
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">Choose Your <br><span class="italic text-secondary">Perfect Ride</span></h1>
+                <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
+                    @translate('Premium Transport')
+                </span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
+                    @translate('Choose Your') <br><span class="italic text-secondary">@translate('Perfect Ride')</span>
+                </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    From city cruisers to spacious family vans. Explore our well-maintained fleet designed for comfort, safety, and style across Java.
+                    @translate('From city cruisers to spacious family vans. Explore our well-maintained fleet designed for comfort, safety, and style across Java.')
                 </p>
             </div>
         </div>
@@ -109,12 +112,12 @@
         <div class="flex flex-wrap gap-3 mb-12 justify-center md:justify-start relative z-10 animate-fade-up">
             <a href="{{ route('usercar.index') }}" 
                class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ !request('type') ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
-                All Cars
+                @translate('All Cars')
             </a>
             @foreach($carTypes as $type)
             <a href="{{ route('usercar.index', ['type' => $type]) }}" 
                class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ request('type') == $type ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
-                {{ ucfirst($type) }}
+                @translate(ucfirst($type))
             </a>
             @endforeach
         </div>
@@ -122,7 +125,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             
-            {{-- Loop Cars (Menggantikan Loop Destinations) --}}
+            {{-- Loop Cars --}}
             @forelse ($cars as $car)
                 <div class="bg-white rounded-[2rem] shadow-lg shadow-blue-900/5 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up h-full flex flex-col group border border-white/60">
                     <div class="relative h-56 overflow-hidden">
@@ -133,45 +136,46 @@
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
                         
-                        {{-- Price Tag --}}
+                        {{-- Price Tag (Using Currency Helper) --}}
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
-                            IDR {{ number_format($car->price, 0, ',', '.') }} /day
+                            @currency($car->price) / @translate('day')
                         </div>
 
                         {{-- Category Tag --}}
                         <div class="absolute top-4 left-4">
                              <span class="px-2 py-1 bg-[#003366]/80 backdrop-blur-md rounded-md text-[10px] font-bold text-white uppercase tracking-wider">
-                                {{ $car->car_type }}
+                                @translate($car->car_type)
                             </span>
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
+                        {{-- Nama Mobil biasanya tidak ditranslate (Merk) --}}
                         <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">{{ $car->name_car }}</h3>
 
                         {{-- Features / Activities Replacement --}}
                         <div class="flex flex-wrap gap-2 mb-6">
                             {{-- Feature 1: Capacity --}}
                             <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
-                                <i class="fas fa-users mr-1 text-secondary"></i> {{ $car->capacity }} Seats
+                                <i class="fas fa-users mr-1 text-secondary"></i> {{ $car->capacity }} @translate('Seats')
                             </span>
                             
                             {{-- Feature 2: Transmission --}}
                             <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
-                                <i class="fas fa-cogs mr-1 text-secondary"></i> {{ $car->transmission }}
+                                <i class="fas fa-cogs mr-1 text-secondary"></i> @translate($car->transmission)
                             </span>
                         </div>
 
                         <a href="{{ route('car.detail', $car->slug) }}"
                             class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
-                            View Details <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            @translate('View Details') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="col-span-full text-center py-10">
-                    <p class="text-gray-500">No cars found matching your criteria.</p>
-                    <a href="{{ route('usercar.index') }}" class="text-primary font-bold hover:underline">Clear Filters</a>
+                    <p class="text-gray-500">@translate('No cars found matching your criteria.')</p>
+                    <a href="{{ route('usercar.index') }}" class="text-primary font-bold hover:underline">@translate('Clear Filters')</a>
                 </div>
             @endforelse
 
@@ -188,13 +192,13 @@
                         <i class="fas fa-headset text-3xl text-secondary"></i>
                     </div>
                     
-                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">Need Help?</h3>
+                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">@translate('Need Help?')</h3>
                     <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
-                        Not sure which car fits your trip? Contact us for a personal recommendation.
+                        @translate('Not sure which car fits your trip? Contact us for a personal recommendation.')
                     </p>
 
                     <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
-                        Chat with Us <i class="fab fa-whatsapp ml-2"></i>
+                        @translate('Chat with Us') <i class="fab fa-whatsapp ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -216,7 +220,7 @@
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">Rent Now</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Rent Now')</span>
     </a>
 
     @include('components.client.footer')
