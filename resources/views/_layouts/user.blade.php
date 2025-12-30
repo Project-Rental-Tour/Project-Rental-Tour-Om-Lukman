@@ -36,7 +36,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
 
     <!-- Additional Head Content -->
