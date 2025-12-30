@@ -201,65 +201,73 @@
             </div>
 
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                @foreach([
-                    [
-                        'title' => 'Expert Guidance', 
-                        'desc' => 'Curated by insiders who know every hidden path.', 
-                        'icon' => 'fas fa-map-marked-alt', 
-                        // Definisikan class warna secara lengkap disini
-                        'style' => 'from-blue-50 to-blue-100 text-blue-600 shadow-blue-500/10 group-hover:shadow-blue-500/30'
-                    ],
-                    [
-                        'title' => 'Best Value', 
-                        'desc' => 'Luxury experiences at fair pricing with no hidden costs.', 
-                        'icon' => 'fas fa-tag', 
-                        'style' => 'from-cyan-50 to-cyan-100 text-cyan-600 shadow-cyan-500/10 group-hover:shadow-cyan-500/30'
-                    ],
-                    [
-                        'title' => '24/7 Concierge', 
-                        'desc' => 'Round-the-clock assistance for peace of mind.', 
-                        'icon' => 'fas fa-headset', 
-                        'style' => 'from-indigo-50 to-indigo-100 text-indigo-600 shadow-indigo-500/10 group-hover:shadow-indigo-500/30'
-                    ],
-                    [
-                        'title' => 'Eco-Conscious', 
-                        'desc' => 'We prioritize responsible tourism and sustainability.', 
-                        'icon' => 'fas fa-leaf', 
-                        'style' => 'from-emerald-50 to-emerald-100 text-emerald-600 shadow-emerald-500/10 group-hover:shadow-emerald-500/30'
-                    ],
-                    [
-                        'title' => 'Flexible Plans', 
-                        'desc' => 'Change of plans? We adapt instantly to your needs.', 
-                        'icon' => 'fas fa-calendar-check', 
-                        'style' => 'from-sky-50 to-sky-100 text-sky-600 shadow-sky-500/10 group-hover:shadow-sky-500/30'
-                    ],
-                    [
-                        'title' => 'Tailored for You', 
-                        'desc' => 'Customizable to your personal rhythm and style.', 
-                        'icon' => 'fas fa-sliders-h', 
-                        'style' => 'from-violet-50 to-violet-100 text-violet-600 shadow-violet-500/10 group-hover:shadow-violet-500/30'
-                    ]
-                ] as $feature)
-                    <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60 hover:border-secondary/30 animate-fade-up h-full">
-                        
-                        {{-- Bagian Icon Premium --}}
-                        {{-- Variable $feature['style'] sekarang berisi class lengkap yang terbaca Tailwind --}}
-                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-300 
-                                    bg-gradient-to-br shadow-lg group-hover:scale-110 
-                                    {{ $feature['style'] }}">
-                            <i class="{{ $feature['icon'] }} text-lg md:text-2xl"></i>
-                        </div>
-
-                        <div class="flex-grow">
-                            <h4 class="font-serif text-base md:text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors leading-tight">
-                                @translate($feature['title'])
-                            </h4>
-                            <p class="text-text-light text-xs md:text-sm leading-relaxed font-light">
-                                @translate($feature['desc'])
-                            </p>
-                        </div>
+    
+                {{-- CARD 1: Expert Guidance (BLUE) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-map-marked-alt text-lg md:text-2xl"></i>
                     </div>
-                @endforeach
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('Expert Guidance')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('Curated by insiders who know every hidden path.')</p>
+                    </div>
+                </div>
+
+                {{-- CARD 2: Best Value (CYAN) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-tag text-lg md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('Best Value')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('Luxury experiences at fair pricing with no hidden costs.')</p>
+                    </div>
+                </div>
+
+                {{-- CARD 3: 24/7 Concierge (INDIGO) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-headset text-lg md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('24/7 Concierge')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('Round-the-clock assistance for peace of mind.')</p>
+                    </div>
+                </div>
+
+                {{-- CARD 4: Eco-Conscious (GREEN/EMERALD) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-leaf text-lg md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('Eco-Conscious')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('We prioritize responsible tourism and sustainability.')</p>
+                    </div>
+                </div>
+
+                {{-- CARD 5: Flexible Plans (SKY) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-sky-100 text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-calendar-check text-lg md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('Flexible Plans')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('Change of plans? We adapt instantly to your needs.')</p>
+                    </div>
+                </div>
+
+                {{-- CARD 6: Tailored for You (VIOLET) --}}
+                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start gap-4 border border-white/60">
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center bg-violet-100 text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-sliders-h text-lg md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base md:text-xl font-bold text-gray-800 mb-2">@translate('Tailored for You')</h4>
+                        <p class="text-gray-500 text-xs md:text-sm leading-relaxed">@translate('Customizable to your personal rhythm and style.')</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
