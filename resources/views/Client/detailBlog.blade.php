@@ -58,6 +58,12 @@
         }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
+        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         /* Components */
         .btn-premium {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
@@ -68,48 +74,16 @@
         }
         .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
 
-        /* --- Blog Content Styling (Typography for Dynamic Content) --- */
-        .blog-content {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--color-text);
-        }
+        /* --- Blog Content Styling --- */
+        .blog-content { font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
         .blog-content p { margin-bottom: 1.5rem; }
-        .blog-content h2 { 
-            font-family: 'Poppins', sans-serif; 
-            font-size: 1.75rem; 
-            font-weight: 700; 
-            color: var(--color-primary); 
-            margin-top: 2.5rem; 
-            margin-bottom: 1rem; 
-        }
-        .blog-content h3 { 
-            font-family: 'Poppins', sans-serif; 
-            font-size: 1.4rem; 
-            font-weight: 600; 
-            color: var(--color-primary); 
-            margin-top: 2rem; 
-            margin-bottom: 0.75rem; 
-        }
+        .blog-content h2 { font-family: 'Poppins', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--color-primary); margin-top: 2.5rem; margin-bottom: 1rem; }
+        .blog-content h3 { font-family: 'Poppins', sans-serif; font-size: 1.4rem; font-weight: 600; color: var(--color-primary); margin-top: 2rem; margin-bottom: 0.75rem; }
         .blog-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-light); }
         .blog-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-light); }
         .blog-content li { margin-bottom: 0.5rem; }
-        .blog-content blockquote {
-            border-left: 4px solid var(--color-secondary);
-            padding-left: 1.5rem;
-            font-style: italic;
-            color: var(--color-text-light);
-            background: rgba(0, 180, 216, 0.05);
-            padding: 1.5rem;
-            border-radius: 0 1rem 1rem 0;
-            margin-bottom: 1.5rem;
-        }
-        .blog-content img {
-            border-radius: 1.5rem;
-            margin: 2rem 0;
-            width: 100%;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
-        }
+        .blog-content blockquote { border-left: 4px solid var(--color-secondary); padding-left: 1.5rem; font-style: italic; color: var(--color-text-light); background: rgba(0, 180, 216, 0.05); padding: 1.5rem; border-radius: 0 1rem 1rem 0; margin-bottom: 1.5rem; }
+        .blog-content img { border-radius: 1.5rem; margin: 2rem 0; width: 100%; box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); }
         .blog-content a { color: var(--color-secondary); text-decoration: none; font-weight: 600; transition: 0.3s; }
         .blog-content a:hover { text-decoration: underline; color: var(--color-primary); }
         .blog-content strong { color: var(--color-primary); font-weight: 700; }
@@ -119,26 +93,36 @@
 @section('content')
     @include('components.client.navbar')
 
-    {{-- HERO SECTION --}}
-    <section class="relative h-[60vh] min-h-[500px] flex items-end pb-20 overflow-hidden bg-primary">
+    {{-- 
+        HERO SECTION (JUMBOTRON) 
+        - min-h-[60vh]: Agar cukup tinggi.
+        - flex items-center: Konten di tengah secara vertikal.
+        - pt-20: Memberi jarak agar teks tidak tertutup Navbar Fixed.
+    --}}
+    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary">
+        {{-- Background Image (Absolute Inset-0: Memenuhi satu section) --}}
         <div class="absolute inset-0 z-0">
             <img src="{{ asset($blog->image_path) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
                  alt="{{ $blog->title }}"
-                 class="w-full h-full object-cover object-center opacity-60 scale-105 animate-[pulse_20s_ease-in-out_infinite]">
+                 class="w-full h-full object-cover object-center animate-float-slow"
+                 style="opacity: 0.5;">
+            
             {{-- Blue Gradient Overlay --}}
-            <div class="absolute inset-0 bg-gradient-to-t from-[#003366] via-[#003366]/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-4xl animate-fade-up">
-                <div class="flex flex-wrap items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
+        {{-- Content Container (Relative Z-10 agar di atas gambar) --}}
+        <div class="container mx-auto px-6 relative z-10 pt-24 text-center">
+            <div class="max-w-4xl mx-auto animate-fade-up">
+                
+                {{-- Meta Tags (Category & Date) --}}
+                <div class="flex flex-wrap justify-center items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
                     <span class="bg-secondary text-white px-4 py-1.5 rounded-full font-bold shadow-lg shadow-secondary/30">
                         @translate($blog->category ?? 'Travel')
                     </span>
                     <span class="flex items-center gap-2">
                         <i class="far fa-calendar"></i> 
-                        {{-- Translate format tanggal (misal: May -> Mei) --}}
                         @translate($blog->created_at->format('d M Y'))
                     </span>
                     <span class="flex items-center gap-2">
@@ -146,15 +130,17 @@
                     </span>
                 </div>
 
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-tight mb-6 text-shadow-lg drop-shadow-md">
+                {{-- Title --}}
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-serif leading-tight mb-6 text-shadow-lg drop-shadow-md">
                     @translate($blog->title)
                 </h1>
 
-                <nav class="flex text-white/70 text-sm font-medium">
+                {{-- Breadcrumbs (Centered) --}}
+                <nav class="flex justify-center text-white/80 text-sm font-medium">
                     <ol class="flex items-center space-x-2">
-                        <li><a href="{{ route('index') }}" class="hover:text-secondary transition">@translate('Home')</a></li>
+                        <li><a href="{{ route('index') }}" class="hover:text-secondary transition-colors">@translate('Home')</a></li>
                         <li>/</li>
-                        <li><a href="{{ route('blogs.index') }}" class="hover:text-secondary transition">@translate('Blog')</a></li>
+                        <li><a href="{{ route('blogs.index') }}" class="hover:text-secondary transition-colors">@translate('Blog')</a></li>
                         <li>/</li>
                         <li class="text-white font-bold truncate max-w-[200px]">
                             @translate($blog->title)
@@ -167,6 +153,7 @@
 
     {{-- CONTENT SECTION --}}
     <section class="max-w-7xl mx-auto px-6 py-16 relative">
+        {{-- Background Blobs --}}
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
             
