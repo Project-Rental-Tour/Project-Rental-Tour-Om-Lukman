@@ -95,12 +95,9 @@
 
     {{-- 
         HERO SECTION (JUMBOTRON) 
-        - min-h-[60vh]: Agar cukup tinggi.
-        - flex items-center: Konten di tengah secara vertikal.
-        - pt-20: Memberi jarak agar teks tidak tertutup Navbar Fixed.
     --}}
     <section id="jumbotron" class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary">
-        {{-- Background Image (Absolute Inset-0: Memenuhi satu section) --}}
+        {{-- Background Image --}}
         <div class="absolute inset-0 z-0">
             <img src="{{ asset($blog->image_path) }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
@@ -112,21 +109,22 @@
             <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
-        {{-- Content Container (Relative Z-10 agar di atas gambar) --}}
+        {{-- Content Container --}}
         <div class="container mx-auto px-6 relative z-10 pt-24 text-center">
             <div class="max-w-4xl mx-auto animate-fade-up">
                 
                 {{-- Meta Tags (Category & Date) --}}
                 <div class="flex flex-wrap justify-center items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
                     <span class="bg-secondary text-white px-4 py-1.5 rounded-full font-bold shadow-lg shadow-secondary/30">
-                        @translate($blog->category ?? 'Travel')
+                        @translate($blog->category ?? 'Wisata')
                     </span>
                     <span class="flex items-center gap-2">
                         <i class="far fa-calendar"></i> 
-                        @translate($blog->created_at->format('d M Y'))
+                        {{-- Format Tanggal biarkan angka, bulan akan otomatis menyesuaikan locale app --}}
+                        {{ $blog->created_at->format('d M Y') }}
                     </span>
                     <span class="flex items-center gap-2">
-                        <i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('min read')
+                        <i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('menit baca')
                     </span>
                 </div>
 
@@ -138,7 +136,7 @@
                 {{-- Breadcrumbs (Centered) --}}
                 <nav class="flex justify-center text-white/80 text-sm font-medium">
                     <ol class="flex items-center space-x-2">
-                        <li><a href="{{ route('index') }}" class="hover:text-secondary transition-colors">@translate('Home')</a></li>
+                        <li><a href="{{ route('index') }}" class="hover:text-secondary transition-colors">@translate('Beranda')</a></li>
                         <li>/</li>
                         <li><a href="{{ route('blogs.index') }}" class="hover:text-secondary transition-colors">@translate('Blog')</a></li>
                         <li>/</li>
@@ -153,7 +151,6 @@
 
     {{-- CONTENT SECTION --}}
     <section class="max-w-7xl mx-auto px-6 py-16 relative">
-        {{-- Background Blobs --}}
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
             
@@ -162,11 +159,12 @@
                 <article class="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl border border-white/60 animate-fade-up">
                     <div class="blog-content">
                         {{-- KONTEN HTML TIDAK DITRANSLATE SERVER-SIDE AGAR TIDAK RUSAK --}}
+                        {{-- Namun, helper TranslationHelper di Middleware bisa diatur untuk handle ini jika diperlukan, tapi amannya dibiarkan raw --}}
                         {!! $blog->content !!}
                     </div>
 
                     <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p class="text-gray-500 font-serif italic">@translate('Share this story:')</p>
+                        <p class="text-gray-500 font-serif italic">@translate('Bagikan cerita ini:')</p>
                         <div class="flex gap-3">
                             <a href="#" class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-500 hover:bg-sky-500 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
@@ -186,18 +184,18 @@
                             <i class="fas fa-user-edit"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">@translate('Written By')</span>
+                            <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">@translate('Ditulis Oleh')</span>
                             <h4 class="font-serif font-bold text-lg text-primary">Going To The Java Team</h4>
                         </div>
                     </div>
                     <p class="text-gray-500 text-sm leading-relaxed">
-                        @translate('Sharing stories, tips, and hidden gems from our journeys across the beautiful island of Java and beyond.')
+                        @translate('Berbagi cerita, tips, dan permata tersembunyi dari perjalanan kami di pulau Jawa yang indah dan sekitarnya.')
                     </p>
                 </div>
 
                 {{-- Recent Posts --}}
                 <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.3s">
-                    <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">@translate('Recent Posts')</h3>
+                    <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">@translate('Postingan Terbaru')</h3>
                     <div class="space-y-6">
                         @if(isset($relatedPosts) && $relatedPosts->count() > 0)
                             @foreach($relatedPosts as $recent)
@@ -215,13 +213,13 @@
                                         @translate($recent->title)
                                     </h4>
                                     <span class="text-xs text-gray-400 mt-2 block">
-                                        @translate($recent->created_at->format('d M Y'))
+                                        {{ $recent->created_at->format('d M Y') }}
                                     </span>
                                 </div>
                             </a>
                             @endforeach
                         @else
-                            <p class="text-gray-400 text-sm italic">@translate('No recent posts available.')</p>
+                            <p class="text-gray-400 text-sm italic">@translate('Tidak ada postingan terbaru.')</p>
                         @endif
                     </div>
                 </div>
@@ -233,10 +231,10 @@
                         <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
                             <i class="fas fa-plane-departure text-2xl text-secondary"></i>
                         </div>
-                        <h3 class="font-serif font-bold text-2xl mb-2">@translate('Inspired to Travel?')</h3>
-                        <p class="text-white/80 text-sm mb-6">@translate('Let us help you plan your perfect trip to these amazing destinations.')</p>
+                        <h3 class="font-serif font-bold text-2xl mb-2">@translate('Terinspirasi untuk Liburan?')</h3>
+                        <p class="text-white/80 text-sm mb-6">@translate('Biarkan kami membantu merencanakan perjalanan sempurna Anda ke destinasi menakjubkan ini.')</p>
                         <a href="{{ route('booking.custom') }}" class="inline-block w-full py-3 bg-white text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg">
-                            @translate('Plan My Trip')
+                            @translate('Rencanakan Perjalanan Saya')
                         </a>
                     </div>
                 </div>
@@ -247,14 +245,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

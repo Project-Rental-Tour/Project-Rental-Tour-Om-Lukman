@@ -91,13 +91,13 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
                 <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20 drop-shadow-sm">
-                    @translate('Visual Diary')
+                    @translate('Jurnal Visual')
                 </span>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 font-serif leading-tight">
-                    @translate('Our Travel') <span class="italic text-secondary">@translate('Gallery')</span>
+                    @translate('Galeri') <span class="italic text-secondary">@translate('Perjalanan Kami')</span>
                 </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    @translate('Every photo tells a story. Explore breathtaking moments from our journeys around the world — from hidden villages to majestic landscapes and joyful traveler experiences.')
+                    @translate('Setiap foto bercerita. Jelajahi momen menakjubkan dari perjalanan kami — mulai dari desa tersembunyi hingga lanskap megah dan pengalaman wisatawan yang penuh sukacita.')
                 </p>
             </div>
         </div>
@@ -122,7 +122,7 @@
                     {{-- Overlay Gradient on Hover --}}
                     <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <span class="text-secondary text-xs font-bold uppercase tracking-wider mb-1">
-                            @translate('Moment')
+                            @translate('Momen')
                         </span>
                         <h3 class="text-white font-serif text-lg md:text-xl font-bold leading-tight">
                             @translate($gallery->title)
@@ -134,13 +134,13 @@
                     <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="far fa-images text-gray-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-400 text-lg font-serif">@translate('No gallery items available at the moment.')</p>
+                    <p class="text-gray-400 text-lg font-serif">@translate('Belum ada item galeri yang tersedia saat ini.')</p>
                 </div>
             @endforelse
         </div>
 
         <div class="text-center mt-16 animate-fade-up">
-            <p class="text-gray-500 text-sm mb-4">@translate('Follow us on Instagram for more visual stories')</p>
+            <p class="text-gray-500 text-sm mb-4">@translate('Ikuti kami di Instagram untuk cerita visual lainnya')</p>
             <a href="#" class="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-secondary/20 hover:border-secondary hover:text-secondary pb-1 transition-all">
                 <i class="fab fa-instagram"></i> @goingtothejava
             </a>
@@ -149,14 +149,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

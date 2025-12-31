@@ -121,7 +121,7 @@
         <div class="absolute inset-0 flex items-center justify-center pt-10">
             <div class="container mx-auto px-6 text-center animate-fade-up">
                 <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full mb-4 inline-block font-bold uppercase tracking-wider shadow-lg shadow-secondary/30">
-                    @translate(ucfirst($destination->category)) @translate('Trip')
+                    @translate('Wisata') @translate(ucfirst($destination->category))
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif text-shadow-lg drop-shadow-md">
                     @translate($destination->name_package)
@@ -139,9 +139,9 @@
     <nav class="bg-white/80 backdrop-blur-md py-4 border-b border-gray-100 shadow-sm sticky top-16 z-30">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-500 font-medium">
-                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors">@translate('Home')</a></li>
+                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors">@translate('Beranda')</a></li>
                 <li>/</li>
-                <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors">@translate('Destinations')</a></li>
+                <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors">@translate('Destinasi')</a></li>
                 <li>/</li>
                 <li class="text-primary font-bold">@translate($destination->name_package)</li>
             </ol>
@@ -157,8 +157,8 @@
         <div class="max-w-4xl mx-auto glass-card rounded-[2rem] shadow-2xl overflow-hidden animate-fade-up relative z-10">
             
             <div class="bg-gray-50/50 px-8 py-8 border-b border-gray-100 text-center">
-                <h2 class="text-3xl font-bold text-primary font-serif">@translate('Complete Your Booking')</h2>
-                <p class="text-gray-500 mt-2 font-light">@translate('Please fill in your details to secure your spot.')</p>
+                <h2 class="text-3xl font-bold text-primary font-serif">@translate('Selesaikan Pemesanan')</h2>
+                <p class="text-gray-500 mt-2 font-light">@translate('Mohon isi detail Anda untuk mengamankan slot.')</p>
             </div>
 
             <form action="{{ route('booking.regular.store') }}" method="POST" class="p-8 md:p-12 space-y-8">
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">@translate('Price per person')</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">@translate('Harga per orang')</p>
                         <p class="text-2xl font-bold text-secondary">
                             @currency($destination->price)
                         </p>
@@ -187,7 +187,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('First Name')</label>
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan')</label>
                         <input type="text" name="first_name" required
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="John" autocomplete="given-name">
@@ -197,7 +197,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Last Name')</label>
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang')</label>
                         <input type="text" name="last_name" required
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="Doe" autocomplete="family-name">
@@ -208,7 +208,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Email Address')</label>
+                    <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email')</label>
                     <input type="email" name="email" required
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                         placeholder="john.doe@example.com" autocomplete="email">
@@ -219,7 +219,7 @@
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                        @translate('Phone Number') <span class="text-red-500">*</span>
+                        @translate('Nomor Telepon') <span class="text-red-500">*</span>
                     </label>
 
                     <div class="flex gap-3">
@@ -227,7 +227,7 @@
                             <select name="country_code" id="country_code"
                                 class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all appearance-none cursor-pointer"
                                 required>
-                                <option value="" disabled selected>@translate('Code')</option>
+                                <option value="" disabled selected>@translate('Kode')</option>
                                 <option value="+62">🇮🇩 +62</option>
                                 <option value="+1">🇺🇸 +1</option>
                                 <option value="+60">🇲🇾 +60</option>
@@ -245,14 +245,14 @@
                             class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             required>
                     </div>
-                    <p class="mt-2 text-xs text-gray-400 font-light">@translate('We will contact you via WhatsApp for confirmation.')</p>
+                    <p class="mt-2 text-xs text-gray-400 font-light">@translate('Kami akan menghubungi Anda via WhatsApp untuk konfirmasi.')</p>
                 </div>
 
                 <div class="pt-6 border-t border-gray-100">
                     <button type="submit" class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
-                        @translate('Confirm Booking') <i class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
+                        @translate('Konfirmasi Pesanan') <i class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
                     </button>
-                    <p class="text-center text-xs text-gray-400 mt-4">@translate('By booking, you agree to our Terms & Conditions.')</p>
+                    <p class="text-center text-xs text-gray-400 mt-4">@translate('Dengan memesan, Anda menyetujui Syarat & Ketentuan kami.')</p>
                 </div>
 
             </form>
@@ -260,13 +260,13 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+    <a href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Need Help?')</span>
+        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

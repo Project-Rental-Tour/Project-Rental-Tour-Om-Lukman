@@ -101,11 +101,12 @@
                         <li class="flex items-start">
                             <i class="fas fa-phone text-white mt-1 mr-3 text-sm flex-shrink-0"></i>
                             <div class="flex flex-col space-y-1">
-                                <a href="https://wa.me/6281217006076" target="_blank" class="text-blue-100 hover:text-white text-sm">
-                                    +62 812-1700-6076
-                                </a>
-                                <a href="https://wa.me/6281217006076" target="_blank" class="text-blue-100 hover:text-white text-sm">
+                                
+                                <a href="https://wa.me/6281220005276" target="_blank" class="text-blue-100 hover:text-white text-sm">
                                     {{ optional($profiles)->phone_number ?? "+62 812-2000-5276" }}
+                                </a>
+                                <a href="https://wa.me/62812200052766" target="_blank" class="text-blue-100 hover:text-white text-sm">
+                                    +62 812-1700-6076
                                 </a>
                             </div>
                         </li>

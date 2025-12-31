@@ -112,15 +112,15 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
                 <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
-                    @translate('Who We Are')
+                    @translate('Siapa Kami')
                 </span>
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
-                    @translate('Crafting') 
-                    <span class="italic text-secondary">@translate('Unforgettable')</span> <br> 
-                    @translate('Journeys')
+                    @translate('Merangkai') 
+                    <span class="italic text-secondary">@translate('Perjalanan')</span> <br> 
+                    @translate('Tak Terlupakan')
                 </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    @translate('We are passionate about connecting travelers with the authentic beauty, culture, and adventure of Indonesia and beyond.')
+                    @translate('Kami bersemangat menghubungkan wisatawan dengan keindahan otentik, budaya, dan petualangan Indonesia dan sekitarnya.')
                 </p>
             </div>
         </div>
@@ -141,15 +141,15 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/80 to-transparent opacity-80"></div>
                     <div class="absolute bottom-8 left-8 right-8 text-white">
                         <p class="font-serif text-xl italic text-balance">
-                            "@translate('Our team is ready to make your dream trip come true — anytime, anywhere.')"
+                            "@translate('Tim kami siap mewujudkan perjalanan impian Anda — kapan saja, di mana saja.')"
                         </p>
                     </div>
                 </div>
 
                 <div class="glass-card bg-white p-8 rounded-[2rem] shadow-xl border border-white/60 animate-fade-up" style="animation-delay: 0.2s">
-                    <h3 class="text-2xl font-bold text-primary font-serif mb-2">@translate('Get in Touch')</h3>
+                    <h3 class="text-2xl font-bold text-primary font-serif mb-2">@translate('Hubungi Kami')</h3>
                     <p class="text-text-light mb-8 text-sm">
-                        @translate('Have questions? Our dedicated team is here to assist you every step of the way.')
+                        @translate('Punya pertanyaan? Tim berdedikasi kami siap membantu Anda di setiap langkah.')
                     </p>
 
                     <div class="space-y-4">
@@ -158,7 +158,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">@translate('Email Us')</h4>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('Email Kami')</h4>
                                 <a href="mailto:goingtothejava@gmail.com" class="text-text-light text-sm hover:text-primary transition-colors">
                                     goingtothejava@gmail.com
                                 </a>
@@ -171,11 +171,11 @@
                                 <i class="fab fa-whatsapp text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">@translate('WhatsApp Support')</h4>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('Dukungan WhatsApp')</h4>
                                 <div class="flex gap-4 text-sm mt-1">
-                                    <a href="https://wa.me/6281217006076" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
+                                    <a href="https://wa.me/62812200052766" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
                                     <span class="text-gray-300">|</span>
-                                    <a href="https://wa.me/6281217006076" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 1700 6076</a>
+                                    <a href="https://wa.me/62812200052766" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 1700 6076</a>
                                 </div>
                             </div>
                         </div>
@@ -185,8 +185,8 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm">@translate('Our Office')</h4>
-                                <p class="text-text-light text-sm">@translate('Malang, East Java, Indonesia')</p>
+                                <h4 class="font-bold text-gray-800 text-sm">@translate('Kantor Kami')</h4>
+                                <p class="text-text-light text-sm">@translate('Malang, Jawa Timur, Indonesia')</p>
                             </div>
                         </div>
                     </div>
@@ -197,16 +197,16 @@
             <div class="space-y-10 lg:mt-10">
                 <div class="animate-fade-up">
                     <span class="text-secondary font-bold tracking-widest uppercase text-xs mb-3 block">
-                        @translate('Our Philosophy')
+                        @translate('Filosofi Kami')
                     </span>
                     <h2 class="text-3xl md:text-4xl font-bold text-primary font-serif mb-6">
-                        @translate('More Than Just A Trip')
+                        @translate('Lebih Dari Sekadar Perjalanan')
                     </h2>
                     <p class="text-text-light leading-relaxed mb-6 text-lg font-light">
-                        @translate("Founded in 2010, our journey began with a simple dream: to make meaningful travel accessible to everyone. Today, we've helped over 15,000 travelers explore hidden gems, experience local cultures, and create memories that last a lifetime.")
+                        @translate("Didirikan pada tahun 2010, perjalanan kami dimulai dengan mimpi sederhana: membuat perjalanan bermakna dapat diakses oleh semua orang. Hari ini, kami telah membantu lebih dari 15.000 wisatawan menjelajahi permata tersembunyi, merasakan budaya lokal, dan menciptakan kenangan abadi.")
                     </p>
                     <p class="text-text-light leading-relaxed text-lg font-light">
-                        @translate('We believe travel is about connection, discovery, and transformation. That’s why every trip we design is crafted with care, sustainability, and authenticity in mind.')
+                        @translate('Kami percaya perjalanan adalah tentang koneksi, penemuan, dan transformasi. Itulah mengapa setiap rencana perjalanan yang kami rancang dibuat dengan hati-hati, keberlanjutan, dan keaslian.')
                     </p>
                 </div>
 
@@ -215,9 +215,9 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                             <i class="fas fa-mountain text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Adventure')</h3>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Petualangan')</h3>
                         <p class="text-sm text-text-light">
-                            @translate('We seek the extraordinary in every journey, going beyond the beaten path.')
+                            @translate('Kami mencari hal yang luar biasa dalam setiap perjalanan, melampaui jalur biasa.')
                         </p>
                     </div>
 
@@ -225,9 +225,9 @@
                         <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
                             <i class="fas fa-leaf text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Sustainability')</h3>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Keberlanjutan')</h3>
                         <p class="text-sm text-text-light">
-                            @translate('We travel responsibly, minimizing impact and supporting local communities.')
+                            @translate('Kami bepergian dengan tanggung jawab, meminimalkan dampak dan mendukung komunitas lokal.')
                         </p>
                     </div>
 
@@ -235,9 +235,9 @@
                         <div class="w-12 h-12 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
                             <i class="fas fa-heart text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Passion')</h3>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Semangat')</h3>
                         <p class="text-sm text-text-light">
-                            @translate('We pour our hearts into crafting every itinerary for the best experience.')
+                            @translate('Kami mencurahkan hati kami dalam merancang setiap rencana perjalanan untuk pengalaman terbaik.')
                         </p>
                     </div>
 
@@ -245,9 +245,9 @@
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                             <i class="fas fa-shield-alt text-xl"></i>
                         </div>
-                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Trust')</h3>
+                        <h3 class="font-bold text-primary mb-2 font-serif">@translate('Kepercayaan')</h3>
                         <p class="text-sm text-text-light">
-                            @translate('Your safety and satisfaction are our top priorities, always.')
+                            @translate('Keamanan dan kepuasan Anda adalah prioritas utama kami, selalu.')
                         </p>
                     </div>
                 </div>
@@ -257,14 +257,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

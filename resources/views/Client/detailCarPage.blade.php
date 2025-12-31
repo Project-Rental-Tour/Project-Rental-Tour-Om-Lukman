@@ -138,7 +138,8 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-4xl animate-fade-up">
                 <span class="bg-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block shadow-lg shadow-secondary/30">
-                    @translate(ucfirst($car->car_type ?? 'General')) @translate('Car')
+                    {{-- Default fallback jadi 'Umum' --}}
+                    @translate(ucfirst($car->car_type ?? 'Umum')) @translate('Mobil')
                 </span>
                 
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg drop-shadow-md">
@@ -147,7 +148,7 @@
                 
                 <div class="flex flex-wrap items-center gap-6 text-white/90 text-lg font-light">
                     <span class="flex items-center gap-2">
-                        <i class="fas fa-users text-secondary"></i> {{ $car->capacity }} @translate('Seats')
+                        <i class="fas fa-users text-secondary"></i> {{ $car->capacity }} @translate('Kursi')
                     </span>
                     <span class="hidden md:inline">•</span>
                     <span class="flex items-center gap-2">
@@ -157,11 +158,12 @@
 
                 <div class="mt-8 flex items-center gap-4">
                     <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
-                        <p class="text-xs text-white/70 uppercase font-bold tracking-wider mb-1">@translate('Daily Rate')</p>
+                        <p class="text-xs text-white/70 uppercase font-bold tracking-wider mb-1">@translate('Harga Per Hari')</p>
                         <p class="text-2xl font-bold text-white">
                             @currency($car->price)
                         </p>
                     </div>
+                    {{-- Status biasanya 'available' di DB. Helper translate akan menanganinya (available -> tersedia) --}}
                     <span class="px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider
                         {{ $car->car_status == 'available' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30' }}">
                         @translate(ucfirst($car->car_status))
@@ -175,9 +177,9 @@
     <nav class="bg-white/80 backdrop-blur-md border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div class="container mx-auto px-6">
             <ol class="flex space-x-2 text-sm text-gray-500">
-                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">@translate('Home')</a></li>
+                <li><a href="{{route('index')}}" class="hover:text-primary transition-colors font-medium">@translate('Beranda')</a></li>
                 <li>/</li>
-                <li><a href="{{route('usercar.index')}}" class="hover:text-primary transition-colors font-medium">@translate('Cars')</a></li>
+                <li><a href="{{route('usercar.index')}}" class="hover:text-primary transition-colors font-medium">@translate('Mobil')</a></li>
                 <li>/</li>
                 <li class="font-bold text-primary">{{ $car->name_car }}</li>
             </ol>
@@ -187,7 +189,6 @@
     {{-- MAIN CONTENT --}}
     <section class="container mx-auto px-6 py-12 relative">
         {{-- Background Blobs --}}
-
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
             
@@ -233,7 +234,8 @@
                 <div class="glass-card rounded-[2rem] shadow-xl shadow-blue-900/5 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
-                            @foreach(['details' => 'Overview', 'specifications' => 'Specs', 'features' => 'Features', 'notes' => 'Important Notes'] as $key => $label)
+                            {{-- Tab Headers dalam Bahasa Indonesia --}}
+                            @foreach(['details' => 'Ringkasan', 'specifications' => 'Spesifikasi', 'features' => 'Fitur', 'notes' => 'Catatan Penting'] as $key => $label)
                             <li class="flex-shrink-0" role="presentation">
                                 <button
                                     id="{{ $key }}-tab"
@@ -253,36 +255,37 @@
                     <div id="myTabContent" class="p-8">
                         {{-- Overview --}}
                         <div class="block animate-fade-in" id="details" role="tabpanel" aria-labelledby="details-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-4">@translate('Car Overview')</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-4">@translate('Ringkasan Mobil')</h3>
                             <p class="text-gray-600 leading-relaxed mb-8">
+                                {{-- Translate deskripsi dari DB jika masih Inggris --}}
                                 @translate($car->description)
                             </p>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
-                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Rental Type')</h4>
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Tipe Sewa')</h4>
                                     <p class="font-semibold text-gray-800">
-                                        @translate($car->rental_type ? 'With Driver' : 'Self Drive')
+                                        @translate($car->rental_type ? 'Dengan Supir' : 'Lepas Kunci')
                                     </p>
                                 </div>
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
-                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Capacity')</h4>
-                                    <p class="font-semibold text-gray-800">{{ $car->capacity }} @translate('Passengers')</p>
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">@translate('Kapasitas')</h4>
+                                    <p class="font-semibold text-gray-800">{{ $car->capacity }} @translate('Penumpang')</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Specs --}}
                         <div class="hidden animate-fade-in" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Technical Specifications')</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Spesifikasi Teknis')</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-4">
                                     <div class="flex justify-between p-3 bg-gray-50 rounded-lg">
-                                        <span class="text-gray-600">@translate('Transmission')</span>
+                                        <span class="text-gray-600">@translate('Transmisi')</span>
                                         <span class="font-bold text-primary">@translate(ucfirst($car->transmission))</span>
                                     </div>
                                     <div class="flex justify-between p-3 bg-gray-50 rounded-lg">
-                                        <span class="text-gray-600">@translate('Car Type')</span>
+                                        <span class="text-gray-600">@translate('Tipe Mobil')</span>
                                         <span class="font-bold text-primary">@translate($car->car_type ?? 'N/A')</span>
                                     </div>
                                 </div>
@@ -299,11 +302,11 @@
 
                         {{-- Features --}}
                         <div class="hidden animate-fade-in" id="features" role="tabpanel" aria-labelledby="features-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Features & Amenities')</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Fitur & Fasilitas')</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h4 class="font-bold text-primary mb-4 flex items-center gap-2 bg-green-50 p-3 rounded-lg border border-green-100">
-                                        <i class="fas fa-check text-green-600"></i> @translate('Included Features')
+                                        <i class="fas fa-check text-green-600"></i> @translate('Fitur Termasuk')
                                     </h4>
                                     <ul class="space-y-2">
                                         @foreach(explode(',', $car->include) as $item)
@@ -318,23 +321,22 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-blue-700 mb-4 flex items-center gap-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                        <i class="fas fa-plus text-blue-600"></i> @translate('Additional Info')
+                                        <i class="fas fa-plus text-blue-600"></i> @translate('Info Tambahan')
                                     </h4>
-                                    <p class="text-gray-500 text-sm">@translate('Contact us for specific feature requests like child seats or roof racks.')</p>
+                                    <p class="text-gray-500 text-sm">@translate('Hubungi kami untuk permintaan fitur khusus seperti kursi bayi atau rak atap.')</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Notes --}}
                         <div class="hidden animate-fade-in" id="notes" role="tabpanel" aria-labelledby="notes-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Important Notes')</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Catatan Penting')</h3>
                             <div class="bg-blue-50 border border-blue-100 p-6 rounded-2xl">
                                 <ul class="space-y-3">
                                     @foreach(explode("\n", $car->notes) as $line)
                                         @if(trim($line))
                                             <li class="flex items-start gap-3 text-gray-700 text-sm">
                                                 <i class="fas fa-info-circle text-secondary mt-0.5"></i>
-                                                {{-- Menggunakan !! !! agar jika ada bold dari translate tetap aman --}}
                                                 <span>{!! \App\Helpers\TranslationHelper::translate(trim($line)) !!}</span>
                                             </li>
                                         @endif
@@ -350,7 +352,7 @@
             <div class="lg:col-span-1">
                 <div class="glass-card p-8 rounded-[2.5rem] shadow-2xl sticky top-28 animate-fade-up border border-white/60" style="animation-delay: 0.3s">
                     <div class="text-center mb-8">
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">@translate('Daily Rate')</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">@translate('Harga Per Hari')</p>
                         <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
                             @currency($car->price)
                         </div>
@@ -359,43 +361,43 @@
                     <div class="space-y-4">
                         <a href="{{ route('booking-car.form', $car->slug) }}"
                             class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 group">
-                            @translate('Book Now') <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                            @translate('Pesan Sekarang') <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
 
-                        <a href="https://wa.me/6281217006076?text=Hi%20GOING%20TO%20THE%20JAVA,%20I'm%20interested%20in%20renting%20{{ $car->name_car }}" 
+                        <a href="https://wa.me/62812200052766?text=Halo%20Admin%20GOING%20TO%20THE%20JAVA,%20Saya%20tertarik%20sewa%20mobil%20{{ $car->name_car }}" 
                            target="_blank"
                            class="w-full py-4 bg-white text-primary rounded-xl font-bold border border-primary/20 flex items-center justify-center gap-2 hover:bg-primary/5 transition-all">
-                            <i class="fab fa-whatsapp text-xl"></i> @translate('Chat for Info')
+                            <i class="fab fa-whatsapp text-xl"></i> @translate('Chat untuk Info')
                         </a>
                     </div>
 
                     <div class="mt-8 pt-8 border-t border-gray-100 space-y-3">
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>@translate('Instant Confirmation')</span>
+                            <span>@translate('Konfirmasi Instan')</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>@translate('Well Maintained')</span>
+                            <span>@translate('Terawat Baik')</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
                             <div class="w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><i class="fas fa-check text-xs"></i></div>
-                            <span>@translate('24/7 Roadside Assist')</span>
+                            <span>@translate('Bantuan Jalan 24/7')</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- FAQ Section --}}
+        {{-- FAQ Section (Indonesian Default) --}}
         <div class="glass-card p-8 rounded-[2rem] shadow-lg border border-white/60 mt-12 animate-fade-up relative z-10" style="animation-delay: 0.4s">
-            <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">@translate('Rental FAQ')</h3>
+            <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">@translate('FAQ Sewa')</h3>
             <div class="space-y-4 max-w-3xl mx-auto" id="accordion-open" data-accordion="open">
                 @foreach([
-                    'What documents are required?' => 'For self-drive: Driver license, ID/Passport, Credit Card deposit. With driver: Only ID/Passport.',
-                    'Is fuel included?' => 'Self-drive: No, return with same fuel level. With driver: Yes, included.',
-                    'Cancellation Policy?' => 'Free cancellation up to 48 hours before pickup.',
-                    'Emergency Contact?' => 'Contact our 24/7 hotline provided in your booking confirmation.'
+                    'Dokumen apa yang diperlukan?' => 'Untuk lepas kunci: SIM, KTP/Paspor, Deposit Kartu Kredit. Dengan supir: Hanya KTP/Paspor.',
+                    'Apakah BBM termasuk?' => 'Lepas kunci: Tidak, kembalikan dengan posisi BBM sama. Dengan supir: Ya, termasuk.',
+                    'Kebijakan Pembatalan?' => 'Pembatalan gratis hingga 48 jam sebelum waktu penjemputan.',
+                    'Kontak Darurat?' => 'Hubungi hotline 24/7 kami yang tertera pada konfirmasi pesanan Anda.'
                 ] as $q => $a)
                 <div class="border border-white/50 bg-white/50 rounded-xl overflow-hidden" data-accordion-item>
                     <h2 id="accordion-heading-{{ $loop->index }}">
@@ -420,13 +422,13 @@
         <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up z-10">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="relative z-10 mb-6 md:mb-0">
-                <h3 class="text-3xl font-bold text-white font-serif mb-2">@translate('Ready to hit the road?')</h3>
-                <p class="text-white/80">@translate('Book your perfect car now and enjoy a seamless journey.')</p>
+                <h3 class="text-3xl font-bold text-white font-serif mb-2">@translate('Siap untuk memulai perjalanan?')</h3>
+                <p class="text-white/80">@translate('Pesan mobil impian Anda sekarang dan nikmati perjalanan yang lancar.')</p>
             </div>
             <div class="relative z-10">
                 <a href="{{ route('booking-car.form', $car->slug) }}"
                     class="inline-flex items-center px-8 py-4 bg-secondary text-primary font-bold rounded-xl hover:bg-white transition-all shadow-lg">
-                    @translate('Rent This Car') <i class="fas fa-key ml-2"></i>
+                    @translate('Sewa Mobil Ini') <i class="fas fa-key ml-2"></i>
                 </a>
             </div>
         </div>
@@ -434,14 +436,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

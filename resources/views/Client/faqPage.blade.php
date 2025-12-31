@@ -8,6 +8,7 @@
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
+    {{-- Flowbite CSS (Wajib untuk Accordion) --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
     <style>
@@ -92,13 +93,13 @@
     {{-- HEADER SECTION --}}
     <section class="max-w-4xl mx-auto px-6 py-24 text-center mt-0 relative z-10">
         <span class="text-secondary font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-up">
-            @translate('Help Center')
+            @translate('Pusat Bantuan')
         </span>
         <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 animate-fade-up font-serif" style="animation-delay: 0.1s">
-            @translate('Frequently Asked Questions')
+            @translate('Pertanyaan yang Sering Diajukan')
         </h1>
         <p class="text-lg text-gray-500 max-w-2xl mx-auto animate-fade-up font-light leading-relaxed" style="animation-delay: 0.2s">
-            @translate('Find answers to the most common questions about our travel packages, booking process, and what to expect on your journey with Going To The Java.')
+            @translate('Temukan jawaban atas pertanyaan umum seputar paket wisata, proses pemesanan, dan perjalanan Anda bersama Going To The Java.')
         </p>
     </section>
 
@@ -114,7 +115,7 @@
             <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.3s" data-accordion-item>
                 <h2 id="accordion-heading-1">
                     <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-1" aria-expanded="true" aria-controls="accordion-body-1">
-                        <span>@translate('Is it possible to pick up at the airport or train station?')</span>
+                        <span>@translate('Apakah bisa dijemput di bandara atau stasiun kereta?')</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -122,7 +123,7 @@
                 </h2>
                 <div id="accordion-body-1" class="hidden" aria-labelledby="accordion-heading-1">
                     <div class="p-6 pt-0 text-gray-600 border-t border-transparent leading-relaxed text-sm md:text-base">
-                        @translate('Yes. Please make sure the flight arrival is before 4:00 AM. If by train, 1 hour before pick up time is fine.')
+                        @translate('Ya, bisa. Pastikan kedatangan pesawat sebelum jam 04:00 pagi. Jika naik kereta, 1 jam sebelum waktu penjemputan sudah cukup.')
                     </div>
                 </div>
             </div>
@@ -131,7 +132,7 @@
             <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.4s" data-accordion-item>
                 <h2 id="accordion-heading-2">
                     <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-2" aria-expanded="false" aria-controls="accordion-body-2">
-                        <span>@translate('Is it possible to be dropped off at the airport or train station?')</span>
+                        <span>@translate('Apakah bisa diantar kembali ke bandara atau stasiun?')</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -139,7 +140,7 @@
                 </h2>
                 <div id="accordion-body-2" class="hidden" aria-labelledby="accordion-heading-2">
                     <div class="p-6 pt-0 text-gray-600 border-t border-transparent leading-relaxed text-sm md:text-base">
-                        @translate('Yes, either Surabaya or Denpasar airport are possible. Please make sure the flight/train departure is 2 hours later than 5:00 PM (17:00) — a flight leaving around 19:00 should be fine. If taking a train to the west (e.g., Yogyakarta), we suggest Ketapang train station.')
+                        @translate('Ya, baik bandara Surabaya atau Denpasar bisa. Pastikan jadwal keberangkatan pesawat/kereta 2 jam setelah jam 17:00 (jam 19:00 aman). Jika naik kereta ke arah barat (misal: Yogyakarta), kami sarankan Stasiun Ketapang.')
                     </div>
                 </div>
             </div>
@@ -148,7 +149,7 @@
             <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.5s" data-accordion-item>
                 <h2 id="accordion-heading-3">
                     <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-3" aria-expanded="false" aria-controls="accordion-body-3">
-                        <span>@translate('Do I have to carry my luggage during the tour?')</span>
+                        <span>@translate('Apakah saya harus membawa koper selama tur?')</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -156,7 +157,7 @@
                 </h2>
                 <div id="accordion-body-3" class="hidden" aria-labelledby="accordion-heading-3">
                     <div class="p-6 pt-0 text-gray-600 border-t border-transparent leading-relaxed text-sm md:text-base">
-                        @translate('Yes. But you will leave it in the car while you’re doing the activity. Our drivers will ensure your belongings are safe.')
+                        @translate('Ya. Tapi Anda akan meninggalkannya di dalam mobil saat beraktivitas. Supir kami akan menjaga barang bawaan Anda tetap aman.')
                     </div>
                 </div>
             </div>
@@ -165,7 +166,7 @@
             <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.6s" data-accordion-item>
                 <h2 id="accordion-heading-4">
                     <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-4" aria-expanded="false" aria-controls="accordion-body-4">
-                        <span>@translate('Is it allowed to fly a drone?')</span>
+                        <span>@translate('Apakah boleh menerbangkan drone?')</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -173,7 +174,7 @@
                 </h2>
                 <div id="accordion-body-4" class="hidden" aria-labelledby="accordion-heading-4">
                     <div class="p-6 pt-0 text-gray-600 border-t border-transparent leading-relaxed text-sm md:text-base">
-                        @translate('Currently, Bromo National Park policy does not allow drones to be flown at any point or spot. However, flying drones is permitted at Tumpak Sewu and Ijen Crater (depending on wind conditions).')
+                        @translate('Saat ini, kebijakan Taman Nasional Bromo melarang penerbangan drone di titik mana pun. Namun, menerbangkan drone diperbolehkan di Tumpak Sewu dan Kawah Ijen (tergantung kondisi angin).')
                     </div>
                 </div>
             </div>
@@ -182,7 +183,7 @@
             <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.7s" data-accordion-item>
                 <h2 id="accordion-heading-5">
                     <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-5" aria-expanded="false" aria-controls="accordion-body-5">
-                        <span>@translate('How about tour availability?')</span>
+                        <span>@translate('Bagaimana dengan ketersediaan tur?')</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -190,7 +191,7 @@
                 </h2>
                 <div id="accordion-body-5" class="hidden" aria-labelledby="accordion-heading-5">
                     <div class="p-6 pt-0 text-gray-600 border-t border-transparent leading-relaxed text-sm md:text-base">
-                        @translate('Tours are available daily, unless there is a closure by local authorities due to local events or routine agendas, which will be announced with prior notice.')
+                        @translate('Tur tersedia setiap hari, kecuali ada penutupan oleh pihak berwenang karena acara lokal atau agenda rutin, yang akan diumumkan sebelumnya.')
                     </div>
                 </div>
             </div>
@@ -198,13 +199,13 @@
         </div>
         
         <div class="text-center mt-16 animate-fade-up relative z-10" style="animation-delay: 0.8s">
-            <p class="text-gray-500 mb-6">@translate('Still have questions?')</p>
-            {{-- WhatsApp Button (Kept Green) --}}
-            <a href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+            <p class="text-gray-500 mb-6">@translate('Masih punya pertanyaan?')</p>
+            {{-- WhatsApp Button (KEPT GREEN) --}}
+            <a href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer" 
                class="inline-flex items-center px-8 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
-                <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i> @translate('Chat Support')
+                <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i> @translate('Chat Bantuan')
             </a>
         </div>
     </section>

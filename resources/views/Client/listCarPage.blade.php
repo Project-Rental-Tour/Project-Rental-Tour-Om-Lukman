@@ -92,13 +92,13 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
                 <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
-                    @translate('Premium Transport')
+                    @translate('Transportasi Premium')
                 </span>
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
-                    @translate('Choose Your') <br><span class="italic text-secondary">@translate('Perfect Ride')</span>
+                    @translate('Pilih Kendaraan') <br><span class="italic text-secondary">@translate('Impian Anda')</span>
                 </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    @translate('From city cruisers to spacious family vans. Explore our well-maintained fleet designed for comfort, safety, and style across Java.')
+                    @translate('Dari mobil kota yang gesit hingga van keluarga yang luas. Jelajahi armada terawat kami yang dirancang untuk kenyamanan, keamanan, dan gaya di seluruh Jawa.')
                 </p>
             </div>
         </div>
@@ -112,11 +112,12 @@
         <div class="flex flex-wrap gap-3 mb-12 justify-center md:justify-start relative z-10 animate-fade-up">
             <a href="{{ route('usercar.index') }}" 
                class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ !request('type') ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
-                @translate('All Cars')
+                @translate('Semua Mobil')
             </a>
             @foreach($carTypes as $type)
             <a href="{{ route('usercar.index', ['type' => $type]) }}" 
                class="px-5 py-2 rounded-full text-sm font-bold transition-all {{ request('type') == $type ? 'bg-primary text-white shadow-lg' : 'bg-white text-gray-500 hover:text-primary border border-gray-100' }}">
+                {{-- Translate kategori mobil (misal: SUV -> SUV, Family -> Keluarga) --}}
                 @translate(ucfirst($type))
             </a>
             @endforeach
@@ -138,7 +139,7 @@
                         
                         {{-- Price Tag (Using Currency Helper) --}}
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
-                            @currency($car->price) / @translate('day')
+                            @currency($car->price) / @translate('hari')
                         </div>
 
                         {{-- Category Tag --}}
@@ -157,10 +158,10 @@
                         <div class="flex flex-wrap gap-2 mb-6">
                             {{-- Feature 1: Capacity --}}
                             <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
-                                <i class="fas fa-users mr-1 text-secondary"></i> {{ $car->capacity }} @translate('Seats')
+                                <i class="fas fa-users mr-1 text-secondary"></i> {{ $car->capacity }} @translate('Kursi')
                             </span>
                             
-                            {{-- Feature 2: Transmission --}}
+                            {{-- Feature 2: Transmission (Manual/Automatic -> Manual/Otomatis) --}}
                             <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
                                 <i class="fas fa-cogs mr-1 text-secondary"></i> @translate($car->transmission)
                             </span>
@@ -168,20 +169,20 @@
 
                         <a href="{{ route('car.detail', $car->slug) }}"
                             class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
-                            @translate('View Details') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            @translate('Lihat Detail') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="col-span-full text-center py-10">
-                    <p class="text-gray-500">@translate('No cars found matching your criteria.')</p>
-                    <a href="{{ route('usercar.index') }}" class="text-primary font-bold hover:underline">@translate('Clear Filters')</a>
+                    <p class="text-gray-500">@translate('Tidak ada mobil yang ditemukan sesuai kriteria Anda.')</p>
+                    <a href="{{ route('usercar.index') }}" class="text-primary font-bold hover:underline">@translate('Hapus Filter')</a>
                 </div>
             @endforelse
 
             {{-- Custom/Contact Card --}}
             <div class="bg-primary rounded-[2rem] shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up cursor-pointer group relative flex flex-col justify-center items-center text-center p-8 border border-white/10"
-                 onclick="window.location='https://wa.me/6281217006076'">
+                 onclick="window.location='https://wa.me/62812200052766'">
                 
                 {{-- Decorative circles --}}
                 <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-secondary/20 transition-colors"></div>
@@ -192,13 +193,13 @@
                         <i class="fas fa-headset text-3xl text-secondary"></i>
                     </div>
                     
-                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">@translate('Need Help?')</h3>
+                    <h3 class="text-2xl font-bold text-white mb-3 font-serif">@translate('Butuh Bantuan?')</h3>
                     <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
-                        @translate('Not sure which car fits your trip? Contact us for a personal recommendation.')
+                        @translate('Bingung mobil mana yang cocok? Hubungi kami untuk rekomendasi pribadi.')
                     </p>
 
                     <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
-                        @translate('Chat with Us') <i class="fab fa-whatsapp ml-2"></i>
+                        @translate('Chat Kami') <i class="fab fa-whatsapp ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -213,14 +214,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Rent Now')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Sewa Sekarang')</span>
     </a>
 
     @include('components.client.footer')

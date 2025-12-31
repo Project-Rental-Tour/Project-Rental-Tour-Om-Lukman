@@ -91,14 +91,14 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl animate-fade-up text-center mx-auto md:text-left md:mx-0">
                 <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block shadow-secondary/20">
-                    @translate('Where to Next?')
+                    @translate('Mau Kemana Selanjutnya?')
                 </span>
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
-                    @translate('Explore Our') <br>
-                    <span class="italic text-secondary">@translate('Destinations')</span>
+                    @translate('Jelajahi') <br>
+                    <span class="italic text-secondary">@translate('Destinasi Kami')</span>
                 </h1>
                 <p class="text-lg text-white/80 leading-relaxed font-light">
-                    @translate('Discover handcrafted travel packages filled with adventure, culture, and unforgettable moments. From serene beaches to mountain treks, we’ve got your next journey covered.')
+                    @translate('Temukan paket wisata pilihan yang penuh petualangan, budaya, dan momen tak terlupakan. Dari pantai yang tenang hingga pendakian gunung, kami siap menemani perjalanan Anda selanjutnya.')
                 </p>
             </div>
         </div>
@@ -119,7 +119,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
                         
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
-                            {{-- Ganti format hardcode IDR dengan helper currency --}}
+                            {{-- Currency helper otomatis mendeteksi mata uang user --}}
                             @currency($destination->price)
                         </div>
                     </div>
@@ -140,13 +140,13 @@
                             @endforeach
 
                             @if(count(explode(',', $destination->activities)) > 2)
-                                <span class="text-gray-400 text-xs flex items-center">@translate('+More')</span>
+                                <span class="text-gray-400 text-xs flex items-center">@translate('+Lainnya')</span>
                             @endif
                         </div>
 
                         <a href="{{ route('destination.show', $destination->slug) }}"
                             class="w-full mt-auto py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center border-2 border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent">
-                            @translate('View Details') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            @translate('Lihat Detail') <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -166,14 +166,14 @@
                     </div>
                     
                     <h3 class="text-2xl font-bold text-white mb-3 font-serif">
-                        @translate('Design Your') <br> @translate('Trip')
+                        @translate('Rancang') <br> @translate('Perjalanan Anda')
                     </h3>
                     <p class="text-white/70 text-sm mb-8 leading-relaxed font-light">
-                        @translate('No package fits? Tell us your dream destination and we\'ll create a custom experience.')
+                        @translate('Tidak ada paket yang cocok? Beritahu kami tujuan impian Anda dan kami akan membuat pengalaman khusus untuk Anda.')
                     </p>
 
                     <button class="px-8 py-3 bg-secondary text-white rounded-full font-bold text-sm hover:bg-white hover:text-primary transition-all duration-300 shadow-lg shadow-secondary/30">
-                        @translate('Customize Now') <i class="fas fa-arrow-right ml-2"></i>
+                        @translate('Kustomisasi Sekarang') <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -183,14 +183,14 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
         class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Need Help?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')
