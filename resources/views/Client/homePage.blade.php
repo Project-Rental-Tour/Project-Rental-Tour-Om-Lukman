@@ -169,9 +169,12 @@
                             @translate('Mulai Perjalanan') 
                             <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <a href="{{ route('booking.custom') }}"
-                        class="px-10 py-4 text-center text-white glass-card rounded-full transition-all duration-300 font-bold border-white/20">
-                            @translate('Rancang Perjalanan Saya')
+                        <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+                        class="px-10 py-4 text-center text-white glass-card rounded-full transition-all duration-300 font-bold border-white/20 flex items-center justify-center gap-2 hover:bg-white/10">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            @translate('Konsultasi via WhatsApp')
                         </a>
                     </div>
                 </div>
