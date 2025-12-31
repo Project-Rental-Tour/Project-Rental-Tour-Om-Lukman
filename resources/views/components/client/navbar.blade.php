@@ -13,7 +13,7 @@
         <button data-collapse-toggle="navbar-default" type="button"
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 text-white"
             aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">@translate('Open main menu')</span>
+            <span class="sr-only">@translate('Buka menu utama')</span>
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M1 1h15M1 7h15M1 13h15" />
@@ -25,19 +25,19 @@
                 
                 <li>
                     <a href="{{ route('index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
-                        @translate('Home')
+                        @translate('Beranda')
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('destination.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
-                        @translate('Tour Package')
+                        @translate('Paket Wisata')
                     </a>
                 </li>
                 
                 <li>
                     <a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
-                        @translate('Rent Car')
+                        @translate('Sewa Mobil')
                     </a>
                 </li>
                 
@@ -49,13 +49,13 @@
                
                 <li>
                     <a href="{{ route('gallery.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
-                        @translate('Gallery')
+                        @translate('Galeri')
                     </a>
                 </li>
                 
                 <li>
                     <a href="{{ route('about') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
-                        @translate('About Us')
+                        @translate('Tentang Kami')
                     </a>
                 </li>
 
