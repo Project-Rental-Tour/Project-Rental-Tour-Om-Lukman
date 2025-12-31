@@ -10,26 +10,38 @@ class TranslationHelper
 {
     public static function translate($text)
     {
-        // 1. Cek Bahasa Target User (Diset oleh Middleware IP tadi)
-        $targetLang = Session::get('app_locale', 'id'); // Default ID
+        // 1. Cek Bahasa Target User
+        $targetLang = Session::get('app_locale', 'id'); 
 
-        // 2. Jika user orang Indo atau Text kosong, langsung tampilkan aslinya
-        if ($targetLang == 'id' || empty($text)) {
-            return $text;
+        // 2. Cek apakah teks kosong? Kalau kosong return string kosong
+        if (empty($text)) {
+            return '';
         }
 
-        // 3. Cek CACHE (Biar gak lemot & gak kena limit Google)
-        // Kita buat kunci unik berdasarkan teks dan bahasa target
+        // HAPUS BAGIAN INI:
+        // if ($targetLang == 'id') { return $text; }
+        // Kita hapus agar jika input Inggris -> target Indo, dia tetap jalan.
+
+        // 3. Cek CACHE
+        // Kunci cache unik berdasarkan teks asli DAN bahasa target
         $cacheKey = 'trans_' . md5($text) . '_' . $targetLang;
 
         return Cache::rememberForever($cacheKey, function () use ($text, $targetLang) {
             try {
-                // 4. Minta Google Terjemahkan
                 $tr = new GoogleTranslate();
-                $tr->setSource('id'); // Asumsi database Anda bahasa Indonesia
+                
+                // PERBAIKAN PENTING:
+                // Set Source ke NULL agar Google otomatis mendeteksi bahasa input.
+                // Jadi: Input Inggris -> Terdeteksi EN -> Translate ke ID
+                $tr->setSource(null); 
+                
                 $tr->setTarget($targetLang);
                 
-                return $tr->translate($text);
+                $result = $tr->translate($text);
+
+                // Validasi: jika hasil kosong, kembalikan teks asli
+                return !empty($result) ? $result : $text;
+
             } catch (\Exception $e) {
                 // Jika Google Error/Limit, kembalikan teks asli saja
                 return $text;
