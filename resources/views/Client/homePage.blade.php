@@ -342,11 +342,20 @@
 
                 <div class="bg-primary p-8 md:p-10 rounded-[2.5rem] shadow-xl shadow-primary/30 animate-fade-up flex flex-col h-full text-white relative overflow-hidden" style="animation-delay: 0.2s">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-                    <div class="flex items-center gap-4 mb-8 relative z-10">
+                    {{-- Tambahkan 'flex-col' dan 'text-center' di div pembungkus utama --}}
+                    <div class="flex flex-col items-center justify-center text-center gap-4 mb-8 relative z-10">
+                        
+                        {{-- Bagian Ikon --}}
                         <div class="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center text-xl backdrop-blur-sm">
-                            <i class="fas fa-magic mx-auto"></i>
+                            {{-- Ganti fa-magic dengan fa-pen jika ingin sesuai gambar --}}
+                            <i class="fas fa-pen"></i> 
                         </div>
-                        <h3 class="text-2xl font-bold font-serif">@translate('Perjalanan Kustom')</h3>
+
+                        {{-- Bagian Judul --}}
+                        <h3 class="text-2xl font-bold font-serif">
+                            @translate('Perjalanan Kustom')
+                        </h3>
+
                     </div>
                     <p class="text-gray-200 mb-8 relative z-10">@translate("Ingin sesuatu yang unik? Ceritakan perjalanan impian Anda dan kami akan mewujudkannya.")</p>
                     <div class="space-y-8 mb-10 flex-grow relative z-10">
