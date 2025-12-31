@@ -364,7 +364,7 @@
                             @translate('Pesan Sekarang') <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
 
-                        <a href="https://wa.me/62812200052766?text=Halo%20Admin%20GOING%20TO%20THE%20JAVA,%20Saya%20tertarik%20sewa%20mobil%20{{ $car->name_car }}" 
+                        <a href="https://wa.me/6281220005276?text=Halo%20Admin%20GOING%20TO%20THE%20JAVA,%20Saya%20tertarik%20sewa%20mobil%20{{ $car->name_car }}" 
                            target="_blank"
                            class="w-full py-4 bg-white text-primary rounded-xl font-bold border border-primary/20 flex items-center justify-center gap-2 hover:bg-primary/5 transition-all">
                             <i class="fab fa-whatsapp text-xl"></i> @translate('Chat untuk Info')
@@ -436,7 +436,7 @@
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=62812200052766&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
