@@ -344,7 +344,7 @@
                     <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     <div class="flex items-center gap-4 mb-8 relative z-10">
                         <div class="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center text-xl backdrop-blur-sm">
-                            <i class="fas fa-magic"></i>
+                            <i class="fas fa-magic mx-auto"></i>
                         </div>
                         <h3 class="text-2xl font-bold font-serif">@translate('Perjalanan Kustom')</h3>
                     </div>
