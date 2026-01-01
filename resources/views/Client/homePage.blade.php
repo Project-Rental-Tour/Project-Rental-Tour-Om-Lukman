@@ -561,7 +561,7 @@
                     <div class="flex items-center text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 gap-3">
                         <span>{{ $blog->created_at->format('M d, Y') }}</span>
                         <span class="w-1 h-1 bg-secondary rounded-full"></span>
-                        <span>{{ $blog->time_read ?? '5' }} @translate('MENIT BACA')</span>
+                        <span>{{ $blog->time_read ?? '5' }} @translate('MENIT')</span>
                     </div>
                     
                     <h4 class="text-xl font-serif font-bold text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">

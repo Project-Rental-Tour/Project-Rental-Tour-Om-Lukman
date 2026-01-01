@@ -98,7 +98,8 @@
     @include('components.client.navbar')
 
     {{-- HERO SECTION --}}
-    <section id="jumbotron" class="relative bg-primary min-h-[55vh] flex items-center overflow-hidden">
+    {{-- UBAH: min-h-[55vh] menjadi min-h-[60vh] agar lebih tinggi dan konsisten --}}
+    <section id="jumbotron" class="relative bg-primary min-h-[60vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('assets/images/bg_header_blogs.jpeg') }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920';"
@@ -190,7 +191,7 @@
                         <div class="flex items-center gap-4 text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">
                             <span class="flex items-center gap-1.5"><i class="far fa-calendar"></i> {{ $blog->created_at->format('M d, Y') }}</span>
                             <span class="w-1 h-1 bg-secondary rounded-full"></span>
-                            <span class="flex items-center gap-1.5"><i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('menit baca')</span>
+                            <span class="flex items-center gap-1.5"><i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('menit')</span>
                         </div>
 
                         <h3 class="text-2xl font-serif font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors line-clamp-2">
@@ -286,15 +287,13 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a 
-        href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-        target="_blank"
-        rel="noopener noreferrer"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+   target="_blank"
+   rel="noopener noreferrer"
+       id="whatsapp-float"
+       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
+        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')
