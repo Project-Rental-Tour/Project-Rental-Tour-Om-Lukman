@@ -127,7 +127,7 @@
                         {{ $blog->created_at->format('d M Y') }}
                     </span>
                     <span class="flex items-center gap-2">
-                        <i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('menit baca')
+                        <i class="far fa-clock"></i> {{ $blog->time_read ?? '5' }} @translate('menit')
                     </span>
                 </div>
 
