@@ -99,7 +99,7 @@
 
     {{-- HERO SECTION --}}
     {{-- UBAH: min-h-[55vh] menjadi min-h-[60vh] agar lebih tinggi dan konsisten --}}
-    <section id="jumbotron" class="relative bg-primary min-h-[60vh] flex items-center overflow-hidden">
+    <section id="jumbotron" class="relative bg-primary min-h-[55vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('assets/images/bg_header_blogs.jpeg') }}" 
                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920';"
