@@ -141,7 +141,7 @@
                 </div>
                 
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg drop-shadow-md">
-                    @translate($destination->name_package)
+                    {{ $destination->name_package }}
                 </h1>
                 
                 <div class="flex flex-wrap items-center gap-6 text-white/90 text-lg font-light">

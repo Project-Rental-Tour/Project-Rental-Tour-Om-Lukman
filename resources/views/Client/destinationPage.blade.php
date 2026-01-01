@@ -126,7 +126,7 @@
 
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-primary mb-3 font-serif group-hover:text-secondary transition-colors">
-                            @translate($destination->name_package)
+                            {{ $destination->name_package }}
                         </h3>
 
                         <div class="flex flex-wrap gap-2 mb-6">

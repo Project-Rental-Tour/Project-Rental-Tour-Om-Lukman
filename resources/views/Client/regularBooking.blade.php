@@ -124,7 +124,7 @@
                     @translate('Wisata') @translate(ucfirst($destination->category))
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif text-shadow-lg drop-shadow-md">
-                    @translate($destination->name_package)
+                    {{ $destination->name_package }}
                 </h1>
                 <p class="text-lg text-white/90 font-light flex items-center justify-center gap-2">
                     <i class="fas fa-map-marker-alt text-secondary"></i> @translate($destination->place)

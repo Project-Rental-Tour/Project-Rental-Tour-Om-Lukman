@@ -342,7 +342,7 @@
                         </div>
                         
                         <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 font-serif group-hover:text-secondary transition-colors">
-                            @translate($destination->name_package)
+                            {{ $destination->name_package }}
                         </h3>
                         <p class="text-white/90 text-lg font-medium">
                             @currency($destination->price)
