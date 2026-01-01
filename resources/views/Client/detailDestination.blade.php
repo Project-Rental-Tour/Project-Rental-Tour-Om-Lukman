@@ -48,10 +48,6 @@
 
         /* Utilities */
         .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
-        
-        /* --- PERBAIKAN DI SINI: MENAMBAHKAN BG-SECONDARY --- */
-        .bg-secondary { background-color: var(--color-secondary) !important; }
-        
         .text-primary { color: var(--color-primary) !important; }
         .text-secondary { color: var(--color-secondary) !important; }
         .bg-surface { background-color: var(--color-surface) !important; }
@@ -177,28 +173,32 @@
                 <li>/</li>
                 <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors font-medium">@translate('Destinasi')</a></li>
                 <li>/</li>
-                <li class="text-primary font-bold">{{$destination->name_package}}</li>
+                <li class="font-bold text-primary">{{$destination->name_package}}</li>
             </ol>
         </div>
     </nav>
 
     {{-- MAIN CONTENT --}}
+    {{-- NOTE: Padding bottom (pb-32) ditambahkan agar konten tidak tertutup Sticky Bar di Mobile --}}
     <section class="container mx-auto px-6 py-12 pb-32 lg:pb-12 relative">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
             {{-- LEFT COLUMN (Details) --}}
             <div class="lg:col-span-2 space-y-12">
                 
-                {{-- 1. Main Image Slider --}}
+                {{-- 1. Main Image Slider (SWIPER) --}}
                 <div class="rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 h-[400px] group animate-fade-up relative">
                     <div class="swiper mainImageSwiper h-full w-full">
                         <div class="swiper-wrapper">
+                            {{-- Slide 1: Main Photo --}}
                             <div class="swiper-slide">
                                 <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
                                      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
                                      alt="Main View"
                                      class="w-full h-full object-cover">
                             </div>
+
+                            {{-- Slide 2 onwards: Gallery Photos --}}
                            @if($destination->destination_photo_2)
                            <div class="swiper-slide">
                                 <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}" 
@@ -218,11 +218,13 @@
                             </div>
                             @endif
                         </div>
+                        {{-- Slider Controls --}}
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
                     </div>
                     
+                    {{-- Optional Tag --}}
                     <div class="absolute top-4 left-4 z-20">
                          <span class="bg-primary/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/20">
                             <i class="fas fa-images mr-1"></i> @translate('Galeri')
@@ -234,6 +236,7 @@
                 <div class="bg-white/80 backdrop-blur rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
+                            {{-- Judul Tab dalam Bahasa Indonesia --}}
                             @foreach(['details' => 'Ringkasan', 'itinerary' => 'Rencana Perjalanan', 'tour' => 'Sorotan', 'inclusion' => 'Fasilitas', 'note' => 'Catatan'] as $key => $label)
                             <li class="flex-shrink-0" role="presentation">
                                 <button
@@ -474,7 +477,7 @@
             </div>
             
             <a href="{{ route('booking.regular.form', $destination->slug) }}" 
-               class="bg-secondary text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-secondary/90 transition-all flex items-center gap-2">
+               class="bg-bg-sky-400 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-bg-sky-400/90 transition-all flex items-center gap-2">
                 @translate('Pesan') <i class="fas fa-arrow-right"></i>
             </a>
         </div>
