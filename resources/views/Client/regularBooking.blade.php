@@ -143,7 +143,7 @@
                 <li>/</li>
                 <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors">@translate('Destinasi')</a></li>
                 <li>/</li>
-                <li class="text-primary font-bold">@translate($destination->name_package)</li>
+                <li class="text-primary font-bold">{{$destination->name_package}}</li>
             </ol>
         </div>
     </nav>
