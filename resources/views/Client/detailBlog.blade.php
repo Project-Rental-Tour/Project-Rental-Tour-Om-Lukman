@@ -96,31 +96,34 @@
     {{-- 
         HERO SECTION (JUMBOTRON) 
     --}}
-    <section id="jumbotron" class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary">
+    <section id="jumbotron" class="relative min-h-[60vh] flex items-center overflow-hidden bg-primary">
         {{-- Background Image --}}
         <div class="absolute inset-0 z-0">
             <img src="{{ asset($blog->image_path) }}" 
-                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
-                 alt="{{ $blog->title }}"
-                 class="w-full h-full object-cover object-center animate-float-slow"
-                 style="opacity: 0.5;">
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
+                alt="{{ $blog->title }}"
+                class="w-full h-full object-cover object-center animate-float-slow"
+                style="opacity: 0.5;">
             
             {{-- Blue Gradient Overlay --}}
             <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
         {{-- Content Container --}}
-        <div class="container mx-auto px-6 relative z-10 pt-24 text-center">
-            <div class="max-w-4xl mx-auto animate-fade-up">
+        {{-- UBAH 1: text-center MENJADI text-left --}}
+        <div class="container mx-auto px-6 relative z-10 pt-24 text-left">
+            
+            {{-- UBAH 2: Hapus mx-auto agar div tidak di tengah, ganti jadi mr-auto (atau biarkan default) --}}
+            <div class="max-w-4xl mr-auto animate-fade-up">
                 
                 {{-- Meta Tags (Category & Date) --}}
-                <div class="flex flex-wrap justify-center items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
+                {{-- UBAH 3: justify-center MENJADI justify-start --}}
+                <div class="flex flex-wrap justify-start items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
                     <span class="bg-secondary text-white px-4 py-1.5 rounded-full font-bold shadow-lg shadow-secondary/30">
                         @translate($blog->category ?? 'Wisata')
                     </span>
                     <span class="flex items-center gap-2">
                         <i class="far fa-calendar"></i> 
-                        {{-- Format Tanggal biarkan angka, bulan akan otomatis menyesuaikan locale app --}}
                         {{ $blog->created_at->format('d M Y') }}
                     </span>
                     <span class="flex items-center gap-2">
@@ -133,8 +136,9 @@
                     @translate($blog->title)
                 </h1>
 
-                {{-- Breadcrumbs (Centered) --}}
-                <nav class="flex justify-center text-white/80 text-sm font-medium">
+                {{-- Breadcrumbs --}}
+                {{-- UBAH 4: justify-center MENJADI justify-start --}}
+                <nav class="flex justify-start text-white/80 text-sm font-medium">
                     <ol class="flex items-center space-x-2">
                         <li><a href="{{ route('index') }}" class="hover:text-secondary transition-colors">@translate('Beranda')</a></li>
                         <li>/</li>
