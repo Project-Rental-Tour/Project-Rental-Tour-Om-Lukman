@@ -22,6 +22,8 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: var(--color-surface);
             color: var(--color-text);
@@ -45,6 +47,8 @@
             font-family: 'Poppins', sans-serif;
             letter-spacing: -0.02em;
         }
+        
+        .text-balance { text-wrap: balance; }
 
         /* Utilities */
         .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
@@ -95,27 +99,29 @@
             border-color: var(--color-primary);
         }
 
+        /* Swiper Customization */
+        .swiper-button-next, .swiper-button-prev {
+            color: white !important;
+            background: rgba(0, 51, 102, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 18px !important;
+            font-weight: bold;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: var(--color-secondary) !important;
+        }
+
         /* Glass Card */
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 8px 32px 0 rgba(0, 51, 102, 0.08);
-        }
-        
-        /* Swiper Custom Pagination */
-        .swiper-pagination-bullet {
-            background: white;
-            opacity: 0.5;
-            width: 10px;
-            height: 10px;
-        }
-        .swiper-pagination-bullet-active {
-            background: var(--color-secondary);
-            opacity: 1;
-            width: 24px;
-            border-radius: 6px;
-            transition: all 0.3s;
         }
     </style>
 @endsection
@@ -136,9 +142,7 @@
         </div>
 
         <div class="container mx-auto px-6 relative z-10 pt-24 pb-10">
-            {{-- Text Left Aligned (Rata Kiri) --}}
             <div class="max-w-4xl mr-auto text-left animate-fade-up">
-                
                 <div class="flex flex-wrap items-center gap-3 mb-4 justify-start">
                     <span class="bg-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg shadow-secondary/30">
                         @translate('Wisata') @translate(ucfirst($destination->category)) 
@@ -149,7 +153,7 @@
                 </div>
                 
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-serif leading-tight text-shadow-lg drop-shadow-md">
-                    @translate($destination->name_package)
+                    {{ $destination->name_package }}
                 </h1>
                 
                 <div class="flex flex-wrap items-center gap-6 text-white/90 text-lg font-light justify-start">
@@ -173,13 +177,13 @@
                 <li>/</li>
                 <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors font-medium">@translate('Destinasi')</a></li>
                 <li>/</li>
-                <li class="font-bold text-primary">{{$destination->name_package}}</li>
+                <li class="font-bold text-primary">{{ $destination->name_package }}</li>
             </ol>
         </div>
     </nav>
 
     {{-- MAIN CONTENT --}}
-    {{-- NOTE: Padding bottom (pb-32) ditambahkan agar konten tidak tertutup Sticky Bar di Mobile --}}
+    {{-- NOTE: Padding bottom (pb-32) ditambahkan untuk mobile agar tidak tertutup sticky bar --}}
     <section class="container mx-auto px-6 py-12 pb-32 lg:pb-12 relative">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
@@ -232,11 +236,11 @@
                     </div>
                 </div>
 
-                {{-- 2. Tabs Container --}}
+                {{-- 2. Tabs Container (Overview, Highlights, etc) --}}
                 <div class="bg-white/80 backdrop-blur rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
-                            {{-- Judul Tab dalam Bahasa Indonesia --}}
+                            {{-- Tab Headers --}}
                             @foreach(['details' => 'Ringkasan', 'itinerary' => 'Rencana Perjalanan', 'tour' => 'Sorotan', 'inclusion' => 'Fasilitas', 'note' => 'Catatan'] as $key => $label)
                             <li class="flex-shrink-0" role="presentation">
                                 <button
@@ -351,6 +355,7 @@
                                 @foreach($lines as $line)
                                     @if(trim($line))
                                         <div class="relative">
+                                            {{-- Dot with Secondary Color --}}
                                             <span class="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-secondary border-4 border-white flex items-center justify-center text-white text-[10px] shadow-sm">
                                                 <i class="fas fa-circle text-[8px]"></i>
                                             </span>
@@ -384,7 +389,7 @@
                     </div>
                 </div>
 
-                {{-- 3. Related Photos --}}
+                {{-- 3. Related Photos / Gallery Grid --}}
                 <div class="bg-white/80 backdrop-blur p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.3s">
                     <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Foto Lainnya')</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -450,6 +455,7 @@
         {{-- CTA Banner --}}
         <div class="mt-16 bg-primary rounded-[2rem] p-10 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-fade-up">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            {{-- Decoration Circle --}}
             <div class="absolute -right-20 -top-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
             
             <div class="relative z-10 mb-6 md:mb-0">
@@ -465,7 +471,7 @@
         </div>
     </section>
 
-    {{-- MOBILE STICKY BOOKING BAR (Visible on Mobile Only) --}}
+    {{-- MOBILE STICKY BOOKING BAR (Only visible on mobile) --}}
     <div class="fixed bottom-0 left-0 w-full z-[60] bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-4 lg:hidden animate-fade-up">
         <div class="flex items-center justify-between gap-4">
             <div class="flex flex-col">
@@ -477,22 +483,22 @@
             </div>
             
             <a href="{{ route('booking.regular.form', $destination->slug) }}" 
-               class="bg-bg-sky-400 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-bg-sky-400/90 transition-all flex items-center gap-2">
+               class="bg-sky-900 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-sky-900/90 transition-all flex items-center gap-2">
                 @translate('Pesan') <i class="fas fa-arrow-right"></i>
             </a>
         </div>
     </div>
 
-    {{-- Floating WhatsApp --}}
+    {{-- Floating WhatsApp (KEPT GREEN) --}}
     <a 
         href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float"
-        class="fixed bottom-24 lg:bottom-8 right-6 z-50 flex items-center gap-3 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 flex items-center gap-2 group animate-bounce-slow"
+        class="fixed bottom-24 lg:bottom-8 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
     >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="whatsapp-text font-medium whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')
