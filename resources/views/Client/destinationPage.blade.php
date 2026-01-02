@@ -131,7 +131,7 @@
 
                         <div class="flex flex-wrap gap-2 mb-6">
                             {{-- Loop Activities, translate per item --}}
-                            @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
+                            @foreach(array_slice(explode('.', $destination->activities), 0, 2) as $activity)
                                 @if(trim($activity))
                                     <span class="bg-gray-50 text-gray-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border border-gray-200 group-hover:border-secondary/20 transition-colors">
                                         @translate(trim($activity))

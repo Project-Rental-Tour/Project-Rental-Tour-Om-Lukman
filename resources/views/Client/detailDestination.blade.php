@@ -294,7 +294,7 @@
                                                                 @else
                                                                     +
                                                                 @endif
-                                                                @translate('Orang')
+                                                                pax
                                                             </td>
                                                             
                                                             {{-- Kolom Harga --}}

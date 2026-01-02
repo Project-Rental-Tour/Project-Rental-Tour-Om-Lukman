@@ -218,7 +218,7 @@
 
                     <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <div class="flex flex-wrap gap-2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
+                            @foreach(array_slice(explode('.', $destination->activities), 0, 2) as $activity)
                                 @if(trim($activity))
                                     <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-semibold text-white border border-white/20 uppercase tracking-wider">
                                         @translate(trim($activity))
