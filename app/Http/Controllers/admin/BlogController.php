@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str; // [Tambahan 1: Import Str]
 
 use App\Models\Blogs;
 use App\Models\LogActivity;
@@ -74,23 +75,30 @@ class BlogController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission.']);
         }
 
-        // Validasi (Tanpa Slug)
+        // Validasi
         $validated = $request->validate([
             'title'      => 'required|string|max:255',
             'category'   => 'required|string|max:100',
             'time_read'  => 'required|integer|min:1',
             'content'    => 'required|string',
-            // Pastikan input name di form adalah 'image_path' atau sesuaikan di sini
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
 
         try {
+            // [Tambahan 2: Generate Slug dari Title]
+            // Contoh: "Cara Memasak Nasi" menjadi "cara-memasak-nasi"
+            $validated['slug'] = Str::slug($request->title);
+
+            // Cek apakah slug sudah ada di database (opsional, untuk menghindari error duplicate entry)
+            $count = Blogs::where('slug', 'like', $validated['slug'] . '%')->count();
+            if ($count > 0) {
+                $validated['slug'] .= '-' . ($count + 1); // Jika ada, tambahkan angka (misal: judul-blog-2)
+            }
+
             // Handle Image Upload
             if ($request->hasFile('image_path')) {
                 $file = $request->file('image_path');
-                // Simpan ke storage/app/public/blogs
                 $path = $file->store('public/blogs');
-                // Ubah path agar bisa diakses via asset() -> storage/blogs/filename.jpg
                 $validated['image_path'] = str_replace('public/', 'storage/', $path);
             }
 
@@ -129,9 +137,21 @@ class BlogController extends Controller
         ]);
 
         try {
+            // [Tambahan 3: Update Slug jika Title berubah]
+            if ($blog->title !== $request->title) {
+                $validated['slug'] = Str::slug($request->title);
+                
+                // Cek unik untuk update (exclude id sendiri)
+                $count = Blogs::where('slug', 'like', $validated['slug'] . '%')
+                              ->where('blog_id', '!=', $blog_id)
+                              ->count();
+                if ($count > 0) {
+                    $validated['slug'] .= '-' . ($count + 1);
+                }
+            }
+
             // Handle Image Update
             if ($request->hasFile('image_path')) {
-                // Hapus gambar lama jika ada
                 if ($blog->image_path && Storage::exists(str_replace('storage/', 'public/', $blog->image_path))) {
                     Storage::delete(str_replace('storage/', 'public/', $blog->image_path));
                 }
@@ -170,7 +190,6 @@ class BlogController extends Controller
 
             // Delete image
             if ($blog->image_path) {
-                // Konversi path storage/ ke public/ untuk Storage facade
                 $storagePath = str_replace('storage/', 'public/', $blog->image_path);
                 if(Storage::exists($storagePath)) {
                     Storage::delete($storagePath);
@@ -215,7 +234,6 @@ class BlogController extends Controller
             $deletedTitles = $blogs->pluck('title');
 
             foreach ($blogs as $blog) {
-                // Delete image
                 if ($blog->image_path) {
                     $storagePath = str_replace('storage/', 'public/', $blog->image_path);
                     if(Storage::exists($storagePath)) {

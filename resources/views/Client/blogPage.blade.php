@@ -195,7 +195,7 @@
                         </div>
 
                         <h3 class="text-2xl font-serif font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors line-clamp-2">
-                            <a href="{{ route('blogs.detail', $blog->title) }}">
+                            <a href="{{ route('blogs.detail', $blog->slug) }}">
                                 @translate($blog->title)
                             </a>
                         </h3>
@@ -206,7 +206,7 @@
                         </p>
 
                         <div class="pt-6 border-t border-gray-100 mt-auto">
-                            <a href="{{ route('blogs.detail', $blog->title) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-2 transition-transform hover:text-secondary">
+                            <a href="{{ route('blogs.detail', $blog->slug) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-2 transition-transform hover:text-secondary">
                                 @translate('Baca Selengkapnya') <i class="fas fa-arrow-right ml-2 text-xs text-secondary"></i>
                             </a>
                         </div>

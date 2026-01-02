@@ -12,11 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('testimonials', function (Blueprint $table) {
+            // Primary Key (Sesuai file create awal)
             $table->id('testimonial_id');
-            $table->string('name');
-            $table->string('role');
-            $table->string('location');
-            $table->text('content');
+
+            // Data Testimoni (Dibuat nullable sesuai file update terakhir)
+            $table->string('name')->nullable();
+            $table->string('role')->nullable();
+            $table->string('location')->nullable();
+            $table->text('content')->nullable();
+            
+            // Kolom Gambar (Tambahan dari file update)
+            $table->string('image')->nullable();
+
+            // Rating & Timestamps
             $table->integer('rating')->default(5);
             $table->timestamps();
         });

@@ -565,14 +565,14 @@
                     </div>
                     
                     <h4 class="text-xl font-serif font-bold text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
-                        <a href="{{ route('blogs.detail', $blog->title) }}">@translate($blog->title)</a>
+                        <a href="{{ route('blogs.detail', $blog->slug) }}">@translate($blog->title)</a>
                     </h4>
                     
                     <p class="text-gray-500 text-sm line-clamp-3 leading-relaxed mb-4">
                         @translate(Str::limit(strip_tags($blog->content), 100))
                     </p>
                     
-                    <a href="{{ route('blogs.detail', $blog->title) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-1 transition-transform border-b-2 border-primary/20 pb-1 group-hover:border-secondary group-hover:text-secondary">
+                    <a href="{{ route('blogs.detail', $blog->slug) }}" class="inline-flex items-center text-sm font-bold text-primary group-hover:translate-x-1 transition-transform border-b-2 border-primary/20 pb-1 group-hover:border-secondary group-hover:text-secondary">
                         @translate('Baca Artikel') <i class="fas fa-arrow-right ml-2 text-xs"></i>
                     </a>
                 </div>

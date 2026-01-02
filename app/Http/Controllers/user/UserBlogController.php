@@ -41,13 +41,13 @@ class UserBlogController extends Controller
         return view('Client.blogPage', compact('blogs', 'profiles', 'recentPosts'));
     }
 
-    public function detailBlog($title)
+    public function detailBlog($slug)
     {
         $profiles = Profile::find(1) ?? Profile::first();
 
-        // Cari berdasarkan kolom 'title'
+        // Cari berdasarkan kolom 'slug'
         // firstOrFail() akan otomatis return 404 jika judul tidak ditemukan
-        $blog = Blogs::where('title', $title)->firstOrFail(); 
+        $blog = Blogs::where('slug', $slug)->firstOrFail(); 
 
         // Artikel Terkait (Kecuali artikel yang sedang dibuka)
         $relatedPosts = Blogs::where('blog_id', '!=', $blog->blog_id)
