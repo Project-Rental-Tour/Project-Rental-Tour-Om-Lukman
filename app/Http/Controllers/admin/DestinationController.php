@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Destination;
 use App\Models\LogActivity;
@@ -100,54 +98,6 @@ class DestinationController extends Controller
         return view('Client.detailDestination', compact('destination', 'profiles', 'relatedGalleries'));
     }
 
-    /**
-     * Helper function to compress and store image
-     */
-    private function processImage($file, $path = 'public/destinations', $quality = 75)
-    {
-        // Target maksimum 500KB (dalam bytes)
-        $targetSize = 500 * 1024; 
-
-        // 1. Init Image Manager
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($file);
-
-        // 2. Resize Awal (Sangat membantu mengurangi size)
-        // Max lebar 1200px, tinggi menyesuaikan (aspect ratio tetap)
-        if ($image->width() > 1200) {
-            $image->scale(width: 1200);
-        }
-
-        // 3. Logika Kompresi Iteratif
-        $quality = 80; // Mulai dari kualitas 80
-        $encoded = null;
-        
-        do {
-            // Encode ke JPEG dengan kualitas saat ini
-            $encoded = $image->toJpeg($quality);
-            
-            // Cek ukuran hasil encode
-            $size = strlen((string) $encoded);
-
-            // Jika masih lebih besar dari 500KB, turunkan kualitas
-            if ($size > $targetSize) {
-                $quality -= 5; // Kurangi 5% setiap loop
-            }
-
-        // Ulangi selama size masih > 500KB DAN kualitas masih di atas 15%
-        } while ($size > $targetSize && $quality >= 15);
-
-        // 4. Buat nama file unik
-        $filename = uniqid() . '_' . time() . '.jpg';
-        $fullPath = $path . '/' . $filename;
-
-        // 5. Simpan ke Storage
-        Storage::put($fullPath, (string) $encoded);
-
-        // 6. Kembalikan path
-        return str_replace('public/', 'storage/', $fullPath);
-    }
-
     public function store(Request $request)
     {
         $currentUser = Auth::user();
@@ -165,10 +115,10 @@ class DestinationController extends Controller
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'price_2' => 'nullable|numeric|min:0',
-            'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased max size for upload before compression
-            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'time' => 'required|string|max:255',
             'category' => 'required|string|max:100',
             'level' => 'nullable|string|max:50',
@@ -184,7 +134,7 @@ class DestinationController extends Controller
             'itinerary' => 'nullable|string',
             'tag' => 'nullable|string|max:500',
             'note' => 'nullable|string',
-            'price_tiers' => 'nullable|array', 
+            'price_tiers' => 'nullable|array', // Validasi array
             'price_tiers.*.min_pax' => 'nullable|numeric',
             'price_tiers.*.max_pax' => 'nullable|numeric',
             'price_tiers.*.price' => 'nullable|string',
@@ -193,13 +143,13 @@ class DestinationController extends Controller
         $photoUrls = [];
 
         try {
-            // Upload & Compress images
+            // Upload images
             $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
 
             foreach ($photoFields as $field) {
                 if ($request->hasFile($field)) {
-                    // Use helper function to compress and store
-                    $photoUrls[$field] = $this->processImage($request->file($field));
+                    $imagePath = $request->file($field)->store('public/destinations');
+                    $photoUrls[$field] = str_replace('public/', 'storage/', $imagePath);
                 } else {
                     $photoUrls[$field] = null;
                 }
@@ -219,7 +169,7 @@ class DestinationController extends Controller
 
             $tagString = $request->tag ?: null;
 
-            // Handle Price Tiers
+            // Handle Price Tiers (Filter empty values)
             $priceTiers = [];
             if ($request->has('price_tiers') && is_array($request->price_tiers)) {
                 foreach ($request->price_tiers as $tier) {
@@ -240,7 +190,7 @@ class DestinationController extends Controller
                 'place' => $request->place,
                 'price' => $price,
                 'price_2' => $price_2,
-                'price_tiers' => !empty($priceTiers) ? $priceTiers : null,
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Simpan array/JSON
                 'destination_photo' => $photoUrls['destination_photo'],
                 'destination_photo_2' => $photoUrls['destination_photo_2'],
                 'destination_photo_3' => $photoUrls['destination_photo_3'],
@@ -304,10 +254,10 @@ class DestinationController extends Controller
                 'place' => 'required|string|max:255',
                 'price' => 'nullable|numeric|min:0',
                 'price_2' => 'nullable|numeric|min:0',
-                'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'remove_photo' => 'nullable|array',
                 'remove_photo.*' => 'in:destination_photo,destination_photo_2,destination_photo_3,destination_photo_4',
                 'time' => 'required|string|max:255',
@@ -365,7 +315,7 @@ class DestinationController extends Controller
                 'place' => $request->place,
                 'price' => $price,
                 'price_2' => $price_2,
-                'price_tiers' => !empty($priceTiers) ? $priceTiers : null,
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Update field JSON
                 'time' => $request->time,
                 'category' => $request->category,
                 'level' => $request->level,
@@ -398,7 +348,7 @@ class DestinationController extends Controller
                     }
                 }
 
-                // 2. Upload New Photo (Compressed)
+                // 2. Upload New Photo
                 if ($request->hasFile($field)) {
                     // Delete old photo first if exists
                     if ($destination->{$field}) {
@@ -407,8 +357,8 @@ class DestinationController extends Controller
                             Storage::delete($oldPath);
                         }
                     }
-                    // Compress and store new image
-                    $updateData[$field] = $this->processImage($request->file($field));
+                    $imagePath = $request->file($field)->store('public/destinations');
+                    $updateData[$field] = str_replace('public/', 'storage/', $imagePath);
                 }
                 
                 // Keep old value if not changed

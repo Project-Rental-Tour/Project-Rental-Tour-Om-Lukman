@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Car;
 use App\Models\LogActivity;
@@ -17,9 +14,6 @@ use App\Models\Profile;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of cars.
-     */
     public function index(Request $request)
     {
         $currentUser = Auth::user();
@@ -78,58 +72,6 @@ class CarController extends Controller
         return view('Admin.manageCar', compact('cars', 'notifications', 'profiles'));
     }
 
-    /**
-     * Helper function to compress and store image
-     */
-    private function processImage($file, $path = 'public/cars', $quality = 75)
-    {
-       // Target maksimum 500KB (dalam bytes)
-        $targetSize = 500 * 1024; 
-
-        // 1. Init Image Manager
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($file);
-
-        // 2. Resize Awal (Sangat membantu mengurangi size)
-        // Max lebar 1200px, tinggi menyesuaikan (aspect ratio tetap)
-        if ($image->width() > 1200) {
-            $image->scale(width: 1200);
-        }
-
-        // 3. Logika Kompresi Iteratif
-        $quality = 80; // Mulai dari kualitas 80
-        $encoded = null;
-        
-        do {
-            // Encode ke JPEG dengan kualitas saat ini
-            $encoded = $image->toJpeg($quality);
-            
-            // Cek ukuran hasil encode
-            $size = strlen((string) $encoded);
-
-            // Jika masih lebih besar dari 500KB, turunkan kualitas
-            if ($size > $targetSize) {
-                $quality -= 5; // Kurangi 5% setiap loop
-            }
-
-        // Ulangi selama size masih > 500KB DAN kualitas masih di atas 15%
-        } while ($size > $targetSize && $quality >= 15);
-
-        // 4. Buat nama file unik
-        $filename = uniqid() . '_' . time() . '.jpg';
-        $fullPath = $path . '/' . $filename;
-
-        // 5. Simpan ke Storage
-        Storage::put($fullPath, (string) $encoded);
-
-        // 6. Kembalikan path
-        return str_replace('public/', 'storage/', $fullPath);
-    
-    }
-
-    /**
-     * Store a newly created car.
-     */
     public function store(Request $request)
     {
         $currentUser = Auth::user();
@@ -137,23 +79,24 @@ class CarController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
-        // Generate slug automatically
+        // Generate slug otomatis dari nama mobil
         $nameCar = $request->input('name_car');
         $baseSlug = Str::slug($nameCar, '-');
         $slug = $baseSlug;
         $counter = 1;
 
+        // Pastikan slug unik
         while (Car::where('slug', $slug)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
 
-        // Validation
+        // Validasi semua field
         $validated = $request->validate([
             'name_car' => 'required|string|max:255',
-            'image_car_1' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased limit to 5MB
-            'image_car_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'image_car_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_car_1' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_car_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_car_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
             'car_type' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -166,32 +109,29 @@ class CarController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Tambahkan slug yang sudah digenerate
         $validated['slug'] = $slug;
 
         try {
-            // Handle image uploads with compression
+            // Handle image uploads
+            $image1Path = $request->file('image_car_1')->store('public/cars');
             $imagePaths = [
-                'image_car_1' => null,
+                'image_car_1' => str_replace('public/', 'storage/', $image1Path),
                 'image_car_2' => null,
                 'image_car_3' => null,
             ];
 
-            // Image 1 (Required)
-            if ($request->hasFile('image_car_1')) {
-                $imagePaths['image_car_1'] = $this->processImage($request->file('image_car_1'));
-            }
-
-            // Image 2 (Optional)
             if ($request->hasFile('image_car_2')) {
-                $imagePaths['image_car_2'] = $this->processImage($request->file('image_car_2'));
+                $image2Path = $request->file('image_car_2')->store('public/cars');
+                $imagePaths['image_car_2'] = str_replace('public/', 'storage/', $image2Path);
             }
 
-            // Image 3 (Optional)
             if ($request->hasFile('image_car_3')) {
-                $imagePaths['image_car_3'] = $this->processImage($request->file('image_car_3'));
+                $image3Path = $request->file('image_car_3')->store('public/cars');
+                $imagePaths['image_car_3'] = str_replace('public/', 'storage/', $image3Path);
             }
 
-            // Merge data
+            // Gabungkan semua data
             $carData = array_merge($validated, $imagePaths);
 
             $car = Car::create($carData);
@@ -209,9 +149,6 @@ class CarController extends Controller
         }
     }
 
-    /**
-     * Update the specified car.
-     */
     public function update(Request $request, $car_id)
     {
         $currentUser = Auth::user();
@@ -221,23 +158,24 @@ class CarController extends Controller
 
         $car = Car::findOrFail($car_id);
 
-        // Generate slug automatically
+        // Generate slug otomatis dari nama mobil
         $nameCar = $request->input('name_car');
         $baseSlug = Str::slug($nameCar, '-');
         $slug = $baseSlug;
         $counter = 1;
 
+        // Pastikan slug unik (kecuali untuk mobil ini sendiri)
         while (Car::where('slug', $slug)->where('car_id', '!=', $car_id)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
 
-        // Validation
+        // Validasi semua field
         $validated = $request->validate([
             'name_car' => 'required|string|max:255',
-            'image_car_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased limit to 5MB
-            'image_car_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'image_car_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_car_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_car_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_car_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
             'car_type' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -250,12 +188,13 @@ class CarController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Tambahkan slug yang sudah digenerate
         $validated['slug'] = $slug;
 
         try {
             $updateData = $validated;
 
-            // Handle image updates with compression
+            // Handle image updates
             foreach (['image_car_1', 'image_car_2', 'image_car_3'] as $imageField) {
                 if ($request->hasFile($imageField)) {
                     // Delete old image if exists
@@ -263,8 +202,8 @@ class CarController extends Controller
                         Storage::delete(str_replace('storage/', 'public/', $car->{$imageField}));
                     }
 
-                    // Compress and store new image
-                    $updateData[$imageField] = $this->processImage($request->file($imageField));
+                    $imagePath = $request->file($imageField)->store('public/cars');
+                    $updateData[$imageField] = str_replace('public/', 'storage/', $imagePath);
                 }
             }
 
@@ -287,9 +226,6 @@ class CarController extends Controller
         }
     }
 
-    /**
-     * Remove the specified car.
-     */
     public function destroy($car_id)
     {
         $currentUser = Auth::user();
@@ -322,9 +258,6 @@ class CarController extends Controller
         }
     }
 
-    /**
-     * Bulk delete cars.
-     */
     public function bulkDestroy(Request $request)
     {
         $currentUser = Auth::user();

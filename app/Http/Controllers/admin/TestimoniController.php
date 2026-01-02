@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Testimonial;
 use App\Models\LogActivity;
@@ -81,36 +78,6 @@ class TestimoniController extends Controller
     }
 
     /**
-     * Helper function to compress and store image
-     */
-    private function processImage($file)
-    {
-        // Create new image manager instance with GD driver
-        $manager = new ImageManager(new Driver());
-
-        // Read image from file
-        $image = $manager->read($file);
-
-        // Resize image if it's too large (Testimonials usually don't need > 800px width)
-        if ($image->width() > 800) {
-            $image->scale(width: 800);
-        }
-
-        // Encode image to JPEG with 75% quality
-        $encoded = $image->toJpeg(75);
-
-        // Generate unique filename
-        $filename = uniqid() . '_' . time() . '.jpg';
-        $path = 'testimonial-images/' . $filename;
-
-        // Store image using Laravel Storage on 'public' disk
-        Storage::disk('public')->put($path, (string) $encoded);
-
-        // Return the path relative to the disk root
-        return $path;
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -126,41 +93,33 @@ class TestimoniController extends Controller
             'location'  => 'nullable|string|max:255',
             'content'   => 'nullable|string',
             'rating'    => 'nullable|integer|between:1,5',
-            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', // Increased limit to 5MB
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ])->validate();
 
-        try {
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                // Use helper to compress and store
-                $imagePath = $this->processImage($request->file('image'));
-            }
-
-            $testimonial = Testimonial::create([
-                'name'       => $validatedData['name'] ?? null,
-                'role'       => $validatedData['role'] ?? null,
-                'location'   => $validatedData['location'] ?? null,
-                'content'    => $validatedData['content'] ?? null,
-                'rating'     => $validatedData['rating'] ?? 5,
-                'image'      => $imagePath,
-                'user_id'    => Auth::id(),
-            ]);
-
-            LogActivity::create([
-                'username' => $currentUser->username,
-                'action' => 'Added testimonial: "' . ($testimonial->content ? Str::limit($testimonial->content, 30) : 'No content') . '" by ' . ($testimonial->name ?? 'Anonim'),
-            ]);
-
-            return redirect()->route('manage-testimonials.index')->with('toast', [
-                'type' => 'success',
-                'message' => 'Testimonial added successfully.'
-            ]);
-        } catch (\Exception $e) {
-            return back()->withInput()->with('toast', [
-                'type' => 'error',
-                'message' => 'Failed to add testimonial: ' . $e->getMessage()
-            ]);
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('testimonial-images', 'public');
         }
+
+        $testimonial = Testimonial::create([
+            'name'       => $validatedData['name'] ?? null,
+            'role'       => $validatedData['role'] ?? null,
+            'location'   => $validatedData['location'] ?? null,
+            'content'    => $validatedData['content'] ?? null,
+            'rating'     => $validatedData['rating'] ?? 5,
+            'image'      => $imagePath,
+            'user_id'    => Auth::id(),
+        ]);
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => 'Added testimonial: "' . ($testimonial->content ? Str::limit($testimonial->content, 30) : 'No content') . '" by ' . ($testimonial->name ?? 'Anonim'),
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial added successfully.'
+        ]);
     }
 
     /**
@@ -181,7 +140,7 @@ class TestimoniController extends Controller
             'location'  => 'nullable|string|max:255',
             'content'   => 'nullable|string',
             'rating'    => 'nullable|integer|between:1,5',
-            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', // Increased limit to 5MB
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'remove_image' => 'nullable|boolean',
         ])->validate();
 
@@ -189,45 +148,35 @@ class TestimoniController extends Controller
         $oldContent = Str::limit($testimonial->content ?? 'No content', 50);
         $imagePath = $testimonial->image;
 
-        try {
-            // Handle Image Removal
-            if ($request->has('remove_image') && $request->remove_image && $testimonial->image) {
-                Storage::disk('public')->delete($testimonial->image);
-                $imagePath = null;
-            }
-
-            // Handle New Image Upload
-            if ($request->hasFile('image')) {
-                if ($testimonial->image) {
-                    Storage::disk('public')->delete($testimonial->image);
-                }
-                // Use helper to compress and store
-                $imagePath = $this->processImage($request->file('image'));
-            }
-
-            $testimonial->name       = $validatedData['name'] ?? null;
-            $testimonial->role       = $validatedData['role'] ?? null;
-            $testimonial->location   = $validatedData['location'] ?? null;
-            $testimonial->content    = $validatedData['content'] ?? null;
-            $testimonial->rating     = $validatedData['rating'] ?? 5;
-            $testimonial->image      = $imagePath;
-            $testimonial->save();
-
-            LogActivity::create([
-                'username' => $currentUser->username,
-                'action' => "Updated testimonial: '{$oldName}' → '{$testimonial->name}' (Content: \"{$oldContent}...\")"
-            ]);
-
-            return redirect()->route('manage-testimonials.index')->with('toast', [
-                'type' => 'success',
-                'message' => 'Testimonial updated successfully.'
-            ]);
-        } catch (\Exception $e) {
-            return back()->withInput()->with('toast', [
-                'type' => 'error',
-                'message' => 'Failed to update testimonial: ' . $e->getMessage()
-            ]);
+        if ($request->has('remove_image') && $request->remove_image && $testimonial->image) {
+            Storage::disk('public')->delete($testimonial->image);
+            $imagePath = null;
         }
+
+        if ($request->hasFile('image')) {
+            if ($testimonial->image) {
+                Storage::disk('public')->delete($testimonial->image);
+            }
+            $imagePath = $request->file('image')->store('testimonial-images', 'public');
+        }
+
+        $testimonial->name       = $validatedData['name'] ?? null;
+        $testimonial->role       = $validatedData['role'] ?? null;
+        $testimonial->location   = $validatedData['location'] ?? null;
+        $testimonial->content    = $validatedData['content'] ?? null;
+        $testimonial->rating     = $validatedData['rating'] ?? 5;
+        $testimonial->image      = $imagePath;
+        $testimonial->save();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => "Updated testimonial: '{$oldName}' → '{$testimonial->name}' (Content: \"{$oldContent}...\")"
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial updated successfully.'
+        ]);
     }
 
     /**
@@ -240,32 +189,25 @@ class TestimoniController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to view this page.']);
         }
 
-        try {
-            $testimonial = Testimonial::findOrFail($testimonial_id);
-            $deletedName = $testimonial->name;
-            $deletedContent = Str::limit($testimonial->content ?? 'No content', 30);
+        $testimonial = Testimonial::findOrFail($testimonial_id);
+        $deletedName = $testimonial->name;
+        $deletedContent = Str::limit($testimonial->content ?? 'No content', 30);
 
-            if ($testimonial->image) {
-                Storage::disk('public')->delete($testimonial->image);
-            }
-
-            $testimonial->delete();
-
-            LogActivity::create([
-                'username' => $currentUser->username,
-                'action' => "Deleted testimonial: '{$deletedName}' (Content: \"{$deletedContent}...\")"
-            ]);
-
-            return redirect()->route('manage-testimonials.index')->with('toast', [
-                'type' => 'success',
-                'message' => 'Testimonial deleted successfully.'
-            ]);
-        } catch (\Exception $e) {
-            return back()->with('toast', [
-                'type' => 'error',
-                'message' => 'Failed to delete: ' . $e->getMessage()
-            ]);
+        if ($testimonial->image) {
+            Storage::disk('public')->delete($testimonial->image);
         }
+
+        $testimonial->delete();
+
+        LogActivity::create([
+            'username' => $currentUser->username,
+            'action' => "Deleted testimonial: '{$deletedName}' (Content: \"{$deletedContent}...\")"
+        ]);
+
+        return redirect()->route('manage-testimonials.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'Testimonial deleted successfully.'
+        ]);
     }
 
     /**
