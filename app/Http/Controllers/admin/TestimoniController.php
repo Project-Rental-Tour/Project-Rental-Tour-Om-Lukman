@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 use App\Models\Testimonial;
 use App\Models\LogActivity;
@@ -286,12 +289,13 @@ class TestimoniController extends Controller
         }
     }
 
-public function bulkCompress(Request $request)
+
+    public function bulkCompress(Request $request)
     {
-        // --- TAMBAHAN: Handle Resource Limit ---
+        // --- Prevent Timeout & Memory Exhaustion ---
         ini_set('memory_limit', '512M'); 
         ini_set('max_execution_time', 300); // 5 Menit
-        // -------------------------------------
+        // ------------------------------------------
 
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -300,7 +304,7 @@ public function bulkCompress(Request $request)
 
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:testimonials,testimonial_id',
+            'ids.*' => 'exists:testimonials,testimonial_id', // Pastikan kolom ini sesuai DB
         ]);
 
         try {
@@ -315,14 +319,17 @@ public function bulkCompress(Request $request)
                         $absolutePath = Storage::disk('public')->path($relativePath);
                         $currentSize = filesize($absolutePath);
                         
+                        // Compress jika > 500KB
                         if ($currentSize > 512000) {
-                            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                            $manager = new ImageManager(new Driver());
                             $image = $manager->read($absolutePath);
 
+                            // Resize jika terlalu lebar (Testimoni cukup 800px)
                             if ($image->width() > 800) {
                                 $image->scale(width: 800);
                             }
 
+                            // Iterasi Kompresi
                             $quality = 80;
                             $targetSize = 500 * 1024;
                             
@@ -332,6 +339,7 @@ public function bulkCompress(Request $request)
                                 $quality -= 5;
                             } while ($size > $targetSize && $quality >= 20);
 
+                            // Simpan
                             Storage::disk('public')->put($relativePath, (string) $encoded);
                             $count++;
                         }

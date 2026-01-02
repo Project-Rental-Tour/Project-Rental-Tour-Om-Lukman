@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Gallery;
 use App\Models\LogActivity;
@@ -259,12 +261,12 @@ class GalleriesController extends Controller
         }
     }
 
-public function bulkCompress(Request $request)
+    public function bulkCompress(Request $request)
     {
-        // --- TAMBAHAN: Handle Resource Limit ---
+        // --- Prevent Timeout & Memory Exhaustion ---
         ini_set('memory_limit', '512M'); 
-        ini_set('max_execution_time', 300); // 5 Menit
-        // -------------------------------------
+        ini_set('max_execution_time', 300);
+        // ------------------------------------------
 
         $currentUser = Auth::user();
         if (!$currentUser) {
@@ -273,7 +275,7 @@ public function bulkCompress(Request $request)
 
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:galleries,gallery_id',
+            'ids.*' => 'exists:galleries,gallery_id', // Pastikan nama tabel & kolom sesuai
         ]);
 
         try {
@@ -282,20 +284,24 @@ public function bulkCompress(Request $request)
 
             foreach ($galleries as $gallery) {
                 if ($gallery->gallery_photo) {
+                    // Konversi URL storage ke path fisik
                     $relativePath = str_replace('storage/', 'public/', $gallery->gallery_photo);
                     
                     if (Storage::exists($relativePath)) {
                         $absolutePath = Storage::path($relativePath);
                         $currentSize = filesize($absolutePath);
                         
+                        // Compress jika > 500KB
                         if ($currentSize > 512000) {
-                            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                            $manager = new ImageManager(new Driver());
                             $image = $manager->read($absolutePath);
 
+                            // Resize jika terlalu lebar
                             if ($image->width() > 1920) {
                                 $image->scale(width: 1920);
                             }
 
+                            // Iterasi Kompresi
                             $quality = 80;
                             $targetSize = 500 * 1024; 
                             
@@ -305,6 +311,7 @@ public function bulkCompress(Request $request)
                                 $quality -= 5;
                             } while ($size > $targetSize && $quality >= 15);
 
+                            // Simpan
                             Storage::put($relativePath, (string) $encoded);
                             $count++;
                         }
