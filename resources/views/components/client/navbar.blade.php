@@ -24,37 +24,37 @@
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-6 md:mt-0 items-center">
                 
                 <li>
-                    <a href="{{ route('index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Beranda')
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('destination.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('destination.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Paket Wisata')
                     </a>
                 </li>
                 
                 <li>
-                    <a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Sewa Mobil')
                     </a>
                 </li>
                 
                 <li>
-                    <a href="{{ route('blogs.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('blogs.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize ">
                         @translate('Blog')
                     </a>
                 </li>
                
                 <li>
-                    <a href="{{ route('gallery.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('gallery.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Galeri')
                     </a>
                 </li>
                 
                 <li>
-                    <a href="{{ route('about') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors">
+                    <a href="{{ route('about') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Tentang Kami')
                     </a>
                 </li>
