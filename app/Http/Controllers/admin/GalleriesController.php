@@ -73,28 +73,46 @@ class GalleriesController extends Controller
      */
     private function processImage($file, $path = 'public/galleries', $quality = 75)
     {
-        // Create new image manager instance with GD driver
-        $manager = new ImageManager(new Driver());
+       // Target maksimum 500KB (dalam bytes)
+        $targetSize = 500 * 1024; 
 
-        // Read image from file
+        // 1. Init Image Manager
+        $manager = new ImageManager(new Driver());
         $image = $manager->read($file);
 
-        // Optional: Resize image if it's too large (e.g., max width 1920px)
-        if ($image->width() > 1920) {
-            $image->scale(width: 1920);
+        // 2. Resize Awal (Sangat membantu mengurangi size)
+        // Max lebar 1200px, tinggi menyesuaikan (aspect ratio tetap)
+        if ($image->width() > 1200) {
+            $image->scale(width: 1200);
         }
 
-        // Encode image to JPEG with reduced quality
-        $encoded = $image->toJpeg($quality);
+        // 3. Logika Kompresi Iteratif
+        $quality = 80; // Mulai dari kualitas 80
+        $encoded = null;
+        
+        do {
+            // Encode ke JPEG dengan kualitas saat ini
+            $encoded = $image->toJpeg($quality);
+            
+            // Cek ukuran hasil encode
+            $size = strlen((string) $encoded);
 
-        // Generate unique filename
+            // Jika masih lebih besar dari 500KB, turunkan kualitas
+            if ($size > $targetSize) {
+                $quality -= 5; // Kurangi 5% setiap loop
+            }
+
+        // Ulangi selama size masih > 500KB DAN kualitas masih di atas 15%
+        } while ($size > $targetSize && $quality >= 15);
+
+        // 4. Buat nama file unik
         $filename = uniqid() . '_' . time() . '.jpg';
         $fullPath = $path . '/' . $filename;
 
-        // Store image using Laravel Storage
+        // 5. Simpan ke Storage
         Storage::put($fullPath, (string) $encoded);
 
-        // Return the path for database storage (replace public/ with storage/)
+        // 6. Kembalikan path
         return str_replace('public/', 'storage/', $fullPath);
     }
 
