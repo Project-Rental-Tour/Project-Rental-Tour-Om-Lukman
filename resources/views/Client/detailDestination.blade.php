@@ -294,7 +294,7 @@
                                                                 @else
                                                                     +
                                                                 @endif
-                                                                peserta
+                                                                Peserta
                                                             </td>
                                                             
                                                             {{-- Kolom Harga --}}
