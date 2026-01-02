@@ -48,9 +48,10 @@
                             <input type="text" name="category" list="category-list" placeholder="Select or type..."
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" required>
                             <datalist id="category-list">
-                                <option value="Technology">
-                                <option value="Automotive">
-                                <option value="Tips & Tricks">
+                                <option value="Tips">
+                                <option value="Destinations">
+                                <option value="Culture">
+                                <option value="Food">
                                 <option value="News">
                             </datalist>
                         </div>

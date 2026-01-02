@@ -145,6 +145,7 @@
                             <option value="Destinations" {{ request('category') == 'Destinations' ? 'selected' : '' }}>@translate('Destinasi')</option>
                             <option value="Culture" {{ request('category') == 'Culture' ? 'selected' : '' }}>@translate('Budaya')</option>
                             <option value="Food" {{ request('category') == 'Food' ? 'selected' : '' }}>@translate('Makanan & Kuliner')</option>
+                            <option value="News" {{ request('category') == 'News' ? 'selected' : '' }}>@translate('Berita')</option>
                         </select>
                     </div>
 
@@ -287,13 +288,15 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a href="https://api.whatsapp.com/send?phone=6281217006076&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+    <a 
+        href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
-       id="whatsapp-float"
-       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
+        id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
+    >
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
+        <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

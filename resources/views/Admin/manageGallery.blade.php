@@ -45,6 +45,16 @@
                         </svg>
                         Delete Selected
                     </button>
+
+                    <button type="button"
+                        class="bulk-action-btn px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 flex items-center transition-colors shadow-sm"
+                        data-route="{{ route('manage-gallery.bulk-compress') }}" 
+                        data-method="POST"
+                        data-confirm-message="Compress selected images to < 500KB? This might take a while."
+                        data-item-type="gallery item">
+                        <i class="fa-solid fa-compress mr-2"></i>
+                        Compress Images
+                    </button>
                 </div>
 
                 <!-- Right Side - Sort Dropdown -->

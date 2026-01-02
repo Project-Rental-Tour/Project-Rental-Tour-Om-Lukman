@@ -83,7 +83,9 @@ Route::middleware('auth')->group(function () {
     // manage booking car
     Route::delete('manage-booking-car/bulk-destroy', [BookingCarController::class, 'bulkDestroy'])->name('manage-booking-car.bulk-destroy');
     Route::resource('/manage-booking-car', BookingCarController::class);
+    
     // Manage Gallery
+    Route::post('/manage-gallery/bulk-compress', [GalleriesController::class, 'bulkCompress'])->name('manage-gallery.bulk-compress');
     Route::delete('/manage-gallery/bulk-destroy', [GalleriesController::class, 'bulkDestroy'])->name('manage-gallery.bulk-destroy');
     Route::resource('/manage-gallery', GalleriesController::class);
 
@@ -91,6 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manage-blog', BlogController::class);
 
     // Manage Testimoni
+    Route::post('/manage-testimonials/bulk-compress', [TestimoniController::class, 'bulkCompress'])->name('manage-testimonials.bulk-compress');
     Route::delete('/manage-testimonials/bulk-destroy', [TestimoniController::class, 'bulkDestroy'])->name('manage-testimonials.bulk-destroy');
     Route::resource('/manage-testimonials', TestimoniController::class);
 

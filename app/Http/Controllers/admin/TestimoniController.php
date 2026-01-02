@@ -285,4 +285,75 @@ class TestimoniController extends Controller
             ], 500);
         }
     }
+
+    public function bulkCompress(Request $request)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:testimonials,testimonial_id',
+        ]);
+
+        try {
+            $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
+            $count = 0;
+
+            foreach ($testimonials as $testimonial) {
+                if ($testimonial->image) {
+                    // Konversi path storage ke path fisik public
+                    // Asumsi path di DB: testimonial-images/filename.jpg (karena disimpan di disk 'public')
+                    $relativePath = $testimonial->image; 
+                    
+                    if (Storage::disk('public')->exists($relativePath)) {
+                        $absolutePath = Storage::disk('public')->path($relativePath);
+                        
+                        // Cek ukuran file (bytes)
+                        $currentSize = filesize($absolutePath);
+                        
+                        // Jika > 500KB (512000 bytes)
+                        if ($currentSize > 512000) {
+                            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                            $image = $manager->read($absolutePath);
+
+                            // Resize jika terlalu lebar (Testimoni cukup 800px)
+                            if ($image->width() > 800) {
+                                $image->scale(width: 800);
+                            }
+
+                            // Iterasi Kompresi
+                            $quality = 80;
+                            $targetSize = 500 * 1024;
+                            
+                            do {
+                                $encoded = $image->toJpeg($quality);
+                                $size = strlen((string) $encoded);
+                                $quality -= 5;
+                            } while ($size > $targetSize && $quality >= 20);
+
+                            // Simpan timpa file lama
+                            Storage::disk('public')->put($relativePath, (string) $encoded);
+                            $count++;
+                        }
+                    }
+                }
+            }
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk compressed {$count} testimonial image(s).",
+            ]);
+
+            return response()->json([
+                'success' => true, 
+                'toast' => ['type' => 'success', 'message' => "{$count} images compressed successfully."]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
 }
