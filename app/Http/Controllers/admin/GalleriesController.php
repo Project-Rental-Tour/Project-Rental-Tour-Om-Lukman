@@ -263,55 +263,51 @@ class GalleriesController extends Controller
 
     public function bulkCompress(Request $request)
     {
-        // --- Prevent Timeout & Memory Exhaustion ---
-        ini_set('memory_limit', '512M'); 
+        ini_set('memory_limit', '512M');
         ini_set('max_execution_time', 300);
-        // ------------------------------------------
 
         $currentUser = Auth::user();
         if (!$currentUser) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 
+        // VALIDASI: Menggunakan 'gallery_id' agar sesuai DB
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:galleries,gallery_id', // Pastikan nama tabel & kolom sesuai
+            'ids.*' => 'exists:galleries,gallery_id', 
         ]);
 
         try {
+            // QUERY: Eksplisit menggunakan 'gallery_id' agar tidak error "Unknown column id"
             $galleries = Gallery::whereIn('gallery_id', $request->ids)->get();
             $count = 0;
 
             foreach ($galleries as $gallery) {
                 if ($gallery->gallery_photo) {
-                    // Konversi URL storage ke path fisik
+                    // Ubah path storage ke public path fisik
                     $relativePath = str_replace('storage/', 'public/', $gallery->gallery_photo);
                     
                     if (Storage::exists($relativePath)) {
                         $absolutePath = Storage::path($relativePath);
-                        $currentSize = filesize($absolutePath);
                         
-                        // Compress jika > 500KB
-                        if ($currentSize > 512000) {
+                        // Cek size (500KB = 512000 bytes)
+                        if (filesize($absolutePath) > 512000) {
                             $manager = new ImageManager(new Driver());
                             $image = $manager->read($absolutePath);
 
-                            // Resize jika terlalu lebar
+                            // Resize dimensi jika terlalu besar
                             if ($image->width() > 1920) {
                                 $image->scale(width: 1920);
                             }
 
-                            // Iterasi Kompresi
                             $quality = 80;
-                            $targetSize = 500 * 1024; 
-                            
+                            // Loop compress sampai < 500KB
                             do {
                                 $encoded = $image->toJpeg($quality);
-                                $size = strlen((string) $encoded);
                                 $quality -= 5;
-                            } while ($size > $targetSize && $quality >= 15);
+                            } while (strlen((string)$encoded) > 512000 && $quality >= 15);
 
-                            // Simpan
+                            // Simpan timpa file lama
                             Storage::put($relativePath, (string) $encoded);
                             $count++;
                         }

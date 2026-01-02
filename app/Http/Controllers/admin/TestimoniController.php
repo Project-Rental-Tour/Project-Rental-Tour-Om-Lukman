@@ -292,22 +292,22 @@ class TestimoniController extends Controller
 
     public function bulkCompress(Request $request)
     {
-        // --- Prevent Timeout & Memory Exhaustion ---
         ini_set('memory_limit', '512M'); 
-        ini_set('max_execution_time', 300); // 5 Menit
-        // ------------------------------------------
+        ini_set('max_execution_time', 300);
 
         $currentUser = Auth::user();
         if (!$currentUser) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 
+        // VALIDASI: Menggunakan 'testimonial_id' agar sesuai DB
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:testimonials,testimonial_id', // Pastikan kolom ini sesuai DB
+            'ids.*' => 'exists:testimonials,testimonial_id',
         ]);
 
         try {
+            // QUERY: Eksplisit menggunakan 'testimonial_id'
             $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
             $count = 0;
 
@@ -315,31 +315,25 @@ class TestimoniController extends Controller
                 if ($testimonial->image) {
                     $relativePath = $testimonial->image; 
                     
+                    // Gunakan Storage Disk Public (sesuai config filesystem testimoni biasanya)
                     if (Storage::disk('public')->exists($relativePath)) {
                         $absolutePath = Storage::disk('public')->path($relativePath);
-                        $currentSize = filesize($absolutePath);
                         
-                        // Compress jika > 500KB
-                        if ($currentSize > 512000) {
+                        if (filesize($absolutePath) > 512000) {
                             $manager = new ImageManager(new Driver());
                             $image = $manager->read($absolutePath);
 
-                            // Resize jika terlalu lebar (Testimoni cukup 800px)
+                            // Resize dimensi (800px cukup untuk testimoni)
                             if ($image->width() > 800) {
                                 $image->scale(width: 800);
                             }
 
-                            // Iterasi Kompresi
                             $quality = 80;
-                            $targetSize = 500 * 1024;
-                            
                             do {
                                 $encoded = $image->toJpeg($quality);
-                                $size = strlen((string) $encoded);
                                 $quality -= 5;
-                            } while ($size > $targetSize && $quality >= 20);
+                            } while (strlen((string)$encoded) > 512000 && $quality >= 20);
 
-                            // Simpan
                             Storage::disk('public')->put($relativePath, (string) $encoded);
                             $count++;
                         }
