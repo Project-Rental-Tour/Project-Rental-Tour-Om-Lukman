@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Destination;
 use App\Models\LogActivity;
@@ -98,6 +100,37 @@ class DestinationController extends Controller
         return view('Client.detailDestination', compact('destination', 'profiles', 'relatedGalleries'));
     }
 
+    /**
+     * Helper function to compress and store image
+     */
+    private function processImage($file, $path = 'public/destinations', $quality = 75)
+    {
+        // Create new image manager instance with GD driver
+        $manager = new ImageManager(new Driver());
+
+        // Read image from file
+        $image = $manager->read($file);
+
+        // Optional: Resize image if it's too large (e.g., max width 1920px)
+        if ($image->width() > 1920) {
+            $image->scale(width: 1920);
+        }
+
+        // Encode image to the same format with reduced quality
+        // You can change 'jpg' to 'webp' for better compression if needed
+        $encoded = $image->toJpeg($quality);
+
+        // Generate unique filename
+        $filename = uniqid() . '_' . time() . '.jpg';
+        $fullPath = $path . '/' . $filename;
+
+        // Store image using Laravel Storage
+        Storage::put($fullPath, (string) $encoded);
+
+        // Return the path for database storage (replace public/ with storage/)
+        return str_replace('public/', 'storage/', $fullPath);
+    }
+
     public function store(Request $request)
     {
         $currentUser = Auth::user();
@@ -115,10 +148,10 @@ class DestinationController extends Controller
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'price_2' => 'nullable|numeric|min:0',
-            'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased max size for upload before compression
+            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'time' => 'required|string|max:255',
             'category' => 'required|string|max:100',
             'level' => 'nullable|string|max:50',
@@ -134,7 +167,7 @@ class DestinationController extends Controller
             'itinerary' => 'nullable|string',
             'tag' => 'nullable|string|max:500',
             'note' => 'nullable|string',
-            'price_tiers' => 'nullable|array', // Validasi array
+            'price_tiers' => 'nullable|array', 
             'price_tiers.*.min_pax' => 'nullable|numeric',
             'price_tiers.*.max_pax' => 'nullable|numeric',
             'price_tiers.*.price' => 'nullable|string',
@@ -143,13 +176,13 @@ class DestinationController extends Controller
         $photoUrls = [];
 
         try {
-            // Upload images
+            // Upload & Compress images
             $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
 
             foreach ($photoFields as $field) {
                 if ($request->hasFile($field)) {
-                    $imagePath = $request->file($field)->store('public/destinations');
-                    $photoUrls[$field] = str_replace('public/', 'storage/', $imagePath);
+                    // Use helper function to compress and store
+                    $photoUrls[$field] = $this->processImage($request->file($field));
                 } else {
                     $photoUrls[$field] = null;
                 }
@@ -169,7 +202,7 @@ class DestinationController extends Controller
 
             $tagString = $request->tag ?: null;
 
-            // Handle Price Tiers (Filter empty values)
+            // Handle Price Tiers
             $priceTiers = [];
             if ($request->has('price_tiers') && is_array($request->price_tiers)) {
                 foreach ($request->price_tiers as $tier) {
@@ -190,7 +223,7 @@ class DestinationController extends Controller
                 'place' => $request->place,
                 'price' => $price,
                 'price_2' => $price_2,
-                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Simpan array/JSON
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null,
                 'destination_photo' => $photoUrls['destination_photo'],
                 'destination_photo_2' => $photoUrls['destination_photo_2'],
                 'destination_photo_3' => $photoUrls['destination_photo_3'],
@@ -254,10 +287,10 @@ class DestinationController extends Controller
                 'place' => 'required|string|max:255',
                 'price' => 'nullable|numeric|min:0',
                 'price_2' => 'nullable|numeric|min:0',
-                'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'remove_photo' => 'nullable|array',
                 'remove_photo.*' => 'in:destination_photo,destination_photo_2,destination_photo_3,destination_photo_4',
                 'time' => 'required|string|max:255',
@@ -315,7 +348,7 @@ class DestinationController extends Controller
                 'place' => $request->place,
                 'price' => $price,
                 'price_2' => $price_2,
-                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Update field JSON
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null,
                 'time' => $request->time,
                 'category' => $request->category,
                 'level' => $request->level,
@@ -348,7 +381,7 @@ class DestinationController extends Controller
                     }
                 }
 
-                // 2. Upload New Photo
+                // 2. Upload New Photo (Compressed)
                 if ($request->hasFile($field)) {
                     // Delete old photo first if exists
                     if ($destination->{$field}) {
@@ -357,8 +390,8 @@ class DestinationController extends Controller
                             Storage::delete($oldPath);
                         }
                     }
-                    $imagePath = $request->file($field)->store('public/destinations');
-                    $updateData[$field] = str_replace('public/', 'storage/', $imagePath);
+                    // Compress and store new image
+                    $updateData[$field] = $this->processImage($request->file($field));
                 }
                 
                 // Keep old value if not changed

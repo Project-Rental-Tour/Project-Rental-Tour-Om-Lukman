@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str; // [Tambahan 1: Import Str]
+use Illuminate\Support\Str; // Untuk Slug
+use Illuminate\Support\Facades\Log;
+use Intervention\Image\ImageManager; // Untuk Gambar
+use Intervention\Image\Drivers\Gd\Driver; // Driver Gambar
 
 use App\Models\Blogs;
 use App\Models\LogActivity;
@@ -50,7 +53,7 @@ class BlogController extends Controller
                 break;
         }
 
-        // 3. Notifications (Log Activity)
+        // 3. Notifications
         $notifications = LogActivity::where('action', 'like', '%Submitted%')
             ->orWhere('action', 'like', '%Added blog%')
             ->latest()
@@ -68,6 +71,36 @@ class BlogController extends Controller
         return view('Admin.manageBlog', compact('blogs', 'notifications', 'profiles'));
     }
 
+    /**
+     * Helper: Compress & Resize Image
+     */
+    private function processImage($file, $path = 'public/blogs', $quality = 75)
+    {
+        // 1. Init Image Manager (Driver GD)
+        $manager = new ImageManager(new Driver());
+
+        // 2. Baca File
+        $image = $manager->read($file);
+
+        // 3. Resize jika terlalu lebar (misal max 1200px untuk blog) agar ringan
+        if ($image->width() > 1200) {
+            $image->scale(width: 1200);
+        }
+
+        // 4. Encode ke JPEG dengan kualitas 75%
+        $encoded = $image->toJpeg($quality);
+
+        // 5. Buat nama file unik
+        $filename = uniqid() . '_' . time() . '.jpg';
+        $fullPath = $path . '/' . $filename;
+
+        // 6. Simpan ke Storage
+        Storage::put($fullPath, (string) $encoded);
+
+        // 7. Kembalikan path untuk database (ganti public/ jadi storage/)
+        return str_replace('public/', 'storage/', $fullPath);
+    }
+
     public function store(Request $request)
     {
         $currentUser = Auth::user();
@@ -81,32 +114,31 @@ class BlogController extends Controller
             'category'   => 'required|string|max:100',
             'time_read'  => 'required|integer|min:1',
             'content'    => 'required|string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            // Max size dinaikkan ke 5MB (5120) karena kita akan compress di server
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', 
         ]);
 
         try {
-            // [Tambahan 2: Generate Slug dari Title]
-            // Contoh: "Cara Memasak Nasi" menjadi "cara-memasak-nasi"
+            // [Fitur 1: Generate Slug dari Title]
             $validated['slug'] = Str::slug($request->title);
 
-            // Cek apakah slug sudah ada di database (opsional, untuk menghindari error duplicate entry)
+            // Cek unik slug (tambah angka jika sudah ada)
             $count = Blogs::where('slug', 'like', $validated['slug'] . '%')->count();
             if ($count > 0) {
-                $validated['slug'] .= '-' . ($count + 1); // Jika ada, tambahkan angka (misal: judul-blog-2)
+                $validated['slug'] .= '-' . ($count + 1);
             }
 
-            // Handle Image Upload
+            // [Fitur 2: Upload & Compress Image]
             if ($request->hasFile('image_path')) {
-                $file = $request->file('image_path');
-                $path = $file->store('public/blogs');
-                $validated['image_path'] = str_replace('public/', 'storage/', $path);
+                // Panggil fungsi helper processImage
+                $validated['image_path'] = $this->processImage($request->file('image_path'));
             }
 
             $blog = Blogs::create($validated);
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added blog post: "' . $blog->title . '" (Category: ' . $blog->category . ')',
+                'action' => 'Added blog post: "' . $blog->title . '"',
             ]);
 
             return redirect()->route('manage-blog.index')
@@ -125,7 +157,6 @@ class BlogController extends Controller
             return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission.']);
         }
 
-        // Cari blog berdasarkan blog_id
         $blog = Blogs::findOrFail($blog_id);
 
         $validated = $request->validate([
@@ -133,15 +164,15 @@ class BlogController extends Controller
             'category'   => 'required|string|max:100',
             'time_read'  => 'required|integer|min:1',
             'content'    => 'required|string',
-            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         try {
-            // [Tambahan 3: Update Slug jika Title berubah]
+            // [Fitur 1: Update Slug jika Title Berubah]
             if ($blog->title !== $request->title) {
                 $validated['slug'] = Str::slug($request->title);
                 
-                // Cek unik untuk update (exclude id sendiri)
+                // Cek unik (kecuali diri sendiri)
                 $count = Blogs::where('slug', 'like', $validated['slug'] . '%')
                               ->where('blog_id', '!=', $blog_id)
                               ->count();
@@ -150,14 +181,18 @@ class BlogController extends Controller
                 }
             }
 
-            // Handle Image Update
+            // [Fitur 2: Update & Compress Image]
             if ($request->hasFile('image_path')) {
-                if ($blog->image_path && Storage::exists(str_replace('storage/', 'public/', $blog->image_path))) {
-                    Storage::delete(str_replace('storage/', 'public/', $blog->image_path));
+                // Hapus gambar lama
+                if ($blog->image_path) {
+                    $oldPath = str_replace('storage/', 'public/', $blog->image_path);
+                    if (Storage::exists($oldPath)) {
+                        Storage::delete($oldPath);
+                    }
                 }
                 
-                $path = $request->file('image_path')->store('public/blogs');
-                $validated['image_path'] = str_replace('public/', 'storage/', $path);
+                // Compress gambar baru
+                $validated['image_path'] = $this->processImage($request->file('image_path'));
             }
 
             $oldTitle = $blog->title;

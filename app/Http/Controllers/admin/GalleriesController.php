@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Gallery;
 use App\Models\LogActivity;
@@ -65,6 +68,36 @@ class GalleriesController extends Controller
         return view('Admin.manageGallery', compact('galleries', 'notifications', 'profiles'));
     }
 
+    /**
+     * Helper function to compress and store image
+     */
+    private function processImage($file, $path = 'public/galleries', $quality = 75)
+    {
+        // Create new image manager instance with GD driver
+        $manager = new ImageManager(new Driver());
+
+        // Read image from file
+        $image = $manager->read($file);
+
+        // Optional: Resize image if it's too large (e.g., max width 1920px)
+        if ($image->width() > 1920) {
+            $image->scale(width: 1920);
+        }
+
+        // Encode image to JPEG with reduced quality
+        $encoded = $image->toJpeg($quality);
+
+        // Generate unique filename
+        $filename = uniqid() . '_' . time() . '.jpg';
+        $fullPath = $path . '/' . $filename;
+
+        // Store image using Laravel Storage
+        Storage::put($fullPath, (string) $encoded);
+
+        // Return the path for database storage (replace public/ with storage/)
+        return str_replace('public/', 'storage/', $fullPath);
+    }
+
     public function store(Request $request)
     {
         $currentUser = Auth::user();
@@ -74,27 +107,23 @@ class GalleriesController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'gallery_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tag' => 'nullable|string|max:500', // tambahkan validasi tag
+            'gallery_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased limit to 5MB
+            'tag' => 'nullable|string|max:500',
         ]);
 
         try {
-            $imagePath = $request->file('gallery_photo')->store('public/galleries');
-            $photoPath = str_replace('public/', 'storage/', $imagePath);
-
-            // Proses tag → pecah jadi array, filter kosong, trim
-
+            // Compress and store image
+            $photoPath = $this->processImage($request->file('gallery_photo'));
 
             $gallery = Gallery::create([
                 'title' => $validated['title'],
                 'gallery_photo' => $photoPath,
-                'tag' => $validated['tag'], // simpan sebagai JSON array
+                'tag' => $validated['tag'],
             ]);
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added gallery item: "' . $gallery->title  . '" with tags: ' . ', ',
-                $gallery->tag
+                'action' => 'Added gallery item: "' . $gallery->title  . '" with tags: ' . $gallery->tag,
             ]);
 
             return redirect()->route('manage-gallery.index')
@@ -114,7 +143,7 @@ class GalleriesController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'gallery_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Increased limit to 5MB
             'tag' => 'nullable|string|max:500',
         ]);
 
@@ -127,13 +156,17 @@ class GalleriesController extends Controller
                 'tag' => $validated['tag'] ?? null,
             ];
 
-            // Proses tag
-
-
             if ($request->hasFile('gallery_photo')) {
-                Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
-                $imagePath = $request->file('gallery_photo')->store('public/galleries');
-                $updateData['gallery_photo'] = str_replace('public/', 'storage/', $imagePath);
+                // Delete old image
+                if ($gallery->gallery_photo) {
+                    $oldPath = str_replace('storage/', 'public/', $gallery->gallery_photo);
+                    if (Storage::exists($oldPath)) {
+                        Storage::delete($oldPath);
+                    }
+                }
+
+                // Compress and store new image
+                $updateData['gallery_photo'] = $this->processImage($request->file('gallery_photo'));
             }
 
             $gallery->update($updateData);
@@ -145,8 +178,8 @@ class GalleriesController extends Controller
             if ($request->hasFile('gallery_photo')) {
                 $logAction .= " (new image)";
             }
-            if (!empty($tags)) {
-                $logAction =   ', ' . $tags;
+            if (!empty($validated['tag'])) {
+                $logAction .= ', Tags: ' . $validated['tag'];
             }
 
             LogActivity::create([
@@ -174,7 +207,13 @@ class GalleriesController extends Controller
             $deletedTitle = $gallery->title;
 
             // Hapus file
-            Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
+            if ($gallery->gallery_photo) {
+                $path = str_replace('storage/', 'public/', $gallery->gallery_photo);
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+            }
+            
             $gallery->delete();
 
             LogActivity::create([
@@ -218,7 +257,12 @@ class GalleriesController extends Controller
             $count = $galleries->count();
 
             foreach ($galleries as $gallery) {
-                Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
+                if ($gallery->gallery_photo) {
+                    $path = str_replace('storage/', 'public/', $gallery->gallery_photo);
+                    if (Storage::exists($path)) {
+                        Storage::delete($path);
+                    }
+                }
                 $gallery->delete();
             }
 
