@@ -277,7 +277,7 @@
                                             <thead class="text-xs text-primary uppercase bg-blue-50 border-b border-blue-100">
                                                 <tr>
                                                     <th scope="col" class="px-6 py-3 font-bold">@translate('Jumlah Peserta')</th>
-                                                    <th scope="col" class="px-6 py-3 font-bold text-right">@translate('Harga Per Orang')</th>
+                                                    <th scope="col" class="px-6 py-3 font-bold text-right">@translate('Harga')</th>
                                                     {{-- Tambahan Kolom Header Keterangan --}}
                                                     <th scope="col" class="px-6 py-3 font-bold">@translate('Keterangan')</th>
                                                 </tr>
