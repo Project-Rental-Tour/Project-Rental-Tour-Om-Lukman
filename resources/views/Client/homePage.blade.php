@@ -170,12 +170,12 @@
                             <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
                         <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer"
-   class="px-10 py-4 text-center text-white rounded-full transition-all duration-300 font-bold flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a]">
-    <i class="fab fa-whatsapp text-xl"></i>
-    @translate('Konsultasi via WhatsApp')
-</a>
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-10 py-4 text-center text-white rounded-full transition-all duration-300 font-bold flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a]">
+            <i class="fab fa-whatsapp text-xl"></i>
+            @translate('Konsultasi via WhatsApp')
+        </a>
                     </div>
                 </div>
             </div>
@@ -188,6 +188,92 @@
             </div>
         </a>
     </section>
+
+    {{-- 4. Destination --}}
+    <section id="destination" class="py-20 md:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
+                <div class="md:w-1/2 animate-fade-up">
+                    <span class="text-secondary uppercase tracking-[0.3em] text-xs font-bold mb-3 block">@translate('Pilihan Utama')</span>
+                    <h2 class="text-4xl md:text-6xl font-bold text-primary leading-tight font-serif text-balance">
+                        @translate('Jelajahi yang') <br><span class="italic text-secondary">@translate('Luar Biasa')</span>
+                    </h2>
+                </div>
+                <div class="md:w-1/3 text-right mt-6 md:mt-0 animate-fade-up" style="animation-delay: 0.2s">
+                    <a href="{{ route('destination.index') }}" class="inline-flex items-center gap-2 text-primary hover:text-secondary transition-all group font-semibold">
+                        @translate('Lihat Semua') <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @foreach ($destinations->take(5) as $destination)
+                <a href="{{ route('destination.show', $destination->slug) }}" class="group relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-up block">
+                    <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}"
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000';"
+                         alt="{{ $destination->name_package }}"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="flex flex-wrap gap-2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
+                                @if(trim($activity))
+                                    <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-semibold text-white border border-white/20 uppercase tracking-wider">
+                                        @translate(trim($activity))
+                                    </span>
+                                @endif
+                            @endforeach
+                        </div>
+                        
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 font-serif group-hover:text-secondary transition-colors">
+                            {{ $destination->name_package }}
+                        </h3>
+                        <p class="text-white/90 text-lg font-medium">
+                            @currency($destination->price)
+                        </p>
+                    </div>
+                </a>
+                @endforeach
+
+                <div class="relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden bg-primary p-8 md:p-12 flex flex-col justify-center text-center animate-fade-up border border-white/10 group cursor-pointer hover:shadow-2xl transition-all duration-300" onclick="window.location='{{ route('booking.custom') }}'">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/10 rounded-full blur-3xl group-hover:bg-secondary/20 transition-colors"></div>
+                    <i class="fas fa-magic text-6xl text-white text-secondary/30 mb-6 group-hover:scale-110 group-hover:text-secondary transition-all duration-500 mx-auto"></i>
+                    
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 font-serif">@translate('Perjalanan') <br> @translate('Kustom')</h3>
+                    <p class="text-white/70 mb-8 text-sm md:text-base leading-relaxed">
+                        @translate("Tidak cocok dengan paket biasa? Biarkan arsitek perjalanan kami merancang rencana perjalanan unik khusus untuk Anda.")
+                    </p>
+                    <div class="mx-auto btn-premium px-8 py-3 rounded-full text-white font-bold text-sm shadow-lg">
+                        @translate('Mulai Merancang')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- 3. PROMOTION BANNER 1 --}}
+    @if(optional($profiles)->promotion_banner_1)
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="rounded-[2.5rem] overflow-hidden shadow-2xl relative group animate-fade-up">
+                <a href="#destination">
+                    <img src="{{ asset($profiles->promotion_banner_1) }}" 
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=1600&auto=format&fit=crop';"
+                         class="w-full h-48 md:h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" 
+                         alt="Special Promotion">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent group-hover:from-black/40 transition-colors"></div>
+                    <div class="absolute bottom-0 left-0 p-8 md:p-12">
+                        <span class="bg-secondary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3 inline-block">@translate('Penawaran Terbatas')</span>
+                        <h3 class="text-3xl md:text-5xl font-serif font-bold text-white mb-2">@translate("Jelajahi Permata Tersembunyi Jawa")</h3>
+                        <p class="text-white/90 hidden md:block">@translate("Jangan lewatkan paket musiman eksklusif kami.")</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    @endif
 
     {{-- 2. WHY CHOOSE US --}}
     <section id="why-choose-us" class="w-full py-20 md:py-32 relative overflow-hidden">
@@ -277,92 +363,6 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    {{-- 3. PROMOTION BANNER 1 --}}
-    @if(optional($profiles)->promotion_banner_1)
-    <section class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="rounded-[2.5rem] overflow-hidden shadow-2xl relative group animate-fade-up">
-                <a href="#destination">
-                    <img src="{{ asset($profiles->promotion_banner_1) }}" 
-                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=1600&auto=format&fit=crop';"
-                         class="w-full h-48 md:h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" 
-                         alt="Special Promotion">
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent group-hover:from-black/40 transition-colors"></div>
-                    <div class="absolute bottom-0 left-0 p-8 md:p-12">
-                        <span class="bg-secondary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3 inline-block">@translate('Penawaran Terbatas')</span>
-                        <h3 class="text-3xl md:text-5xl font-serif font-bold text-white mb-2">@translate("Jelajahi Permata Tersembunyi Jawa")</h3>
-                        <p class="text-white/90 hidden md:block">@translate("Jangan lewatkan paket musiman eksklusif kami.")</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    @endif
-
-    {{-- 4. Destination --}}
-    <section id="destination" class="py-20 md:py-32 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
-                <div class="md:w-1/2 animate-fade-up">
-                    <span class="text-secondary uppercase tracking-[0.3em] text-xs font-bold mb-3 block">@translate('Pilihan Utama')</span>
-                    <h2 class="text-4xl md:text-6xl font-bold text-primary leading-tight font-serif text-balance">
-                        @translate('Jelajahi yang') <br><span class="italic text-secondary">@translate('Luar Biasa')</span>
-                    </h2>
-                </div>
-                <div class="md:w-1/3 text-right mt-6 md:mt-0 animate-fade-up" style="animation-delay: 0.2s">
-                    <a href="{{ route('destination.index') }}" class="inline-flex items-center gap-2 text-primary hover:text-secondary transition-all group font-semibold">
-                        @translate('Lihat Semua') <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @foreach ($destinations->take(5) as $destination)
-                <a href="{{ route('destination.show', $destination->slug) }}" class="group relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-up block">
-                    <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}"
-                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000';"
-                         alt="{{ $destination->name_package }}"
-                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
-
-                    <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <div class="flex flex-wrap gap-2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            @foreach(array_slice(explode(',', $destination->activities), 0, 2) as $activity)
-                                @if(trim($activity))
-                                    <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-semibold text-white border border-white/20 uppercase tracking-wider">
-                                        @translate(trim($activity))
-                                    </span>
-                                @endif
-                            @endforeach
-                        </div>
-                        
-                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 font-serif group-hover:text-secondary transition-colors">
-                            {{ $destination->name_package }}
-                        </h3>
-                        <p class="text-white/90 text-lg font-medium">
-                            @currency($destination->price)
-                        </p>
-                    </div>
-                </a>
-                @endforeach
-
-                <div class="relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden bg-primary p-8 md:p-12 flex flex-col justify-center text-center animate-fade-up border border-white/10 group cursor-pointer hover:shadow-2xl transition-all duration-300" onclick="window.location='{{ route('booking.custom') }}'">
-                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/10 rounded-full blur-3xl group-hover:bg-secondary/20 transition-colors"></div>
-                    <i class="fas fa-magic text-6xl text-white text-secondary/30 mb-6 group-hover:scale-110 group-hover:text-secondary transition-all duration-500 mx-auto"></i>
-                    
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 font-serif">@translate('Perjalanan') <br> @translate('Kustom')</h3>
-                    <p class="text-white/70 mb-8 text-sm md:text-base leading-relaxed">
-                        @translate("Tidak cocok dengan paket biasa? Biarkan arsitek perjalanan kami merancang rencana perjalanan unik khusus untuk Anda.")
-                    </p>
-                    <div class="mx-auto btn-premium px-8 py-3 rounded-full text-white font-bold text-sm shadow-lg">
-                        @translate('Mulai Merancang')
-                    </div>
-                </div>
             </div>
         </div>
     </section>

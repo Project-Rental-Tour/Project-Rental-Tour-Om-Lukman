@@ -1,4 +1,9 @@
-<div class="relative w-full max-w-4xl px-4 slide-down overflow-y-auto" x-data="{ step: 1 }">
+<div class="relative w-full max-w-4xl px-4 slide-down overflow-y-auto" 
+     x-data="{ 
+        step: 1, 
+        tiers: [{ min_pax: '', max_pax: '', price: '' }] 
+     }">
+    
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
         <div class="flex items-center justify-between p-6 border-b border-gray-100">
             <div>
@@ -18,6 +23,7 @@
                   method="POST" class="space-y-8">
                 @csrf
 
+                {{-- Stepper Navigation --}}
                 <div class="flex justify-center mb-8">
                     <div class="flex items-center space-x-4">
                         <template x-for="i in 6" :key="i">
@@ -34,6 +40,7 @@
                     </div>
                 </div>
 
+                {{-- STEP 1: Basic Info --}}
                 <div x-show="step === 1" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Name Package</label>
@@ -58,26 +65,74 @@
                     </div>
                 </div>
 
+                {{-- STEP 2: Pricing & Tiers (UPDATED) --}}
                 <div x-show="step === 2" class="space-y-6">
-                    <div class="grid gap-6 md:grid-cols-3">
+                    
+                    {{-- Basic Price & Duration --}}
+                    <div class="grid gap-6 md:grid-cols-2">
                         <div>
-                            <label class="block mb-2 text-sm font-medium">Price (WNI/Normal)</label>
+                            <label class="block mb-2 text-sm font-medium">Base Price (Per Person)</label>
                             <input type="text" name="price" placeholder="Rp 1.500.000"
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <p class="text-xs text-gray-400 mt-1">Price for Indonesian citizens/standard price.</p>
+                            <p class="text-xs text-gray-400 mt-1">Standard price for single pax or base rate.</p>
                         </div>
-                        {{-- <div>
-                            <label class="block mb-2 text-sm font-medium">Price 2 (WNA/Optional)</label>
-                            <input type="text" name="price_2" placeholder="Rp 2.000.000"
-                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <p class="text-xs text-gray-400 mt-1">Price for Foreigners (if applicable).</p>
-                        </div> --}}
                         <div>
                             <label class="block mb-2 text-sm font-medium">Duration</label>
                             <input type="text" name="time" placeholder="3 Days 2 Nights"
                                 class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
+
+                    <hr class="border-gray-100">
+
+                    {{-- Dynamic Price Tiers Section --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium">Price Tiers (Group Pricing)</label>
+                        <p class="text-xs text-gray-400 mb-3">Set different prices based on group size.</p>
+                        
+                        <div class="space-y-3">
+                            <template x-for="(tier, index) in tiers" :key="index">
+                                <div class="flex items-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div class="flex-1">
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Min Pax</label>
+                                        <input type="number" :name="`price_tiers[${index}][min_pax]`" x-model="tier.min_pax" placeholder="e.g. 2"
+                                            class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Max Pax</label>
+                                        <input type="number" :name="`price_tiers[${index}][max_pax]`" x-model="tier.max_pax" placeholder="e.g. 5"
+                                            class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <div class="flex-[2]">
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Price (IDR)</label>
+                                        <input type="text" :name="`price_tiers[${index}][price]`" x-model="tier.price" placeholder="Rp 1.000.000"
+                                            class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    
+                                    {{-- Tombol Hapus (Sampah) --}}
+                                    <div class="pb-1">
+                                        <button type="button" @click="tiers.splice(index, 1)" 
+                                                class="text-red-500 hover:text-red-700 hover:bg-red-100 p-2 rounded-md transition-colors"
+                                                title="Remove Tier">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        {{-- Tombol Tambah (+) --}}
+                        <button type="button" @click="tiers.push({ min_pax: '', max_pax: '', price: '' })"
+                            class="mt-3 flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add New Price Tier
+                        </button>
+                    </div>
+
                     <div>
                         <label class="block mb-2 text-sm font-medium">WNA/WNI Policy</label>
                         <select name="wna_wni_policy"
@@ -87,7 +142,6 @@
                             <option value="WNA">WNA (Warga Negara Asing)</option>
                             <option value="All">All (WNI & WNA)</option>
                         </select>
-                        <p class="text-xs text-gray-400 mt-1">Determines which pricing applies or if both are accepted.</p>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium">Description</label>
@@ -95,6 +149,7 @@
                     </div>
                 </div>
 
+                {{-- STEP 3: Logistics --}}
                 <div x-show="step === 3" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Pickup Points</label>
@@ -123,6 +178,7 @@
                     </div>
                 </div>
 
+                {{-- STEP 4: Activities & Tags --}}
                 <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
@@ -141,15 +197,11 @@
                                 @keydown.enter.prevent="
                                     const val = $event.target.value.trim();
                                     if (val) {
-                                        // Tambahkan tag ke container yang terlihat
                                         const span = document.createElement('span');
                                         span.className = 'inline-flex items-center gap-1 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full';
                                         span.innerHTML = val + '<button type=\'button\' onclick=\'removeTag(this)\' class=\'ml-1 text-blue-600 hover:text-blue-800\'>×</button>';
                                         document.getElementById('tags-container-add').appendChild(span);
-
-                                        // Update input hidden dengan semua tag
                                         updateTagInput();
-
                                         $event.target.value = '';
                                     }
                                 "
@@ -160,6 +212,7 @@
                     </div>
                 </div>
 
+                {{-- STEP 5: Inclusions --}}
                 <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Include</label>
@@ -180,6 +233,7 @@
                     </div>
                 </div>
 
+                {{-- STEP 6: Itinerary & Photos --}}
                 <div x-show="step === 6" class="grid gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Itinerary</label>
@@ -210,7 +264,7 @@
                                     onchange="handleImageChange(event, 'add-preview-{{ $field }}')"
                                     {{ $field == 'destination_photo' ? 'required' : '' }}>
                                 
-                                <p class="text-xs text-gray-400 mt-1">Upload image (jpg, png, max 2MB). Main photo is required.</p>
+                                <p class="text-xs text-gray-400 mt-1">Upload image (jpg, png, max 2MB).</p>
 
                                 <div class="mt-4 flex flex-col items-center">
                                     <div class="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
@@ -233,6 +287,7 @@
                     </div>
                 </div>
 
+                {{-- Navigation Buttons --}}
                 <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
                     <button type="button" @click="step = Math.max(step - 1, 1)" x-show="step > 1"
                             class="px-6 py-3 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Previous</button>
@@ -253,9 +308,7 @@
 </div>
 
 <script>
-    // --- Tag Management Functions (Sesuai dengan modal Add) ---
-
-    // Fungsi untuk mendapatkan semua tag dari container dan mengupdate hidden input
+    // --- Tag Management Functions (Same as before) ---
     window.updateTagInput = function() {
         const container = document.getElementById('tags-container-add');
         const tags = Array.from(container.children)
@@ -268,20 +321,14 @@
         }
     }
 
-    // Fungsi untuk menghapus tag
     window.removeTag = function(button) {
         const span = button.parentNode;
         const container = span.parentNode;
         container.removeChild(span);
-
-        // Update hidden input setelah penghapusan
         updateTagInput();
     }
 
-
-    // --- Image Preview Functions ---
-    
-    // Menggunakan fungsi yang dimodifikasi agar kompatibel dengan Add (tanpa remove checkbox)
+    // --- Image Preview Functions (Same as before) ---
     window.handleImageChange = function(event, previewId) {
         const file = event.target.files[0];
         const preview = document.getElementById(previewId);
@@ -296,7 +343,6 @@
             };
             reader.readAsDataURL(file);
         } else {
-            // Jika input dikosongkan (cancel selection), sembunyikan preview dan tampilkan placeholder
             preview.src = '';
             preview.classList.add('hidden');
             placeholder.classList.remove('hidden');

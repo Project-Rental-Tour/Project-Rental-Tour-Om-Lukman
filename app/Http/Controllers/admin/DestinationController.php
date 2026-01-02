@@ -37,7 +37,7 @@ class DestinationController extends Controller
             $query->where('name_package', 'like', "%{$search}%")
                 ->orWhere('place', 'like', "%{$search}%")
                 ->orWhere('price', 'like', "%{$search}%")
-                ->orWhere('price_2', 'like', "%{$search}%") // Kolom baru
+                ->orWhere('price_2', 'like', "%{$search}%")
                 ->orWhere('time', 'like', "%{$search}%")
                 ->orWhere('category', 'like', "%{$search}%")
                 ->orWhere('level', 'like', "%{$search}%")
@@ -106,7 +106,6 @@ class DestinationController extends Controller
         }
 
         Log::info('Request Data:', $request->all());
-        Log::info('Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
 
         // VALIDATION
         $request->validate([
@@ -115,11 +114,11 @@ class DestinationController extends Controller
             'description' => 'nullable|string',
             'place' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
-            'price_2' => 'nullable|numeric|min:0', // Kolom baru
+            'price_2' => 'nullable|numeric|min:0',
             'destination_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
-            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
-            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
+            'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'time' => 'required|string|max:255',
             'category' => 'required|string|max:100',
             'level' => 'nullable|string|max:50',
@@ -131,19 +130,23 @@ class DestinationController extends Controller
             'consumption' => 'nullable|string|max:500',
             'include' => 'nullable|string',
             'exclude' => 'nullable|string',
-            'wna_wni_policy' => 'nullable|string', // Kolom baru
+            'wna_wni_policy' => 'nullable|string',
             'itinerary' => 'nullable|string',
             'tag' => 'nullable|string|max:500',
             'note' => 'nullable|string',
+            'price_tiers' => 'nullable|array', // Validasi array
+            'price_tiers.*.min_pax' => 'nullable|numeric',
+            'price_tiers.*.max_pax' => 'nullable|numeric',
+            'price_tiers.*.price' => 'nullable|string',
         ]);
 
         $photoUrls = [];
 
         try {
-            // Upload images (Destination Photo 1, 2, 3, 4)
+            // Upload images
             $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
 
-            foreach ($photoFields as $index => $field) {
+            foreach ($photoFields as $field) {
                 if ($request->hasFile($field)) {
                     $imagePath = $request->file($field)->store('public/destinations');
                     $photoUrls[$field] = str_replace('public/', 'storage/', $imagePath);
@@ -154,7 +157,7 @@ class DestinationController extends Controller
 
             // Parse prices
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : 0.00;
-            $price_2 = $request->price_2 !== null ? (float) str_replace(['.', ','], '', $request->price_2) : 0.00; // Kolom baru
+            $price_2 = $request->price_2 !== null ? (float) str_replace(['.', ','], '', $request->price_2) : 0.00;
 
             // Generate slug
             $slug = $request->slug ?? Str::slug($request->name_package);
@@ -165,7 +168,20 @@ class DestinationController extends Controller
             }
 
             $tagString = $request->tag ?: null;
-            Log::info('Processed Tag:', ['tagString' => $tagString]);
+
+            // Handle Price Tiers (Filter empty values)
+            $priceTiers = [];
+            if ($request->has('price_tiers') && is_array($request->price_tiers)) {
+                foreach ($request->price_tiers as $tier) {
+                    if (!empty($tier['min_pax']) && !empty($tier['price'])) {
+                        $priceTiers[] = [
+                            'min_pax' => $tier['min_pax'],
+                            'max_pax' => $tier['max_pax'] ?? null, 
+                            'price' => $tier['price'],
+                        ];
+                    }
+                }
+            }
 
             $destination = Destination::create([
                 'name_package' => $request->name_package,
@@ -173,11 +189,12 @@ class DestinationController extends Controller
                 'description' => $request->description,
                 'place' => $request->place,
                 'price' => $price,
-                'price_2' => $price_2, // Kolom baru
+                'price_2' => $price_2,
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Simpan array/JSON
                 'destination_photo' => $photoUrls['destination_photo'],
-                'destination_photo_2' => $photoUrls['destination_photo_2'], // Kolom baru
-                'destination_photo_3' => $photoUrls['destination_photo_3'], // Kolom baru
-                'destination_photo_4' => $photoUrls['destination_photo_4'], // Kolom baru
+                'destination_photo_2' => $photoUrls['destination_photo_2'],
+                'destination_photo_3' => $photoUrls['destination_photo_3'],
+                'destination_photo_4' => $photoUrls['destination_photo_4'],
                 'time' => $request->time,
                 'category' => $request->category,
                 'level' => $request->level,
@@ -189,17 +206,15 @@ class DestinationController extends Controller
                 'consumption' => $request->consumption,
                 'include' => $request->include,
                 'exclude' => $request->exclude,
-                'wna_wni_policy' => $request->wna_wni_policy, // Kolom baru
+                'wna_wni_policy' => $request->wna_wni_policy,
                 'itinerary' => $request->itinerary,
                 'tag' => $tagString,
                 'note' => $request->note,
             ]);
 
-            Log::info('Created Destination:', ['destination' => $destination->toArray()]);
-
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '" in ' . $destination->place . ' with tags: ' . $tagString,
+                'action' => 'Added destination: "' . Str::limit($destination->name_package, 50) . '"',
             ]);
 
             return redirect()->route('manage-destination.index')
@@ -207,7 +222,7 @@ class DestinationController extends Controller
         } catch (\Exception $e) {
             Log::error('Error creating destination:', ['error' => $e->getMessage()]);
 
-            // Clean up uploaded files if creation fails
+            // Cleanup uploaded files if fails
             foreach ($photoUrls as $url) {
                 if ($url) {
                     $path = str_replace('storage/', 'public/', $url);
@@ -231,7 +246,6 @@ class DestinationController extends Controller
 
         try {
             Log::info('Update Request Data:', $request->all());
-            Log::info('Update Tag Value:', ['tag' => $request->tag, 'type' => gettype($request->tag)]);
 
             $request->validate([
                 'name_package' => 'required|string|max:255',
@@ -239,12 +253,12 @@ class DestinationController extends Controller
                 'description' => 'nullable|string',
                 'place' => 'required|string|max:255',
                 'price' => 'nullable|numeric|min:0',
-                'price_2' => 'nullable|numeric|min:0', // Kolom baru
+                'price_2' => 'nullable|numeric|min:0',
                 'destination_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
-                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
-                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kolom baru
-                'remove_photo' => 'nullable|array', // Untuk menghapus foto 1-4
+                'destination_photo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'destination_photo_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'remove_photo' => 'nullable|array',
                 'remove_photo.*' => 'in:destination_photo,destination_photo_2,destination_photo_3,destination_photo_4',
                 'time' => 'required|string|max:255',
                 'category' => 'required|string|max:100',
@@ -257,10 +271,14 @@ class DestinationController extends Controller
                 'consumption' => 'nullable|string|max:500',
                 'include' => 'nullable|string',
                 'exclude' => 'nullable|string',
-                'wna_wni_policy' => 'nullable|string', // Kolom baru
+                'wna_wni_policy' => 'nullable|string',
                 'itinerary' => 'nullable|string',
                 'tag' => 'nullable|string|max:500',
                 'note' => 'nullable|string',
+                'price_tiers' => 'nullable|array',
+                'price_tiers.*.min_pax' => 'nullable|numeric',
+                'price_tiers.*.max_pax' => 'nullable|numeric',
+                'price_tiers.*.price' => 'nullable|string',
             ]);
 
             $destination = Destination::findOrFail($destination_id);
@@ -268,30 +286,26 @@ class DestinationController extends Controller
             // Simpan data lama untuk log
             $oldName = $destination->name_package;
             $oldPrice = $destination->price;
-            $oldPrice2 = $destination->price_2; // Kolom baru
-            $oldPlace = $destination->place;
-            $oldPolicy = $destination->wna_wni_policy; // Kolom baru
-
-            try {
-                $oldTags = $destination->tag ?? 'none';
-            } catch (\Exception $e) {
-                Log::error('Error getting old tags:', ['error' => $e->getMessage()]);
-                $oldTags = 'none';
-            }
 
             // Parse prices
             $price = $request->price !== null ? (float) str_replace(['.', ','], '', $request->price) : $destination->price;
-            $price_2 = $request->price_2 !== null ? (float) str_replace(['.', ','], '', $request->price_2) : $destination->price_2; // Kolom baru
+            $price_2 = $request->price_2 !== null ? (float) str_replace(['.', ','], '', $request->price_2) : $destination->price_2;
 
-            // Proses tag
-            try {
-                $tagString = !empty(trim($request->tag)) ? trim($request->tag) : null;
-                $newTags = $tagString ?? 'none';
-                Log::info('Processed Update Tag:', ['tagString' => $tagString]);
-            } catch (\Exception $e) {
-                Log::error('Error processing update tag:', ['error' => $e->getMessage(), 'tag' => $request->tag]);
-                $tagString = $destination->tag; // Keep old value if error
-                $newTags = $oldTags;
+            // Process tag
+            $tagString = !empty(trim($request->tag)) ? trim($request->tag) : $destination->tag;
+
+            // Handle Price Tiers Update
+            $priceTiers = [];
+            if ($request->has('price_tiers') && is_array($request->price_tiers)) {
+                foreach ($request->price_tiers as $tier) {
+                    if (!empty($tier['min_pax']) && !empty($tier['price'])) {
+                        $priceTiers[] = [
+                            'min_pax' => $tier['min_pax'],
+                            'max_pax' => $tier['max_pax'] ?? null,
+                            'price' => $tier['price'],
+                        ];
+                    }
+                }
             }
 
             $updateData = [
@@ -300,7 +314,8 @@ class DestinationController extends Controller
                 'description' => $request->description,
                 'place' => $request->place,
                 'price' => $price,
-                'price_2' => $price_2, // Kolom baru
+                'price_2' => $price_2,
+                'price_tiers' => !empty($priceTiers) ? $priceTiers : null, // Update field JSON
                 'time' => $request->time,
                 'category' => $request->category,
                 'level' => $request->level,
@@ -312,108 +327,61 @@ class DestinationController extends Controller
                 'consumption' => $request->consumption,
                 'include' => $request->include,
                 'exclude' => $request->exclude,
-                'wna_wni_policy' => $request->wna_wni_policy, // Kolom baru
+                'wna_wni_policy' => $request->wna_wni_policy,
                 'itinerary' => $request->itinerary,
                 'tag' => $tagString,
                 'note' => $request->note,
             ];
             
-            // Handle photo uploads dan deletions (untuk 4 foto)
-            $photoChanged = false;
+            // Handle photo uploads & removal
             $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
 
             foreach ($photoFields as $field) {
-                // 1. Logika Hapus Foto
+                // 1. Remove Photo
                 if ($request->filled('remove_photo') && in_array($field, $request->remove_photo)) {
                     if ($destination->{$field}) {
                         $oldPath = str_replace('storage/', 'public/', $destination->{$field});
                         if (Storage::exists($oldPath)) {
                             Storage::delete($oldPath);
                             $updateData[$field] = null;
-                            $photoChanged = true;
                         }
                     }
                 }
 
-                // 2. Logika Upload/Ganti Foto
+                // 2. Upload New Photo
                 if ($request->hasFile($field)) {
-                    try {
-                        // Hapus foto lama (jika ada) sebelum mengunggah yang baru
-                        if ($destination->{$field}) {
-                            $oldPath = str_replace('storage/', 'public/', $destination->{$field});
-                            if (Storage::exists($oldPath)) {
-                                Storage::delete($oldPath);
-                            }
+                    // Delete old photo first if exists
+                    if ($destination->{$field}) {
+                        $oldPath = str_replace('storage/', 'public/', $destination->{$field});
+                        if (Storage::exists($oldPath)) {
+                            Storage::delete($oldPath);
                         }
-
-                        $imagePath = $request->file($field)->store('public/destinations');
-                        $updateData[$field] = str_replace('public/', 'storage/', $imagePath);
-                        $photoChanged = true;
-
-                    } catch (\Exception $e) {
-                        Log::error("Error handling photo upload for {$field}:", ['error' => $e->getMessage()]);
-                        // Jika upload foto gagal, return error
-                        return back()->withInput()
-                            ->with('toast', ['type' => 'error', 'message' => "Failed to upload photo ({$field}): " . $e->getMessage()]);
                     }
+                    $imagePath = $request->file($field)->store('public/destinations');
+                    $updateData[$field] = str_replace('public/', 'storage/', $imagePath);
                 }
                 
-                // Pastikan nilai foto saat ini dipertahankan jika tidak ada perubahan/penghapusan
+                // Keep old value if not changed
                 if (!isset($updateData[$field])) {
                      $updateData[$field] = $destination->{$field};
                 }
             }
 
-
-            // Ensure slug is unique
-            try {
-                $slug = $updateData['slug'];
-                $slugCount = Destination::where('slug', $slug)
-                    ->where('destination_id', '!=', $destination_id)
-                    ->count();
-                if ($slugCount > 0) {
-                    $updateData['slug'] = $slug . '-' . uniqid();
-                }
-            } catch (\Exception $e) {
-                Log::error('Error checking slug uniqueness:', ['error' => $e->getMessage()]);
+            // Slug Uniqueness Check
+            $slug = $updateData['slug'];
+            $slugCount = Destination::where('slug', $slug)
+                ->where('destination_id', '!=', $destination_id)
+                ->count();
+            if ($slugCount > 0) {
+                $updateData['slug'] = $slug . '-' . uniqid();
             }
 
             $destination->update($updateData);
 
-            // Log changes
-            $changes = [];
-            if ($oldName !== $updateData['name_package']) {
-                $changes[] = "name: '{$oldName}' → '{$updateData['name_package']}'";
-            }
-            if ($oldPrice != $price) {
-                $changes[] = "price 1: {$oldPrice} → {$price}";
-            }
-            if ($oldPrice2 != $price_2) {
-                $changes[] = "price 2: {$oldPrice2} → {$price_2}";
-            }
-            if ($oldPlace !== $request->place) {
-                $changes[] = "place: '{$oldPlace}' → '{$request->place}'";
-            }
-            if ($oldPolicy !== $request->wna_wni_policy) {
-                $changes[] = "policy: '{$oldPolicy}' → '{$request->wna_wni_policy}'";
-            }
-            if ($photoChanged) {
-                $changes[] = "photos updated/removed";
-            }
-            if ($oldTags != $newTags) {
-                $changes[] = "tags: '{$oldTags}' → '{$newTags}'";
-            }
-
-            $changeText = !empty($changes) ? ' (' . implode(', ', $changes) . ')' : '';
-
-            try {
-                LogActivity::create([
-                    'username' => $currentUser->username,
-                    'action' => 'Updated destination: "' . Str::limit($updateData['name_package'], 50) . '"' . $changeText,
-                ]);
-            } catch (\Exception $e) {
-                Log::error('Error creating update log activity:', ['error' => $e->getMessage()]);
-            }
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => 'Updated destination: "' . Str::limit($updateData['name_package'], 50) . '"',
+            ]);
 
             return redirect()->route('manage-destination.index')
                 ->with('toast', ['type' => 'success', 'message' => 'Destination updated successfully']);
@@ -469,19 +437,15 @@ class DestinationController extends Controller
         $currentUser = Auth::user();
         if (!$currentUser) {
             if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'toast' => ['type' => 'error', 'message' => 'Unauthorized.']
-                ], 401);
+                return response()->json(['success' => false, 'toast' => ['type' => 'error', 'message' => 'Unauthorized.']], 401);
             }
-            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'You do not have permission to perform this action.']);
+            return redirect()->route('login')->with('toast', ['type' => 'error', 'message' => 'Unauthorized.']);
         }
 
         try {
             $original = Destination::findOrFail($destination_id);
 
             $newName = 'Copy of ' . $original->name_package;
-
             $baseSlug = Str::slug($newName);
             $slug = $baseSlug;
             $counter = 1;
@@ -492,8 +456,11 @@ class DestinationController extends Controller
             $duplicate = $original->replicate();
             $duplicate->name_package = $newName;
             $duplicate->slug = $slug;
+            
+            // Explicitly copy price_tiers (optional if cast handled well, but safe to add)
+            $duplicate->price_tiers = $original->price_tiers;
 
-            // SALIN SEMUA 4 FILE GAMBAR FISIK
+            // Copy physical image files
             $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
 
             foreach ($photoFields as $field) {
@@ -501,15 +468,11 @@ class DestinationController extends Controller
                     $sourcePath = str_replace('storage/', 'public/', $original->{$field});
 
                     if (Storage::exists($sourcePath)) {
-                        $originalFileName = basename($original->{$field});
-                        $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
-                        $nameWithoutExt = pathinfo($originalFileName, PATHINFO_FILENAME);
-
-                        $newFileName = 'copy_' . Str::slug($nameWithoutExt) . '_' . time() . '_' . $field . '.' . $extension;
+                        $extension = pathinfo($original->{$field}, PATHINFO_EXTENSION);
+                        $newFileName = 'copy_' . uniqid() . '_' . $field . '.' . $extension;
                         $newStoragePath = 'public/destinations/' . $newFileName;
 
                         Storage::copy($sourcePath, $newStoragePath);
-
                         $duplicate->{$field} = str_replace('public/', 'storage/', $newStoragePath);
                     } else {
                         $duplicate->{$field} = null;
@@ -521,48 +484,28 @@ class DestinationController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Duplicated destination: "' . $original->name_package . '" → "' . $newName . '"',
+                'action' => 'Duplicated destination: "' . $original->name_package . '"',
             ]);
 
             if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => true,
-                    'toast' => ['type' => 'success', 'message' => 'Destination duplicated successfully!']
-                ]);
+                return response()->json(['success' => true, 'toast' => ['type' => 'success', 'message' => 'Destination duplicated successfully!']]);
             }
 
-            return redirect()->route('manage-destination.index')
-                ->with('toast', ['type' => 'success', 'message' => 'Destination duplicated successfully!']);
+            return redirect()->route('manage-destination.index')->with('toast', ['type' => 'success', 'message' => 'Destination duplicated successfully!']);
         } catch (\Exception $e) {
-            Log::error('Error duplicating destination:', ['error' => $e->getMessage()]);
-
+            Log::error('Error duplicating:', ['error' => $e->getMessage()]);
             if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'toast' => ['type' => 'error', 'message' => 'Failed to duplicate destination: ' . $e->getMessage()]
-                ], 500);
+                return response()->json(['success' => false, 'toast' => ['type' => 'error', 'message' => 'Failed to duplicate.']], 500);
             }
-
-            return back()->with('toast', [
-                'type' => 'error',
-                'message' => 'Failed to duplicate destination.'
-            ]);
+            return back()->with('toast', ['type' => 'error', 'message' => 'Failed to duplicate destination.']);
         }
     }
+
     public function bulkDestroy(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser) {
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'toast' => ['type' => 'error', 'message' => 'Unauthorized.']
-                ], 401);
-            }
-            return redirect()->route('login')->with('toast', [
-                'type' => 'error',
-                'message' => 'You do not have permission to view this page.'
-            ]);
+            return response()->json(['success' => false, 'toast' => ['type' => 'error', 'message' => 'Unauthorized.']], 401);
         }
 
         $request->validate([
@@ -572,14 +515,10 @@ class DestinationController extends Controller
 
         try {
             $destinations = Destination::whereIn('destination_id', $request->ids)->get();
+            $count = $destinations->count();
 
-            $deletedCount = $destinations->count();
-            $deletedNames = $destinations->pluck('name_package')->join(', ');
-
-            // Hapus semua 4 foto untuk setiap destinasi
-            $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
-            
             foreach ($destinations as $destination) {
+                $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
                 foreach ($photoFields as $field) {
                     if ($destination->{$field}) {
                         $path = str_replace('storage/', 'public/', $destination->{$field});
@@ -593,32 +532,12 @@ class DestinationController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => "Bulk deleted {$deletedCount} destination(s): " . $deletedNames,
+                'action' => "Bulk deleted {$count} destination(s)",
             ]);
 
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => true,
-                    'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']
-                ]);
-            }
-
-            return redirect()->route('manage-destination.index')->with('toast', [
-                'type' => 'success',
-                'message' => 'Selected destinations deleted successfully'
-            ]);
+            return response()->json(['success' => true, 'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']]);
         } catch (\Exception $e) {
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'toast' => ['type' => 'error', 'message' => 'Failed to bulk delete: ' . $e->getMessage()]
-                ], 500);
-            }
-
-            return redirect()->back()->with('toast', [
-                'type' => 'error',
-                'message' => 'Failed to bulk delete destinations.'
-            ]);
+            return response()->json(['success' => false, 'toast' => ['type' => 'error', 'message' => 'Failed to delete: ' . $e->getMessage()]], 500);
         }
     }
 }

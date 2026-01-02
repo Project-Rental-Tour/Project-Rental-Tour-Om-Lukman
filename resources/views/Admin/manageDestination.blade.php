@@ -254,14 +254,14 @@
 
     <!-- Add Modal -->
     <div id="add-modal" tabindex="-1" aria-hidden="true"
-        class="fixed inset-0 z-50 hidden  items-center justify-center w-full h-full  bg-opacity-50 backdrop-blur-sm">
+        class="fixed inset-0 z-50 hidden  items-center justify-center w-full h-full  bg-opacity-50 backdrop-blur-sm overflow-y-auto">
         @include('components.admin.modal.modal-destination.add-destination')
     </div>
 
     {{-- Update Modal --}}
     @foreach ($destinations as $destination)
         <div id="edit-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-destination.edit-destination', ['destination' => $destination])
         </div>
     @endforeach
@@ -269,7 +269,7 @@
     {{-- Duplicate Modal --}}
     @foreach ($destinations as $destination)
         <div id="duplicate-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-destination.duplicate-destination', ['destination' => $destination])
         </div>
     @endforeach
@@ -278,7 +278,7 @@
     @foreach ($destinations as $destination)
         <!-- Delete Modal (unique ID for each user) -->
         <div id="delete-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-destination.delete-destination', ['destination' => $destination])
         </div>
     @endforeach
@@ -286,7 +286,7 @@
     {{-- View Modal --}}
     @foreach ($destinations as $destination)
         <div id="view-modal-{{ $destination->destination_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-destination.view-destination', ['destination' => $destination])
         </div>
     @endforeach

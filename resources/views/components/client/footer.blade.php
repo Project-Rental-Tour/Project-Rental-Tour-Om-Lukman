@@ -133,7 +133,7 @@
             {{-- FOOTER BAWAH: COPYRIGHT --}}
             <div class="flex flex-col md:flex-row justify-between items-center text-sm">
                 <p class="text-blue-100 mb-4 md:mb-0">
-                    © 2025 {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}. @translate('Hak cipta dilindungi undang-undang.')
+                    © 2025 {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}. @translate('By CV. NENNIS')
                 </p>
                 <div class="flex space-x-6">
                     <a href="#" class="text-blue-100 hover:text-white transition-colors">@translate('Kebijakan Privasi')</a>

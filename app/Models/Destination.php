@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Gallery; // Pastikan Model Gallery di-import
 
 class Destination extends Model
 {
@@ -17,10 +18,11 @@ class Destination extends Model
         'type_destination',
         'place',
         'price',
+        'price_tiers',
         'discount_price',
-        'price_2', // Kolom harga baru
+        'price_2', 
         'destination_photo',
-        'destination_photo_2', // Foto baru
+        'destination_photo_2',
         'destination_photo_3',
         'destination_photo_4',
         'time',
@@ -34,7 +36,7 @@ class Destination extends Model
         'consumption',
         'include',
         'exclude',
-        'wna_wni_policy', // Kolom kebijakan WNA/WNI
+        'wna_wni_policy',
         'itinerary',
         'tag',
         'note',
@@ -44,44 +46,37 @@ class Destination extends Model
         'pickup_points' => 'string',
         'dropoff_points' => 'string',
         'tag' => 'string',
+        'price' => 'integer',
+        'price_2' => 'integer',
+        'price_tiers' => 'array', // <--- PENTING: Casting JSON ke Array otomatis
     ];
 
+    public $timestamps = true;
+
+    /**
+     * Mengambil galeri terkait berdasarkan tags (Optimized).
+     */
     public function relatedGalleries()
     {
         $tags = $this->tag;
-        
-        // Asumsi: Model Gallery sudah di-import atau berada di namespace yang sama
-        // Pastikan Anda mengimport Model Gallery jika berada di namespace yang berbeda: use App\Models\Gallery; 
 
-        if (!$tags || !is_string($tags)) {
+        if (empty($tags) || !is_string($tags)) {
             return collect();
         }
 
         $tagArray = array_filter(array_map('trim', explode(',', $tags)));
-        $tagArray = array_map('strtolower', $tagArray);
-
+        
         if (empty($tagArray)) {
             return collect();
         }
 
-        $related = collect();
+        // Regex pattern untuk pencarian sekaligus
+        $regexPattern = '\\b(' . implode('|', array_map(function($tag) {
+            return preg_quote(strtolower($tag), '/');
+        }, $tagArray)) . ')\\b';
 
-        foreach ($tagArray as $tag) {
-            $pattern = '\\b' . preg_quote($tag, '/') . '\\b';
-
-            $galleries = Gallery::whereRaw('LOWER(tag) REGEXP ?', [$pattern])
-                ->limit(4)
-                ->get();
-
-            $related = $related->merge($galleries);
-
-            if ($related->count() >= 9) {
-                break;
-            }
-        }
-
-        return $related->unique('gallery_id')->take(9)->values();
+        return Gallery::whereRaw('LOWER(tag) REGEXP ?', [$regexPattern])
+            ->limit(9)
+            ->get();
     }
-
-    public $timestamps = true;
 }

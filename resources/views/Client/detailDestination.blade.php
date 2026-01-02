@@ -183,7 +183,6 @@
     </nav>
 
     {{-- MAIN CONTENT --}}
-    {{-- NOTE: Padding bottom (pb-32) ditambahkan untuk mobile agar tidak tertutup sticky bar --}}
     <section class="container mx-auto px-6 py-12 pb-32 lg:pb-12 relative">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
@@ -236,7 +235,7 @@
                     </div>
                 </div>
 
-                {{-- 2. Tabs Container (Overview, Highlights, etc) --}}
+                {{-- 2. Tabs Container --}}
                 <div class="bg-white/80 backdrop-blur rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
@@ -266,6 +265,47 @@
                                 @translate($destination->description)
                             </p>
                             
+                            {{-- START: PRICE TIERS TABLE (TABLE HARGA) --}}
+                            @if(!empty($destination->price_tiers) && is_array($destination->price_tiers))
+                                <div class="mb-8">
+                                    <h4 class="text-lg font-bold text-primary mb-3 flex items-center gap-2">
+                                        <i class="fas fa-tags text-secondary"></i> @translate('Daftar Harga Paket')
+                                    </h4>
+                                    <div class="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+                                        <table class="w-full text-sm text-left text-gray-600">
+                                            <thead class="text-xs text-primary uppercase bg-blue-50 border-b border-blue-100">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 font-bold">@translate('Jumlah Peserta')</th>
+                                                    <th scope="col" class="px-6 py-3 font-bold text-right">@translate('Harga Per Orang')</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-100">
+                                                @foreach($destination->price_tiers as $tier)
+                                                    @if(!empty($tier['min_pax']) && !empty($tier['price']))
+                                                        <tr class="hover:bg-gray-50 transition-colors">
+                                                            <td class="px-6 py-4 font-medium text-gray-900">
+                                                                {{ $tier['min_pax'] }} 
+                                                                @if(!empty($tier['max_pax']))
+                                                                    - {{ $tier['max_pax'] }}
+                                                                @else
+                                                                    +
+                                                                @endif
+                                                                @translate('Orang')
+                                                            </td>
+                                                            <td class="px-6 py-4 text-right font-bold text-secondary">
+                                                                IDR {{ number_format((float) str_replace(['Rp', '.', ','], '', $tier['price']), 0, ',', '.') }}
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p class="text-xs text-gray-400 mt-2 italic">* @translate('Harga dapat berubah sewaktu-waktu tanpa pemberitahuan sebelumnya.')</p>
+                                </div>
+                            @endif
+                            {{-- END: PRICE TIERS TABLE --}}
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 @foreach([
                                     ['Lokasi', $destination->place, 'map-pin'],
@@ -415,7 +455,7 @@
             <div class="lg:col-span-1 hidden lg:block">
                 <div class="glass-card p-8 rounded-[2.5rem] shadow-2xl sticky top-28 animate-fade-up border border-white/60" style="animation-delay: 0.4s">
                     <div class="text-center mb-8">
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">@translate('Penawaran Terbaik')</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">{{ $destination->name_package }}</p>
                         <div class="text-3xl md:text-4xl font-bold text-primary font-serif">
                             @currency($destination->price)
                         </div>

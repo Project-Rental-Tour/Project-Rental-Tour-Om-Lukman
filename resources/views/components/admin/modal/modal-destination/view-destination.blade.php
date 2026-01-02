@@ -20,7 +20,8 @@
                         <h2 class="text-2xl font-bold mb-1">{{ $destination->name_package }}</h2>
                         <p class="text-blue-200 text-sm">{{ $destination->place }}</p>
                         
-                        <div class="mt-4 grid grid-cols-2 gap-3">
+                        {{-- Harga Utama --}}
+                        <div class="mt-4 grid grid-cols-2 gap-3 pb-4 border-b border-white/20">
                             <div>
                                 <span class="text-xl font-extrabold">IDR {{ number_format((float) $destination->price, 0, ',', '.') }}</span>
                                 <span class="text-blue-200 block text-xs mt-1">/ WNI (Standard)</span>
@@ -32,8 +33,25 @@
                                 </div>
                             @endif
                         </div>
+
+                        {{-- Price Tiers Display (NEW) --}}
+                        @if(!empty($destination->price_tiers) && is_array($destination->price_tiers))
+                            <div class="py-3 border-b border-white/20">
+                                <span class="text-xs font-semibold text-blue-200 uppercase tracking-wider block mb-2">Group Pricing</span>
+                                <div class="space-y-1">
+                                    @foreach($destination->price_tiers as $tier)
+                                        @if(!empty($tier['min_pax']) && !empty($tier['price']))
+                                            <div class="flex justify-between text-xs">
+                                                <span>{{ $tier['min_pax'] }} - {{ $tier['max_pax'] }} Pax</span>
+                                                <span class="font-bold">IDR {{ number_format((float) str_replace(['Rp', '.', ','], '', $tier['price']), 0, ',', '.') }}</span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                         
-                        <div class="mt-3 flex items-center space-x-3 text-xs">
+                        <div class="mt-3 flex items-center space-x-3 text-xs pt-2">
                             <span class="bg-white bg-opacity-20 inline-block px-3 py-1 rounded-full">{{ $destination->time }}</span>
                             @if($destination->wna_wni_policy)
                                 <span class="bg-yellow-400 text-yellow-900 inline-block px-3 py-1 rounded-full font-semibold">

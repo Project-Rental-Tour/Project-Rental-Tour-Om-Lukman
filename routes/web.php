@@ -37,7 +37,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/gallery', [UserGalleryController::class, 'index'])->name('gallery.index');
 Route::get('/list-car', [UserCarController::class, 'index'])->name('usercar.index');
-Route::get('/destination', [UserDestinationController::class, 'index'])->name('destination.index');
+Route::get('/tour-package', [UserDestinationController::class, 'index'])->name('destination.index');
 
 Route::get('/blog', [UserBlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/{title}', [UserBlogController::class, 'detailBlog'])->name('blogs.detail');
@@ -46,8 +46,8 @@ Route::get('/rent-car/{slug}', [UserCarController::class, 'detailCar'])->name('c
 Route::get('/rent-car-booking/{slug}', [BookingCarController::class, 'booking'])->name('booking-car.form');
 Route::post('/rent-car-booking', [BookingCarController::class, 'bookingStore'])->name('bookingStore');
 
-Route::get('/destinations/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
-Route::get('/destinations/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
+Route::get('/tour-package/{slug}', [DestinationController::class, 'detailDestination'])->name('destination.show');
+Route::get('/tour-package/{slug}/book', [BookingController::class, 'showRegularForm'])->name('booking.regular.form');
 Route::post('/booking/regular', [BookingController::class, 'bookingRegular'])->name('booking.regular.store');
 
 Route::get('/custom-trip', [BookingController::class, 'showCustomForm'])->name('booking.custom');

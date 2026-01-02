@@ -174,8 +174,6 @@
                                 <h4 class="font-bold text-gray-800 text-sm">@translate('Dukungan WhatsApp')</h4>
                                 <div class="flex gap-4 text-sm mt-1">
                                     <a href="https://wa.me/6281220005276" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 2000 5276</a>
-                                    <span class="text-gray-300">|</span>
-                                    <a href="https://wa.me/6281220005276" target="_blank" class="text-text-light hover:text-green-600 font-medium">+62 812 1700 6076</a>
                                 </div>
                             </div>
                         </div>
