@@ -134,10 +134,12 @@ class DestinationController extends Controller
             'itinerary' => 'nullable|string',
             'tag' => 'nullable|string|max:500',
             'note' => 'nullable|string',
-            'price_tiers' => 'nullable|array', // Validasi array
+            // VALIDASI PRICE TIERS
+            'price_tiers' => 'nullable|array', 
             'price_tiers.*.min_pax' => 'nullable|numeric',
             'price_tiers.*.max_pax' => 'nullable|numeric',
             'price_tiers.*.price' => 'nullable|string',
+            'price_tiers.*.description' => 'nullable|string', // [BARU] Validasi Description
         ]);
 
         $photoUrls = [];
@@ -178,6 +180,7 @@ class DestinationController extends Controller
                             'min_pax' => $tier['min_pax'],
                             'max_pax' => $tier['max_pax'] ?? null, 
                             'price' => $tier['price'],
+                            'description' => $tier['description'] ?? null, // [BARU] Simpan Description
                         ];
                     }
                 }
@@ -275,10 +278,12 @@ class DestinationController extends Controller
                 'itinerary' => 'nullable|string',
                 'tag' => 'nullable|string|max:500',
                 'note' => 'nullable|string',
+                // VALIDASI PRICE TIERS
                 'price_tiers' => 'nullable|array',
                 'price_tiers.*.min_pax' => 'nullable|numeric',
                 'price_tiers.*.max_pax' => 'nullable|numeric',
                 'price_tiers.*.price' => 'nullable|string',
+                'price_tiers.*.description' => 'nullable|string', // [BARU] Validasi Description
             ]);
 
             $destination = Destination::findOrFail($destination_id);
@@ -303,6 +308,7 @@ class DestinationController extends Controller
                             'min_pax' => $tier['min_pax'],
                             'max_pax' => $tier['max_pax'] ?? null,
                             'price' => $tier['price'],
+                            'description' => $tier['description'] ?? null, // [BARU] Update Description
                         ];
                     }
                 }
