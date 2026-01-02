@@ -348,7 +348,7 @@
                         <div class="hidden animate-fade-in" id="tour" role="tabpanel" aria-labelledby="tour-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Sorotan Wisata')</h3>
                             <ul class="space-y-3">
-                                @foreach(explode(',', $destination->activities) as $item)
+                                @foreach(explode('.', $destination->activities) as $item)
                                     @if(trim($item))
                                         <li class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-secondary/30 transition-colors">
                                             <i class="fas fa-check-circle text-secondary text-lg"></i>
