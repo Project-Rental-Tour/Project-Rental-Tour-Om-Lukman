@@ -1,7 +1,7 @@
 <div class="relative w-full max-w-4xl px-4 slide-down overflow-y-auto" 
      x-data="{ 
         step: 1, 
-        tiers: {{ $destination->price_tiers ? json_encode($destination->price_tiers) : '[{ min_pax: \'\', max_pax: \'\', price: \'\' }]' }} 
+        tiers: {{ $destination->price_tiers ? json_encode($destination->price_tiers) : '[{ min_pax: \'\', max_pax: \'\', price: \'\', description: \'\' }]' }} 
      }">
     
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                {{-- STEP 2: Pricing & Tiers (UPDATED with Dynamic Tiers) --}}
+                {{-- STEP 2: Pricing & Tiers (UPDATED with Dynamic Tiers + Description) --}}
                 <div x-show="step === 2" class="space-y-6">
                     
                     {{-- Basic Price & Duration --}}
@@ -103,20 +103,26 @@
                         
                         <div class="space-y-3">
                             <template x-for="(tier, index) in tiers" :key="index">
-                                <div class="flex items-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                    <div class="flex-1">
+                                <div class="flex flex-col md:flex-row items-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div class="w-full md:w-20">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Min Pax</label>
                                         <input type="number" :name="`price_tiers[${index}][min_pax]`" x-model="tier.min_pax" placeholder="e.g. 2"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
-                                    <div class="flex-1">
+                                    <div class="w-full md:w-20">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Max Pax</label>
                                         <input type="number" :name="`price_tiers[${index}][max_pax]`" x-model="tier.max_pax" placeholder="e.g. 5"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
-                                    <div class="flex-[2]">
+                                    <div class="w-full md:w-40">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Price (IDR)</label>
                                         <input type="text" :name="`price_tiers[${index}][price]`" x-model="tier.price" placeholder="Rp 1.000.000"
+                                            class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    {{-- Kolom Keterangan Baru --}}
+                                    <div class="w-full md:flex-1">
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Description (Optional)</label>
+                                        <input type="text" :name="`price_tiers[${index}][description]`" x-model="tier.description" placeholder="e.g. Include Lunch / Special Discount"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
                                     
@@ -135,7 +141,7 @@
                         </div>
 
                         {{-- Tombol Tambah (+) --}}
-                        <button type="button" @click="tiers.push({ min_pax: '', max_pax: '', price: '' })"
+                        <button type="button" @click="tiers.push({ min_pax: '', max_pax: '', price: '', description: '' })"
                             class="mt-3 flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />

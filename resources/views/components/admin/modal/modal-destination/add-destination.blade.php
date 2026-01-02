@@ -1,7 +1,7 @@
 <div class="relative w-full max-w-4xl px-4 slide-down overflow-y-auto" 
      x-data="{ 
         step: 1, 
-        tiers: [{ min_pax: '', max_pax: '', price: '' }] 
+        tiers: [{ min_pax: '', max_pax: '', price: '', note: '' }] 
      }">
     
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                {{-- STEP 2: Pricing & Tiers (UPDATED) --}}
+                {{-- STEP 2: Pricing & Tiers (UPDATED with Note/Description Column) --}}
                 <div x-show="step === 2" class="space-y-6">
                     
                     {{-- Basic Price & Duration --}}
@@ -92,24 +92,30 @@
                         
                         <div class="space-y-3">
                             <template x-for="(tier, index) in tiers" :key="index">
-                                <div class="flex items-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                    <div class="flex-1">
+                                <div class="flex flex-col md:flex-row items-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div class="w-full md:w-20">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Min Pax</label>
                                         <input type="number" :name="`price_tiers[${index}][min_pax]`" x-model="tier.min_pax" placeholder="e.g. 2"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
-                                    <div class="flex-1">
+                                    <div class="w-full md:w-20">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Max Pax</label>
                                         <input type="number" :name="`price_tiers[${index}][max_pax]`" x-model="tier.max_pax" placeholder="e.g. 5"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
-                                    <div class="flex-[2]">
+                                    <div class="w-full md:w-40">
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Price (IDR)</label>
                                         <input type="text" :name="`price_tiers[${index}][price]`" x-model="tier.price" placeholder="Rp 1.000.000"
                                             class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
                                     </div>
+                                    {{-- Kolom Keterangan Baru --}}
+                                    <div class="w-full md:flex-1">
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Description (Optional)</label>
+                                        <input type="text" :name="`price_tiers[${index}][description]`" x-model="tier.description" placeholder="e.g. Include Lunch / Special Discount"
+                                            class="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
                                     
-                                    {{-- Tombol Hapus (Sampah) --}}
+                                    {{-- Tombol Hapus --}}
                                     <div class="pb-1">
                                         <button type="button" @click="tiers.splice(index, 1)" 
                                                 class="text-red-500 hover:text-red-700 hover:bg-red-100 p-2 rounded-md transition-colors"
@@ -124,7 +130,7 @@
                         </div>
 
                         {{-- Tombol Tambah (+) --}}
-                        <button type="button" @click="tiers.push({ min_pax: '', max_pax: '', price: '' })"
+                        <button type="button" @click="tiers.push({ min_pax: '', max_pax: '', price: '', description: '' })"
                             class="mt-3 flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -149,7 +155,7 @@
                     </div>
                 </div>
 
-                {{-- STEP 3: Logistics --}}
+                {{-- STEP 3, 4, 5, 6 (Sama seperti sebelumnya) --}}
                 <div x-show="step === 3" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Pickup Points</label>
@@ -178,7 +184,6 @@
                     </div>
                 </div>
 
-                {{-- STEP 4: Activities & Tags --}}
                 <div x-show="step === 4" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Activities</label>
@@ -212,7 +217,6 @@
                     </div>
                 </div>
 
-                {{-- STEP 5: Inclusions --}}
                 <div x-show="step === 5" class="grid gap-6 md:grid-cols-2">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Include</label>
@@ -233,7 +237,6 @@
                     </div>
                 </div>
 
-                {{-- STEP 6: Itinerary & Photos --}}
                 <div x-show="step === 6" class="grid gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium">Itinerary</label>
@@ -287,7 +290,6 @@
                     </div>
                 </div>
 
-                {{-- Navigation Buttons --}}
                 <div class="flex justify-between pt-8 border-t mt-8 border-gray-100">
                     <button type="button" @click="step = Math.max(step - 1, 1)" x-show="step > 1"
                             class="px-6 py-3 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Previous</button>
@@ -308,7 +310,7 @@
 </div>
 
 <script>
-    // --- Tag Management Functions (Same as before) ---
+    // --- Tag Management Functions ---
     window.updateTagInput = function() {
         const container = document.getElementById('tags-container-add');
         const tags = Array.from(container.children)
@@ -328,7 +330,7 @@
         updateTagInput();
     }
 
-    // --- Image Preview Functions (Same as before) ---
+    // --- Image Preview Functions ---
     window.handleImageChange = function(event, previewId) {
         const file = event.target.files[0];
         const preview = document.getElementById(previewId);

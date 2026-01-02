@@ -266,6 +266,7 @@
                             </p>
                             
                             {{-- START: PRICE TIERS TABLE (TABLE HARGA) --}}
+                            {{-- START: PRICE TIERS TABLE (TABLE HARGA) --}}
                             @if(!empty($destination->price_tiers) && is_array($destination->price_tiers))
                                 <div class="mb-8">
                                     <h4 class="text-lg font-bold text-primary mb-3 flex items-center gap-2">
@@ -277,13 +278,16 @@
                                                 <tr>
                                                     <th scope="col" class="px-6 py-3 font-bold">@translate('Jumlah Peserta')</th>
                                                     <th scope="col" class="px-6 py-3 font-bold text-right">@translate('Harga Per Orang')</th>
+                                                    {{-- Tambahan Kolom Header Keterangan --}}
+                                                    <th scope="col" class="px-6 py-3 font-bold">@translate('Keterangan')</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-100">
                                                 @foreach($destination->price_tiers as $tier)
                                                     @if(!empty($tier['min_pax']) && !empty($tier['price']))
                                                         <tr class="hover:bg-gray-50 transition-colors">
-                                                            <td class="px-6 py-4 font-medium text-gray-900">
+                                                            {{-- Kolom Peserta --}}
+                                                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                                 {{ $tier['min_pax'] }} 
                                                                 @if(!empty($tier['max_pax']))
                                                                     - {{ $tier['max_pax'] }}
@@ -292,8 +296,16 @@
                                                                 @endif
                                                                 @translate('Orang')
                                                             </td>
-                                                            <td class="px-6 py-4 text-right font-bold text-secondary">
+                                                            
+                                                            {{-- Kolom Harga --}}
+                                                            <td class="px-6 py-4 text-right font-bold text-secondary whitespace-nowrap">
                                                                 IDR {{ number_format((float) str_replace(['Rp', '.', ','], '', $tier['price']), 0, ',', '.') }}
+                                                            </td>
+
+                                                            {{-- Tambahan Kolom Data Keterangan --}}
+                                                            <td class="px-6 py-4 text-gray-500 italic">
+                                                                {{-- Tampilkan deskripsi, jika kosong tampilkan '-' --}}
+                                                                {{ $tier['description'] ?? '-' }}
                                                             </td>
                                                         </tr>
                                                     @endif
