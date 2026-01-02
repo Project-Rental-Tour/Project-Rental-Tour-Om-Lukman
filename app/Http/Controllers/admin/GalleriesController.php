@@ -259,8 +259,13 @@ class GalleriesController extends Controller
         }
     }
 
-    public function bulkCompress(Request $request)
+public function bulkCompress(Request $request)
     {
+        // --- TAMBAHAN: Handle Resource Limit ---
+        ini_set('memory_limit', '512M'); 
+        ini_set('max_execution_time', 300); // 5 Menit
+        // -------------------------------------
+
         $currentUser = Auth::user();
         if (!$currentUser) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
@@ -277,35 +282,22 @@ class GalleriesController extends Controller
 
             foreach ($galleries as $gallery) {
                 if ($gallery->gallery_photo) {
-                    // Ambil path asli (storage/...) ubah ke path fisik (public/...)
                     $relativePath = str_replace('storage/', 'public/', $gallery->gallery_photo);
                     
                     if (Storage::exists($relativePath)) {
-                        // Ambil file fisik
-                        $fileContent = Storage::get($relativePath);
                         $absolutePath = Storage::path($relativePath);
-                        
-                        // Cek ukuran file saat ini (dalam bytes)
                         $currentSize = filesize($absolutePath);
                         
-                        // Jika ukuran > 500KB (512000 bytes), lakukan kompresi ulang
                         if ($currentSize > 512000) {
-                            // Panggil helper processImage yang sudah kita buat sebelumnya
-                            // Kita kirim path absolut file-nya
-                            // Note: Kita perlu sedikit modifikasi helper processImage agar support path file, 
-                            // atau kita buat logika simple disini:
-                            
                             $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
                             $image = $manager->read($absolutePath);
 
-                            // Resize jika terlalu besar
                             if ($image->width() > 1920) {
                                 $image->scale(width: 1920);
                             }
 
-                            // Iterasi Kompresi
                             $quality = 80;
-                            $targetSize = 500 * 1024; // 500KB
+                            $targetSize = 500 * 1024; 
                             
                             do {
                                 $encoded = $image->toJpeg($quality);
@@ -313,7 +305,6 @@ class GalleriesController extends Controller
                                 $quality -= 5;
                             } while ($size > $targetSize && $quality >= 15);
 
-                            // Timpa file lama dengan hasil kompresi
                             Storage::put($relativePath, (string) $encoded);
                             $count++;
                         }

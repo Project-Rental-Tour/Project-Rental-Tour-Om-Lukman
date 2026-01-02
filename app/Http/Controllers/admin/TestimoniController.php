@@ -286,8 +286,13 @@ class TestimoniController extends Controller
         }
     }
 
-    public function bulkCompress(Request $request)
+public function bulkCompress(Request $request)
     {
+        // --- TAMBAHAN: Handle Resource Limit ---
+        ini_set('memory_limit', '512M'); 
+        ini_set('max_execution_time', 300); // 5 Menit
+        // -------------------------------------
+
         $currentUser = Auth::user();
         if (!$currentUser) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
@@ -304,27 +309,20 @@ class TestimoniController extends Controller
 
             foreach ($testimonials as $testimonial) {
                 if ($testimonial->image) {
-                    // Konversi path storage ke path fisik public
-                    // Asumsi path di DB: testimonial-images/filename.jpg (karena disimpan di disk 'public')
                     $relativePath = $testimonial->image; 
                     
                     if (Storage::disk('public')->exists($relativePath)) {
                         $absolutePath = Storage::disk('public')->path($relativePath);
-                        
-                        // Cek ukuran file (bytes)
                         $currentSize = filesize($absolutePath);
                         
-                        // Jika > 500KB (512000 bytes)
                         if ($currentSize > 512000) {
                             $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
                             $image = $manager->read($absolutePath);
 
-                            // Resize jika terlalu lebar (Testimoni cukup 800px)
                             if ($image->width() > 800) {
                                 $image->scale(width: 800);
                             }
 
-                            // Iterasi Kompresi
                             $quality = 80;
                             $targetSize = 500 * 1024;
                             
@@ -334,7 +332,6 @@ class TestimoniController extends Controller
                                 $quality -= 5;
                             } while ($size > $targetSize && $quality >= 20);
 
-                            // Simpan timpa file lama
                             Storage::disk('public')->put($relativePath, (string) $encoded);
                             $count++;
                         }
