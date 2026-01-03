@@ -275,7 +275,7 @@
                                     <div class="flex items-center gap-2 mb-1 text-gray-400">
                                         <i class="fas fa-users text-xs"></i> <h4 class="text-xs font-bold uppercase tracking-wider">@translate('Kapasitas')</h4>
                                     </div>
-                                    <p class="font-semibold text-gray-800 text-sm md:text-base">{{ $car->capacity }} @translate('Orang')</p>
+                                    <p class="font-semibold text-gray-800 text-sm md:text-base">{{ $car->capacity }} @translate('Penumpang')</p>
                                 </div>
 
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 flex flex-col justify-center">
