@@ -5,7 +5,6 @@
 @section('content')
     <div class="w-full">
 
-        <!-- Header Section -->
         <div class="px-4 md:px-6 py-4 md:py-6 bg-white shadow-sm">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
@@ -14,7 +13,6 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                    <!-- Action Buttons -->
                     <div class="flex gap-2">
                         <button data-modal-target="add-car-modal" data-modal-toggle="add-car-modal"
                             class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none flex items-center">
@@ -29,25 +27,37 @@
             </div>
         </div>
 
-        <!-- Filter and Content Section -->
         <div class="bg-white px-4 md:px-6 py-4">
-            <!-- Filter and Sort Row -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <!-- Left Side - Delete Selected Button -->
+                
                 <div class="flex gap-2">
+                    {{-- 1. Tombol Delete (Updated Class & Attributes) --}}
                     <button type="button"
-                        class="bulk-delete-btn px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 flex items-center"
-                        data-route="{{ route('manage-car.bulk-destroy') }}" data-item-type="car">
-                        <svg class="h-5 w-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="bulk-action-btn px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-red-50 hover:text-red-700 flex items-center transition-colors shadow-sm"
+                        data-route="{{ route('manage-car.bulk-destroy') }}" 
+                        data-method="DELETE"
+                        data-confirm-message="Are you sure you want to delete the selected cars?"
+                        data-item-type="car">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                             </path>
                         </svg>
                         Delete Selected
                     </button>
+
+                    {{-- 2. Tombol Compress Images (BARU) --}}
+                    <button type="button"
+                        class="bulk-action-btn px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 flex items-center transition-colors shadow-sm"
+                        data-route="{{ route('manage-car.bulk-compress') }}"
+                        data-method="POST"
+                        data-confirm-message="Compress images for selected cars? This might take a while."
+                        data-item-type="car">
+                        <i class="fa-solid fa-compress mr-2"></i>
+                        Compress Images
+                    </button>
                 </div>
 
-                <!-- Right Side - Sort Dropdown -->
                 <div class="relative">
                     <select onchange="window.location.href = '{{ route('manage-car.index') }}' + this.value"
                         class="appearance-none pl-3 pr-8 py-2 border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-full md:w-auto">
@@ -80,13 +90,13 @@
                 </div>
             </div>
 
-            <!-- Car Table -->
             <div class="overflow-x-auto shadow rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{-- Penting: Jangan ada name="ids[]" di checkbox header --}}
                                 <input type="checkbox" id="select-all"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
                                     aria-label="Select all cars">
@@ -155,6 +165,7 @@
                             @foreach ($cars as $car)
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
+                                        {{-- Checkbox Item dengan car_id --}}
                                         <input type="checkbox" name="ids[]" value="{{ $car->car_id }}"
                                             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bulk-checkbox"
                                             aria-label="Select car: {{ $car->name_car }}">
@@ -209,7 +220,6 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                                                 </svg>
                                             </button>
-                                            <!-- Dropdown menu -->
                                             <div class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 z-50 hidden">
                                                 <ul class="py-1 text-sm">
                                                     <li>
@@ -254,7 +264,6 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
             <div class="mt-4">
                 {{ $cars->links('vendor.pagination.tailwind') }}
             </div>
@@ -262,16 +271,15 @@
     </div>
 
 
-    <!-- Add Modal -->
     <div id="add-car-modal" tabindex="-1" aria-hidden="true"
-        class="fixed inset-0 z-50 hidden  items-center justify-center w-full h-full  bg-opacity-50 backdrop-blur-sm">
+        class="fixed inset-0 z-50 hidden  items-center justify-center w-full h-full  bg-opacity-50 backdrop-blur-sm overflow-y-auto">
         @include('components.admin.modal.modal-car.add-car')
     </div>
 
     {{-- Update Modal --}}
     @foreach ($cars as $car)
         <div id="edit-car-modal-{{ $car->car_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-car.edit-car', ['car' => $car])
         </div>
     @endforeach
@@ -279,9 +287,8 @@
 
     {{-- Delete Modal --}}
     @foreach ($cars as $car)
-        <!-- Delete Modal (unique ID for each user) -->
         <div id="delete-car-modal-{{ $car->car_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-car.delete-car', ['car' => $car])
         </div>
     @endforeach
@@ -289,13 +296,14 @@
     {{-- View Modal --}}
     @foreach ($cars as $car)
         <div id="view-car-modal-{{ $car->car_id }}" tabindex="-1" aria-hidden="true"
-            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm">
+            class="fixed inset-0 z-50 hidden items-center justify-center w-full h-full bg-opacity-50 backdrop-blur-sm overflow-y-auto">
             @include('components.admin.modal.modal-car.view-car', ['car' => $car])
         </div>
     @endforeach
 @endsection
 
 @push('scripts')
+    {{-- Pastikan bulkAction.js sudah diperbarui dengan versi terbaru --}}
     <script src="{{ asset('assets/js/bulkAction.js') }}"></script>
     <script src="{{ asset('assets/js/dropdownTable.js') }}"></script>
     <script src="{{ asset('assets/js/replaceImage.js') }}"></script>

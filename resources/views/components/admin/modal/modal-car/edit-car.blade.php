@@ -57,33 +57,83 @@
                 </div>
 
                 <!-- STEP 2: Specifications -->
-                <div x-show="step === 2" class="grid gap-6 md:grid-cols-2">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Transmission</label>
-                        <select name="transmission" 
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
-                            <option value="manual" {{ $car->transmission == 'manual' ? 'selected' : '' }}>Manual</option>
-                            <option value="automatic" {{ $car->transmission == 'automatic' ? 'selected' : '' }}>Automatic</option>
-                        </select>
+                <div x-show="step === 2" class="space-y-6">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Transmission</label>
+                            <select name="transmission" 
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                                <option value="manual" {{ $car->transmission == 'manual' ? 'selected' : '' }}>Manual</option>
+                                <option value="automatic" {{ $car->transmission == 'automatic' ? 'selected' : '' }}>Automatic</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Capacity (Seats)</label>
+                            <input type="number" name="capacity" min="1" value="{{ $car->capacity }}"
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Base Price (per day)</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-3 text-gray-500">Rp</span>
+                                <input type="number" name="price" step="1" min="0" value="{{ (int)$car->price }}"
+                                class="w-full border rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Status</label>
+                            <select name="car_status" 
+                                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                                <option value="available" {{ $car->car_status == 'available' ? 'selected' : '' }}>Available</option>
+                                <option value="booked" {{ $car->car_status == 'booked' ? 'selected' : '' }}>Booked</option>
+                                <option value="maintenance" {{ $car->car_status == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Capacity (Seats)</label>
-                        <input type="number" name="capacity" min="1" value="{{ $car->capacity }}"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Price (per day)</label>
-                        <input type="number" name="price" step="0.01" min="0" value="{{ $car->price }}"
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" required>
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium">Status</label>
-                        <select name="car_status" 
-                               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <option value="available" {{ $car->car_status == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="booked" {{ $car->car_status == 'booked' ? 'selected' : '' }}>Booked</option>
-                            <option value="maintenance" {{ $car->car_status == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
-                        </select>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200" 
+                        x-data="{ 
+                            tiers: {{ !empty($car->price_tiers) ? json_encode($car->price_tiers) : '[{ duration: \'\', price: \'\', description: \'\' }]' }} 
+                        }">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-sm font-bold text-gray-700">Opsi Harga Bertingkat</h4>
+                            <button type="button" @click="tiers.push({ duration: '', price: '', description: '' })" 
+                                    class="text-xs flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-200 transition-colors font-medium">
+                                <i class="fas fa-plus"></i> Tambah Opsi
+                            </button>
+                        </div>
+
+                        <template x-for="(tier, index) in tiers" :key="index">
+                            <div class="grid grid-cols-12 gap-3 mb-3 items-end">
+                                <div class="col-span-3">
+                                    <label class="block text-xs font-medium text-gray-500 mb-1" x-show="index === 0">Durasi</label>
+                                    <input type="text" :name="`price_tiers[${index}][duration]`" x-model="tier.duration" placeholder="12 Jam"
+                                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                </div>
+
+                                <div class="col-span-4">
+                                    <label class="block text-xs font-medium text-gray-500 mb-1" x-show="index === 0">Harga</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2 text-gray-400 text-xs">Rp</span>
+                                        <input type="number" :name="`price_tiers[${index}][price]`" x-model="tier.price" placeholder="300000"
+                                            class="w-full border rounded-lg pl-8 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                </div>
+
+                                <div class="col-span-4">
+                                    <label class="block text-xs font-medium text-gray-500 mb-1" x-show="index === 0">Keterangan</label>
+                                    <input type="text" :name="`price_tiers[${index}][description]`" x-model="tier.description" placeholder="All in / Mobil saja"
+                                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                </div>
+
+                                <div class="col-span-1 flex justify-center pb-2">
+                                    <button type="button" @click="tiers.splice(index, 1)" 
+                                            class="text-red-400 hover:text-red-600 transition-colors">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
 

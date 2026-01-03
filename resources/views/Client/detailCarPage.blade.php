@@ -302,13 +302,80 @@
                                     </span>
                                 </div>
                             </div>
+
+                            {{-- START: TABEL DAFTAR HARGA --}}
+                            @if(!empty($car->price_tiers) && is_array($car->price_tiers))
+                                <div class="mt-10 animate-fade-in">
+                                    {{-- Judul Section --}}
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                                            <i class="fas fa-tags text-lg"></i>
+                                        </div>
+                                        <h3 class="text-xl font-serif font-bold text-primary">@translate('Daftar Paket Harga')</h3>
+                                    </div>
+
+                                    {{-- Container Tabel (Scrollable di HP) --}}
+                                    <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                                        <table class="w-full text-sm text-left min-w-[500px] md:min-w-full">
+                                            <thead class="bg-gray-50 text-gray-700 font-bold uppercase tracking-wider text-xs border-b border-gray-200">
+                                                <tr>
+                                                    {{-- Kolom 1: Durasi --}}
+                                                    <th class="px-6 py-4 w-1/4">@translate('Durasi')</th>
+                                                    
+                                                    {{-- Kolom 2: Keterangan (Sekarang selalu muncul) --}}
+                                                    <th class="px-6 py-4 w-2/4">@translate('Keterangan')</th>
+                                                    
+                                                    {{-- Kolom 3: Harga --}}
+                                                    <th class="px-6 py-4 w-1/4 text-right">@translate('Harga')</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100 bg-white">
+                                                @foreach($car->price_tiers as $tier)
+                                                <tr class="hover:bg-blue-50/30 transition-colors group">
+                                                    
+                                                    {{-- Data Durasi --}}
+                                                    <td class="px-6 py-4 font-semibold text-gray-800 group-hover:text-primary transition-colors align-middle">
+                                                        <span class="bg-blue-100 text-primary px-2.5 py-1 rounded text-xs font-bold mr-2 inline-block">
+                                                            <i class="far fa-clock"></i>
+                                                        </span>
+                                                        {{ $tier['duration'] }}
+                                                    </td>
+
+                                                    {{-- Data Keterangan --}}
+                                                    <td class="px-6 py-4 text-gray-600 align-middle">
+                                                        @if(!empty($tier['description']))
+                                                            {{ $tier['description'] }}
+                                                        @else
+                                                            <span class="text-gray-300 italic">-</span>
+                                                        @endif
+                                                    </td>
+
+                                                    {{-- Data Harga --}}
+                                                    <td class="px-6 py-4 text-right align-middle">
+                                                        <span class="font-bold text-lg text-primary whitespace-nowrap">
+                                                            Rp {{ number_format((float)$tier['price'], 0, ',', '.') }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    {{-- Catatan Kecil --}}
+                                    <p class="text-xs text-gray-400 mt-2 italic flex items-center gap-1">
+                                        <i class="fas fa-info-circle"></i> 
+                                        @translate('Geser tabel ke samping jika terpotong pada layar kecil.')
+                                    </p>
+                                </div>
+                            @endif
+                            {{-- END: TABEL DAFTAR HARGA --}}
                         </div>
 
-                        {{-- Specs --}}
+                        {{-- Specs (Hidden by default based on code provided) --}}
                         {{-- <div class="hidden animate-fade-in" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
                             <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Spesifikasi Teknis')</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                
                             </div>
                         </div> --}}
 

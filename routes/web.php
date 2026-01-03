@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manage-booking', BookingController::class);
 
     // manage car
+    Route::post('/manage-car/bulk-compress', [CarController::class, 'bulkCompress'])->name('manage-car.bulk-compress');
     Route::delete('/manage-car/bulk-destroy', [CarController::class, 'bulkDestroy'])->name('manage-car.bulk-destroy');
     Route::resource('/manage-car', CarController::class);
 

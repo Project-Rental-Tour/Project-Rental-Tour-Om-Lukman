@@ -24,6 +24,7 @@ class Car extends Model
         'description',
         'car_type',
         'price',
+        'price_tiers', // <--- TAMBAHAN: Agar bisa disimpan ke database
         'capacity',
         'transmission',
         'car_status',
@@ -38,12 +39,9 @@ class Car extends Model
      */
     protected $casts = [
         'price' => 'decimal:2',
-        'rental_type' => 'boolean', // Penting! agar selalu jadi true/false
+        'price_tiers' => 'array', // <--- TAMBAHAN: Mengubah JSON di DB menjadi Array PHP
+        'rental_type' => 'boolean', 
         'quantity' => 'integer',
         'capacity' => 'integer',
     ];
-
-    /**
-     * Accessor: Tampilkan tipe rental dalam bentuk teks.
-     */
 }

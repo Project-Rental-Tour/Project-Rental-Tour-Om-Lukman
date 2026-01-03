@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+// Import Library Image
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 use App\Models\Car;
 use App\Models\LogActivity;
 use App\Models\Profile;
@@ -99,7 +103,7 @@ class CarController extends Controller
             'image_car_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
             'car_type' => 'nullable|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0', // Harga Utama
             'capacity' => 'required|integer|min:1',
             'transmission' => 'required|string|in:manual,automatic',
             'car_status' => 'nullable|string|in:available,booked,maintenance',
@@ -107,10 +111,35 @@ class CarController extends Controller
             'include' => 'nullable|string',
             'additional' => 'nullable|string',
             'notes' => 'nullable|string',
+            
+            // --- VALIDASI PRICE TIERS (HARGA BERTINGKAT) ---
+            'price_tiers' => 'nullable|array',
+            'price_tiers.*.duration' => 'nullable|string',
+            'price_tiers.*.price' => 'nullable|string',
+            'price_tiers.*.description' => 'nullable|string', // Validasi Keterangan
         ]);
 
         // Tambahkan slug yang sudah digenerate
         $validated['slug'] = $slug;
+
+        // --- PROSES PRICE TIERS ---
+        $priceTiers = [];
+        if ($request->has('price_tiers') && is_array($request->price_tiers)) {
+            foreach ($request->price_tiers as $tier) {
+                if (!empty($tier['duration']) && !empty($tier['price'])) {
+                    // Bersihkan format harga (hapus Rp, titik, koma)
+                    $cleanPrice = str_replace(['Rp', '.', ','], '', $tier['price']);
+                    
+                    $priceTiers[] = [
+                        'duration' => $tier['duration'],
+                        'price' => (float) $cleanPrice, // Simpan sebagai angka
+                        'description' => $tier['description'] ?? null, // Simpan keterangan
+                    ];
+                }
+            }
+        }
+        // Masukkan hasil proses ke array validated (akan otomatis jadi JSON oleh Model Casts)
+        $validated['price_tiers'] = !empty($priceTiers) ? $priceTiers : null;
 
         try {
             // Handle image uploads
@@ -138,7 +167,7 @@ class CarController extends Controller
 
             LogActivity::create([
                 'username' => $currentUser->username,
-                'action' => 'Added car: "' . $car->name_car . '" (ID: ' . $car->car_id . ') with price Rp' . number_format($car->price, 0, ',', '.') . '/day',
+                'action' => 'Added car: "' . $car->name_car . '" (ID: ' . $car->car_id . ')',
             ]);
 
             return redirect()->route('manage-car.index')
@@ -186,10 +215,32 @@ class CarController extends Controller
             'include' => 'nullable|string',
             'additional' => 'nullable|string',
             'notes' => 'nullable|string',
+            
+            // --- VALIDASI PRICE TIERS ---
+            'price_tiers' => 'nullable|array',
+            'price_tiers.*.duration' => 'nullable|string',
+            'price_tiers.*.price' => 'nullable|string',
+            'price_tiers.*.description' => 'nullable|string', // Validasi Keterangan
         ]);
 
         // Tambahkan slug yang sudah digenerate
         $validated['slug'] = $slug;
+
+        // --- PROSES PRICE TIERS ---
+        $priceTiers = [];
+        if ($request->has('price_tiers') && is_array($request->price_tiers)) {
+            foreach ($request->price_tiers as $tier) {
+                if (!empty($tier['duration']) && !empty($tier['price'])) {
+                    $cleanPrice = str_replace(['Rp', '.', ','], '', $tier['price']);
+                    $priceTiers[] = [
+                        'duration' => $tier['duration'],
+                        'price' => (float) $cleanPrice,
+                        'description' => $tier['description'] ?? null, // Simpan keterangan
+                    ];
+                }
+            }
+        }
+        $validated['price_tiers'] = !empty($priceTiers) ? $priceTiers : null;
 
         try {
             $updateData = $validated;
@@ -211,7 +262,7 @@ class CarController extends Controller
             $oldPrice = $car->price;
             $car->update($updateData);
 
-            $logAction = "Updated car: '{$oldName}' → '{$car->name_car}' (Price: Rp" . number_format($oldPrice, 0, ',', '.') . " → Rp" . number_format($car->price, 0, ',', '.') . ")";
+            $logAction = "Updated car: '{$oldName}' → '{$car->name_car}' (Price updated)";
 
             LogActivity::create([
                 'username' => $currentUser->username,
@@ -330,6 +381,64 @@ class CarController extends Controller
                     'message' => 'Bulk delete failed: ' . $e->getMessage()
                 ]
             ], 500);
+        }
+    }
+    
+    // Fitur Bulk Compress Image (Sesuai dengan logika perbaikan Gallery/Testimoni sebelumnya)
+    public function bulkCompress(Request $request)
+    {
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 300);
+
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'ids' => 'required|array',
+            // PENTING: Menggunakan 'car_id' sebagai primary key sesuai model
+            'ids.*' => 'exists:cars,car_id', 
+        ]);
+
+        try {
+            $cars = Car::whereIn('car_id', $request->ids)->get();
+            $count = 0;
+
+            foreach ($cars as $car) {
+                foreach (['image_car_1', 'image_car_2', 'image_car_3'] as $field) {
+                    if ($car->{$field}) {
+                        $relativePath = str_replace('storage/', 'public/', $car->{$field});
+                        if (Storage::exists($relativePath)) {
+                            $absolutePath = Storage::path($relativePath);
+                            if (filesize($absolutePath) > 512000) {
+                                $manager = new ImageManager(new Driver());
+                                $image = $manager->read($absolutePath);
+                                
+                                if ($image->width() > 1920) $image->scale(width: 1920);
+                                
+                                $quality = 80;
+                                do {
+                                    $encoded = $image->toJpeg($quality);
+                                    $quality -= 5;
+                                } while (strlen((string)$encoded) > 512000 && $quality >= 15);
+
+                                Storage::put($relativePath, (string) $encoded);
+                                $count++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk compressed images for {$count} car(s).",
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }
