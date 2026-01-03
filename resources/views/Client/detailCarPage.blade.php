@@ -404,12 +404,31 @@
         {{-- FAQ Section (Indonesian Default) --}}
         <div class="glass-card p-8 rounded-[2rem] shadow-lg border border-white/60 mt-12 animate-fade-up relative z-10" style="animation-delay: 0.4s">
             <h3 class="text-2xl font-serif font-bold text-primary mb-8 text-center">@translate('FAQ Sewa')</h3>
-            <div class="space-y-4 max-w-3xl mx-auto" id="accordion-open" data-accordion="open">
+            <div class="space-y-4 w-full mx-auto" id="accordion-open" data-accordion="open">
                 @foreach([
-                    'Dokumen apa yang diperlukan?' => 'Untuk lepas kunci: SIM, KTP/Paspor, Deposit Kartu Kredit. Dengan supir: Hanya KTP/Paspor.',
-                    'Apakah BBM termasuk?' => 'Lepas kunci: Tidak, kembalikan dengan posisi BBM sama. Dengan supir: Ya, termasuk.',
-                    'Kebijakan Pembatalan?' => 'Pembatalan gratis hingga 48 jam sebelum waktu penjemputan.',
-                    'Kontak Darurat?' => 'Hubungi hotline 24/7 kami yang tertera pada konfirmasi pesanan Anda.'
+                    'Dokumen apa yang diperlukan?' => 
+                        'Untuk lepas kunci: SIM A, KTP asli (ditahan), dan Deposit. Untuk dengan supir: Cukup pemesan menunjukkan KTP.',
+                    
+                    'Apakah harga sudah termasuk BBM?' => 
+                        'Tidak. Baik sewa Lepas Kunci maupun Dengan Supir, harga belum termasuk BBM (Bahan Bakar). Mobil diserahkan dengan BBM posisi tertentu dan dikembalikan di posisi yang sama.',
+                    
+                    'Apa saja yang tidak termasuk dalam paket Dengan Supir?' => 
+                        'Harga sewa mobil + supir tidak termasuk BBM, Tol, Parkir, Konsumsi (Makan) Driver, dan Tiket masuk wisata.',
+                        
+                    'Bagaimana ketentuan durasi sewanya?' => 
+                        'Lepas Kunci: Hitungan per hari (berganti tanggal) maksimal pengembalian pukul 22.00 WIB. Dengan Supir: Durasi penggunaan mulai pukul 07.00 s/d 21.00 WIB.',
+                        
+                    'Apakah ada biaya tambahan lainnya?' => 
+                        'Khusus Lepas Kunci dikenakan biaya cuci mobil Rp 30.000. Jika melebihi batas waktu, dikenakan biaya Overtime Rp 50.000/jam.',
+                        
+                    'Bolehkah mobil digunakan ke luar kota?' => 
+                        'Harga yang tertera khusus untuk penggunaan area Malang dan Batu (serta Pantai Selatan untuk paket supir). Silakan hubungi Admin untuk penawaran harga penggunaan luar kota.',
+                        
+                    'Kebijakan Pembatalan?' => 
+                        'Pembatalan gratis hingga 48 jam sebelum waktu penjemputan. Pembatalan mendadak mungkin dikenakan biaya.',
+                        
+                    'Kontak Darurat?' => 
+                        'Hubungi hotline 24/7 kami yang tertera pada konfirmasi pesanan Anda atau tombol WhatsApp di website.'
                 ] as $q => $a)
                 <div class="border border-white/50 bg-white/50 rounded-xl overflow-hidden" data-accordion-item>
                     <h2 id="accordion-heading-{{ $loop->index }}">
