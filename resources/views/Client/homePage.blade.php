@@ -155,7 +155,7 @@
                     </div>
                     
                     <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-6 leading-[1.1] animate-fade-up drop-shadow-2xl font-serif text-balance">
-                        @translate('Temukan') <br> @translate('yang') <span class="italic text-gradient-gold">@translate('Belum Terjamah.')</span>
+                        @translate('Jelajahi Keindahan') <br> @translate('yang') <span class="italic text-gradient-gold">@translate('Masih Alami.')</span>
                     </h1>
 
                     <p class="text-base sm:text-lg md:text-xl text-white/90 mb-8 max-w-xl animate-fade-up font-light leading-relaxed glass-dark p-6 rounded-3xl border border-white/10"

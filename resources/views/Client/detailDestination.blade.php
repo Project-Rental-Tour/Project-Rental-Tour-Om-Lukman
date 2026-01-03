@@ -292,7 +292,7 @@
                                                                 @if(!empty($tier['max_pax']))
                                                                     - {{ $tier['max_pax'] }}
                                                                 @else
-                                                                    +
+                                                                    
                                                                 @endif
                                                                 Peserta
                                                             </td>
@@ -535,7 +535,7 @@
             </div>
             
             <a href="{{ route('booking.regular.form', $destination->slug) }}" 
-               class="bg-sky-900 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-sky-900/90 transition-all flex items-center gap-2">
+               class="bg-blue-900 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-blue-900/90 transition-all flex items-center gap-2">
                 @translate('Pesan') <i class="fas fa-arrow-right"></i>
             </a>
         </div>

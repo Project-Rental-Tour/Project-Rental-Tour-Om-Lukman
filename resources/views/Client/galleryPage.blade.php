@@ -125,7 +125,7 @@
                             @translate('Momen')
                         </span>
                         <h3 class="text-white font-serif text-lg md:text-xl font-bold leading-tight">
-                            @translate($gallery->title)
+                            {{ $gallery->title }}
                         </h3>
                     </div>
                 </div>
