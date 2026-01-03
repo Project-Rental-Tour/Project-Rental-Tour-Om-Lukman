@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 1. Logic Select All Checkbox
     const selectAllCheckbox = document.getElementById('select-all');
-    // Hanya ambil checkbox item (yang punya name="ids[]") agar header tidak ikut
+    // PERBAIKAN: Gunakan selector spesifik agar checkbox header tidak ikut dianggap sebagai item
     const itemCheckboxes = document.querySelectorAll('input[name="ids[]"]');
 
     if (selectAllCheckbox) {
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 2. Helper: Get Selected IDs
     function getSelectedIds() {
-        // Hanya ambil value dari checkbox yang dicentang DAN punya name="ids[]"
+        // PERBAIKAN: Hanya ambil checkbox yang punya name="ids[]"
+        // Ini MENCEGAH nilai "on" dari header checkbox ikut terkirim
         return Array.from(document.querySelectorAll('input[name="ids[]"]:checked')).map(cb => cb.value);
     }
 
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json', // PENTING: Minta JSON dari server
+                        'Accept': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     },
                     body: JSON.stringify({ ids: ids })
@@ -99,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const isJson = response.headers.get('content-type')?.includes('application/json');
                     const data = isJson ? await response.json() : null;
 
-                    // 1. Handle Validasi Error (422)
                     if (response.status === 422) {
                         console.error("Validation Error:", data); 
                         let errorMsg = data.message || "Validation Failed";
@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         throw new Error(errorMsg);
                     }
 
-                    // 2. Handle Server Error (500, etc)
                     if (!response.ok) {
                         const text = data ? JSON.stringify(data) : await response.text();
                         console.error("Server Error Response:", text);

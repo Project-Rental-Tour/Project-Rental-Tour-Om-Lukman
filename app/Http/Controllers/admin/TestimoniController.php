@@ -300,14 +300,15 @@ class TestimoniController extends Controller
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 
-        // VALIDASI: Menggunakan 'testimonial_id' agar sesuai DB
+        // --- PERBAIKAN: Gunakan 'testimonial_id' ---
+        // Sesuai dengan Model Testimonial.php Anda
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:testimonials,testimonial_id',
+            'ids.*' => 'exists:testimonials,testimonial_id', 
         ]);
 
         try {
-            // QUERY: Eksplisit menggunakan 'testimonial_id'
+            // Gunakan 'testimonial_id'
             $testimonials = Testimonial::whereIn('testimonial_id', $request->ids)->get();
             $count = 0;
 
@@ -315,7 +316,6 @@ class TestimoniController extends Controller
                 if ($testimonial->image) {
                     $relativePath = $testimonial->image; 
                     
-                    // Gunakan Storage Disk Public (sesuai config filesystem testimoni biasanya)
                     if (Storage::disk('public')->exists($relativePath)) {
                         $absolutePath = Storage::disk('public')->path($relativePath);
                         
@@ -323,7 +323,6 @@ class TestimoniController extends Controller
                             $manager = new ImageManager(new Driver());
                             $image = $manager->read($absolutePath);
 
-                            // Resize dimensi (800px cukup untuk testimoni)
                             if ($image->width() > 800) {
                                 $image->scale(width: 800);
                             }

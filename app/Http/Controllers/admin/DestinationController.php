@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Destination;
 use App\Models\LogActivity;
@@ -544,6 +546,88 @@ class DestinationController extends Controller
             return response()->json(['success' => true, 'toast' => ['type' => 'success', 'message' => 'Selected destinations deleted successfully']]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'toast' => ['type' => 'error', 'message' => 'Failed to delete: ' . $e->getMessage()]], 500);
+        }
+    }
+
+    public function bulkCompress(Request $request)
+    {
+        // 1. Setup Resource
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 600); // 10 Menit (karena foto destination banyak)
+
+        $currentUser = Auth::user();
+        if (!$currentUser) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        // 2. Validasi (Gunakan 'destination_id')
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:destinations,destination_id',
+        ]);
+
+        try {
+            $destinations = Destination::whereIn('destination_id', $request->ids)->get();
+            $countDestinations = 0;
+            $countImages = 0;
+
+            // Daftar kolom foto di tabel destinations
+            $photoFields = ['destination_photo', 'destination_photo_2', 'destination_photo_3', 'destination_photo_4'];
+
+            foreach ($destinations as $destination) {
+                $processedAny = false;
+
+                // Loop ke 4 kolom foto
+                foreach ($photoFields as $field) {
+                    if (!empty($destination->{$field})) {
+                        // Ubah path storage ke path fisik (public)
+                        $relativePath = str_replace('storage/', 'public/', $destination->{$field});
+                        
+                        if (Storage::exists($relativePath)) {
+                            $absolutePath = Storage::path($relativePath);
+                            
+                            // Cek jika ukuran > 500KB
+                            if (filesize($absolutePath) > 512000) {
+                                $manager = new ImageManager(new Driver());
+                                $image = $manager->read($absolutePath);
+
+                                // Resize dimensi (Destination biasanya butuh landscape lebar)
+                                if ($image->width() > 1920) {
+                                    $image->scale(width: 1920);
+                                }
+
+                                $quality = 80;
+                                do {
+                                    $encoded = $image->toJpeg($quality);
+                                    $quality -= 5;
+                                } while (strlen((string)$encoded) > 512000 && $quality >= 15);
+
+                                // Simpan timpa file lama
+                                Storage::put($relativePath, (string) $encoded);
+                                $countImages++;
+                                $processedAny = true;
+                            }
+                        }
+                    }
+                }
+
+                if ($processedAny) {
+                    $countDestinations++;
+                }
+            }
+
+            LogActivity::create([
+                'username' => $currentUser->username,
+                'action' => "Bulk compressed images for {$countDestinations} destination(s) (Total {$countImages} files).",
+            ]);
+
+            return response()->json([
+                'success' => true, 
+                'toast' => ['type' => 'success', 'message' => "Successfully compressed {$countImages} images from {$countDestinations} destinations."]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }

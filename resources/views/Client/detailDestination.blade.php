@@ -240,7 +240,7 @@
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
                             {{-- Tab Headers --}}
-                            @foreach(['details' => 'Ringkasan', 'itinerary' => 'Rencana Perjalanan', 'tour' => 'Sorotan', 'inclusion' => 'Fasilitas', 'note' => 'Catatan'] as $key => $label)
+                            @foreach(['details' => 'Ringkasan', 'inclusion' => 'Fasilitas', 'itinerary' => 'Rencana Perjalanan', 'tour' => 'Sorotan', 'note' => 'Catatan'] as $key => $label)
                             <li class="flex-shrink-0" role="presentation">
                                 <button
                                     id="{{ $key }}-tab"

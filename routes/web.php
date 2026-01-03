@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manage-testimonials', TestimoniController::class);
 
     // Manage Destination
+    Route::post('/manage-destination/bulk-compress', [DestinationController::class, 'bulkCompress'])->name('manage-destination.bulk-compress');
     Route::post('/manage-destination/{destination_id}/duplicate', [DestinationController::class, 'duplicate'])
         ->name('manage-destination.duplicate');
     Route::delete('/manage-destination/bulk-destroy', [DestinationController::class, 'bulkDestroy'])->name('manage-destination.bulk-destroy');
