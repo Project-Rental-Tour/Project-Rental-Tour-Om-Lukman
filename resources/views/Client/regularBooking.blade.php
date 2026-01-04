@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">@translate('Harga per orang')</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">@translate('Harga per '){{ $destination->wna_wni_policy }}</p>
                         <p class="text-2xl font-bold text-secondary">
                             @currency($destination->price)
                         </p>
