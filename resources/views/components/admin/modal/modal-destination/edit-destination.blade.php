@@ -152,13 +152,11 @@
                     
                     {{-- Policy & Description --}}
                     <div>
-                        <label class="block mb-2 text-sm font-medium">WNA/WNI Policy</label>
-                        <select name="wna_wni_policy"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <option value="">-- Select Policy --</option>
-                            <option value="WNI" {{ old('wna_wni_policy', $destination->wna_wni_policy) == 'WNI' ? 'selected' : '' }}>WNI (Warga Negara Indonesia)</option>
-                            <option value="WNA" {{ old('wna_wni_policy', $destination->wna_wni_policy) == 'WNA' ? 'selected' : '' }}>WNA (Warga Negara Asing)</option>
-                            <option value="All" {{ old('wna_wni_policy', $destination->wna_wni_policy) == 'All' ? 'selected' : '' }}>All (WNI & WNA)</option>
+                        <label class="block mb-2 text-sm font-medium">Price /Pax or /Group</label>
+                        <select name="wna_wni_policy" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
+                            <option value="pax" {{ old('pax', $destination->pax) == 'pax' ? 'selected' : '' }}>pax</option>
+                            <option value="group" {{ old('group', $destination->group) == 'group' ? 'selected' : '' }}>group</option>
+                            
                         </select>
                         <p class="text-xs text-gray-400 mt-1">Determines which pricing applies or if both are accepted.</p>
                     </div>

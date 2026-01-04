@@ -530,7 +530,7 @@
                 <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">@translate('Mulai dari')</span>
                 <div class="flex items-baseline gap-1">
                     <span class="text-xl font-bold text-primary font-serif">@currency($destination->price)</span>
-                    <span class="text-xs text-gray-400">/pax</span>
+                    <span class="text-xs text-gray-400">/{{ $destination->wna_wni_policy }}</span>
                 </div>
             </div>
             

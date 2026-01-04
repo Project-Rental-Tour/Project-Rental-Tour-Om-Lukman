@@ -140,13 +140,11 @@
                     </div>
 
                     <div>
-                        <label class="block mb-2 text-sm font-medium">WNA/WNI Policy</label>
+                        <label class="block mb-2 text-sm font-medium">Price /Pax or /Group</label>
                         <select name="wna_wni_policy"
                             class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <option value="">-- Select Policy --</option>
-                            <option value="WNI">WNI (Warga Negara Indonesia)</option>
-                            <option value="WNA">WNA (Warga Negara Asing)</option>
-                            <option value="All">All (WNI & WNA)</option>
+                            <option value="pax">pax</option>
+                            <option value="group">group</option>
                         </select>
                     </div>
                     <div>
