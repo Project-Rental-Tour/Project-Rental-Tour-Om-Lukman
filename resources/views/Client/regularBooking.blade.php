@@ -100,6 +100,12 @@
             border-color: var(--color-secondary);
             box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
         }
+        
+        /* Custom Date Picker Indicator */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(24%) sepia(87%) saturate(2256%) hue-rotate(174deg) brightness(96%) contrast(89%); /* Matches secondary color roughly */
+            cursor: pointer;
+        }
     </style>
 @endsection
 
@@ -185,89 +191,113 @@
                     </div>
                 </div>
 
+                {{-- FORM FIELDS --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    {{-- First Name --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan')</label>
-                        <input type="text" name="first_name" required
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan') <span class="text-red-500">*</span></label>
+                        <input type="text" name="first_name" required value="{{ old('first_name') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="John" autocomplete="given-name">
-                        @error('first_name')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
+                    {{-- Last Name --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang')</label>
-                        <input type="text" name="last_name" required
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang') <span class="text-red-500">*</span></label>
+                        <input type="text" name="last_name" required value="{{ old('last_name') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="Doe" autocomplete="family-name">
-                        @error('last_name')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email')</label>
-                    <input type="email" name="email" required
-                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
-                        placeholder="john.doe@example.com" autocomplete="email">
-                    @error('email')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                    {{-- Email --}}
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email') <span class="text-red-500">*</span></label>
+                        <input type="email" name="email" required value="{{ old('email') }}"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
+                            placeholder="john.doe@example.com" autocomplete="email">
+                        @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
-                        @translate('Nomor Telepon') <span class="text-red-500">*</span>
-                    </label>
-
-                    <div class="flex gap-3">
-                        <div class="relative w-1/3 md:w-1/4">
-                            <select name="country_code" id="country_code"
-                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all appearance-none cursor-pointer"
-                                required>
-                                <option value="" disabled selected>@translate('Kode')</option>
-                                <option value="+62">🇮🇩 +62</option>
-                                <option value="+1">🇺🇸 +1</option>
-                                <option value="+60">🇲🇾 +60</option>
-                                <option value="+65">🇸🇬 +65</option>
-                                <option value="+61">🇦🇺 +61</option>
-                                <option value="+44">🇬🇧 +44</option>
-                                <option value="+81">🇯🇵 +81</option>
-                                </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
-                                <i class="fas fa-chevron-down text-xs"></i>
+                    {{-- Phone Number Group --}}
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
+                            @translate('Nomor Telepon') <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-3">
+                            <div class="relative w-1/3">
+                                <select name="country_code" id="country_code"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all appearance-none cursor-pointer"
+                                    required>
+                                    <option value="+62" {{ old('country_code') == '+62' ? 'selected' : '' }}>🇮🇩 +62</option>
+                                    <option value="+1" {{ old('country_code') == '+1' ? 'selected' : '' }}>🇺🇸 +1</option>
+                                    <option value="+60" {{ old('country_code') == '+60' ? 'selected' : '' }}>🇲🇾 +60</option>
+                                    <option value="+65" {{ old('country_code') == '+65' ? 'selected' : '' }}>🇸🇬 +65</option>
+                                    <option value="+61" {{ old('country_code') == '+61' ? 'selected' : '' }}>🇦🇺 +61</option>
+                                    <option value="+44" {{ old('country_code') == '+44' ? 'selected' : '' }}>🇬🇧 +44</option>
+                                    <option value="+81" {{ old('country_code') == '+81' ? 'selected' : '' }}>🇯🇵 +81</option>
+                                    </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </div>
                             </div>
+                            <input type="tel" name="phone_number" placeholder="81234567890" value="{{ old('phone_number') }}"
+                                class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
+                                required>
                         </div>
-
-                        <input type="tel" name="phone_number" placeholder="81234567890"
-                            class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
-                            required>
+                        @error('phone_number') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
-                    <p class="mt-2 text-xs text-gray-400 font-light">@translate('Kami akan menghubungi Anda via WhatsApp untuk konfirmasi.')</p>
+
+                    {{-- Travel Date (New) --}}
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Tanggal Perjalanan') <span class="text-red-500">*</span></label>
+                        <input type="date" name="travel_date" required min="{{ date('Y-m-d') }}" value="{{ old('travel_date') }}"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all cursor-pointer">
+                        @error('travel_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- Country (New) --}}
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Negara Asal') <span class="text-red-500">*</span></label>
+                        <input type="text" name="country" required value="{{ old('country') }}"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
+                            placeholder="Indonesia">
+                        @error('country') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- Message (New) --}}
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Pesan Tambahan') <span class="text-gray-400 font-normal normal-case">(@translate('Opsional'))</span></label>
+                        <textarea name="message" rows="4"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all resize-none"
+                            placeholder="@translate('Apakah ada permintaan khusus?')">{{ old('message') }}</textarea>
+                        @error('message') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
                 </div>
 
                 <div class="pt-6 border-t border-gray-100">
                     <button type="submit" class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
                         @translate('Konfirmasi Pesanan') <i class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
                     </button>
-                    <p class="text-center text-xs text-gray-400 mt-4">@translate('Dengan memesan, Anda menyetujui Syarat & Ketentuan kami.')</p>
+                    <p class="text-center text-xs text-gray-400 mt-4">@translate('Kami akan menghubungi Anda via WhatsApp untuk konfirmasi detail dan pembayaran.')</p>
                 </div>
 
             </form>
         </div>
     </section>
 
-    {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+    {{-- Floating WhatsApp --}}
+    {{-- <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
-    </a>
+    </a> --}}
 
     @include('components.client.footer')
     <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>

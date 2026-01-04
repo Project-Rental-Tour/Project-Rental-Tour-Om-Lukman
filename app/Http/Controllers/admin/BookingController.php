@@ -94,6 +94,8 @@ class BookingController extends Controller
     {
         $destination = Destination::findOrFail($request->destination_id);
 
+         // Extract number of nights from destination time string
+
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
         $nights = $matches[1] ?? null;
 
@@ -108,6 +110,7 @@ class BookingController extends Controller
             'travel_date' => 'required|date|after_or_equal:today',
             'message' => 'nullable|string|max:1000',
         ]);
+
 
         $fullPhoneNumber = $validated['country_code'] . ltrim($validated['phone_number'], '0');
 
