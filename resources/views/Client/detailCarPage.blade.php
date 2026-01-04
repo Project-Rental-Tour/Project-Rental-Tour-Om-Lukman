@@ -234,8 +234,8 @@
                 <div class="glass-card rounded-[2rem] shadow-xl shadow-blue-900/5 overflow-hidden animate-fade-up" style="animation-delay: 0.2s">
                     <div class="px-6 pt-6 border-b border-gray-100 overflow-x-auto">
                         <ul class="flex flex-nowrap md:flex-wrap gap-2 pb-4 md:pb-0" role="tablist">
-                            {{-- Tab Headers dalam Bahasa Indonesia --}}
-                            @foreach(['details' => 'Ringkasan', 'features' => 'Fitur', 'notes' => 'Catatan Penting'] as $key => $label)
+                            {{-- Tab Headers (Fitur DIHAPUS dari sini) --}}
+                            @foreach(['details' => 'Ringkasan', 'notes' => 'Catatan Penting'] as $key => $label)
                             <li class="flex-shrink-0" role="presentation">
                                 <button
                                     id="{{ $key }}-tab"
@@ -261,7 +261,8 @@
                                 @translate($car->description)
                             </p>
                             
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {{-- Grid Info (Ikon) --}}
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 flex flex-col justify-center">
                                     <div class="flex items-center gap-2 mb-1 text-gray-400">
                                         <i class="fas fa-key text-xs"></i> <h4 class="text-xs font-bold uppercase tracking-wider">@translate('Tipe Sewa')</h4>
@@ -303,10 +304,31 @@
                                 </div>
                             </div>
 
-                            {{-- START: TABEL DAFTAR HARGA --}}
+                            {{-- FITUR MOBIL (Dipindahkan ke sini dari Tab Fitur) --}}
+                            @if(!empty($car->include))
+                                <div class="mb-10 animate-fade-in bg-green-50/50 p-6 rounded-2xl border border-green-100">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <h3 class="text-lg font-serif font-bold text-primary">@translate('Fitur & Fasilitas')</h3>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+                                        @foreach(explode('.', $car->include) as $item)
+                                            @if(trim($item))
+                                                <div class="flex items-center gap-3 text-sm text-gray-700">
+                                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                                    <span>@translate(trim($item))</span>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            {{-- START: TABEL DAFTAR HARGA BERTINGKAT --}}
                             @if(!empty($car->price_tiers) && is_array($car->price_tiers))
-                                <div class="mt-10 animate-fade-in">
-                                    {{-- Judul Section --}}
+                                <div class="animate-fade-in">
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary">
                                             <i class="fas fa-tags text-lg"></i>
@@ -314,34 +336,24 @@
                                         <h3 class="text-xl font-serif font-bold text-primary">@translate('Daftar Paket Harga')</h3>
                                     </div>
 
-                                    {{-- Container Tabel (Scrollable di HP) --}}
                                     <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
                                         <table class="w-full text-sm text-left min-w-[500px] md:min-w-full">
                                             <thead class="bg-gray-50 text-gray-700 font-bold uppercase tracking-wider text-xs border-b border-gray-200">
                                                 <tr>
-                                                    {{-- Kolom 1: Durasi --}}
                                                     <th class="px-6 py-4 w-1/4">@translate('Durasi')</th>
-                                                    
-                                                    {{-- Kolom 2: Keterangan (Sekarang selalu muncul) --}}
                                                     <th class="px-6 py-4 w-2/4">@translate('Keterangan')</th>
-                                                    
-                                                    {{-- Kolom 3: Harga --}}
                                                     <th class="px-6 py-4 w-1/4 text-right">@translate('Harga')</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-gray-100 bg-white">
                                                 @foreach($car->price_tiers as $tier)
                                                 <tr class="hover:bg-blue-50/30 transition-colors group">
-                                                    
-                                                    {{-- Data Durasi --}}
                                                     <td class="px-6 py-4 font-semibold text-gray-800 group-hover:text-primary transition-colors align-middle">
                                                         <span class="bg-blue-100 text-primary px-2.5 py-1 rounded text-xs font-bold mr-2 inline-block">
                                                             <i class="far fa-clock"></i>
                                                         </span>
                                                         {{ $tier['duration'] }}
                                                     </td>
-
-                                                    {{-- Data Keterangan --}}
                                                     <td class="px-6 py-4 text-gray-600 align-middle">
                                                         @if(!empty($tier['description']))
                                                             {{ $tier['description'] }}
@@ -349,8 +361,6 @@
                                                             <span class="text-gray-300 italic">-</span>
                                                         @endif
                                                     </td>
-
-                                                    {{-- Data Harga --}}
                                                     <td class="px-6 py-4 text-right align-middle">
                                                         <span class="font-bold text-lg text-primary whitespace-nowrap">
                                                             Rp {{ number_format((float)$tier['price'], 0, ',', '.') }}
@@ -361,51 +371,16 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    
-                                    {{-- Catatan Kecil --}}
                                     <p class="text-xs text-gray-400 mt-2 italic flex items-center gap-1">
                                         <i class="fas fa-info-circle"></i> 
                                         @translate('Geser tabel ke samping jika terpotong pada layar kecil.')
                                     </p>
                                 </div>
                             @endif
-                            {{-- END: TABEL DAFTAR HARGA --}}
+                            {{-- END: TABEL DAFTAR HARGA BERTINGKAT --}}
                         </div>
 
-                        {{-- Specs (Hidden by default based on code provided) --}}
-                        {{-- <div class="hidden animate-fade-in" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Spesifikasi Teknis')</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            </div>
-                        </div> --}}
-
-                        {{-- Features --}}
-                        <div class="hidden animate-fade-in" id="features" role="tabpanel" aria-labelledby="features-tab">
-                            <h3 class="text-2xl font-serif font-bold text-primary mb-6">@translate('Fitur & Fasilitas')</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-primary mb-4 flex items-center gap-2 bg-green-50 p-3 rounded-lg border border-green-100">
-                                        <i class="fas fa-check text-green-600"></i> @translate('Fitur Termasuk')
-                                    </h4>
-                                    <ul class="space-y-2">
-                                        @foreach(explode('.', $car->include) as $item)
-                                            @if(trim($item))
-                                                <li class="text-gray-600 flex items-start gap-2 text-sm">
-                                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 shrink-0"></span>
-                                                    @translate(trim($item))
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-blue-700 mb-4 flex items-center gap-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                        <i class="fas fa-plus text-blue-600"></i> @translate('Info Tambahan')
-                                    </h4>
-                                    <p class="text-gray-500 text-sm">@translate('Hubungi kami untuk permintaan fitur khusus seperti kursi bayi atau rak atap.')</p>
-                                </div>
-                            </div>
-                        </div>
+                        {{-- Tab Features dihapus dari sini --}}
 
                         {{-- Notes --}}
                         <div class="hidden animate-fade-in" id="notes" role="tabpanel" aria-labelledby="notes-tab">
