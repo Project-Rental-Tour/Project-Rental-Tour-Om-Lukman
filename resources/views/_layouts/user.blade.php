@@ -113,8 +113,8 @@
         "name": "GOING TO THE JAVA",
         "description": "Agen travel lokal di Malang, Jawa Timur, Indonesia yang menyediakan paket wisata Gunung Bromo, Kawah Ijen, Air Terjun Tumpak Sewu, dan sewa mobil di Malang & Surabaya.",
         "url": "https://www.goingtothejava.com",
-        "logo": "{{ asset('assets/images/logo.png') }}",
-        "image": "{{ asset('assets/images/og-bromo-jeep.jpg') }}",
+        {{-- "logo": "{{ asset('assets/images/logo.png') }}",
+        "image": "{{ asset('assets/images/og-bromo-jeep.jpg') }}", --}}
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Malang",
