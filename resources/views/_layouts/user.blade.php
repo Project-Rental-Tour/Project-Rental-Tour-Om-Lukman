@@ -2,12 +2,16 @@
 <html lang="id" class="scroll-smooth">
 
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGS6FD4F');</script>
     <meta charset="utf-8" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Primary Meta Tags -->
     <title>@yield('title', 'GOING TO THE JAVA – Paket Wisata & Sewa Mobil di Jawa Timur, Indonesia')</title>
     <meta name="description" content="@yield('meta-description', 'GOING TO THE JAVA adalah agen travel lokal di Malang, Jawa Timur, Indonesia. Kami menyediakan paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, sewa mobil Malang & Surabaya, dengan supir profesional dan harga transparan.')">
     <meta name="keywords" content="wisata Jawa Timur, paket Bromo Indonesia, sewa mobil Malang, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Surabaya, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, going to the java indonesia">
@@ -15,7 +19,6 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="@yield('canonical', 'https://www.goingtothejava.com')" />
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="@yield('og-title', 'GOING TO THE JAVA – Travel & Sewa Mobil di Jawa Timur, Indonesia')" />
@@ -28,22 +31,17 @@
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="@yield('og-image-alt', 'Jeep Bromo Sunrise di Gunung Bromo, Jawa Timur, Indonesia – oleh GOING TO THE JAVA')" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@yield('twitter-title', 'GOING TO THE JAVA – Wisata Bromo, Ijen & Tumpak Sewu | Jawa Timur')" />
     <meta name="twitter:description" content="@yield('twitter-description', 'Paket wisata otentik ke destinasi ikonik Jawa Timur, Indonesia. Armada baru, pemandu lokal, harga terjangkau.')" />
     <meta name="twitter:image" content="@yield('twitter-image', asset('assets/images/og-bromo-jeep.jpg'))" />
 
-    <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Font Awesome (local) -->
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
 
-    <!-- Flowbite CSS -->
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
 
-    <!-- Custom Styles -->
     <style>
         .animate-fade-up {
             opacity: 0;
@@ -97,7 +95,6 @@
         }
     </style>
 
-    <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -146,18 +143,16 @@
 </head>
 
 <body class="bg-gray-50 font-sans antialiased">
-    <!-- Toast Notifications -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGS6FD4F"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @include('components.admin.toast')
 
-    <!-- Main Content -->
     @yield('content')
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
 
-    <!-- Custom JS -->
     @if (file_exists(public_path('assets/js/navbar.js')))
         <script src="{{ asset('assets/js/navbar.js') }}"></script>
     @endif
