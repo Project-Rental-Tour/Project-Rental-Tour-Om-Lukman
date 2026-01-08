@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     @yield('head')
     @stack('styles')
+    </script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17775817511');
+    </script>
 </head>
 
 <body class="h-full font-sans antialiased bg-gray-50">

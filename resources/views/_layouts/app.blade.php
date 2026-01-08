@@ -42,6 +42,13 @@
             @apply bg-white border border-gray-300 rounded-lg p-4 shadow-lg;
         }
     </style>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17775817511');
+    </script>
 </head>
 
 <body class="h-full font-sans antialiased">
