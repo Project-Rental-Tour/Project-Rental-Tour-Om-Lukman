@@ -93,11 +93,10 @@ class BookingController extends Controller
         return view('Client.regularBooking', compact('destination', 'profiles'));
     }
 
-    public function bookingRegular(Request $request)
+public function bookingRegular(Request $request)
     {
         $destination = Destination::findOrFail($request->destination_id);
 
-         // Extract number of nights from destination time string
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
         $nights = $matches[1] ?? null;
 
@@ -110,6 +109,7 @@ class BookingController extends Controller
             'country_code' => 'required|string|max:10',
             'phone_number' => 'required|string|max:15',
             'travel_date' => 'required|date|after_or_equal:today',
+            'travelers' => 'required|integer|min:1|max:50', // <--- VALIDASI BARU
             'message' => 'nullable|string|max:1000',
         ]);
 
@@ -126,21 +126,25 @@ class BookingController extends Controller
             'email' => $validated['email'],
             'country' => $validated['country'],
             'phone_number' => $fullPhoneNumber,
+            'travelers' => $validated['travelers'], // <--- SIMPAN KE DB
             'message' => $validated['message'],
             'custom_destinations' => null,
             'interests' => null,
-            'travelers' => 1,
             'budget_range' => null,
         ]);
 
         $fullName = $booking->first_name . ' ' . $booking->last_name;
 
+        // Hitung estimasi total (hanya untuk info di log/notif, bukan simpan ke DB booking jika tidak ada kolom price)
+        $estimatedTotal = $destination->price * $booking->travelers; 
+        $formattedPrice = number_format($estimatedTotal, 0, ',', '.');
+
         LogActivity::create([
             'username' => $fullName,
-            'action' => "Submitted regular booking for {$booking->destination_name} on {$booking->travel_date}"
+            'action' => "Submitted regular booking for {$booking->destination_name} ({$booking->travelers} pax) on {$booking->travel_date}"
         ]);
 
-        // 1. Kirim Telegram (Kode Lama Anda)
+        // 1. Kirim Telegram
         $durationNights = $booking->duration_nights ?? 'N/A';
         $messageText = $booking->message ? "<b>Message:</b> " . htmlspecialchars($booking->message) . "\n" : "";
 
@@ -151,13 +155,15 @@ class BookingController extends Controller
                 "<b>Phone:</b> <a href='https://wa.me/{$booking->phone_number}'>{$booking->phone_number}</a>\n" .
                 "<b>Destination:</b> {$booking->destination_name}\n" .
                 "<b>Travel Date:</b> {$booking->travel_date}\n" .
+                "<b>Pax:</b> {$booking->travelers} People\n" . // <--- INFO PAX
+                "<b>Est. Total:</b> Rp {$formattedPrice}\n" . // <--- INFO HARGA TOTAL
                 "<b>Nights:</b> {$durationNights}\n" .
                 "<b>Country:</b> {$booking->country}\n" .
                 $messageText .
                 "\n📅 <i>Booked at: " . now()->format('M d, Y H:i') . "</i>"
         );
 
-        // 2. Kirim Email ke Admin (BARU)
+        // 2. Kirim Email ke Admin
         try {
             Notification::route('mail', 'goingtothejava@gmail.com')
                 ->notify(new NewBookingNotification($booking));

@@ -250,7 +250,7 @@
                         @error('phone_number') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
-                    {{-- Travel Date (New) --}}
+                    {{-- Travel Date --}}
                     <div class="md:col-span-1">
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Tanggal Perjalanan') <span class="text-red-500">*</span></label>
                         <input type="date" name="travel_date" required min="{{ date('Y-m-d') }}" value="{{ old('travel_date') }}"
@@ -258,8 +258,22 @@
                         @error('travel_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
-                    {{-- Country (New) --}}
+                    {{-- Travelers Count (NEW) --}}
                     <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Jumlah Peserta') <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="number" name="travelers" required min="1" max="50" value="{{ old('travelers', 1) }}"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all pl-10"
+                                placeholder="1">
+                            <div class="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none text-gray-400">
+                                <i class="fas fa-users text-sm"></i>
+                            </div>
+                        </div>
+                        @error('travelers') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- Country --}}
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Negara Asal') <span class="text-red-500">*</span></label>
                         <input type="text" name="country" required value="{{ old('country') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
@@ -267,7 +281,7 @@
                         @error('country') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
-                    {{-- Message (New) --}}
+                    {{-- Message --}}
                     <div class="md:col-span-2">
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Pesan Tambahan') <span class="text-gray-400 font-normal normal-case">(@translate('Opsional'))</span></label>
                         <textarea name="message" rows="4"
