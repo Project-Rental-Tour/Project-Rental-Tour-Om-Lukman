@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
+use Illuminate\Support\Facades\Notification; // <--- PENTING
+use App\Notifications\NewCarBookingNotification;
+
 use App\Models\BookingCar;
 use App\Models\Car;
 use App\Models\LogActivity;
@@ -90,8 +94,6 @@ class BookingCarController extends Controller
 
     public function bookingStore(Request $request)
     {
-
-
         $validated = $request->validate([
             'car_id'        => 'required|exists:cars,car_id',
             'customer_name' => 'required|string|max:255',
@@ -110,6 +112,9 @@ class BookingCarController extends Controller
             $startDate = \Carbon\Carbon::parse($validated['start_date']);
             $endDate = \Carbon\Carbon::parse($validated['end_date']);
             $durationDays = $startDate->diffInDays($endDate);
+            
+            // Fix: Jika booking hari yang sama (pagi-malam), diffInDays bisa 0. Minimal 1 hari.
+            if ($durationDays == 0) $durationDays = 1;
 
             $totalPrice = $car->price * $durationDays;
 
@@ -132,6 +137,7 @@ class BookingCarController extends Controller
                 'action'   => "New Car Booking: {$booking->customer_name} for {$car->name_car} ({$startDate->format('M d')} - {$endDate->format('M d')})"
             ]);
 
+            // 1. Kirim Telegram
             $this->sendTelegramNotification(
                 "🚗 <b>New Car Booking!</b>\n\n" .
                     "<b>Customer:</b> {$booking->customer_name}\n" .
@@ -146,6 +152,15 @@ class BookingCarController extends Controller
                     ($booking->notes ? "<b>Notes:</b> " . htmlspecialchars($booking->notes) . "\n" : "") .
                     "\n📅 <i>Booked at: " . now()->format('M d, Y H:i') . "</i>"
             );
+
+            // 2. Kirim Email ke Admin (BARU)
+            try {
+                // Kita kirim object $booking dan $car ke notifikasi
+                Notification::route('mail', 'goingtothejava@gmail.com')
+                    ->notify(new NewCarBookingNotification($booking, $car));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email car booking: ' . $e->getMessage());
+            }
 
             return redirect()->route('index')
                 ->with('toast', ['type' => 'success', 'message' => 'Car booking created successfully']);

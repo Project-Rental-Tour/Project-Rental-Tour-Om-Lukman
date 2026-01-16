@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewBookingNotification;
+
 use App\Models\Booking;
 use App\Models\Destination;
 use App\Models\LogActivity;
@@ -95,7 +98,6 @@ class BookingController extends Controller
         $destination = Destination::findOrFail($request->destination_id);
 
          // Extract number of nights from destination time string
-
         preg_match('/(\d+)\s*nights?/i', $destination->time, $matches);
         $nights = $matches[1] ?? null;
 
@@ -110,7 +112,6 @@ class BookingController extends Controller
             'travel_date' => 'required|date|after_or_equal:today',
             'message' => 'nullable|string|max:1000',
         ]);
-
 
         $fullPhoneNumber = $validated['country_code'] . ltrim($validated['phone_number'], '0');
 
@@ -139,6 +140,7 @@ class BookingController extends Controller
             'action' => "Submitted regular booking for {$booking->destination_name} on {$booking->travel_date}"
         ]);
 
+        // 1. Kirim Telegram (Kode Lama Anda)
         $durationNights = $booking->duration_nights ?? 'N/A';
         $messageText = $booking->message ? "<b>Message:</b> " . htmlspecialchars($booking->message) . "\n" : "";
 
@@ -155,6 +157,13 @@ class BookingController extends Controller
                 "\n📅 <i>Booked at: " . now()->format('M d, Y H:i') . "</i>"
         );
 
+        // 2. Kirim Email ke Admin (BARU)
+        try {
+            Notification::route('mail', 'goingtothejava@gmail.com')
+                ->notify(new NewBookingNotification($booking));
+        } catch (\Exception $e) {
+            Log::error('Gagal kirim email notifikasi: ' . $e->getMessage());
+        }
 
         return redirect()->route('destination.show', $destination->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Booking submitted! We will contact you soon.']);
@@ -216,6 +225,7 @@ class BookingController extends Controller
             'action' => "Submitted custom trip request for: {$booking->custom_destinations} (Travelers: {$booking->travelers}, Budget: {$booking->budget_range})"
         ]);
 
+        // 1. Kirim Telegram (Kode Lama Anda)
         $durationNights = $booking->duration_nights ?? 'Not specified';
         $budgetRange = $booking->budget_range ?? 'Not specified';
         $messageText = $booking->message ? "<b>Message:</b> " . htmlspecialchars($booking->message) . "\n" : '';
@@ -236,9 +246,18 @@ class BookingController extends Controller
                 "\n📅 <i>Requested at: " . now()->format('M d, Y H:i') . "</i>"
         );
 
+        // 2. Kirim Email ke Admin (BARU)
+        try {
+            Notification::route('mail', 'goingtothejava@gmail.com')
+                ->notify(new NewBookingNotification($booking));
+        } catch (\Exception $e) {
+            Log::error('Gagal kirim email notifikasi: ' . $e->getMessage());
+        }
+
         return redirect()->route('index')
             ->with('toast', ['type' => 'success', 'message' => 'Custom trip request sent! We’ll design your dream package.']);
     }
+
 
     public function sendTelegramNotification($message)
     {
