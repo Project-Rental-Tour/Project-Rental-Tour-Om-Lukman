@@ -19,7 +19,21 @@ use App\Http\Controllers\user\UserBlogController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
+use Illuminate\Support\Facades\Mail;
+
 // User-Route
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('Ini tes email dari Laravel', function ($msg) {
+            $msg->to('goingtothejava@gmail.com')
+                ->subject('Tes Email Berhasil');
+        });
+        return 'Email terkirim! Cek inbox.';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
 Route::get('/test', function () {
     return 'OK';
 });
