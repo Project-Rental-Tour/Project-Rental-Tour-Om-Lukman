@@ -12,6 +12,7 @@ use App\Models\Testimonial;
 use App\Models\Gallery;
 use App\Models\Profile;
 use App\Models\Blogs;
+use App\Models\Car;
 
 class HomeController extends Controller
 {
@@ -20,6 +21,7 @@ class HomeController extends Controller
         $testimonials = Testimonial::orderBy('created_at')->get();
         $galleries = Gallery::orderBy('created_at')->get();
         $destinations = Destination::orderByDesc('created_at')->get();
+        $cars = Car::orderByDesc('created_at')->take(6)->get();
 
         // Gunakan first() sebagai fallback jika find(1) tidak ada
         $profiles = Profile::find(1) ?? Profile::first();
@@ -29,7 +31,7 @@ class HomeController extends Controller
         $blogs = Blogs::orderBy('created_at', 'desc')->take(3)->get();
 
 
-        return view('Client.homePage', compact('testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries', 'blogs'));
+        return view('Client.homePage', compact('testimonials', 'galleries', 'destinations', 'profiles', 'latestGalleries', 'blogs', 'cars'));
     }
 
     public function about()
