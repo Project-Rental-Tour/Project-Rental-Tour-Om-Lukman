@@ -171,7 +171,7 @@
                             @translate('Mulai Perjalanan') 
                             <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+                        <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
         target="_blank"
         rel="noopener noreferrer"
         class="px-10 py-4 text-center text-white rounded-full transition-all duration-300 font-bold flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a]">
@@ -809,7 +809,7 @@
 
     {{-- Floating WhatsApp (KEPT GREEN AS REQUESTED) --}}
     <a 
-        href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
    target="_blank"
    rel="noopener noreferrer"
         id="whatsapp-float"
@@ -823,7 +823,6 @@
 
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
         <script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
         <script>

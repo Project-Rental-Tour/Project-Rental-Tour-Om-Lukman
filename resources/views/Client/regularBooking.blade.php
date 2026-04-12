@@ -304,15 +304,14 @@
     </section>
 
     {{-- Floating WhatsApp --}}
-    {{-- <a href="https://api.whatsapp.com/send?phone=6281220005276&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer"
+    <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+       target="_blank"
+       rel="noopener noreferrer"
        id="whatsapp-float"
        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
-    </a> --}}
+    </a>
 
     @include('components.client.footer')
-    <script src="{{ asset('assets/js/whatsAppIcon.js') }}"></script>
 @endsection
