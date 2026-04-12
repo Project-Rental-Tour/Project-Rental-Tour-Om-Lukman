@@ -397,10 +397,8 @@
         {{-- Decorative Glow Background --}}
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl -z-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
 
-        {{-- MENGUBAH max-w-7xl MENJADI max-w-5xl AGAR KESELURUHAN KONTEN LEBIH KE TENGAH --}}
         <div class="max-w-5xl mx-auto px-6 relative z-10">
             
-            {{-- Menambahkan justify-center agar kolom kiri dan kanan merapat ke tengah --}}
             <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
                 
                 {{-- Left Text Content --}}
@@ -426,20 +424,25 @@
                 </div>
 
                 {{-- Right Portrait Video Container --}}
-                <div class="lg:w-1/2 w-full flex justify-end animate-fade-up" style="animation-delay: 0.2s">
+                {{-- Diubah menjadi justify-center agar posisinya pas di tengah kolomnya --}}
+                <div class="lg:w-1/2 w-full flex justify-center animate-fade-up" style="animation-delay: 0.2s">
                     
                     {{-- Glass Card Wrapper (Phone Mockup Style) --}}
+                    {{-- Bingkai luar menggunakan rounded-[3rem] --}}
                     <div class="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[9/16] glass-card p-3 md:p-4 rounded-[3rem] shadow-2xl border border-white/60 group transform hover:-translate-y-2 transition-transform duration-500">
                         
                         {{-- Outer Glow for Video --}}
                         <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-[3rem] blur-xl -z-10 group-hover:opacity-100 opacity-50 transition-opacity duration-500"></div>
 
                         {{-- Inner Video Frame --}}
-                        <div class="relative w-full h-full rounded-[2.2rem] overflow-hidden bg-gray-900 shadow-inner">
+                        {{-- PERBAIKAN 1: Inner radius disesuaikan ke [2rem] agar proporsional dengan padding luar. --}}
+                        {{-- PERBAIKAN 2: Ditambahkan style mask-image sebagai trik jitu mengatasi bug WebKit/Safari --}}
+                        <div class="relative w-full h-full rounded-[2rem] overflow-hidden bg-gray-900 shadow-inner z-0" style="-webkit-mask-image: -webkit-radial-gradient(white, black);">
                             
                             {{-- HTML5 Portrait Video Player --}}
+                            {{-- PERBAIKAN 3: Kelas rounded-[2rem] ditempel langsung ke tag video --}}
                             <video 
-                                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                class="w-full h-full object-cover rounded-[2rem] transition-transform duration-1000 group-hover:scale-105"
                                 loop 
                                 autoplay 
                                 muted 
@@ -450,7 +453,7 @@
                             </video>
 
                             {{-- Dark Overlay at bottom for contrast --}}
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none rounded-[2rem]"></div>
 
                             {{-- Floating Badges on Video --}}
                             <div class="absolute top-5 right-5 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/30 text-white text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5 shadow-lg">
