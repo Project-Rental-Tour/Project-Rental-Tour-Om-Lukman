@@ -587,10 +587,9 @@
     </section>
 
     {{-- X. CAR FLEET / RENTAL PREVIEW --}}
-    <section id="car-rental" class="py-24 relative overflow-hidden bg-surface">
+    {{-- <section id="car-rental" class="py-24 relative overflow-hidden bg-surface">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             
-            {{-- Section Header --}}
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16">
                 <div class="md:w-2/3 animate-fade-up">
                     <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-3 block">
@@ -605,7 +604,6 @@
                     </p>
                 </div>
                 
-                {{-- View All Button (Desktop) --}}
                 <div class="md:w-1/3 text-right mt-6 md:mt-0 hidden md:block animate-fade-up" style="animation-delay: 0.2s">
                     <a href="{{ route('usercar.index') }}" class="inline-flex items-center gap-2 text-primary hover:text-secondary transition-all group font-bold pb-1 border-b-2 border-primary/20 hover:border-secondary">
                         @translate('Lihat Semua Kendaraan') <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
@@ -613,15 +611,11 @@
                 </div>
             </div>
 
-            {{-- Car Grid Container --}}
-            {{-- Menampilkan 1 kolom di Mobile, 2 di Tablet, 3 di Desktop --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 
-                {{-- Loop Data Mobil (Dibatasi 6 menggunakan take(6) agar tidak merusak layout landing page) --}}
                 @forelse ($cars->take(6) as $car)
                     <div class="bg-white rounded-[2rem] shadow-lg shadow-blue-900/5 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up h-full flex flex-col group border border-white/60">
                         <div class="relative h-56 overflow-hidden">
-                            {{-- Image Logic --}}
                             <img loading="lazy" src="{{ asset($car->image_car_1) }}"
                                 alt="{{ $car->name_car }}"
                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1000';"
@@ -629,12 +623,10 @@
                             
                             <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/60 to-transparent opacity-60"></div>
                             
-                            {{-- Price Tag --}}
                             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-primary shadow-sm border border-white/50">
                                 @currency($car->price) <span class="text-[10px] font-normal text-gray-500">/ @translate('hari')</span>
                             </div>
 
-                            {{-- Category Tag --}}
                             <div class="absolute top-4 left-4">
                                 <span class="px-2 py-1 bg-[#003366]/80 backdrop-blur-md rounded-md text-[10px] font-bold text-white uppercase tracking-wider shadow-md">
                                     @translate($car->car_type)
@@ -643,14 +635,13 @@
                         </div>
 
                         <div class="p-6 flex flex-col flex-grow relative">
-                            {{-- Dekorasi kecil --}}
                             <div class="absolute top-0 right-6 transform -translate-y-1/2 w-10 h-10 bg-surface rounded-full flex items-center justify-center shadow-sm border border-gray-100">
                                 <i class="fas fa-car-side text-secondary text-sm"></i>
                             </div>
 
                             <h3 class="text-xl font-bold text-primary mb-4 font-serif group-hover:text-secondary transition-colors">{{ $car->name_car }}</h3>
 
-                            {{-- Features --}}
+                            
                             <div class="flex flex-wrap gap-2 mb-6">
                                 <span class="bg-primary/5 text-primary px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wide border border-primary/10 group-hover:bg-primary/10 transition-colors">
                                     <i class="fas fa-users mr-1.5 text-secondary"></i> {{ $car->capacity }} @translate('Kursi')
@@ -675,7 +666,6 @@
                 @endforelse
             </div>
 
-            {{-- View All Button (Mobile Only) --}}
             <div class="mt-10 text-center md:hidden animate-fade-up">
                 <a href="{{ route('usercar.index') }}" class="btn-premium px-8 py-3 text-white rounded-full font-bold shadow-lg flex items-center justify-center gap-2 group w-full">
                     @translate('Lihat Semua Kendaraan') <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
@@ -683,7 +673,7 @@
             </div>
 
         </div>
-    </section>
+    </section> --}}
 
     {{-- 9. TESTIMONIALS --}}
     <section class="py-20 bg-gray-50 relative overflow-hidden">

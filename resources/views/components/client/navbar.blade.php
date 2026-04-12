@@ -35,11 +35,11 @@
                     </a>
                 </li>
                 
-                <li>
+                {{-- <li>
                     <a href="{{ route('usercar.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize">
                         @translate('Sewa Mobil')
                     </a>
-                </li>
+                </li> --}}
                 
                 <li>
                     <a href="{{ route('blogs.index') }}" class="block py-2 px-3 text-white rounded md:p-0 hover:text-secondary transition-colors capitalize ">

@@ -95,7 +95,7 @@
                             <i class="fas fa-map-marker-alt text-white mt-1 mr-3 text-sm"></i>
                             {{-- Alamat biasanya dibiarkan apa adanya, tapi tetap dibungkus translate jika perlu --}}
                             <span class="text-blue-100 text-sm">
-                                @translate(optional($profiles)->address ?? "Jl. Batubara 12 A, Kel. Purwantoro, Kec. Blimbing, Malang - Jawa Timur 65122")
+                                @translate(optional($profiles)->address ?? "Jl. Slamet Temboro No.70, Cemorokandang, Kec. Kedungkandang, Kota Malang, Jawa Timur 65122")
                             </span>
                         </li>
                         <li class="flex items-start">
@@ -117,7 +117,7 @@
                             <i class="fas fa-clock text-white mt-1 mr-3 text-sm"></i>
                             {{-- Jam Operasional --}}
                             <span class="text-blue-100 text-sm">
-                                @translate(optional($profiles)->operating_hours ?? "Senin - Minggu: 09:00 - 18:00")
+                                @translate(optional($profiles)->operating_hours ?? "Senin - Minggu: 07:30 - 20:00")
                             </span>
                         </li>
                     </ul>
