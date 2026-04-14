@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 // Import Library Image
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-
+use App\Helpers\ImageHelper;
 use App\Models\Car;
 use App\Models\LogActivity;
 use App\Models\Profile;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class CarController extends Controller
 {
@@ -253,8 +253,7 @@ class CarController extends Controller
                         Storage::delete(str_replace('storage/', 'public/', $car->{$imageField}));
                     }
 
-                    $imagePath = $request->file($imageField)->store('public/cars');
-                    $updateData[$imageField] = str_replace('public/', 'storage/', $imagePath);
+                    $updateData[$imageField] = ImageHelper::convertToWebp($request->file($imageField), 'cars');
                 }
             }
 

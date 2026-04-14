@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-
+use App\Helpers\ImageHelper;
 use App\Models\Destination;
 use App\Models\LogActivity;
 use App\Models\Profile;
 use App\Models\Gallery;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class DestinationController extends Controller
 {
@@ -152,8 +152,7 @@ class DestinationController extends Controller
 
             foreach ($photoFields as $field) {
                 if ($request->hasFile($field)) {
-                    $imagePath = $request->file($field)->store('public/destinations');
-                    $photoUrls[$field] = str_replace('public/', 'storage/', $imagePath);
+                    $photoUrls[$field] = ImageHelper::convertToWebp($request->file($field), 'destinations');
                 } else {
                     $photoUrls[$field] = null;
                 }
@@ -365,8 +364,7 @@ class DestinationController extends Controller
                             Storage::delete($oldPath);
                         }
                     }
-                    $imagePath = $request->file($field)->store('public/destinations');
-                    $updateData[$field] = str_replace('public/', 'storage/', $imagePath);
+                    $updateData[$field] = ImageHelper::convertToWebp($request->file($field), 'destinations');
                 }
                 
                 // Keep old value if not changed

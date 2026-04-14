@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-
+use App\Helpers\ImageHelper;
 use App\Models\Gallery;
 use App\Models\LogActivity;
 use App\Models\Profile;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class GalleriesController extends Controller
 {
@@ -81,8 +81,7 @@ class GalleriesController extends Controller
         ]);
 
         try {
-            $imagePath = $request->file('gallery_photo')->store('public/galleries');
-            $photoPath = str_replace('public/', 'storage/', $imagePath);
+            $photoPath = ImageHelper::convertToWebp($request->file('gallery_photo'), 'galleries');
 
             // Proses tag → pecah jadi array, filter kosong, trim
 
@@ -134,8 +133,7 @@ class GalleriesController extends Controller
 
             if ($request->hasFile('gallery_photo')) {
                 Storage::delete(str_replace('storage/', 'public/', $gallery->gallery_photo));
-                $imagePath = $request->file('gallery_photo')->store('public/galleries');
-                $updateData['gallery_photo'] = str_replace('public/', 'storage/', $imagePath);
+                $updateData['gallery_photo'] = ImageHelper::convertToWebp($request->file('gallery_photo'), 'galleries');
             }
 
             $gallery->update($updateData);

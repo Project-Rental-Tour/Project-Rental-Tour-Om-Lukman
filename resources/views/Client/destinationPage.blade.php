@@ -1,5 +1,8 @@
 @extends('_layouts.user')
 
+@section('title', 'Pilihan Paket Wisata Jawa Timur Terbaik – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', 'Jelajahi paket wisata Bromo, Ijen, Tumpak Sewu, dan destinasi menarik lainnya di Jawa Timur. Harga transparan dan pengalaman otentik bersama ' . ($profiles->website_name ?? 'GOING TO THE JAVA') . '.')
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

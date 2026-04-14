@@ -1,5 +1,9 @@
 @extends('_layouts.user')
 
+@section('title', 'Paket Wisata ' . $destination->name_package . ' – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', Str::limit(strip_tags($destination->description), 160))
+@section('og-image', asset($destination->destination_photo))
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -203,20 +207,23 @@
 
                             {{-- Slide 2 onwards: Gallery Photos --}}
                            @if($destination->destination_photo_2)
-                           <div class="swiper-slide">
+                            <div class="swiper-slide">
                                 <img loading="lazy" src="{{ asset($destination->destination_photo_2) }}" 
+                                     alt="{{ $destination->name_package }} - @translate('Tampilan') 2"
                                      class="w-full h-full object-cover">
                             </div>
                             @endif
                             @if($destination->destination_photo_3)
                             <div class="swiper-slide">
                                 <img loading="lazy" src="{{ asset($destination->destination_photo_3) }}" 
+                                     alt="{{ $destination->name_package }} - @translate('Tampilan') 3"
                                      class="w-full h-full object-cover">
                             </div>
                             @endif
                             @if($destination->destination_photo_4)
                             <div class="swiper-slide">
                                 <img loading="lazy" src="{{ asset($destination->destination_photo_4) }}" 
+                                     alt="{{ $destination->name_package }} - @translate('Tampilan') 4"
                                      class="w-full h-full object-cover">
                             </div>
                             @endif

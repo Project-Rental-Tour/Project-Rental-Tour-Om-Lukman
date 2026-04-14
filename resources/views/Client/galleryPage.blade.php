@@ -1,5 +1,8 @@
 @extends('_layouts.user')
 
+@section('title', 'Galeri Foto Wisata Jawa Timur – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', 'Lihat dokumentasi perjalanan seru tamu kami di Bromo, Ijen, dan Tumpak Sewu. Keindahan alam Jawa Timur dalam bidikan kamera ' . ($profiles->website_name ?? 'GOING TO THE JAVA') . '.')
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

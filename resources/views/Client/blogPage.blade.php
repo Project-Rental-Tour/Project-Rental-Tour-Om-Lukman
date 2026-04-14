@@ -1,5 +1,8 @@
 @extends('_layouts.user')
 
+@section('title', 'Blog & Tips Perjalanan Jawa Timur – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', 'Temukan tips perjalanan, cerita destinasi, dan panduan wisata terbaru di Jawa Timur, Indonesia hanya di blog ' . ($profiles->website_name ?? 'GOING TO THE JAVA') . '.')
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

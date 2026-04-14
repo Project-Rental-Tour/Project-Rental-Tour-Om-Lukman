@@ -1,5 +1,8 @@
 @extends('_layouts.user')
 
+@section('title', ($profiles->website_name ?? 'GOING TO THE JAVA') . ' – Paket Wisata & Sewa Mobil Terbaik di Jawa Timur')
+@section('meta-description', ($profiles->website_name ?? 'GOING TO THE JAVA') . ' menyediakan paket wisata Bromo, Ijen, dan Tumpak Sewu dengan harga terjangkau. Sewa mobil Malang & Surabaya dengan supir profesional.')
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

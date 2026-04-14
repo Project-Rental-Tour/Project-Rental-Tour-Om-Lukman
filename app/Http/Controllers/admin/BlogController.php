@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str; // [Tambahan 1: Import Str]
 
 use App\Models\Blogs;
+use App\Helpers\ImageHelper;
 use App\Models\LogActivity;
 use App\Models\Profile;
 
@@ -97,9 +98,7 @@ class BlogController extends Controller
 
             // Handle Image Upload
             if ($request->hasFile('image_path')) {
-                $file = $request->file('image_path');
-                $path = $file->store('public/blogs');
-                $validated['image_path'] = str_replace('public/', 'storage/', $path);
+                $validated['image_path'] = ImageHelper::convertToWebp($request->file('image_path'), 'blogs');
             }
 
             $blog = Blogs::create($validated);
@@ -156,8 +155,7 @@ class BlogController extends Controller
                     Storage::delete(str_replace('storage/', 'public/', $blog->image_path));
                 }
                 
-                $path = $request->file('image_path')->store('public/blogs');
-                $validated['image_path'] = str_replace('public/', 'storage/', $path);
+                $validated['image_path'] = ImageHelper::convertToWebp($request->file('image_path'), 'blogs');
             }
 
             $oldTitle = $blog->title;

@@ -1,5 +1,9 @@
 @extends('_layouts.user')
 
+@section('title', $blog->title . ' – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', Str::limit(strip_tags($blog->content), 160))
+@section('og-image', asset($blog->image_path))
+
 @section('head')
     {{-- Libraries --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

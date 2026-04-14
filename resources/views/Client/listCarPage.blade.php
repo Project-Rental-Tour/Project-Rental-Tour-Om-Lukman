@@ -1,5 +1,8 @@
 @extends('_layouts.user')
 
+@section('title', 'Sewa Mobil Malang & Surabaya Murah – ' . ($profiles->website_name ?? 'GOING TO THE JAVA'))
+@section('meta-description', 'Layanan sewa mobil profesional di Malang dan Surabaya. Tersedia berbagai armada mulai dari MPV hingga Hiace dengan supir berpengalaman dari ' . ($profiles->website_name ?? 'GOING TO THE JAVA') . '.')
+
 @section('head')
     {{-- Libraries --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

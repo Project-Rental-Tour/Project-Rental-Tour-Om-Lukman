@@ -11,6 +11,15 @@
     <!-- End Google Tag Manager -->
 
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; 
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net; 
+        script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com; 
+        img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com https://www.google.id https://googleads.g.doubleclick.net https://www.googleadservices.com https://images.unsplash.com https://*.unsplash.com; 
+        connect-src 'self' https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com https://www.google.id https://googleads.g.doubleclick.net https://www.googleadservices.com https://region1.analytics.google.com; 
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
+        frame-src 'self' https://www.googletagmanager.com https://www.google.com https://www.google.id;
+        object-src 'none';">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,18 +28,18 @@
     <title>@yield('title', 'GOING TO THE JAVA – Paket Wisata & Sewa Mobil di Jawa Timur, Indonesia')</title>
     <meta name="description" content="@yield('meta-description', 'GOING TO THE JAVA adalah agen travel lokal di Malang, Jawa Timur, Indonesia. Kami menyediakan paket wisata Bromo sunrise, tour Ijen Blue Fire, Tumpak Sewu, sewa mobil Malang & Surabaya, dengan supir profesional dan harga transparan.')">
     <meta name="keywords" content="wisata Jawa Timur, paket Bromo Indonesia, sewa mobil Malang, tour Ijen Blue Fire, travel Tumpak Sewu, sewa Hiace Surabaya, jeep Bromo sunrise, Malang city tour, Surabaya car rental, east java tour, paket honeymoon Bromo, going to the java indonesia">
-    <meta name="author" content="GOING TO THE JAVA">
+    <meta name="author" content="{{ $profiles->website_name ?? 'GOING TO THE JAVA' }}">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="@yield('canonical', 'https://www.goingtothejava.com')" />
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="@yield('og-title', 'GOING TO THE JAVA – Travel & Sewa Mobil di Jawa Timur, Indonesia')" />
+    <meta property="og:title" content="@yield('og-title', ($profiles->website_name ?? 'GOING TO THE JAVA') . ' – Travel & Sewa Mobil di Jawa Timur, Indonesia')" />
     <meta property="og:description" content="@yield('og-description', 'Jelajahi Gunung Bromo, Kawah Ijen, Tumpak Sewu & kota Malang-Surabaya bersama agen travel lokal terpercaya di Jawa Timur, Indonesia.')" />
-    <meta property="og:url" content="@yield('og-url', 'https://www.goingtothejava.com')" />
-    <meta property="og:site_name" content="GOING TO THE JAVA" />
-    <meta property="og:image" content="@yield('og-image', asset('assets/images/og-bromo-jeep.jpg'))" />
+    <meta property="og:url" content="@yield('og-url', url()->current())" />
+    <meta property="og:site_name" content="{{ $profiles->website_name ?? 'GOING TO THE JAVA' }}" />
+    <meta property="og:image" content="@yield('og-image', isset($profiles->jumbotron_image) ? asset('storage/' . $profiles->jumbotron_image) : asset('assets/images/og-bromo-jeep.jpg'))" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />

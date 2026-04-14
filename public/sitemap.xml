@@ -30,17 +30,17 @@
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/destinations/tumpak-sewu-bromo-kawah-ijen</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-            </url>
-    <url>
-    <loc>http://localhost/destinations/ep</loc>
+    <loc>http://localhost/destinations/sasa</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
     <loc>http://localhost/car/dsds</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/car/dsds-1</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>

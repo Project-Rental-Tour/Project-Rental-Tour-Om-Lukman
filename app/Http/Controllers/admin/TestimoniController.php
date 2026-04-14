@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-
-
+use App\Helpers\ImageHelper;
 use App\Models\Testimonial;
 use App\Models\LogActivity;
 use App\Models\Profile;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class TestimoniController extends Controller
 {
@@ -101,7 +100,8 @@ class TestimoniController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('testimonial-images', 'public');
+            $fullPath = ImageHelper::convertToWebp($request->file('image'), 'testimonial-images');
+            $imagePath = str_replace('storage/', '', $fullPath);
         }
 
         $testimonial = Testimonial::create([
@@ -160,7 +160,8 @@ class TestimoniController extends Controller
             if ($testimonial->image) {
                 Storage::disk('public')->delete($testimonial->image);
             }
-            $imagePath = $request->file('image')->store('testimonial-images', 'public');
+            $fullPath = ImageHelper::convertToWebp($request->file('image'), 'testimonial-images');
+            $imagePath = str_replace('storage/', '', $fullPath);
         }
 
         $testimonial->name       = $validatedData['name'] ?? null;

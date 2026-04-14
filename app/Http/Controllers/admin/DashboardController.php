@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\ImageHelper;
 
 use App\Models\Profile;
 use App\Models\User;
@@ -109,26 +110,29 @@ class DashboardController extends Controller
         // upload logo light
         if ($request->hasFile('website_logo_light')) {
             if ($profile->website_logo_light) {
-                Storage::delete($profile->website_logo_light);
+                Storage::disk('public')->delete($profile->website_logo_light);
             }
-            $profile->website_logo_light = $request->file('website_logo_light')->store('logos', 'public');
+            $fullPath = ImageHelper::convertToWebp($request->file('website_logo_light'), 'logos');
+            $profile->website_logo_light = str_replace('storage/', '', $fullPath);
         }
 
         // upload logo dark
         if ($request->hasFile('website_logo_dark')) {
             if ($profile->website_logo_dark) {
-                Storage::delete($profile->website_logo_dark);
+                Storage::disk('public')->delete($profile->website_logo_dark);
             }
-            $profile->website_logo_dark = $request->file('website_logo_dark')->store('logos', 'public');
+            $fullPath = ImageHelper::convertToWebp($request->file('website_logo_dark'), 'logos');
+            $profile->website_logo_dark = str_replace('storage/', '', $fullPath);
         }
 
 
         // upload jumbotron image
         if ($request->hasFile('jumbotron_image')) {
             if ($profile->jumbotron_image) {
-                Storage::delete($profile->jumbotron_image);
+                Storage::disk('public')->delete($profile->jumbotron_image);
             }
-            $profile->jumbotron_image = $request->file('jumbotron_image')->store('jumbotrons', 'public');
+            $fullPath = ImageHelper::convertToWebp($request->file('jumbotron_image'), 'jumbotrons');
+            $profile->jumbotron_image = str_replace('storage/', '', $fullPath);
         }
 
         try {

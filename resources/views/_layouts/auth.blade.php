@@ -8,6 +8,15 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TGS6FD4F');</script>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; 
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net; 
+        script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com; 
+        img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com https://www.google.id https://googleads.g.doubleclick.net https://www.googleadservices.com https://images.unsplash.com https://*.unsplash.com {{ asset('') }}; 
+        connect-src 'self' https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com https://www.google.id https://googleads.g.doubleclick.net https://www.googleadservices.com https://region1.analytics.google.com; 
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
+        frame-src 'self' https://www.googletagmanager.com https://www.google.com https://www.google.id;
+        object-src 'none';">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'GOING TO THE JAVA')</title>
