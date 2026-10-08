@@ -6,23 +6,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
         /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary: #003366;
+            /* Deep Ocean Navy */
             --color-primary-light: #004080;
-            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary: #00b4d8;
+            /* Pacific Cyan/Sky Blue */
             --color-secondary-light: #90e0ef;
-            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-surface: #f4f8fb;
+            /* Very Light Blue/White */
             --color-text: #1e293b;
             --color-text-light: #64748b;
             font-family: 'Poppins', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background-color: var(--color-surface);
@@ -35,7 +41,10 @@
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 9999;
@@ -43,18 +52,37 @@
         }
 
         /* --- Typography --- */
-        h1, h2, h3, h4, h5, h6, .font-serif {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-serif {
             font-family: 'Poppins', sans-serif;
             letter-spacing: -0.02em;
         }
-        
-        .text-balance { text-wrap: balance; }
+
+        .text-balance {
+            text-wrap: balance;
+        }
 
         /* --- Custom Utilities --- */
-        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
-        .text-primary { color: var(--color-primary) !important; }
-        .text-secondary { color: var(--color-secondary) !important; }
-        .bg-surface { background-color: var(--color-surface) !important; }
+        .bg-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important;
+        }
+
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+
+        .text-secondary {
+            color: var(--color-secondary) !important;
+        }
+
+        .bg-surface {
+            background-color: var(--color-surface) !important;
+        }
 
         /* --- Components --- */
         .glass-card {
@@ -71,39 +99,70 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
         }
+
         .btn-premium::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             transition: 0.5s;
         }
-        .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
+
+        .btn-premium:hover::after {
+            left: 100%;
+        }
+
+        .btn-premium:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4);
+            transform: translateY(-2px);
+        }
 
         /* --- Animations --- */
-        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
         @keyframes float-slow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         .animate-fade-up {
-            opacity: 0; transform: translateY(30px);
+            opacity: 0;
+            transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Form Styling */
-        input:focus, select:focus, textarea:focus {
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--color-secondary);
             box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
         }
-        
+
         /* Custom Date Picker Indicator */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(24%) sepia(87%) saturate(2256%) hue-rotate(174deg) brightness(96%) contrast(89%); /* Matches secondary color roughly */
+            filter: invert(24%) sepia(87%) saturate(2256%) hue-rotate(174deg) brightness(96%) contrast(89%);
+            /* Matches secondary color roughly */
             cursor: pointer;
         }
     </style>
@@ -115,18 +174,18 @@
     {{-- JUMBOTRON --}}
     <section class="relative bg-primary text-white h-80 overflow-hidden" id="jumbotron">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" src="{{ asset($destination->destination_photo) }}" 
-                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
-                 alt="{{ $destination->name_package }}"
-                 class="w-full h-full object-cover object-center animate-float-slow"
-                 style="opacity: 0.5;">
+            <img loading="lazy" src="{{ asset($destination->destination_photo) }}"
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80';"
+                alt="{{ $destination->name_package }}" class="w-full h-full object-cover object-center animate-float-slow"
+                style="opacity: 0.5;">
             {{-- Blue Gradient --}}
             <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
 
         <div class="absolute inset-0 flex items-center justify-center pt-10">
             <div class="container mx-auto px-6 text-center animate-fade-up">
-                <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full mb-4 inline-block font-bold uppercase tracking-wider shadow-lg shadow-secondary/30">
+                <span
+                    class="bg-secondary text-white text-xs px-3 py-1 rounded-full mb-4 inline-block font-bold uppercase tracking-wider shadow-lg shadow-secondary/30">
                     @translate('Wisata') @translate(ucfirst($destination->category))
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif text-shadow-lg drop-shadow-md">
@@ -134,7 +193,7 @@
                 </h1>
                 <p class="text-lg text-white/90 font-light flex items-center justify-center gap-2">
                     <i class="fas fa-map-marker-alt text-secondary"></i> @translate($destination->place)
-                    <span class="mx-2">•</span> 
+                    <span class="mx-2">•</span>
                     <i class="fas fa-clock text-secondary"></i> @translate($destination->time)
                 </p>
             </div>
@@ -147,7 +206,8 @@
             <ol class="flex space-x-2 text-sm text-gray-500 font-medium">
                 <li><a href="{{route('index')}}" class="hover:text-primary transition-colors">@translate('Beranda')</a></li>
                 <li>/</li>
-                <li><a href="{{route('destination.index')}}" class="hover:text-primary transition-colors">@translate('Destinasi')</a></li>
+                <li><a href="{{route('destination.index')}}"
+                        class="hover:text-primary transition-colors">@translate('Destinasi')</a></li>
                 <li>/</li>
                 <li class="text-primary font-bold">{{$destination->name_package}}</li>
             </ol>
@@ -157,11 +217,15 @@
     {{-- BOOKING FORM --}}
     <section class="container mx-auto px-6 py-16 relative">
         {{-- Background Blobs --}}
-        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div
+            class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
 
         <div class="max-w-4xl mx-auto glass-card rounded-[2rem] shadow-2xl overflow-hidden animate-fade-up relative z-10">
-            
+
             <div class="bg-gray-50/50 px-8 py-8 border-b border-gray-100 text-center">
                 <h2 class="text-3xl font-bold text-primary font-serif">@translate('Selesaikan Pemesanan')</h2>
                 <p class="text-gray-500 mt-2 font-light">@translate('Mohon isi detail Anda untuk mengamankan slot.')</p>
@@ -173,18 +237,21 @@
                 <input type="hidden" name="destination_id" value="{{ $destination->destination_id }}">
 
                 {{-- Product Summary Card --}}
-                <div class="bg-primary/5 p-6 rounded-2xl border border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div
+                    class="bg-primary/5 p-6 rounded-2xl border border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 rounded-xl overflow-hidden shadow-md">
                             <img src="{{ asset($destination->destination_photo) }}" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h3 class="font-bold text-primary text-lg font-serif">@translate($destination->name_package)</h3>
+                            <h3 class="font-bold text-primary text-lg font-serif">@translate($destination->name_package)
+                            </h3>
                             <p class="text-gray-500 text-sm">@translate($destination->place)</p>
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">@translate('Harga /  '){{ $destination->wna_wni_policy }}</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">
+                            @translate('Harga /  '){{ $destination->wna_wni_policy }}</p>
                         <p class="text-2xl font-bold text-secondary">
                             @currency($destination->price)
                         </p>
@@ -193,32 +260,41 @@
 
                 {{-- FORM FIELDS --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
+
                     {{-- First Name --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan') <span class="text-red-500">*</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan')
+                            <span class="text-red-500">*</span></label>
                         <input type="text" name="first_name" required value="{{ old('first_name') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="John" autocomplete="given-name">
-                        @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('first_name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Last Name --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang') <span class="text-red-500">*</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang')
+                            <span class="text-red-500">*</span></label>
                         <input type="text" name="last_name" required value="{{ old('last_name') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="Doe" autocomplete="family-name">
-                        @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('last_name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Email --}}
                     <div class="md:col-span-1">
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email') <span class="text-red-500">*</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email')
+                            <span class="text-red-500">*</span></label>
                         <input type="email" name="email" required value="{{ old('email') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="john.doe@example.com" autocomplete="email">
-                        @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Phone Number Group --}}
@@ -238,65 +314,85 @@
                                     <option value="+61" {{ old('country_code') == '+61' ? 'selected' : '' }}>🇦🇺 +61</option>
                                     <option value="+44" {{ old('country_code') == '+44' ? 'selected' : '' }}>🇬🇧 +44</option>
                                     <option value="+81" {{ old('country_code') == '+81' ? 'selected' : '' }}>🇯🇵 +81</option>
-                                    </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
                                     <i class="fas fa-chevron-down text-xs"></i>
                                 </div>
                             </div>
-                            <input type="tel" name="phone_number" placeholder="81234567890" value="{{ old('phone_number') }}"
+                            <input type="tel" name="phone_number" placeholder="81234567890"
+                                value="{{ old('phone_number') }}"
                                 class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                                 required>
                         </div>
-                        @error('phone_number') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('phone_number')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Travel Date --}}
                     <div class="md:col-span-1">
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Tanggal Perjalanan') <span class="text-red-500">*</span></label>
-                        <input type="date" name="travel_date" required min="{{ date('Y-m-d') }}" value="{{ old('travel_date') }}"
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Tanggal Perjalanan')
+                            <span class="text-red-500">*</span></label>
+                        <input type="date" name="travel_date" required min="{{ date('Y-m-d') }}"
+                            value="{{ old('travel_date') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all cursor-pointer">
-                        @error('travel_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('travel_date')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Travelers Count (NEW) --}}
                     <div class="md:col-span-1">
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Jumlah Peserta') <span class="text-red-500">*</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Jumlah Peserta')
+                            <span class="text-red-500">*</span></label>
                         <div class="relative">
-                            <input type="number" name="travelers" required min="1" max="50" value="{{ old('travelers', 1) }}"
+                            <input type="number" name="travelers" required min="1" max="50"
+                                value="{{ old('travelers', 1) }}"
                                 class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all pl-10"
                                 placeholder="1">
                             <div class="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none text-gray-400">
                                 <i class="fas fa-users text-sm"></i>
                             </div>
                         </div>
-                        @error('travelers') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('travelers')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Country --}}
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Negara Asal') <span class="text-red-500">*</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Negara Asal')
+                            <span class="text-red-500">*</span></label>
                         <input type="text" name="country" required value="{{ old('country') }}"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all"
                             placeholder="Indonesia">
-                        @error('country') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('country')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Message --}}
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Pesan Tambahan') <span class="text-gray-400 font-normal normal-case">(@translate('Opsional'))</span></label>
+                        <label
+                            class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Pesan Tambahan')
+                            <span class="text-gray-400 font-normal normal-case">(@translate('Opsional'))</span></label>
                         <textarea name="message" rows="4"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:bg-white bg-gray-50/50 transition-all resize-none"
                             placeholder="@translate('Apakah ada permintaan khusus?')">{{ old('message') }}</textarea>
-                        @error('message') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('message')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                 </div>
 
                 <div class="pt-6 border-t border-gray-100">
-                    <button type="submit" class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
-                        @translate('Konfirmasi Pesanan') <i class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
+                    <button type="submit"
+                        class="btn-premium w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
+                        @translate('Konfirmasi Pesanan') <i
+                            class="fas fa-check-circle transform group-hover:scale-110 transition-transform"></i>
                     </button>
-                    <p class="text-center text-xs text-gray-400 mt-4">@translate('Kami akan menghubungi Anda via WhatsApp untuk konfirmasi detail dan pembayaran.')</p>
+                    <p class="text-center text-xs text-gray-400 mt-4">
+                        @translate('Kami akan menghubungi Anda via WhatsApp untuk konfirmasi detail dan pembayaran.')</p>
                 </div>
 
             </form>
@@ -304,13 +400,12 @@
     </section>
 
     {{-- Floating WhatsApp --}}
-    <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-       target="_blank"
-       rel="noopener noreferrer"
-       id="whatsapp-float"
-       class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
+    <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281217006076') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        target="_blank" rel="noopener noreferrer" id="whatsapp-float"
+        class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-105 transition-all duration-300 animate-bounce group">
         <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
+        <span
+            class="font-bold whitespace-nowrap hidden group-hover:block transition-all">@translate('Butuh Bantuan?')</span>
     </a>
 
     @include('components.client.footer')

@@ -6,23 +6,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
         /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary: #003366;
+            /* Deep Ocean Navy */
             --color-primary-light: #004080;
-            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary: #00b4d8;
+            /* Pacific Cyan/Sky Blue */
             --color-secondary-light: #90e0ef;
-            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-surface: #f4f8fb;
+            /* Very Light Blue/White */
             --color-text: #1e293b;
             --color-text-light: #64748b;
             font-family: 'Poppins', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background-color: var(--color-surface);
@@ -35,7 +41,10 @@
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 9999;
@@ -43,18 +52,37 @@
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6, .font-serif {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-serif {
             font-family: 'Poppins', sans-serif;
             letter-spacing: -0.02em;
         }
-        
-        .text-balance { text-wrap: balance; }
+
+        .text-balance {
+            text-wrap: balance;
+        }
 
         /* --- Custom Utilities --- */
-        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
-        .text-primary { color: var(--color-primary) !important; }
-        .text-secondary { color: var(--color-secondary) !important; }
-        .bg-surface { background-color: var(--color-surface) !important; }
+        .bg-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important;
+        }
+
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+
+        .text-secondary {
+            color: var(--color-secondary) !important;
+        }
+
+        .bg-surface {
+            background-color: var(--color-surface) !important;
+        }
 
         /* --- Components --- */
         .glass-card {
@@ -71,38 +99,68 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
         }
+
         .btn-premium::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             transition: 0.5s;
         }
-        .btn-premium:hover::after { left: 100%; }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
+
+        .btn-premium:hover::after {
+            left: 100%;
+        }
+
+        .btn-premium:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4);
+            transform: translateY(-2px);
+        }
 
         /* --- Animations --- */
-        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
         @keyframes float-slow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         .animate-fade-up {
-            opacity: 0; transform: translateY(30px);
+            opacity: 0;
+            transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Form Styling */
-        input:focus, select:focus, textarea:focus {
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--color-secondary);
             box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
         }
-        
+
         /* Checkbox Custom */
-        input[type="checkbox"]:checked ~ div {
+        input[type="checkbox"]:checked~div {
             background-color: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
@@ -116,8 +174,8 @@
     {{-- HERO SECTION --}}
     <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-primary" id="jumbotron">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" 
-                src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}" 
+            <img loading="lazy"
+                src="{{ optional($profiles)->background_image ? asset(optional($profiles)->background_image) : asset('assets/images/jumbotron/background-jumbo.png') }}"
                 alt="Dream Travel Experience"
                 class="w-full h-full object-cover object-center opacity-60 animate-float-slow">
             {{-- Blue Gradient Overlay --}}
@@ -125,13 +183,17 @@
         </div>
 
         <div class="container mx-auto px-6 relative z-10 text-center pt-20">
-            <span class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up shadow-secondary/20">
+            <span
+                class="text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-4 block animate-fade-up shadow-secondary/20">
                 @translate('Perjalanan yang Dipersonalisasi')
             </span>
-            <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-serif animate-fade-up shadow-sm drop-shadow-md">
-                @translate('Rancang') <span class="italic text-secondary">@translate('Perjalanan Impian')</span> @translate('Anda')
+            <h1
+                class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-serif animate-fade-up shadow-sm drop-shadow-md">
+                @translate('Rancang') <span class="italic text-secondary">@translate('Perjalanan Impian')</span>
+                @translate('Anda')
             </h1>
-            <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed animate-fade-up font-light" style="animation-delay: 0.2s">
+            <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed animate-fade-up font-light"
+                style="animation-delay: 0.2s">
                 @translate('Tidak ada paket yang sesuai impian Anda? Beritahu kami tujuan, tanggal, dan preferensi ideal Anda — kami akan membuat pengalaman perjalanan yang dipersonalisasi khusus untuk Anda.')
             </p>
         </div>
@@ -139,11 +201,16 @@
 
     <section class="container mx-auto px-6 py-20 -mt-20 relative z-20">
         {{-- Background Blobs --}}
-        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div
+            class="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00b4d8]/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-40 left-0 w-[500px] h-[500px] bg-[#003366]/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
 
-        <div class="max-w-5xl mx-auto glass-card rounded-[2.5rem] shadow-2xl shadow-blue-900/10 overflow-hidden animate-fade-up relative z-10" style="animation-delay: 0.4s">
-            
+        <div class="max-w-5xl mx-auto glass-card rounded-[2.5rem] shadow-2xl shadow-blue-900/10 overflow-hidden animate-fade-up relative z-10"
+            style="animation-delay: 0.4s">
+
             <div class="bg-gray-50/50 px-8 md:px-12 py-8 border-b border-gray-100 text-center">
                 <h2 class="text-3xl font-bold text-primary font-serif">@translate('Preferensi Perjalanan Anda')</h2>
                 <p class="text-gray-500 mt-2 font-light">
@@ -158,16 +225,18 @@
                     <h3 class="text-lg font-bold text-primary border-b border-gray-100 pb-2 flex items-center gap-2">
                         <i class="fas fa-map-marked-alt text-secondary"></i> @translate('Detail Perjalanan')
                     </h3>
-                    
+
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
                             @translate('Destinasi yang Ingin Dikunjungi') <span class="text-red-500">*</span>
                         </label>
                         {{-- Placeholder perlu diterjemahkan manual di PHP --}}
-                        <input type="text" name="custom_destinations" 
+                        <input type="text" name="custom_destinations"
                             placeholder="<?php echo \App\Helpers\TranslationHelper::translate('contoh: Bali, Komodo, Lombok, Yogyakarta'); ?>"
-                            class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
-                        <p class="text-xs text-gray-400 mt-2 font-light">@translate('Pisahkan beberapa tujuan dengan koma.')</p>
+                            class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
+                            required>
+                        <p class="text-xs text-gray-400 mt-2 font-light">@translate('Pisahkan beberapa tujuan dengan koma.')
+                        </p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -183,12 +252,14 @@
                             <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
                                 @translate('Durasi Perjalanan') <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="duration_nights" 
+                            <input type="text" name="duration_nights"
                                 placeholder="<?php echo \App\Helpers\TranslationHelper::translate('contoh: 3h 2m'); ?>"
                                 class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
                                 required>
                             <p class="text-xs text-gray-400 mt-2 font-light">
-                                @translate('Format:') <code class="text-primary font-bold">h</code> @translate('untuk hari'), <code class="text-primary font-bold">m</code> @translate('untuk malam. Contoh: 3h 2m')
+                                @translate('Format:') <code class="text-primary font-bold">h</code>
+                                @translate('untuk hari'), <code class="text-primary font-bold">m</code>
+                                @translate('untuk malam. Contoh: 3h 2m')
                             </p>
                         </div>
                     </div>
@@ -199,9 +270,9 @@
                                 @translate('Jumlah Wisatawan') <span class="text-red-500">*</span>
                             </label>
 
-                            <select name="travelers_select" id="travelers_select" required 
-                                    class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors cursor-pointer"
-                                    onchange="toggleCustomTravelersInput()">
+                            <select name="travelers_select" id="travelers_select" required
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors cursor-pointer"
+                                onchange="toggleCustomTravelersInput()">
                                 <option value="">@translate('Pilih jumlah')</option>
                                 <option value="1">@translate('1 orang')</option>
                                 <option value="2">@translate('2 orang')</option>
@@ -213,10 +284,7 @@
                             </select>
 
                             <div id="custom_travelers_container" class="mt-4 hidden animate-fade-up">
-                                <input type="number" 
-                                    name="travelers_custom" 
-                                    id="travelers_custom"
-                                    min="1"
+                                <input type="number" name="travelers_custom" id="travelers_custom" min="1"
                                     placeholder="<?php echo \App\Helpers\TranslationHelper::translate('Masukkan jumlah spesifik'); ?>"
                                     class="w-full p-4 border border-gray-200 rounded-xl bg-white border-secondary ring-1 ring-secondary"
                                     oninput="syncTravelersValue()">
@@ -225,9 +293,11 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Kisaran Anggaran (per orang)')</label>
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Kisaran Anggaran (per orang)')</label>
                             <div class="relative">
-                                <select name="budget_range" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors appearance-none cursor-pointer">
+                                <select name="budget_range"
+                                    class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors appearance-none cursor-pointer">
                                     <option value="">@translate('Tidak ada preferensi')</option>
                                     <option value="Below Rp 3 juta">@translate('Di bawah Rp 3.000.000')</option>
                                     <option value="Rp 3 - 5 juta">@translate('Rp 3.000.000 - 5.000.000')</option>
@@ -235,7 +305,8 @@
                                     <option value="Rp 8 - 12 juta">@translate('Rp 8.000.000 - 12.000.000')</option>
                                     <option value="Above Rp 12 juta">@translate('Di atas Rp 12.000.000')</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
                                     <i class="fas fa-chevron-down text-xs"></i>
                                 </div>
                             </div>
@@ -247,7 +318,7 @@
                     <h3 class="text-lg font-bold text-primary border-b border-gray-100 pb-2 flex items-center gap-2">
                         <i class="fas fa-heart text-secondary"></i> @translate('Minat & Aktivitas')
                     </h3>
-                    
+
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">
                             @translate('Apa yang Anda Minati?')
@@ -257,7 +328,8 @@
                             @foreach(['Petualangan', 'Relaksasi', 'Budaya', 'Bulan Madu', 'Keluarga', 'Fotografi', 'Makanan & Kuliner', 'Trekking', 'Pantai'] as $interest)
                                 <label class="cursor-pointer relative group">
                                     <input type="checkbox" name="interests[]" value="{{ $interest }}" class="peer sr-only">
-                                    <div class="p-3 border border-gray-200 rounded-xl text-center text-sm text-gray-600 transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary group-hover:border-secondary">
+                                    <div
+                                        class="p-3 border border-gray-200 rounded-xl text-center text-sm text-gray-600 transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary group-hover:border-secondary">
                                         @translate($interest)
                                     </div>
                                 </label>
@@ -273,21 +345,37 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan') <span class="text-red-500">*</span></label>
-                            <input type="text" name="first_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Depan')
+                                <span class="text-red-500">*</span></label>
+                            <input type="text" name="first_name"
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
+                                required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang') <span class="text-red-500">*</span></label>
-                            <input type="text" name="last_name" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nama Belakang')
+                                <span class="text-red-500">*</span></label>
+                            <input type="text" name="last_name"
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
+                                required>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email') <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Alamat Email')
+                                <span class="text-red-500">*</span></label>
+                            <input type="email" name="email"
+                                class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
+                                required>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nomor Telepon') <span class="text-red-500">*</span></label>
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Nomor Telepon')
+                                <span class="text-red-500">*</span></label>
                             <div class="flex gap-3">
-                                <select name="country_code" id="country_code" class="w-1/3 md:w-1/4 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-sm" required>
+                                <select name="country_code" id="country_code"
+                                    class="w-1/3 md:w-1/4 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors text-sm"
+                                    required>
                                     <option value="">@translate('Kode')</option>
                                     <option value="+62">🇮🇩 +62</option>
                                     <option value="+1">🇺🇸 +1</option>
@@ -296,21 +384,25 @@
                                     <option value="+61">🇦🇺 +61</option>
                                     <option value="+44">🇬🇧 +44</option>
                                     <option value="+81">🇯🇵 +81</option>
-                                    </select>
-                                <input type="number" name="phone_number" placeholder="812345678" class="flex-1 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors" required>
+                                </select>
+                                <input type="number" name="phone_number" placeholder="812345678"
+                                    class="flex-1 p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors"
+                                    required>
                             </div>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Permintaan Khusus / Catatan')</label>
-                            <textarea name="message" rows="4" 
-                                placeholder="<?php echo \App\Helpers\TranslationHelper::translate('Ceritakan lebih banyak tentang perjalanan impian Anda...'); ?>" 
+                            <label
+                                class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">@translate('Permintaan Khusus / Catatan')</label>
+                            <textarea name="message" rows="4"
+                                placeholder="<?php echo \App\Helpers\TranslationHelper::translate('Ceritakan lebih banyak tentang perjalanan impian Anda...'); ?>"
                                 class="w-full p-4 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-colors resize-none"></textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-6">
-                    <button type="submit" class="btn-premium w-full py-5 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20 hover:shadow-blue-900/40 flex items-center justify-center gap-3">
+                    <button type="submit"
+                        class="btn-premium w-full py-5 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20 hover:shadow-blue-900/40 flex items-center justify-center gap-3">
                         @translate('Kirim Permintaan') <i class="fas fa-paper-plane"></i>
                     </button>
                     <p class="text-xs text-gray-400 text-center mt-4">
@@ -322,13 +414,9 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a 
-        href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-        target="_blank"
-        rel="noopener noreferrer"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281217006076') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        target="_blank" rel="noopener noreferrer" id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>
@@ -347,7 +435,7 @@
                     container.classList.remove('hidden');
                     customInput.focus();
                     customInput.required = true;
-                    select.required = false; 
+                    select.required = false;
                 } else {
                     container.classList.add('hidden');
                     customInput.required = false;
@@ -362,12 +450,12 @@
                 hiddenInput.value = customInput.value;
             }
 
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const select = document.getElementById('travelers_select');
                 const hiddenInput = document.getElementById('travelers');
                 hiddenInput.value = select.value;
 
-                select.addEventListener('change', function() {
+                select.addEventListener('change', function () {
                     if (this.value !== 'other') {
                         hiddenInput.value = this.value;
                     }

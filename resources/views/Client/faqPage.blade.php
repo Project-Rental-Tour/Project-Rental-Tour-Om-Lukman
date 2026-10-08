@@ -6,19 +6,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
     {{-- Flowbite CSS (Wajib untuk Accordion) --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
     <style>
         /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary: #003366;
+            /* Deep Ocean Navy */
             --color-primary-light: #004080;
-            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary: #00b4d8;
+            /* Pacific Cyan/Sky Blue */
             --color-secondary-light: #90e0ef;
-            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-surface: #f4f8fb;
+            /* Very Light Blue/White */
             --color-text: #1e293b;
             --color-text-light: #64748b;
             font-family: 'Poppins', sans-serif;
@@ -35,7 +39,10 @@
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 9999;
@@ -43,15 +50,29 @@
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6, .font-serif {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-serif {
             font-family: 'Poppins', sans-serif;
             letter-spacing: -0.02em;
         }
 
         /* Utilities */
-        .bg-primary { background-color: var(--color-primary) !important; }
-        .text-primary { color: var(--color-primary) !important; }
-        .text-secondary { color: var(--color-secondary) !important; }
+        .bg-primary {
+            background-color: var(--color-primary) !important;
+        }
+
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+
+        .text-secondary {
+            color: var(--color-secondary) !important;
+        }
 
         /* Animation */
         .animate-fade-up {
@@ -59,8 +80,12 @@
             transform: translateY(20px);
             animation: fadeUp 0.6s ease-out forwards;
         }
+
         @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Accordion Customization */
@@ -71,19 +96,29 @@
         }
 
         [data-accordion-item] button[aria-expanded="true"] {
-            background-color: rgba(0, 51, 102, 0.05); /* Primary light bg */
+            background-color: rgba(0, 51, 102, 0.05);
+            /* Primary light bg */
             color: var(--color-primary);
         }
-        
+
         [data-accordion-item] button:hover {
             background-color: rgba(0, 51, 102, 0.02);
             color: var(--color-primary);
         }
 
         /* Custom scrollbar for aesthetic */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-surface); }
-        ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 4px; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 4px;
+        }
     </style>
 @endsection
 
@@ -95,10 +130,12 @@
         <span class="text-secondary font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-up">
             @translate('Pusat Bantuan')
         </span>
-        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 animate-fade-up font-serif" style="animation-delay: 0.1s">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 animate-fade-up font-serif"
+            style="animation-delay: 0.1s">
             @translate('Pertanyaan yang Sering Diajukan')
         </h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto animate-fade-up font-light leading-relaxed" style="animation-delay: 0.2s">
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto animate-fade-up font-light leading-relaxed"
+            style="animation-delay: 0.2s">
             @translate('Temukan jawaban atas pertanyaan umum seputar paket wisata, proses pemesanan, dan perjalanan Anda bersama Going To The Java.')
         </p>
     </section>
@@ -106,18 +143,28 @@
     {{-- ACCORDION SECTION --}}
     <section class="max-w-3xl mx-auto px-6 pb-32 relative">
         {{-- Background Blobs --}}
-        <div class="absolute top-0 right-[-100px] w-[300px] h-[300px] bg-[#00b4d8]/10 rounded-full blur-[80px] pointer-events-none animate-pulse"></div>
-        <div class="absolute bottom-0 left-[-100px] w-[300px] h-[300px] bg-[#003366]/5 rounded-full blur-[80px] pointer-events-none"></div>
+        <div
+            class="absolute top-0 right-[-100px] w-[300px] h-[300px] bg-[#00b4d8]/10 rounded-full blur-[80px] pointer-events-none animate-pulse">
+        </div>
+        <div
+            class="absolute bottom-0 left-[-100px] w-[300px] h-[300px] bg-[#003366]/5 rounded-full blur-[80px] pointer-events-none">
+        </div>
 
         <div class="space-y-4 relative z-10" id="accordion-open" data-accordion="open">
-            
+
             {{-- Q1 --}}
-            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.3s" data-accordion-item>
+            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up"
+                style="animation-delay: 0.3s" data-accordion-item>
                 <h2 id="accordion-heading-1">
-                    <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-1" aria-expanded="true" aria-controls="accordion-body-1">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7"
+                        data-accordion-target="#accordion-body-1" aria-expanded="true" aria-controls="accordion-body-1">
                         <span>@translate('Apakah bisa dijemput di bandara atau stasiun kereta?')</span>
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        <svg data-accordion-icon
+                            class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -129,12 +176,18 @@
             </div>
 
             {{-- Q2 --}}
-            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.4s" data-accordion-item>
+            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up"
+                style="animation-delay: 0.4s" data-accordion-item>
                 <h2 id="accordion-heading-2">
-                    <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-2" aria-expanded="false" aria-controls="accordion-body-2">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7"
+                        data-accordion-target="#accordion-body-2" aria-expanded="false" aria-controls="accordion-body-2">
                         <span>@translate('Apakah bisa diantar kembali ke bandara atau stasiun?')</span>
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        <svg data-accordion-icon
+                            class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -146,12 +199,18 @@
             </div>
 
             {{-- Q3 --}}
-            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.5s" data-accordion-item>
+            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up"
+                style="animation-delay: 0.5s" data-accordion-item>
                 <h2 id="accordion-heading-3">
-                    <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-3" aria-expanded="false" aria-controls="accordion-body-3">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7"
+                        data-accordion-target="#accordion-body-3" aria-expanded="false" aria-controls="accordion-body-3">
                         <span>@translate('Apakah saya harus membawa koper selama tur?')</span>
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        <svg data-accordion-icon
+                            class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -163,12 +222,18 @@
             </div>
 
             {{-- Q4 --}}
-            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.6s" data-accordion-item>
+            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up"
+                style="animation-delay: 0.6s" data-accordion-item>
                 <h2 id="accordion-heading-4">
-                    <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-4" aria-expanded="false" aria-controls="accordion-body-4">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7"
+                        data-accordion-target="#accordion-body-4" aria-expanded="false" aria-controls="accordion-body-4">
                         <span>@translate('Apakah boleh menerbangkan drone?')</span>
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        <svg data-accordion-icon
+                            class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -180,12 +245,18 @@
             </div>
 
             {{-- Q5 --}}
-            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up" style="animation-delay: 0.7s" data-accordion-item>
+            <div class="rounded-2xl shadow-sm border border-white/60 overflow-hidden animate-fade-up"
+                style="animation-delay: 0.7s" data-accordion-item>
                 <h2 id="accordion-heading-5">
-                    <button type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7" data-accordion-target="#accordion-body-5" aria-expanded="false" aria-controls="accordion-body-5">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-6 font-semibold text-left text-gray-700 transition-all duration-300 focus:ring-0 focus:outline-none gap-4 hover:pl-7"
+                        data-accordion-target="#accordion-body-5" aria-expanded="false" aria-controls="accordion-body-5">
                         <span>@translate('Bagaimana dengan ketersediaan tur?')</span>
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        <svg data-accordion-icon
+                            class="w-3 h-3 rotate-180 shrink-0 text-secondary transition-transform duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -197,15 +268,15 @@
             </div>
 
         </div>
-        
+
         <div class="text-center mt-16 animate-fade-up relative z-10" style="animation-delay: 0.8s">
             <p class="text-gray-500 mb-6">@translate('Masih punya pertanyaan?')</p>
             {{-- WhatsApp Button (KEPT GREEN) --}}
-            <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer" 
-               class="inline-flex items-center px-8 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
-                <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i> @translate('Chat Bantuan')
+            <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281217006076') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+                target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center px-8 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
+                <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i>
+                @translate('Chat Bantuan')
             </a>
         </div>
     </section>

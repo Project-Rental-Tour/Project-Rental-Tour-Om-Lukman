@@ -9,17 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- UNIFIED FONT TO POPPINS ONLY --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
     <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
     <style>
         /* --- Premium Blue Ocean Theme Configuration --- */
         :root {
-            --color-primary: #003366;   /* Deep Ocean Navy */
+            --color-primary: #003366;
+            /* Deep Ocean Navy */
             --color-primary-light: #004080;
-            --color-secondary: #00b4d8; /* Pacific Cyan/Sky Blue */
+            --color-secondary: #00b4d8;
+            /* Pacific Cyan/Sky Blue */
             --color-secondary-light: #90e0ef;
-            --color-surface: #f4f8fb;   /* Very Light Blue/White */
+            --color-surface: #f4f8fb;
+            /* Very Light Blue/White */
             --color-text: #1e293b;
             --color-text-light: #64748b;
             font-family: 'Poppins', sans-serif;
@@ -36,7 +40,10 @@
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 9999;
@@ -44,28 +51,62 @@
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6, .font-serif {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-serif {
             font-family: 'Poppins', sans-serif;
             letter-spacing: -0.02em;
         }
 
         /* Utilities */
-        .bg-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important; }
-        .text-primary { color: var(--color-primary) !important; }
-        .text-secondary { color: var(--color-secondary) !important; }
-        .bg-surface { background-color: var(--color-surface) !important; }
+        .bg-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important;
+        }
+
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+
+        .text-secondary {
+            color: var(--color-secondary) !important;
+        }
+
+        .bg-surface {
+            background-color: var(--color-surface) !important;
+        }
 
         /* Animation */
         .animate-fade-up {
-            opacity: 0; transform: translateY(30px);
+            opacity: 0;
+            transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
         @keyframes float-slow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         /* Components */
@@ -76,39 +117,110 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
         }
-        .btn-premium:hover { box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4); transform: translateY(-2px); }
+
+        .btn-premium:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 51, 102, 0.4);
+            transform: translateY(-2px);
+        }
 
         /* --- Blog Content Styling --- */
-        .blog-content { font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
-        .blog-content p { margin-bottom: 1.5rem; }
-        .blog-content h2 { font-family: 'Poppins', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--color-primary); margin-top: 2.5rem; margin-bottom: 1rem; }
-        .blog-content h3 { font-family: 'Poppins', sans-serif; font-size: 1.4rem; font-weight: 600; color: var(--color-primary); margin-top: 2rem; margin-bottom: 0.75rem; }
-        .blog-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-light); }
-        .blog-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-light); }
-        .blog-content li { margin-bottom: 0.5rem; }
-        .blog-content blockquote { border-left: 4px solid var(--color-secondary); padding-left: 1.5rem; font-style: italic; color: var(--color-text-light); background: rgba(0, 180, 216, 0.05); padding: 1.5rem; border-radius: 0 1rem 1rem 0; margin-bottom: 1.5rem; }
-        .blog-content img { border-radius: 1.5rem; margin: 2rem 0; width: 100%; box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); }
-        .blog-content a { color: var(--color-secondary); text-decoration: none; font-weight: 600; transition: 0.3s; }
-        .blog-content a:hover { text-decoration: underline; color: var(--color-primary); }
-        .blog-content strong { color: var(--color-primary); font-weight: 700; }
+        .blog-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--color-text);
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-content h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        .blog-content ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: var(--color-text-light);
+            background: rgba(0, 180, 216, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 1rem 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-content img {
+            border-radius: 1.5rem;
+            margin: 2rem 0;
+            width: 100%;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-content a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .blog-content a:hover {
+            text-decoration: underline;
+            color: var(--color-primary);
+        }
+
+        .blog-content strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
     </style>
 @endsection
 
 @section('content')
     @include('components.client.navbar')
 
-    {{-- 
-        HERO SECTION (JUMBOTRON) 
+    {{--
+    HERO SECTION (JUMBOTRON)
     --}}
     <section id="jumbotron" class="relative min-h-[60vh] flex items-center overflow-hidden bg-primary">
         {{-- Background Image --}}
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset($blog->image_path) }}" 
+            <img src="{{ asset($blog->image_path) }}"
                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920';"
-                alt="{{ $blog->title }}"
-                class="w-full h-full object-cover object-center animate-float-slow"
+                alt="{{ $blog->title }}" class="w-full h-full object-cover object-center animate-float-slow"
                 style="opacity: 0.5;">
-            
+
             {{-- Blue Gradient Overlay --}}
             <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/90 via-[#003366]/40 to-transparent"></div>
         </div>
@@ -116,18 +228,19 @@
         {{-- Content Container --}}
         {{-- UBAH 1: text-center MENJADI text-left --}}
         <div class="container mx-auto px-6 relative z-10 pt-24 text-left">
-            
+
             {{-- UBAH 2: Hapus mx-auto agar div tidak di tengah, ganti jadi mr-auto (atau biarkan default) --}}
             <div class="max-w-4xl mr-auto animate-fade-up">
-                
+
                 {{-- Meta Tags (Category & Date) --}}
                 {{-- UBAH 3: justify-center MENJADI justify-start --}}
-                <div class="flex flex-wrap justify-start items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
+                <div
+                    class="flex flex-wrap justify-start items-center gap-4 text-white/90 text-sm font-medium mb-6 uppercase tracking-wider">
                     <span class="bg-secondary text-white px-4 py-1.5 rounded-full font-bold shadow-lg shadow-secondary/30">
                         @translate($blog->category ?? 'Wisata')
                     </span>
                     <span class="flex items-center gap-2">
-                        <i class="far fa-calendar"></i> 
+                        <i class="far fa-calendar"></i>
                         {{ $blog->created_at->format('d M Y') }}
                     </span>
                     <span class="flex items-center gap-2">
@@ -136,7 +249,8 @@
                 </div>
 
                 {{-- Title --}}
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-serif leading-tight mb-6 text-shadow-lg drop-shadow-md">
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-serif leading-tight mb-6 text-shadow-lg drop-shadow-md">
                     @translate($blog->title)
                 </h1>
 
@@ -144,9 +258,11 @@
                 {{-- UBAH 4: justify-center MENJADI justify-start --}}
                 <nav class="flex justify-start text-white/80 text-sm font-medium">
                     <ol class="flex items-center space-x-2">
-                        <li><a href="{{ route('index') }}" class="hover:text-secondary transition-colors">@translate('Beranda')</a></li>
+                        <li><a href="{{ route('index') }}"
+                                class="hover:text-secondary transition-colors">@translate('Beranda')</a></li>
                         <li>/</li>
-                        <li><a href="{{ route('blogs.index') }}" class="hover:text-secondary transition-colors">@translate('Blog')</a></li>
+                        <li><a href="{{ route('blogs.index') }}"
+                                class="hover:text-secondary transition-colors">@translate('Blog')</a></li>
                         <li>/</li>
                         <li class="text-white font-bold truncate max-w-[200px]">
                             @translate($blog->title)
@@ -159,24 +275,32 @@
 
     {{-- CONTENT SECTION --}}
     <section class="max-w-7xl mx-auto px-6 py-16 relative">
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-            
+
             {{-- Main Article --}}
             <div class="lg:col-span-8">
                 <article class="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl border border-white/60 animate-fade-up">
                     <div class="blog-content">
                         {{-- KONTEN HTML TIDAK DITRANSLATE SERVER-SIDE AGAR TIDAK RUSAK --}}
-                        {{-- Namun, helper TranslationHelper di Middleware bisa diatur untuk handle ini jika diperlukan, tapi amannya dibiarkan raw --}}
+                        {{-- Namun, helper TranslationHelper di Middleware bisa diatur untuk handle ini jika diperlukan,
+                        tapi amannya dibiarkan raw --}}
                         {!! $blog->content !!}
                     </div>
 
-                    <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div
+                        class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
                         <p class="text-gray-500 font-serif italic">@translate('Bagikan cerita ini:')</p>
                         <div class="flex gap-3">
-                            <a href="#" class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-500 hover:bg-sky-500 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-500 hover:text-white transition-all"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-500 hover:bg-sky-500 hover:text-white transition-all"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-500 hover:text-white transition-all"><i
+                                    class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </article>
@@ -184,15 +308,18 @@
 
             {{-- Sidebar --}}
             <div class="lg:col-span-4 space-y-8">
-                
+
                 {{-- Author Card --}}
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.2s">
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up"
+                    style="animation-delay: 0.2s">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl border border-primary/20">
+                        <div
+                            class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl border border-primary/20">
                             <i class="fas fa-user-edit"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">@translate('Ditulis Oleh')</span>
+                            <span
+                                class="text-xs text-gray-400 uppercase tracking-widest font-bold">@translate('Ditulis Oleh')</span>
                             <h4 class="font-serif font-bold text-lg text-primary">Going To The Java Team</h4>
                         </div>
                     </div>
@@ -202,29 +329,32 @@
                 </div>
 
                 {{-- Recent Posts --}}
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up" style="animation-delay: 0.3s">
-                    <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">@translate('Postingan Terbaru')</h3>
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-white/60 animate-fade-up"
+                    style="animation-delay: 0.3s">
+                    <h3 class="font-serif font-bold text-xl text-primary mb-6 pb-2 border-b border-gray-100">
+                        @translate('Postingan Terbaru')</h3>
                     <div class="space-y-6">
                         @if(isset($relatedPosts) && $relatedPosts->count() > 0)
                             @foreach($relatedPosts as $recent)
-                            <a href="{{ route('blogs.detail', $recent->title) }}" class="flex gap-4 group">
-                                <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 relative">
-                                    <img src="{{ asset($recent->image_path) }}" 
-                                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
-                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                                </div>
-                                <div>
-                                    <span class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-1 block">
-                                        @translate($recent->category)
-                                    </span>
-                                    <h4 class="font-bold text-gray-800 text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                                        @translate($recent->title)
-                                    </h4>
-                                    <span class="text-xs text-gray-400 mt-2 block">
-                                        {{ $recent->created_at->format('d M Y') }}
-                                    </span>
-                                </div>
-                            </a>
+                                <a href="{{ route('blogs.detail', $recent->title) }}" class="flex gap-4 group">
+                                    <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 relative">
+                                        <img src="{{ asset($recent->image_path) }}"
+                                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200';"
+                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-1 block">
+                                            @translate($recent->category)
+                                        </span>
+                                        <h4
+                                            class="font-bold text-gray-800 text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                            @translate($recent->title)
+                                        </h4>
+                                        <span class="text-xs text-gray-400 mt-2 block">
+                                            {{ $recent->created_at->format('d M Y') }}
+                                        </span>
+                                    </div>
+                                </a>
                             @endforeach
                         @else
                             <p class="text-gray-400 text-sm italic">@translate('Tidak ada postingan terbaru.')</p>
@@ -233,15 +363,22 @@
                 </div>
 
                 {{-- CTA Card --}}
-                <div class="bg-primary rounded-[2rem] p-8 text-center text-white relative overflow-hidden animate-fade-up shadow-2xl" style="animation-delay: 0.4s">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                <div class="bg-primary rounded-[2rem] p-8 text-center text-white relative overflow-hidden animate-fade-up shadow-2xl"
+                    style="animation-delay: 0.4s">
+                    <div
+                        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+                    </div>
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
+                        <div
+                            class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
                             <i class="fas fa-plane-departure text-2xl text-secondary"></i>
                         </div>
                         <h3 class="font-serif font-bold text-2xl mb-2">@translate('Terinspirasi untuk Liburan?')</h3>
-                        <p class="text-white/80 text-sm mb-6">@translate('Biarkan kami membantu merencanakan perjalanan sempurna Anda ke destinasi menakjubkan ini.')</p>
-                        <a href="{{ route('booking.custom') }}" class="inline-block w-full py-3 bg-white text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg">
+                        <p class="text-white/80 text-sm mb-6">
+                            @translate('Biarkan kami membantu merencanakan perjalanan sempurna Anda ke destinasi menakjubkan ini.')
+                        </p>
+                        <a href="{{ route('booking.custom') }}"
+                            class="inline-block w-full py-3 bg-white text-primary font-bold rounded-xl hover:bg-white transition-colors shadow-lg">
                             @translate('Rencanakan Perjalanan Saya')
                         </a>
                     </div>
@@ -252,13 +389,9 @@
     </section>
 
     {{-- Floating WhatsApp (KEPT GREEN) --}}
-    <a 
-        href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
-   target="_blank"
-   rel="noopener noreferrer"
-        id="whatsapp-float"
-        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow"
-    >
+    <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281217006076') }}&text=Halo%20Admin%20GOING%20TO%20THE%20JAVA%2C%20saya%20mau%20tanya%20tentang%20paket%20wisata.%20Boleh%20dibantu%3F"
+        target="_blank" rel="noopener noreferrer" id="whatsapp-float"
+        class="fixed bottom-6 right-6 bg-green-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform scale-0 opacity-0 z-50 flex items-center gap-2 group animate-bounce-slow">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="whatsapp-text font-medium whitespace-nowrap">@translate('Butuh Bantuan?')</span>
     </a>

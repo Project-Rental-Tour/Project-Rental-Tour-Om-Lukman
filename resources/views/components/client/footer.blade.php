@@ -6,35 +6,32 @@
                 {{-- KOLOM 1: LOGO & DESKRIPSI --}}
                 <div class="lg:col-span-2 flex flex-col text-left">
                     <div class="logo-container mb-4">
-                        <img 
-                            src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}" 
-                            alt="GOING TO THE JAVA Logo"
-                            class="h-10 object-contain max-w-[160px]"
-                        >
+                        <img src="{{ optional($profiles)->website_logo_light ? asset('storage/' . optional($profiles)->website_logo_light) : asset('assets/images/logo/logo-white.png') }}"
+                            alt="GOING TO THE JAVA Logo" class="h-10 object-contain max-w-[160px]">
                         <p class="text-blue-100 text-sm mt-2">
                             @translate('Agen Perjalanan & Wisata')
                         </p>
                     </div>
 
                     <p class="text-blue-100 mb-6 leading-relaxed">
-                        @translate('Selamat datang di') {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}! 
+                        @translate('Selamat datang di') {{ optional($profiles)->website_name ?? "GOING TO THE JAVA" }}!
                         @translate('Kami menyediakan layanan perjalanan dan wisata terbaik untuk membuat perjalanan Anda tak terlupakan. Dari perjalanan lokal hingga petualangan internasional, kami ada untuk Anda — cepat, aman, dan ramah.')
                     </p>
 
                     <div class="flex gap-x-4 mb-6">
                         <a href="{{ optional($profiles)->instagram_link }}" target="_blank"
-                           class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
-                           aria-label="Instagram">
+                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="{{ optional($profiles)->facebook_link }}" target="_blank"
-                           class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
-                           aria-label="TikTok">
+                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                            aria-label="TikTok">
                             <i class="fab fa-tiktok"></i>
                         </a>
                         <a href="https://www.facebook.com/share/1FroC8sWtd/?mibextid=wwXIfr" target="_blank"
-                           class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
-                           aria-label="Facebook">
+                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
                     </div>
@@ -42,43 +39,50 @@
 
                 {{-- KOLOM 2: MENU NAVIGASI --}}
                 <div class="flex flex-col items-start">
-                    <h3 class="text-sm font-semibold uppercase tracking-wider text-white border-b border-white/30 pb-1 mb-4">
+                    <h3
+                        class="text-sm font-semibold uppercase tracking-wider text-white border-b border-white/30 pb-1 mb-4">
                         @translate('Sumber Daya & Layanan')
                     </h3>
                     <ul class="space-y-3">
                         <li>
-                            <a href="{{ route('index') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i> 
+                            <a href="{{ route('index') }}"
+                                class="text-blue-100 hover:text-white flex items-center group">
+                                <i
+                                    class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 @translate('Beranda')
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('destination.index') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> 
+                            <a href="{{ route('destination.index') }}"
+                                class="text-blue-100 hover:text-white flex items-center group">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i>
                                 @translate('Destinasi')
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('usercar.index') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> 
+                            <a href="{{ route('usercar.index') }}"
+                                class="text-blue-100 hover:text-white flex items-center group">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i>
                                 @translate('Daftar Mobil')
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('gallery.index') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> 
+                            <a href="{{ route('gallery.index') }}"
+                                class="text-blue-100 hover:text-white flex items-center group">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i>
                                 @translate('Galeri')
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('about') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> 
+                            <a href="{{ route('about') }}"
+                                class="text-blue-100 hover:text-white flex items-center group">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i>
                                 @translate('Tentang Kami')
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('faq') }}" class="text-blue-100 hover:text-white flex items-center group">
-                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i> 
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100"></i>
                                 @translate('FAQ')
                             </a>
                         </li>
@@ -87,7 +91,8 @@
 
                 {{-- KOLOM 3: KONTAK --}}
                 <div class="flex flex-col items-start">
-                    <h3 class="text-sm font-semibold uppercase tracking-wider text-white border-b border-white/30 pb-1 mb-4">
+                    <h3
+                        class="text-sm font-semibold uppercase tracking-wider text-white border-b border-white/30 pb-1 mb-4">
                         @translate('Hubungi Kami')
                     </h3>
                     <ul class="space-y-4">
@@ -101,8 +106,8 @@
                         <li class="flex items-start">
                             <i class="fas fa-phone text-white mt-1 mr-3 text-sm flex-shrink-0"></i>
                             <div class="flex flex-col space-y-1">
-                                
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281220005276') }}" target="_blank" class="text-blue-100 hover:text-white text-sm">
+
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', optional($profiles)->phone_number ?? '6281217006076') }}" target="_blank" class="text-blue-100 hover:text-white text-sm">
                                     {{ optional($profiles)->phone_number ?? "+62 812-2000-5276" }}
                                 </a>
                             </div>
